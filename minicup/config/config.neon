@@ -15,13 +15,13 @@ nette:
 	application:
 		errorPresenter: Error
 		mapping:
-			*: App\*Module\Presenters\*Presenter
+			*: Minicup\*Module\Presenters\*Presenter
 
 	session:
 		expiration: 14 days
 
 
 services:
-	- App\Model\UserManager
-	- App\RouterFactory
-	router: @App\RouterFactory::createRouter
+	- Minicup\Model\UserManager
+	- Minicup\RouterFactory
+	router: @Minicup\RouterFactory::createRouter

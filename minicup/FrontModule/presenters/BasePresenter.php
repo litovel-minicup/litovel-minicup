@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presenters;
+namespace Minicup\FrontModule\Presenters;
 
 use Nette,
-    App\Model;
+    Minicup\Model;
 
 /**
  * Base presenter for all application presenters.
