@@ -11,5 +11,6 @@ use Nette,
 class HomepagePresenter extends BasePresenter {
     public function renderDefault() {
         $e = new Entity\Match();
+        \Tracy\Debugger::barDump($e);
     }
 }

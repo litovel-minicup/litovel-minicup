@@ -22,6 +22,9 @@ nette:
 
 
 services:
-	- Minicup\Model\UserManager
-	- Minicup\RouterFactory
-	router: @Minicup\RouterFactory::createRouter
+#	- Minicup\Model\UserManager
+        authenticator: Nette\Security\SimpleAuthenticator([
+            kathy: 12345
+        ]) # only for testing
+        - Minicup\RouterFactory
+        router: @Minicup\RouterFactory::createRouter

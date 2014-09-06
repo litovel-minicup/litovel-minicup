@@ -4,6 +4,8 @@
     
 </head>
 <body>
+    <div n:foreach="$flashes as $flash" n:if="$flashes" class="flash {$flash->message}">{$flash->message}</div>
+    <a n:if="$user->loggedIn" n:href=":Sign:out">Odhlásit se</a>
     admin @layout
     <strong>
         {block content}{/}
