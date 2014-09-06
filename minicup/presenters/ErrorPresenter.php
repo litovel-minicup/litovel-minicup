@@ -1,6 +1,6 @@
 <?php
 
-namespace Minicup\FrontModule\Presenters;
+namespace Minicup\Presenters;
 
 use Nette,
     Minicup\Model,
@@ -9,7 +9,7 @@ use Nette,
 /**
  * Error presenter.
  */
-class ErrorPresenter extends BasePresenter {
+class ErrorPresenter extends Nette\Application\UI\Presenter {
 
     /**
      * @param  Exception
@@ -20,6 +20,7 @@ class ErrorPresenter extends BasePresenter {
             $code = $exception->getCode();
             // load template 403.latte or 404.latte or ... 4xx.latte
             $this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx');
+            Nette\Diagnostics\Debugger::dump($code);
             // log to access.log
             Debugger::log("HTTP code $code: {$exception->getMessage()} in {$exception->getFile()}:{$exception->getLine()}", 'access');
         } else {
