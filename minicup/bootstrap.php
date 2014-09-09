@@ -10,11 +10,17 @@ $configurator->enableDebugger(__DIR__ . '/../log');
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 
 $configurator->createRobotLoader()
-	->addDirectory(__DIR__)
-	->register();
+        ->addDirectory(__DIR__)
+        ->register();
 
 $configurator->addConfig(__DIR__ . '/config/config.neon');
-$configurator->addConfig(__DIR__ . '/config/config.local.neon');
+
+if (file_exists(__DIR__ . '/config/config.server.neon')) {
+    $configurator->addConfig(__DIR__ . '/config/config.server.neon');
+} elseif (file_exists(__DIR__ . '/config/config.localhost.neon')) {
+    $configurator->addConfig(__DIR__ . '/config/config.localhost.neon');
+}
+
 $configurator->onCompile[] = function ($configurator, $compiler) {
     $compiler->addExtension('dibi', new Dibi\Bridges\Nette\DibiExtension22);
 };
