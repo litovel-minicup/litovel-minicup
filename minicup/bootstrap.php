@@ -21,9 +21,7 @@ if (file_exists(__DIR__ . '/config/config.server.neon')) {
     $configurator->addConfig(__DIR__ . '/config/config.localhost.neon');
 }
 
-$configurator->onCompile[] = function ($configurator, $compiler) {
-    $compiler->addExtension('dibi', new Dibi\Bridges\Nette\DibiExtension22);
-};
+
 $container = $configurator->createContainer();
 
 return $container;

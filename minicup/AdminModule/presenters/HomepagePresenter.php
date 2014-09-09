@@ -9,8 +9,16 @@ use Nette,
  * Homepage presenter.
  */
 class HomepagePresenter extends BasePresenter {
+    /**
+     * @var \Minicup\Model\Repository\MatchRepository
+     */
+    private $MR;
+
+    public function __construct(\Minicup\Model\Repository\MatchRepository $MR) {
+        parent::__construct();
+        $this->MR = $MR;
+    }
     public function renderDefault() {
-        $e = new Entity\Match();
-        \Tracy\Debugger::barDump($e);
+        $this->template->matches = $this->MR->findAll();
     }
 }

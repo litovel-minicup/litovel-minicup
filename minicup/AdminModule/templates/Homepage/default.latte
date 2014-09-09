@@ -1,2 +1,14 @@
 {block content}
-admin default
+
+
+<table>
+{foreach $matches as $match}
+    <tr>
+        <td>{$match->home_team->name}</td>
+        <td>{$match->home_team->slug}</td>
+        <td>{$match->category->slug}</td>
+        <td>{$match->away_team->slug}</td>
+        <td>{$match->away_team->name}</td>
+    </tr>
+{/}
+</table>

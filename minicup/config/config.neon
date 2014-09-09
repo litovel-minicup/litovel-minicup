@@ -5,6 +5,16 @@
 # http://nette.org/security-warning
 #
 parameters:
+    entityNS: 'Minicup\Model\Entity'
+
+leanMapper:
+    host: localhost
+    username: root
+    password: ''
+    database: 'minicup-2015'
+    lazy: true
+    charset: utf8
+    profiler: true
 
 
 php:
@@ -27,4 +37,12 @@ services:
             kathy: 12345
         ]) # only for testing
         - Minicup\RouterFactory
+
         router: @Minicup\RouterFactory::createRouter
+        - LeanMapper\DefaultEntityFactory
+        - Minicup\Model\Mapper(%entityNS%)
+
+        matchRepository: Minicup\Model\Repository\MatchRepository
+
+extensions:
+        leanMapper: Minicup\Model\LeanMapperExtension
