@@ -3,26 +3,20 @@
 namespace Minicup\Model;
 
 use Nette,
-    Nette\Utils\Strings,
-    Nette\Security\Passwords;
+    Nette\Security\Passwords,
+    Minicup\Model\Entity\User;
+        
 
 /**
  * Users management.
  */
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator {
 
-    const
-            TABLE_NAME = 'user',
-            COLUMN_ID = 'id',
-            COLUMN_NAME = 'username',
-            COLUMN_PASSWORD_HASH = 'password',
-            COLUMN_ROLE = 'role';
+    /** @var \Minicup\Model\Repository\UserRepository */
+    private $UR;
 
-    /** @var Nette\Database\Context */
-    private $database;
-
-    public function __construct(Nette\Database\Context $database) {
-        $this->database = $database;
+    public function __construct(\Minicup\Model\Repository\UserRepository $UR) {
+        $this->UR = $UR;
     }
 
     /**
@@ -33,21 +27,20 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
     public function authenticate(array $credentials) {
         list($username, $password) = $credentials;
 
-        $row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
-
-        if (!$row) {
-            throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
-        } elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
-            throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
-        } elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
-            $row->update(array(
-                self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-            ));
+        try {
+            $UE = $this->UR->findByUsername($username);
+        } catch (\Exception $ex) {
+            throw new Nette\Security\AuthenticationException('User not found!', self::IDENTITY_NOT_FOUND);
         }
 
-        $arr = $row->toArray();
-        unset($arr[self::COLUMN_PASSWORD_HASH]);
-        return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
+        if (!Passwords::verify($password, $UE->password_hash)) {
+            throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+        } elseif (Passwords::needsRehash($UE->password_hash)) {
+            $UE->password_hash = Passwords::hash($password);
+            $this->UR->persist($UE);
+        }
+
+        return new Nette\Security\Identity($UE->id, $UE->role);
     }
 
     /**
@@ -56,11 +49,13 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
      * @param  string
      * @return void
      */
-    public function add($username, $password) {
-        $this->database->table(self::TABLE_NAME)->insert(array(
-            self::COLUMN_NAME => $username,
-            self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-        ));
+    public function add($username, $password, $role=NULL) {
+        $UE = new User;
+        $UE->username = $username;
+        $UE->password_hash = Passwords::hash($password);
+        $UE->role = $role;
+        $id = $this->UR->persist($UE);
+        return new Nette\Security\Identity($id, $UE->role);
     }
 
 }
