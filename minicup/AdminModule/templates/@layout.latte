@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-</head>
-<body>
-    <div n:foreach="$flashes as $flash" n:if="$flashes" class="flash {$flash->message}">{$flash->message}</div>
-    <a n:if="$user->loggedIn" n:href=":Sign:out">Odhlásit se</a>
-    admin @layout
-    <strong>
-        {block content}{/}
-    </strong>
-</body>
+    <head>
+        <link href="https://raw.githubusercontent.com/o5/grido/master/client-side/grido.css" />
+        <script src="https://raw.githubusercontent.com/o5/grido/master/client-side/grido.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script>
+            $(function() {
+                $.noConflict();
+            });
+        </script>
+    </head>
+    <body>
+        <div n:foreach="$flashes as $flash" n:if="$flashes" class="flash {$flash->message}">{$flash->message}</div>
+        <a n:if="$user->loggedIn" n:href=":Sign:out">Odhlásit se</a>
+        admin @layout
+        <strong>
+            {block content}{/}
+        </strong>
+    </body>
 </html>
