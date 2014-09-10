@@ -16,10 +16,8 @@ leanMapper:
     charset: utf8
     profiler: true
 
-
 php:
 	date.timezone: Europe/Prague
-
 
 nette:
 	application:
@@ -29,7 +27,8 @@ nette:
 
 	session:
 		expiration: 14 days
-
+includes:
+    - config.ACL.neon
 
 services:
 #	- Minicup\Model\UserManager
