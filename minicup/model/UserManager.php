@@ -40,7 +40,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
             $this->UR->persist($UE);
         }
 
-        return new Nette\Security\Identity($UE->id, $UE->role);
+        return new Nette\Security\Identity($UE->id, $UE->role, array('fullname' => $UE->fullname));
     }
 
     /**
@@ -49,11 +49,15 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
      * @param  string
      * @return void
      */
-    public function add($username, $password, $role=NULL) {
+    public function add($username, $password, $fullname, $role='guest') {
+        if ($this->UR->existsUsername($username)) {
+            throw new \Exception('Zadané uživatelské jméno již existuje.');
+        }
         $UE = new User;
         $UE->username = $username;
         $UE->password_hash = Passwords::hash($password);
         $UE->role = $role;
+        $UE->fullname = $fullname;
         $id = $this->UR->persist($UE);
         return new Nette\Security\Identity($id, $UE->role);
     }

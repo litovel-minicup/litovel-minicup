@@ -15,12 +15,23 @@ class UserRepository extends Repository {
     public function findByUsername($username) {
         $row = $this->connection->select('*')
                 ->from($this->getTable())
-                ->where('username = %i', $username)
+                ->where('username = %s', $username)
                 ->fetch();
         if ($row === false) {
             throw new \Exception('Entity was not found.');
         }
         return $this->createEntity($row);
     }
-
+    
+    /**
+     * @return bool
+     */
+    public function existsUsername($username) {
+        try {
+            $e = $this->findByUsername($username);
+        } catch (\Exception $ex) {
+            return FALSE;
+        }
+        return TRUE;
+    }
 }
