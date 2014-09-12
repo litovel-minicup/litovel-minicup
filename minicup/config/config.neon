@@ -31,10 +31,7 @@ includes:
     - config.ACL.neon
 
 services:
-#	- Minicup\Model\UserManager
-        authenticator: Nette\Security\SimpleAuthenticator([
-            kathy: 12345
-        ]) # only for testing
+        - Minicup\Model\UserManager
         - Minicup\RouterFactory
 
         router: @Minicup\RouterFactory::createRouter
@@ -42,6 +39,7 @@ services:
         - Minicup\Model\Mapper(%entityNS%)
 
         matchRepository: Minicup\Model\Repository\MatchRepository
+        userRepository: Minicup\Model\Repository\UserRepository
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
