@@ -40,7 +40,6 @@ class UsersPresenter extends BasePresenter {
                 ->setSortable()
                 ->setFilterText()
                 ->setSuggestion();
-        $grid->setExport();
         return $grid;
     }
 
@@ -50,7 +49,8 @@ class UsersPresenter extends BasePresenter {
                 ->setRequired();
         $form->addText('fullname', 'celé jméno')
                 ->setRequired();
-        $form->addPassword('password', 'heslo');
+        $form->addPassword('password', 'heslo')
+                ->setRequired('Zadejte prosím heslo');
         $form->addPassword('password_check', 'kontrola hesla')
                 ->setOmitted(TRUE)
                 ->addConditionOn($form['password'], Form::FILLED)
@@ -71,6 +71,7 @@ class UsersPresenter extends BasePresenter {
                     $values->role);
         } catch (\Exception $ex) {
             $form->addError($ex->getMessage());
+            return FALSE;
         }
         $this->flashMessage('Uživatel úspěšně přidán!', 'success');
         $this->redirect('Homepage:default');

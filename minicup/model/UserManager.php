@@ -59,7 +59,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         $UE->role = $role;
         $UE->fullname = $fullname;
         $id = $this->UR->persist($UE);
-        return new Nette\Security\Identity($id, $UE->role);
+        return $id;
     }
 
 }

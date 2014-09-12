@@ -12,8 +12,8 @@ services:
             - addRole('moderator', 'guest')
             - addRole('admin', 'moderator')
 
-            #- addResource('') # TODO resources
+            - addResource('users') # TODO resources
             #- addResource('')
 
-            #- allow('editor', 'Admin:Default') # šetky akcie resource Admin:Default
-            #- allow('admin') # šetky resources a ich akcie
+            - allow('moderator', 'users', 'view') # šetky akcie resource Admin:Default
+            - allow('admin', 'users') # šetky resources a ich akcie
