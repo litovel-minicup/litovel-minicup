@@ -40,6 +40,8 @@ services:
 
         matchRepository: Minicup\Model\Repository\MatchRepository
         userRepository: Minicup\Model\Repository\UserRepository
-
+        teamRepository: Minicup\Model\Repository\TeamRepository
+        
+        - Minicup\Components\ICategoryTableComponentFactory
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

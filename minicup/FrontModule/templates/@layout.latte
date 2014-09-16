@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
-</head>
-<body>
-    front @layout
-    <strong>
-        {block content}{/}
-    </strong>
-</body>
+    <head>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="{$basePath}/js/nette.forms.js"></script>
+        <script src="{$basePath}/js/nette.ajax.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $.nette.init();
+            });
+        </script>
+    </head>
+    <body>
+        front @layout
+        <strong>
+            {block content}{/}
+        </strong>
+    </body>
 </html>

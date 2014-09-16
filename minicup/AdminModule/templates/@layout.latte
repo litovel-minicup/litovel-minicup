@@ -4,9 +4,11 @@
         <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="{$basePath}/js/nette.forms.js"></script>
         <script src="{$basePath}/js/nette.ajax.js"></script>
-
-
-        
+        <script type="text/javascript">
+            $(function() {
+                $.nette.init();
+            });
+        </script>
     </head>
     <body>
         <div n:foreach="$flashes as $flash" n:if="$flashes" class="flash {$flash->message}">{$flash->message}</div>
@@ -15,7 +17,6 @@
             přihlášen jako {$user->identity->fullname} <br />
             <a n:href=":Sign:out">Odhlásit se</a>
         </h3>
-
         <strong>
             {block content}{/}
         </strong>
