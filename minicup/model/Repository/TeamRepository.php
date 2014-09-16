@@ -2,6 +2,6 @@
 
 namespace Minicup\Model\Repository;
 
-class MatchRepository extends Repository {
+class TeamRepository extends Repository {
     
 }
