@@ -1,0 +1,22 @@
+{block content}
+<table>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+{foreach $teams as $team}
+    <tr>
+        <td>{$team->order}</td>
+        <td>{$team->name}</td>
+        <td>{$team->matches}</td>
+        <td>{$team->wins}</td>
+        <td>{$team->score_for}</td>
+        <td>{$team->score_against}</td>
+        <td>{$team->points}</td>
+    </tr>
+{/foreach}
+</table>

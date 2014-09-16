@@ -32,7 +32,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
         } catch (\Exception $ex) {
             throw new Nette\Security\AuthenticationException('User not found!', self::IDENTITY_NOT_FOUND);
         }
-
+        
         if (!Passwords::verify($password, $UE->password_hash)) {
             throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($UE->password_hash)) {
