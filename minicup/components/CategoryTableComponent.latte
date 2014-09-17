@@ -5,14 +5,16 @@
     <table>
         <tr>
             <th>pořadí</th>
+            <th>URL</th>
             <th>jméno</th>
             <th>slug</th>
         </tr>
         {foreach $teams as $team}
             <tr>
-                <td>{$team->id}</td>
+                <td>{$team->order}</td>
+                <td>{$team->category->slug}/{$team->slug}</td>
                 <td>{$team->name}</td>
-                <td>{$team->slug}</td>
+                <td>{$team->category->name}</td>
             </tr>
         {/foreach}
     </table>

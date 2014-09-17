@@ -28,20 +28,23 @@ nette:
 	session:
 		expiration: 14 days
 includes:
-    - config.ACL.neon
+        - config.ACL.neon
 
 services:
         - Minicup\Model\UserManager
-        - Minicup\RouterFactory
 
+        - Minicup\RouterFactory
         router: @Minicup\RouterFactory::createRouter
+
         - LeanMapper\DefaultEntityFactory
         - Minicup\Model\Mapper(%entityNS%)
 
+        # repositories
         matchRepository: Minicup\Model\Repository\MatchRepository
         userRepository: Minicup\Model\Repository\UserRepository
         teamRepository: Minicup\Model\Repository\TeamRepository
         
+        # component factories
         - Minicup\Components\ICategoryTableComponentFactory
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

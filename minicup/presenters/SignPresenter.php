@@ -6,7 +6,7 @@ use Nette,
     App\Model;
 
 /**
- * Sign in/out presenters.
+ * Sign in/out presenter
  */
 class SignPresenter extends Nette\Application\UI\Presenter {
 
@@ -47,7 +47,7 @@ class SignPresenter extends Nette\Application\UI\Presenter {
 
     public function actionOut() {
         $this->getUser()->logout();
-        $this->flashMessage('Byl jste odhlášen');
+        $this->flashMessage('Byl jste odhlášen.');
         $this->redirect('in');
     }
 

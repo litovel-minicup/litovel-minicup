@@ -2,19 +2,19 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Nette,
-    Minicup\Model\Entity;
+use Minicup\Model\Repository\MatchRepository;
+        
 
 /**
  * Homepage presenter.
  */
 class HomepagePresenter extends BasePresenter {
     /**
-     * @var \Minicup\Model\Repository\MatchRepository
+     * @var MatchRepository
      */
     private $MR;
 
-    public function __construct(\Minicup\Model\Repository\MatchRepository $MR) {
+    public function __construct(MatchRepository $MR) {
         parent::__construct();
         $this->MR = $MR;
     }

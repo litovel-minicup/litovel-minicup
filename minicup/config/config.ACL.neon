@@ -15,5 +15,5 @@ services:
             - addResource('users') # TODO resources
             #- addResource('')
 
-            - allow('moderator', 'users', 'view') # šetky akcie resource Admin:Default
-            - allow('admin', 'users') # šetky resources a ich akcie
+            - allow('moderator', 'users', 'view')
+            - allow('admin', 'users')

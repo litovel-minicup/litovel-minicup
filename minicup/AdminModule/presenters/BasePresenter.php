@@ -5,7 +5,7 @@ namespace Minicup\AdminModule\Presenters;
 use Nette;
 
 /**
- * Base presenter for all application presenters.
+ * Base prosenter for adminModule
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public function startup() {
