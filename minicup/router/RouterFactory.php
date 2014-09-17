@@ -2,8 +2,7 @@
 
 namespace Minicup;
 
-use Nette,
-    Nette\Application\Routers\RouteList,
+use Nette\Application\Routers\RouteList,
     Nette\Application\Routers\Route;
 
 /**
@@ -16,20 +15,18 @@ class RouterFactory {
      */
     public function createRouter() {
         $router = new RouteList();
-        $router[] = new Route('Sign[/<action>]', 'Sign:in');
+        $router[] = new Route('login[/<action>]', 'Sign:in');
         
         $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
             'module' => 'admin',
             'presenter' => 'Homepage',
-            'action' => 'default',
-            'id' => NULL,
+            'action' => 'default'
         ));
 
         $router[] = new Route('<presenter>/<action>[/<id>]', array(
             'module' => 'front',
             'presenter' => 'Homepage',
-            'action' => 'default',
-            'id' => NULL,
+            'action' => 'default'
         ));
 
         return $router;
