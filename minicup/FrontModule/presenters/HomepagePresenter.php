@@ -9,7 +9,21 @@ use Nette,
  * Homepage presenter.
  */
 class HomepagePresenter extends BasePresenter {
-    public function renderDefault($param) {
-        $e = new Entity\Match();
+    /**
+     *
+     * @var \Minicup\Components\ICategoryTableComponentFactory
+     */
+    private $CTCFactory;
+
+    public function __construct(\Minicup\Components\ICategoryTableComponentFactory $CTCFactory) {
+        parent::__construct();
+        $this->CTCFactory = $CTCFactory;
+    }
+    
+    public function renderDefault() {
+    }
+
+    public function createComponentCategoryTableComponent() {
+        return $this->CTCFactory->create();
     }
 }

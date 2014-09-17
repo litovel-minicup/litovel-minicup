@@ -1,0 +1,6 @@
+parameters:
+    leanmapper:
+        host: localhost
+        username: root
+        password: ''
+        database: 'minicup-2015'

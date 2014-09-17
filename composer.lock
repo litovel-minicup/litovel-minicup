@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "728483d01bf6ca56fe4dccbeb6b85459",
+    "hash": "1d9d41381cac3c44abfa68304f9a6a89",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -23,6 +24,69 @@
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
             "time": "2014-08-05 16:59:07"
+        },
+        {
+            "name": "dibi/dibi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/dibi.git",
+                "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
+                "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "replace": {
+                "dg/dibi": "self.version"
+            },
+            "require-dev": {
+                "nette/tester": "~1.1",
+                "tracy/tracy": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "dibi/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "Dibi is Database Abstraction Library for PHP",
+            "homepage": "http://dibiphp.com",
+            "keywords": [
+                "access",
+                "database",
+                "dbal",
+                "mssql",
+                "mysql",
+                "odbc",
+                "oracle",
+                "pdo",
+                "postgresql",
+                "sqlite"
+            ],
+            "time": "2014-07-16 15:46:08"
         },
         {
             "name": "latte/latte",
@@ -1099,6 +1163,100 @@
             "time": "2014-08-24 23:29:12"
         },
         {
+            "name": "o5/grido",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/o5/grido.git",
+                "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/o5/grido/zipball/b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
+                "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "~2.0",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "dibi/dibi": "@dev",
+                "mockery/mockery": "@dev",
+                "nella/doctrine": "@dev",
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Grido": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Petr Bugyík",
+                    "homepage": "http://petr.bugyik.cz/"
+                }
+            ],
+            "description": "Grido - DataGrid for Nette Framework",
+            "homepage": "http://o5.github.io/grido-sandbox/",
+            "keywords": [
+                "datagrid",
+                "datalist",
+                "grid",
+                "list",
+                "nette",
+                "table",
+                "tablegrid"
+            ],
+            "time": "2014-09-05 17:30:27"
+        },
+        {
+            "name": "tharos/leanmapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Tharos/LeanMapper.git",
+                "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/257d404091dbe525a9334283ad1e3584bd6a0e4a",
+                "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a",
+                "shasum": ""
+            },
+            "require": {
+                "dg/dibi": "~2.0"
+            },
+            "require-dev": {
+                "nette/tester": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LeanMapper": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vojtěch Kohout"
+                }
+            ],
+            "description": "Tiny ORM based on powerful dibi database abstraction library for PHP 5.",
+            "homepage": "http://www.leanmapper.com",
+            "time": "2014-04-27 19:12:51"
+        },
+        {
             "name": "tracy/tracy",
             "version": "v2.2.3",
             "source": {
@@ -1216,9 +1374,12 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "dibi/dibi": 20,
+        "tharos/leanmapper": 20,
+        "o5/grido": 20
+    },
+    "prefer-stable": false,
     "platform": {
         "php": ">= 5.3.7"
     },

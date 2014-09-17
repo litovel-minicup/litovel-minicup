@@ -5,11 +5,19 @@
 # http://nette.org/security-warning
 #
 parameters:
+    entityNS: 'Minicup\Model\Entity'
 
+leanMapper:
+    host: localhost
+    username: root
+    password: ''
+    database: 'minicup-2015'
+    lazy: true
+    charset: utf8
+    profiler: true
 
 php:
 	date.timezone: Europe/Prague
-
 
 nette:
 	application:
@@ -19,9 +27,24 @@ nette:
 
 	session:
 		expiration: 14 days
-
+includes:
+        - config.ACL.neon
 
 services:
-	- Minicup\Model\UserManager
-	- Minicup\RouterFactory
-	router: @Minicup\RouterFactory::createRouter
+        - Minicup\Model\UserManager
+
+        - Minicup\RouterFactory
+        router: @Minicup\RouterFactory::createRouter
+
+        - LeanMapper\DefaultEntityFactory
+        - Minicup\Model\Mapper(%entityNS%)
+
+        # repositories
+        matchRepository: Minicup\Model\Repository\MatchRepository
+        userRepository: Minicup\Model\Repository\UserRepository
+        teamRepository: Minicup\Model\Repository\TeamRepository
+        
+        # component factories
+        - Minicup\Components\ICategoryTableComponentFactory
+extensions:
+        leanMapper: Minicup\Model\LeanMapperExtension

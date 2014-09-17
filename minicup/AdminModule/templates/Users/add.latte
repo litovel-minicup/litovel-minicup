@@ -1,0 +1,7 @@
+{block content}
+<h2>Přidat uživatele</h2>
+{if $user->isAllowed('users', 'add')}
+{control userForm}
+{else}
+    Access deined
+{/}

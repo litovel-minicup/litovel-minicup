@@ -1248,5 +1248,168 @@
             "testing",
             "unit"
         ]
+    },
+    {
+        "name": "dibi/dibi",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dg/dibi.git",
+            "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dg/dibi/zipball/cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
+            "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "replace": {
+            "dg/dibi": "self.version"
+        },
+        "require-dev": {
+            "nette/tester": "~1.1",
+            "tracy/tracy": "~2.2"
+        },
+        "time": "2014-07-16 15:46:08",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "dibi/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause",
+            "GPL-2.0",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "David Grudl",
+                "homepage": "http://davidgrudl.com"
+            }
+        ],
+        "description": "Dibi is Database Abstraction Library for PHP",
+        "homepage": "http://dibiphp.com",
+        "keywords": [
+            "access",
+            "database",
+            "dbal",
+            "mssql",
+            "mysql",
+            "odbc",
+            "oracle",
+            "pdo",
+            "postgresql",
+            "sqlite"
+        ]
+    },
+    {
+        "name": "tharos/leanmapper",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Tharos/LeanMapper.git",
+            "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/257d404091dbe525a9334283ad1e3584bd6a0e4a",
+            "reference": "257d404091dbe525a9334283ad1e3584bd6a0e4a",
+            "shasum": ""
+        },
+        "require": {
+            "dg/dibi": "~2.0"
+        },
+        "require-dev": {
+            "nette/tester": "dev-master"
+        },
+        "time": "2014-04-27 19:12:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "LeanMapper": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Vojtěch Kohout"
+            }
+        ],
+        "description": "Tiny ORM based on powerful dibi database abstraction library for PHP 5.",
+        "homepage": "http://www.leanmapper.com"
+    },
+    {
+        "name": "o5/grido",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/o5/grido.git",
+            "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/o5/grido/zipball/b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
+            "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
+            "shasum": ""
+        },
+        "require": {
+            "nette/nette": "~2.0",
+            "php": ">=5.3"
+        },
+        "require-dev": {
+            "dibi/dibi": "@dev",
+            "mockery/mockery": "@dev",
+            "nella/doctrine": "@dev",
+            "nette/tester": "@dev"
+        },
+        "time": "2014-09-05 17:30:27",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Grido": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3",
+            "GPL-2.0",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Petr Bugyík",
+                "homepage": "http://petr.bugyik.cz/"
+            }
+        ],
+        "description": "Grido - DataGrid for Nette Framework",
+        "homepage": "http://o5.github.io/grido-sandbox/",
+        "keywords": [
+            "datagrid",
+            "datalist",
+            "grid",
+            "list",
+            "nette",
+            "table",
+            "tablegrid"
+        ]
     }
 ]
