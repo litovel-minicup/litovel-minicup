@@ -10,18 +10,21 @@ use Nette,
  */
 class SignPresenter extends Nette\Application\UI\Presenter {
 
+    /** @persistent */
+    public $backlink = '';
+
     /**
      * Sign-in form factory.
      * @return Nette\Application\UI\Form
      */
     protected function createComponentSignInForm() {
         $form = new Nette\Application\UI\Form;
-        $form->addText('username', 'Username:')
-                ->setRequired('Please enter your username.');
-        $form->addPassword('password', 'Password:')
-                ->setRequired('Please enter your password.');
-        $form->addCheckbox('remember', 'Keep me signed in');
-        $form->addSubmit('send', 'Sign in');
+        $form->addText('username', 'Uživatelské jméno')
+                ->setRequired('Prosím, zadejte vaše uživatelské jméno.');
+        $form->addPassword('password', 'Heslo')
+                ->setRequired('Prosím vložte vaše heslo.');
+        $form->addCheckbox('remember', 'Zůstat přihlášen');
+        $form->addSubmit('send', 'Přihlásit');
 
         $form->onSuccess[] = $this->signInFormSucceeded;
         return $form;
@@ -35,15 +38,16 @@ class SignPresenter extends Nette\Application\UI\Presenter {
         }
         try {
             $this->getUser()->login($values->username, $values->password);
-            $this->redirect('Admin:Homepage:');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError($e->getMessage());
         }
+        $this->restoreRequest($this->backlink);
+        $this->redirect('Admin:Homepage:');
     }
 
     public function actionOut() {
         $this->getUser()->logout();
-        $this->flashMessage('You have been signed out.');
+        $this->flashMessage('Byl jste odhlášen');
         $this->redirect('in');
     }
 

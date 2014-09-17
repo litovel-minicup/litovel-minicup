@@ -13,11 +13,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         if (!$this->user->loggedIn) {
             if ($this->user->logoutReason === \Nette\Security\User::INACTIVITY) {
                 $this->flashMessage('Pro neaktivitu jste byl odhlášen, přihlašte se prosím.', 'info');
-                $this->redirect(':Sign:in');
             } else {
                 $this->flashMessage('Pro vstup do této sekce je nutné se přihlásit!', 'info');
-                $this->redirect(':Sign:in');
             }
+            $this->redirect(':Sign:in', array('backlink' => $this->storeRequest()));
         }
     }
 }
