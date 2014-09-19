@@ -9,6 +9,7 @@ use LeanMapper\Entity;
  * @property Team $away_team m:hasOne(away_team_id:team)
  * @property int $score_home score of home team
  * @property int $score_away score of away team
+ * @property OnlineReport[] $online_reports m:belongsToMany(:online_report)
  * 
  */
 class Match extends Entity {
