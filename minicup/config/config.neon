@@ -40,11 +40,13 @@ services:
         - Minicup\Model\Mapper(%entityNS%)
 
         # repositories
-        matchRepository: Minicup\Model\Repository\MatchRepository
-        userRepository: Minicup\Model\Repository\UserRepository
-        teamRepository: Minicup\Model\Repository\TeamRepository
+        - Minicup\Model\Repository\MatchRepository
+        - Minicup\Model\Repository\UserRepository
+        - Minicup\Model\Repository\TeamRepository
+        - Minicup\Model\Repository\OnlineReportRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
+        - Minicup\Components\IOnlineReportComponentFactory
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

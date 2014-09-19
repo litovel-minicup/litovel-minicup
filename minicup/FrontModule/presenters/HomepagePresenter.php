@@ -2,28 +2,33 @@
 
 namespace Minicup\FrontModule\Presenters;
 
-use Nette,
-    Minicup\Model\Entity;
+use Minicup\Components\IOnlineReportComponentFactory,
+    Minicup\Model\Repository\MatchRepository;
 
 /**
  * Homepage presenter.
  */
 class HomepagePresenter extends BasePresenter {
-    /**
-     *
-     * @var \Minicup\Components\ICategoryTableComponentFactory
-     */
-    private $CTCFactory;
 
-    public function __construct(\Minicup\Components\ICategoryTableComponentFactory $CTCFactory) {
+    /** @var \Minicup\Components\IOnlineReportComponentFactory */
+    private $ORCFactory;
+
+    /** @var \Minicup\Model\Repository\MatchRepository */
+    private $MR;
+
+    public function __construct(IOnlineReportComponentFactory $ORCFactory,
+            MatchRepository $MR) {
         parent::__construct();
-        $this->CTCFactory = $CTCFactory;
-    }
-    
-    public function renderDefault() {
+        $this->ORCFactory = $ORCFactory;
+        $this->MR = $MR;
     }
 
-    public function createComponentCategoryTableComponent() {
-        return $this->CTCFactory->create();
+    public function renderDefault() {
+        $this->template->match = $this->MR->find(4);
     }
+
+    public function createComponentOnlineReportComponent() {
+        return $this->ORCFactory->create();
+    }
+
 }

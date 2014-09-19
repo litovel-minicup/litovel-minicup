@@ -1,0 +1,11 @@
+<div class="component" n:snippet="OnlineComponent">
+    <h2>Zápas {$match->home_team->name} proti {$match->away_team->name}</h2>
+    {foreach $match->online_reports as $report}
+        <p style="border:1px solid black;">
+            {$report->message}
+            <strong>
+                {$report->datetime}
+            </strong>
+        </p>
+    {/foreach}
+</div>
