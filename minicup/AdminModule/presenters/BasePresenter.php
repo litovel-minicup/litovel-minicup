@@ -2,16 +2,17 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Nette;
+use Nette\Security\User,
+    Nette\Application\UI\Presenter;
 
 /**
  * Base prosenter for adminModule
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter {
+abstract class BasePresenter extends Presenter {
     public function startup() {
         parent::startup();
         if (!$this->user->loggedIn) {
-            if ($this->user->logoutReason === \Nette\Security\User::INACTIVITY) {
+            if ($this->user->logoutReason === User::INACTIVITY) {
                 $this->flashMessage('Pro neaktivitu jste byl odhlášen, přihlašte se prosím.', 'info');
             } else {
                 $this->flashMessage('Pro vstup do této sekce je nutné se přihlásit!', 'info');
