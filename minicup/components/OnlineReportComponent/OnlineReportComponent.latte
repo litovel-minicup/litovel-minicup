@@ -1,5 +1,5 @@
 <div class="component" n:snippet="OnlineComponent">
-    <h2>Zápas {$match->home_team->name} proti {$match->away_team->name}</h2>
+    <h2><a n:href="refresh! $match" class="ajax">Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time}</a></h2>
     {foreach $match->online_reports as $report}
         <p style="border:1px solid black;">
             {$report->message}
@@ -8,4 +8,14 @@
             </strong>
         </p>
     {/foreach}
+    {if $user->isAllowed('online', 'write')}
+        {form newReportForm}
+            <tr n:foreach="$form->controls as $name => $field">
+                <th>label {label $name /}<th>
+                <td>input {input $name}</td>
+            </tr>
+        {/form}
+        {if $user->isAllowed('online', 'edit')}
+        {/if}
+    {/if}
 </div>

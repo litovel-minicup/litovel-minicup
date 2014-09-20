@@ -5,10 +5,16 @@
         <script src="{$basePath}/js/nette.forms.js"></script>
         <script src="{$basePath}/js/nette.ajax.js"></script>
         <script type="text/javascript">
-            $(function() {
+            $(function () {
                 $.nette.init();
             });
         </script>
+        <style>
+            a[href^="#error:"] {
+                background: red;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         front @layout

@@ -13,7 +13,8 @@ services:
             - addRole('admin', 'moderator')
 
             - addResource('users') # TODO resources
-            #- addResource('')
+            - addResource('online')
 
             - allow('moderator', 'users', 'view')
-            - allow('admin', 'users')
+            - allow('moderator', 'online', 'write')
+            - allow('admin')
