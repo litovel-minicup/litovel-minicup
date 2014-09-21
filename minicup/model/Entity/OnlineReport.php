@@ -7,8 +7,8 @@ use LeanMapper\Entity;
  * @property Match $match m:hasOne
  * @property string $type type of this report
  * @property string $message message of this report
- * @property \Datetime $datetime
- * @property int $timestamp
+ * @property \Datetime $added
+ * @property int $updated
  * 
  */
 class OnlineReport extends Entity {

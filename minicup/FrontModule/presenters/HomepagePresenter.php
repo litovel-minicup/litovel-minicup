@@ -24,9 +24,8 @@ class HomepagePresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $match = $this->MR->find(4);
-        $this->template->match = $match;
     }
+
     public function actionDefault() {
         // TODO: move to OnlineReportComponent factory
         $match = $this->MR->find(4);

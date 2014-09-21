@@ -11,48 +11,49 @@ class OnlineReportComponent extends Control {
 
     /** @var \Minicup\Model\Entity\Match */
     public $match;
-    
-    /** @persistent @var int */
-    public $match_id;
 
     /** @var \Minicup\Model\Repository\OnlineReportRepository */
-    public $ORR;
+    private $ORR;
 
     public function __construct(OnlineReportRepository $ORR) {
         parent::__construct();
         $this->ORR = $ORR;
     }
-
     public function render() {
         $this->template->setFile(__DIR__ . '/OnlineReportComponent.latte');
         $this->template->time = time();
         $this->template->match = $this->match;
-        $this->match_id = $this->match->id;
         $this->template->render();
     }
-
     public function handleRefresh() {
-        $this->invalidateControl();
+        $this->redrawControl();
     }
-
     public function createComponentNewReportForm() {
         $form = new Form();
-        $form->addText('message', '', 50);
-        $form->addSubmit('add', 'Přidat');
-        $form->getElementPrototype()->class = 'ajax';
+        $form->addText('message', '', 50)
+                ->setRequired('Zprávu prostě musíš vyplnit!');
+        $form->addSubmit('info', 'INFO');
+        $form->addSubmit('action', 'AKCE');
+        $form->addSubmit('goal', 'GÓL');
+        $form->addSubmit('penalty', 'VYLOUČENÍ');
+        $form->getElementPrototype()->class = 'ajasdax';
         $form->onSuccess[] = $this->newReportFormSubmitted;
         return $form;
     }
-
+    /**
+     * @param Form $form
+     * @param \Nette\Utils\ArrayHash $values
+     */
     public function newReportFormSubmitted($form, $values) {
         if (!$this->presenter->user->isAllowed('online', 'write')) {
             $this->presenter->flashMessage('Pro tuto akci nejste oprávněn!', 'error');
             $this->presenter->redirect('Front:Homepage:default');
         }
         $ORE = new OnlineReport();
-        $ORE->assign($values, ['message']);
-        $ORE->datetime = new \DateTime();
+        $ORE->assign($values);
+        $ORE->added = new \DateTime();
         $ORE->match = $this->match;
+        $ORE->type = $form->submitted->name;
         $this->ORR->persist($ORE);
         $this->invalidateControl();
     }
