@@ -36,7 +36,7 @@ class OnlineReportComponent extends Control {
         $form->addSubmit('action', 'AKCE');
         $form->addSubmit('goal', 'GÓL');
         $form->addSubmit('penalty', 'VYLOUČENÍ');
-        $form->getElementPrototype()->class = 'ajasdax';
+        $form->getElementPrototype()->class = 'ajax';
         $form->onSuccess[] = $this->newReportFormSubmitted;
         return $form;
     }
@@ -55,7 +55,7 @@ class OnlineReportComponent extends Control {
         $ORE->match = $this->match;
         $ORE->type = $form->submitted->name;
         $this->ORR->persist($ORE);
-        $this->invalidateControl();
+        $this->redrawControl();
     }
 
 }

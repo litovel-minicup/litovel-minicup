@@ -48,5 +48,6 @@ services:
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\IOnlineReportComponentFactory
+        - Minicup\Components\ILoginFormComponentFactory
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

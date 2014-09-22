@@ -15,7 +15,6 @@ class RouterFactory {
      */
     public function createRouter() {
         $router = new RouteList();
-        $router[] = new Route('login[/<action>]', 'Sign:in');
         
         $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
             'module' => 'admin',
