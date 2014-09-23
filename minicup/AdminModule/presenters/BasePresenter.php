@@ -17,7 +17,7 @@ abstract class BasePresenter extends Presenter {
             } else {
                 $this->flashMessage('Pro vstup do této sekce je nutné se přihlásit!', 'info');
             }
-            $this->redirect(':Sign:in', array('backlink' => $this->storeRequest()));
+            $this->redirect(':Front:Homepage:', array('backlink' => $this->storeRequest()));
         }
     }
 }
