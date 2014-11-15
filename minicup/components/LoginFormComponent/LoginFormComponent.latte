@@ -1,6 +1,6 @@
 <div class="component" n:snippet="LoginFormComponent">
     {if !$user->loggedIn}
-    {control loginForm}
+        {control loginForm}
     {else}
         <a n:href="logOut!">Odhlásit</a>
     {/if}

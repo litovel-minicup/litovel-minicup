@@ -1,14 +1,14 @@
 <?php
 
-namespace Minicup\FrontModule\Presenters;
+namespace Minicup\Presenters;
 
 use Nette,
     Minicup\Model;
 
 /**
- * Base presenter for all application presenters.
+ * Base presenter.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter {
+class BasePresenter extends Nette\Application\UI\Presenter {
 
     /** @var \Minicup\Components\ILoginFormComponentFactory @inject */
     public $LFCF;

@@ -8,7 +8,7 @@ use Minicup\Model\Repository\MatchRepository,
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BasePresenter {
+class HomepagePresenter extends BaseAdminPresenter {
 
     /**
      * @var MatchRepository

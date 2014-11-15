@@ -9,13 +9,18 @@
                 $.nette.init();
             });
         </script>
+        <style>
+            a[href^="#error:"] {
+                background: red;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <div n:foreach="$flashes as $flash" n:if="$flashes" class="flash {$flash->message}">{$flash->message}</div>
         <h2>admin @layout</h2>
-        <h3 n:if="$user->loggedIn" style="float: right;">
-            přihlášen jako {$user->identity->fullname} <br />
-            <a n:href=":Sign:out">Odhlásit se</a>
+        <h3 style="float: right;">
+            {control loginForm}
         </h3>
         <strong>
             {block content}{/}

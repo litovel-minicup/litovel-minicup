@@ -6,7 +6,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <h2>Uživatelé</h2>
 {if $user->isAllowed('users', 'view')}
-{control grid}
+    {control grid}
 {else}
-Access denied
+    Bohužel si nemůžete zobrazit seznam uživatelů.
 {/}

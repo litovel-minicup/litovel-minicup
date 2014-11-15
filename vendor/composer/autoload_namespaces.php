@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'LeanMapper' => array($vendorDir . '/tharos/leanmapper'),
-    'Grido' => array($vendorDir . '/o5/grido'),
 );

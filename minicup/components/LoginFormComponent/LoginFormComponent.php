@@ -39,7 +39,7 @@ class LoginFormComponent extends Control {
         } catch (Nette\Security\AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), 'error');
             $this->redrawControl();
-            return null;
+            return;
         }
         if ($values->remember || in_array('admin', $user->roles)) {
             $user->setExpiration('14 days', FALSE);

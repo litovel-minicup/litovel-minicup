@@ -30,6 +30,6 @@ class CategoryTableComponent extends Control {
         $this->template->render();
     }
     public function handleRefresh() {
-        $this->invalidateControl();
+        $this->redrawControl();
     }
 }

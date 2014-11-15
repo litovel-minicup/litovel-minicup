@@ -8,7 +8,7 @@ use Minicup\Components\IOnlineReportComponentFactory,
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BasePresenter {
+class HomepagePresenter extends BaseFrontPresenter {
 
     /** @var \Minicup\Components\IOnlineReportComponentFactory */
     private $ORCFactory;

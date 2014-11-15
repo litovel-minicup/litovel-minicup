@@ -2,13 +2,13 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Nette\Security\User,
-    Nette\Application\UI\Presenter;
+use Minicup\Presenters\BasePresenter;
+use Nette\Security\User;
 
 /**
  * Base prosenter for adminModule
  */
-abstract class BasePresenter extends Presenter {
+abstract class BaseAdminPresenter extends BasePresenter {
     public function startup() {
         parent::startup();
         if (!$this->user->loggedIn) {

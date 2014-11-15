@@ -9,7 +9,8 @@ use Nette,
 /**
  * Users grid presenter.
  */
-class UsersPresenter extends BasePresenter {
+class UsersAdminPresenter extends BaseAdminPresenter
+{
 
     /**
      * @var \DibiConnection
@@ -22,53 +23,57 @@ class UsersPresenter extends BasePresenter {
     private $UM;
 
     public function __construct(\DibiConnection $DC,
-            \Minicup\Model\UserManager $UM) {
+                                \Minicup\Model\UserManager $UM)
+    {
         parent::__construct();
         $this->DC = $DC;
         $this->UM = $UM;
     }
 
-    protected function createComponentGrid($name) {
+    protected function createComponentGrid($name)
+    {
         $grid = new \Grido\Grid($this, $name);
         $fluent = $this->DC->select('*')->from('[user]');
         $grid->model = $fluent;
         $grid->addColumnNumber('id', 'id');
         $grid->addColumnText('username', 'Username')
-                ->setFilterText()
-                ->setSuggestion();
+            ->setFilterText()
+            ->setSuggestion();
         $grid->addColumnText('role', 'Role')
-                ->setSortable()
-                ->setFilterText()
-                ->setSuggestion();
+            ->setSortable()
+            ->setFilterText()
+            ->setSuggestion();
         return $grid;
     }
 
-    protected function createComponentUserForm() {
+    protected function createComponentUserForm()
+    {
         $form = new Form();
         $form->addText('username', 'uživatelské jméno')
-                ->setRequired();
+            ->setRequired();
         $form->addText('fullname', 'celé jméno')
-                ->setRequired();
+            ->setRequired();
         $form->addPassword('password', 'heslo')
-                ->setRequired('Zadejte prosím heslo');
+            ->setRequired('Zadejte prosím heslo');
         $form->addPassword('password_check', 'kontrola hesla')
-                ->setOmitted(TRUE)
-                ->addConditionOn($form['password'], Form::FILLED)
-                ->addRule(Form::FILLED, 'Zadejte prosím heslo znovu pro ověření.')
-                ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $form['password']);
+            ->setOmitted(TRUE)
+            ->addConditionOn($form['password'], Form::FILLED)
+            ->addRule(Form::FILLED, 'Zadejte prosím heslo znovu pro ověření.')
+            ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $form['password']);
         $form->addSelect('role', 'role uživatele', Array('admin' => 'administrátor', 'moderator' => 'moderátor'));
         $form->addSubmit('submit', 'vytvořit');
         $form->onSuccess[] = $this->userFormSuccess;
         return $form;
     }
 
-    public function userFormSuccess($form, $values) {
+    public function userFormSuccess($form, $values)
+    {
         try {
-            $identity = $this->UM->add(
-                    $values->username, 
-                    $values->password,
-                    $values->fullname,
-                    $values->role);
+            $this->UM->add(
+                $values->username,
+                $values->password,
+                $values->fullname,
+                $values->role);
         } catch (\Exception $ex) {
             $form->addError($ex->getMessage());
             return FALSE;

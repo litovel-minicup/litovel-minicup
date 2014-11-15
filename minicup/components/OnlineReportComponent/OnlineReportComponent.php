@@ -26,7 +26,8 @@ class OnlineReportComponent extends Control {
         $this->template->render();
     }
     public function handleRefresh() {
-        $this->redrawControl();
+        $this->redrawControl('OnlineReportComponentReports');
+        $this->redrawControl('OnlineReportComponentHeading');
     }
     public function createComponentNewReportForm() {
         $form = new Form();

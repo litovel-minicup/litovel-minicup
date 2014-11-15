@@ -17,9 +17,11 @@
         </style>
     </head>
     <body>
+        <div n:foreach="$flashes as $flash">{$flash->message}</div>
         front @layout
         {block content}{/}
         <div style="float: right;">
+            <a n:href=":Admin:Homepage:">Administrace</a>
             {control loginForm}
         </div>
         

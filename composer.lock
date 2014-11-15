@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1d9d41381cac3c44abfa68304f9a6a89",
+    "hash": "fa725536745970972311eada6478b88f",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -31,12 +31,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0"
+                "reference": "6fc99254abee574618ee6efb56369bba02ae71e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
-                "reference": "cde5af7cbe02d231fe2d3f904fc2c3d3eeda66f0",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/6fc99254abee574618ee6efb56369bba02ae71e5",
+                "reference": "6fc99254abee574618ee6efb56369bba02ae71e5",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2014-07-16 15:46:08"
+            "time": "2014-10-26 13:01:41"
         },
         {
             "name": "latte/latte",
@@ -1168,12 +1168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831"
+                "reference": "be993b95bed1d3f03d261b7cd6cf4f28aa063cf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
-                "reference": "b5ae0c58503f1ddcb591b3b674bdd799a70c1831",
+                "url": "https://api.github.com/repos/o5/grido/zipball/be993b95bed1d3f03d261b7cd6cf4f28aa063cf0",
+                "reference": "be993b95bed1d3f03d261b7cd6cf4f28aa063cf0",
                 "shasum": ""
             },
             "require": {
@@ -1182,14 +1182,18 @@
             },
             "require-dev": {
                 "dibi/dibi": "@dev",
+                "kdyby/doctrine": "@dev",
                 "mockery/mockery": "@dev",
-                "nella/doctrine": "@dev",
-                "nette/tester": "@dev"
+                "nette/tester": "@dev",
+                "squizlabs/php_codesniffer": "~1.5.0"
+            },
+            "suggest": {
+                "symfony/property-access": "Allows to use Grido\\PropertyAccessors\\SymfonyPropertyAccessor"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Grido": ""
+                "psr-4": {
+                    "Grido\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1215,7 +1219,7 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2014-09-05 17:30:27"
+            "time": "2014-10-22 09:51:17"
         },
         {
             "name": "tharos/leanmapper",
@@ -1314,20 +1318,19 @@
     "packages-dev": [
         {
             "name": "nette/tester",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tester.git",
-                "reference": "1023fbf942a34d8971ec835bb86a849a33e2ad56"
+                "reference": "73e9511cb0bd03efdba398c00e91fac8b22edde7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tester/zipball/1023fbf942a34d8971ec835bb86a849a33e2ad56",
-                "reference": "1023fbf942a34d8971ec835bb86a849a33e2ad56",
+                "url": "https://api.github.com/repos/nette/tester/zipball/73e9511cb0bd03efdba398c00e91fac8b22edde7",
+                "reference": "73e9511cb0bd03efdba398c00e91fac8b22edde7",
                 "shasum": ""
             },
             "require": {
-                "ext-iconv": "*",
                 "php": ">=5.3.0"
             },
             "bin": [
@@ -1336,7 +1339,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -1367,12 +1370,10 @@
                 "testing",
                 "unit"
             ],
-            "time": "2014-06-11 15:50:33"
+            "time": "2014-09-27 10:42:19"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "dibi/dibi": 20,
@@ -1383,7 +1384,5 @@
     "platform": {
         "php": ">= 5.3.7"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

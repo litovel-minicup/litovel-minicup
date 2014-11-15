@@ -1,16 +1,6 @@
-<div class="component" n:snippet="OnlineComponent">
-    <h2><a n:href="refresh!" class="ajax">Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time}</a></h2>
-
-    {if $user->isAllowed('online', 'write')}
-        {form newReportForm}
-            {input message}
-            {input goal}
-            {input penalty}
-            {input info}
-            {input action}
-        {/form}
-    {/if}
-
+<div class="component" n:snippet="OnlineReportComponent">
+    <h2 n:snippet="OnlineReportComponentHeading"><a id="online-report-component--refresh" n:href="refresh!" class="ajax">Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time}</a></h2>
+    <div n:snippet="OnlineReportComponentReports">
     {foreach $match->online_reports as $report}
         <p style="border:1px solid black;">
             {$report->message}
@@ -19,4 +9,26 @@
             </strong>
         </p>
     {/foreach}
+    </div>
+    <div n:snippet="OnlineReportComponentForm">
+    {if $user->isAllowed('online', 'write')}
+        {form newReportForm}
+            {input message}
+            {input info}
+            {input goal}
+            {input penalty}
+            {input action}
+        {/form}
+    {/if}
+    </div>
+
 </div>
+
+<script>
+$(function(){
+    setInterval(function(){
+        var $refresh = $('#online-report-component--refresh');
+        $refresh.click();
+    }, 1000*5);
+});
+</script>
