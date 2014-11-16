@@ -1,7 +1,12 @@
-<div class="component" n:snippet="LoginFormComponent">
+<div class="component" n:snippet>
     {if !$user->loggedIn}
         {control loginForm}
     {else}
         <a n:href="logOut!">Odhlásit</a>
     {/if}
+    {ifCurrent ':Admin'}
+
+    {else}
+        <a href={plink ':Admin:Homepage:'}>Administrace</a>
+    {/ifCurrent}
 </div>

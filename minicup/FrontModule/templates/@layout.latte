@@ -2,8 +2,6 @@
 {block body}
     front @layout
     {block content}{/}
-    <div style="float: right;">
-        <a n:href=":Admin:Homepage:">Administrace</a>
-        {control loginForm}
-    </div>
+    {control loginForm}
+    {control listOfMatchesComponent}
 {/}

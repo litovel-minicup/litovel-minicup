@@ -1,0 +1,23 @@
+<div class="component" n:snippet>
+    <h2>{$control->name}</h2>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>domácí</th>
+            <th>hosté</th>
+            <th>začátek</th>
+            <th>konec</th>
+            <th>hriště</th>
+        </tr>
+        {foreach $matches as $match}
+            <tr>
+                <td>{$match->id}</td>
+                <td>{$match->home_team->name}</td>
+                <td>{$match->away_team->name}</td>
+                <td>{$match->term->start|date:"j. n. Y - G:i"}</td>
+                <td>{$match->term->end|date:"j. n. Y - G:i"}</td>
+                <td>{$match->term->location}</td>
+            </tr>
+        {/foreach}
+    </table>
+</div>

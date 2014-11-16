@@ -39,7 +39,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
         }
 
         if (!Passwords::verify($password, $UE->password_hash)) {
-            throw new Nette\Security\AuthenticationException('Zadané heslo není platné.', self::INVALID_CREDENTIAL);
+            throw new Nette\Security\AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($UE->password_hash)) {
             $UE->password_hash = Passwords::hash($password);
             $this->UR->persist($UE);

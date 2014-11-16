@@ -38,10 +38,12 @@ services:
         - Minicup\Model\Repository\UserRepository
         - Minicup\Model\Repository\TeamRepository
         - Minicup\Model\Repository\OnlineReportRepository
+        - Minicup\Model\Repository\MatchTermRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\IOnlineReportComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
+        - Minicup\Components\IListOfMatchesComponentFactory
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

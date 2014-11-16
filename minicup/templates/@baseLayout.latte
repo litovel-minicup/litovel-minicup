@@ -16,8 +16,9 @@
                 background: red;
                 color: white;
             }
-            .component {
-                border: 4px solid black;
+            div[id$='Component-'],
+            div[id$='Form-'] {
+                border: 4px solid blue;
             }
             .flash {
                 background-color: rgba(20, 0, 240, 0.5);
@@ -28,7 +29,7 @@
     <div n:foreach="$flashes as $flash" class="flash">
         <p>{$flash->message}</p>
     </div>
-        {block body}
-        {/}
+    {block body}
+    {/}
     </body>
 </html>
