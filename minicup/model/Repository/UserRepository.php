@@ -10,6 +10,7 @@ namespace Minicup\Model\Repository;
 
 class UserRepository extends Repository {
     /**
+     * @throws \Exception
      * @return \Minicup\Model\Entity\User
      */
     public function findByUsername($username) {
@@ -24,6 +25,7 @@ class UserRepository extends Repository {
     }
     
     /**
+     * @param $username string
      * @return bool
      */
     public function existsUsername($username) {

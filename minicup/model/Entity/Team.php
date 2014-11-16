@@ -12,6 +12,7 @@ use LeanMapper\Entity;
  * @property-read Category $category m:hasOne category where is team in
  * @property Match[] $matches m:belongsToMany(home_team_id#union)
  */
-class Team extends Entity {
+class Team extends Entity
+{
 
 }

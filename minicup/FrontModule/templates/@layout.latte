@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="{$basePath}/js/nette.forms.js"></script>
-        <script src="{$basePath}/js/nette.ajax.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $.nette.init();
-            });
-        </script>
-        <style>
-            a[href^="#error:"] {
-                background: red;
-                color: white;
-            }
-        </style>
-    </head>
-    <body>
-        <div n:foreach="$flashes as $flash">{$flash->message}</div>
-        front @layout
-        {block content}{/}
-        <div style="float: right;">
-            <a n:href=":Admin:Homepage:">Administrace</a>
-            {control loginForm}
-        </div>
-        
-    </body>
-</html>
+{extends '../../templates/@baseLayout.latte'}
+{block body}
+    front @layout
+    {block content}{/}
+    <div style="float: right;">
+        <a n:href=":Admin:Homepage:">Administrace</a>
+        {control loginForm}
+    </div>
+{/}

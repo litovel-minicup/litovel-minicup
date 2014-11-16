@@ -5,10 +5,11 @@ namespace Minicup\Components;
 /**
  * IOnlineComponentFactory
  */
-interface IOnlineReportComponentFactory {
+interface IOnlineReportComponentFactory
+{
     /**
      * @return \Minicup\Components\OnlineReportComponent
      */
     public function create();
-    
+
 }

@@ -1,5 +1,9 @@
 <div class="component" n:snippet="OnlineReportComponent">
-    <h2 n:snippet="OnlineReportComponentHeading"><a id="online-report-component--refresh" n:href="refresh!" class="ajax">Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time}</a></h2>
+    <h2 n:snippet="OnlineReportComponentHeading">
+        <a id="online-report-component--refresh" n:href="refresh!" class="ajax">
+            Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time}
+        </a>
+    </h2>
     <div n:snippet="OnlineReportComponentReports">
     {foreach $match->online_reports as $report}
         <p style="border:1px solid black;">

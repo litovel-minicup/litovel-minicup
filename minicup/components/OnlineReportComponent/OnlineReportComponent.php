@@ -2,12 +2,13 @@
 
 namespace Minicup\Components;
 
-use \Nette\Application\UI\Control,
-    \Nette\Application\UI\Form,
-    Minicup\Model\Entity\OnlineReport,
-    Minicup\Model\Repository\OnlineReportRepository;
+use Minicup\Model\Entity\OnlineReport;
+use Minicup\Model\Repository\OnlineReportRepository;
+use Nette\Application\UI\Control;
+use Nette\Application\UI\Form;
 
-class OnlineReportComponent extends Control {
+class OnlineReportComponent extends Control
+{
 
     /** @var \Minicup\Model\Entity\Match */
     public $match;
@@ -15,24 +16,31 @@ class OnlineReportComponent extends Control {
     /** @var \Minicup\Model\Repository\OnlineReportRepository */
     private $ORR;
 
-    public function __construct(OnlineReportRepository $ORR) {
+    public function __construct(OnlineReportRepository $ORR)
+    {
         parent::__construct();
         $this->ORR = $ORR;
     }
-    public function render() {
+
+    public function render()
+    {
         $this->template->setFile(__DIR__ . '/OnlineReportComponent.latte');
         $this->template->time = time();
         $this->template->match = $this->match;
         $this->template->render();
     }
-    public function handleRefresh() {
+
+    public function handleRefresh()
+    {
         $this->redrawControl('OnlineReportComponentReports');
         $this->redrawControl('OnlineReportComponentHeading');
     }
-    public function createComponentNewReportForm() {
+
+    public function createComponentNewReportForm()
+    {
         $form = new Form();
         $form->addText('message', '', 50)
-                ->setRequired('Zprávu prostě musíš vyplnit!');
+            ->setRequired('Zprávu prostě musíš vyplnit!');
         $form->addSubmit('info', 'INFO');
         $form->addSubmit('action', 'AKCE');
         $form->addSubmit('goal', 'GÓL');
@@ -41,11 +49,13 @@ class OnlineReportComponent extends Control {
         $form->onSuccess[] = $this->newReportFormSubmitted;
         return $form;
     }
+
     /**
      * @param Form $form
      * @param \Nette\Utils\ArrayHash $values
      */
-    public function newReportFormSubmitted($form, $values) {
+    public function newReportFormSubmitted($form, $values)
+    {
         if (!$this->presenter->user->isAllowed('online', 'write')) {
             $this->presenter->flashMessage('Pro tuto akci nejste oprávněn!', 'error');
             $this->presenter->redirect('Front:Homepage:default');

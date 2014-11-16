@@ -2,13 +2,14 @@
 
 namespace Minicup\FrontModule\Presenters;
 
-use Minicup\Components\IOnlineReportComponentFactory,
-    Minicup\Model\Repository\MatchRepository;
+use Minicup\Components\IOnlineReportComponentFactory;
+use Minicup\Model\Repository\MatchRepository;
 
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BaseFrontPresenter {
+class HomepagePresenter extends BaseFrontPresenter
+{
 
     /** @var \Minicup\Components\IOnlineReportComponentFactory */
     private $ORCFactory;
@@ -17,22 +18,25 @@ class HomepagePresenter extends BaseFrontPresenter {
     private $MR;
 
     public function __construct(IOnlineReportComponentFactory $ORCFactory,
-            MatchRepository $MR) {
+                                MatchRepository $MR)
+    {
         parent::__construct();
         $this->ORCFactory = $ORCFactory;
         $this->MR = $MR;
     }
 
-    public function renderDefault() {
+    public function renderDefault()
+    {
     }
 
-    public function actionDefault() {
-        // TODO: move to OnlineReportComponent factory
+    public function actionDefault()
+    {
         $match = $this->MR->find(4);
         $this['onlineReportComponent']->match = $match;
     }
 
-    public function createComponentOnlineReportComponent() {
+    public function createComponentOnlineReportComponent()
+    {
         return $this->ORCFactory->create();
     }
 

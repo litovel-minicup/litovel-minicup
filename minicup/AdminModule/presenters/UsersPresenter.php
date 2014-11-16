@@ -2,14 +2,15 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Nette,
-    Minicup\Model\Entity,
-    Nette\Application\UI\Form;
+use Minicup\Model\Entity;
+use Minicup\Model\UserManager;
+use Nette;
+use Nette\Application\UI\Form;
 
 /**
  * Users grid presenter.
  */
-class UsersAdminPresenter extends BaseAdminPresenter
+class UsersPresenter extends BaseAdminPresenter
 {
 
     /**
@@ -22,8 +23,7 @@ class UsersAdminPresenter extends BaseAdminPresenter
      */
     private $UM;
 
-    public function __construct(\DibiConnection $DC,
-                                \Minicup\Model\UserManager $UM)
+    public function __construct(\DibiConnection $DC, UserManager $UM)
     {
         parent::__construct();
         $this->DC = $DC;
