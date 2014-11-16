@@ -1,8 +1,5 @@
 /**
- * Debugger Bar
- *
  * This file is part of the Tracy (http://tracy.nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  */
 
 (function(){
@@ -120,7 +117,7 @@
 		doc.title = this.elem.find('h1').dom().innerHTML;
 
 		var _this = this;
-		$([win]).bind('unload', function() {
+		$([win]).bind('beforeunload', function() {
 			_this.toPeek();
 			win.close(); // forces closing, can be invoked by F5
 		});
