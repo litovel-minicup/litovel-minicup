@@ -15,4 +15,8 @@ class TeamDetailComponent extends Control{
         $this->team = $team;
     }
 
+    public function render(){
+        
+    }
+
 }
