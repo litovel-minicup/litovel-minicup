@@ -2,5 +2,6 @@
 /nbproject/
 /temp/
 /log/
+/.idea/
 config.server.neon
 config.localhost.neon
