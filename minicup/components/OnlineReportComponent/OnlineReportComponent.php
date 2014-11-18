@@ -11,10 +11,10 @@ use Nette\Application\UI\Form;
 class OnlineReportComponent extends Control
 {
 
-    /** @var \Minicup\Model\Entity\Match */
+    /** @var Match */
     private $match;
 
-    /** @var \Minicup\Model\Repository\OnlineReportRepository */
+    /** @var OnlineReportRepository */
     private $ORR;
 
     public function __construct(Match $match, OnlineReportRepository $ORR)
@@ -53,8 +53,8 @@ class OnlineReportComponent extends Control
     }
 
     /**
-     * @param Form $form
-     * @param \Nette\Utils\ArrayHash $values
+     * @param Form      $form
+     * @param ArrayHash $values
      */
     public function newReportFormSubmitted($form, $values)
     {

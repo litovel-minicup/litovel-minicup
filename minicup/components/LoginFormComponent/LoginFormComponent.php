@@ -5,6 +5,7 @@ namespace Minicup\Components;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
+use Nette\Utils\ArrayHash;
 
 class LoginFormComponent extends Control
 {
@@ -36,8 +37,8 @@ class LoginFormComponent extends Control
     }
 
     /**
-     * @param Form $form
-     * @param \Nette\Utils\ArrayHash $values
+     * @param Form      $form
+     * @param ArrayHash $values
      */
     public function loginFormValidated($form, $values)
     {

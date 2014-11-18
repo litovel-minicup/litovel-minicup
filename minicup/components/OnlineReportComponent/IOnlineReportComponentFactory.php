@@ -1,6 +1,7 @@
 <?php
 
 namespace Minicup\Components;
+
 use Minicup\Model\Entity\Match;
 
 /**
@@ -10,7 +11,7 @@ interface IOnlineReportComponentFactory
 {
     /**
      * @param $match Match
-     * @return \Minicup\Components\OnlineReportComponent
+     * @return OnlineReportComponent
      */
     public function create($match);
 

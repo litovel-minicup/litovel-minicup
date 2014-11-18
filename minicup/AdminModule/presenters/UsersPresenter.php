@@ -2,12 +2,12 @@
 
 namespace Minicup\AdminModule\Presenters;
 
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use Minicup\Model\Entity;
 use Minicup\Model\UserManager;
 use Nette;
 use Nette\Application\UI\Form;
-use Grido\Components\Filters\Filter;
 
 /**
  * Users grid presenter.
@@ -21,7 +21,7 @@ class UsersPresenter extends BaseAdminPresenter
     private $DC;
 
     /**
-     * @var \Minicup\Model\UserManager
+     * @var UserManager
      */
     private $UM;
 
@@ -30,6 +30,22 @@ class UsersPresenter extends BaseAdminPresenter
         parent::__construct();
         $this->DC = $DC;
         $this->UM = $UM;
+    }
+
+    public function userFormSuccess($form, $values)
+    {
+        try {
+            $this->UM->add(
+                $values->username,
+                $values->password,
+                $values->fullname,
+                $values->role);
+        } catch (\Exception $ex) {
+            $form->addError($ex->getMessage());
+            return FALSE;
+        }
+        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
+        $this->redirect('Homepage:default');
     }
 
     protected function createComponentGrid($name)
@@ -68,22 +84,6 @@ class UsersPresenter extends BaseAdminPresenter
         $form->addSubmit('submit', 'vytvořit');
         $form->onSuccess[] = $this->userFormSuccess;
         return $form;
-    }
-
-    public function userFormSuccess($form, $values)
-    {
-        try {
-            $this->UM->add(
-                $values->username,
-                $values->password,
-                $values->fullname,
-                $values->role);
-        } catch (\Exception $ex) {
-            $form->addError($ex->getMessage());
-            return FALSE;
-        }
-        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
-        $this->redirect('Homepage:default');
     }
 
 }

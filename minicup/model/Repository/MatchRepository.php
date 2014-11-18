@@ -21,7 +21,7 @@ class MatchRepository extends Repository
         [match].[match_term_id],
         [match_term].[start],
         [match_term].[end]
-        FROM [match] LEFT JOIN [match_term] ON [match_term].[id] = [match].[match_term_id] WHERE [match_term].[start] LIKE ', '"%'.$date.'%"')->fetchAll();
+        FROM [match] LEFT JOIN [match_term] ON [match_term].[id] = [match].[match_term_id] WHERE [match_term].[start] LIKE ', '"%' . $date . '%"')->fetchAll();
         return $this->createEntities(
             $values
         );

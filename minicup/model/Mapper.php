@@ -20,9 +20,23 @@ class Mapper extends DefaultMapper
         return self::toUnderScore($this->trimNamespace($entityClass));
     }
 
+    public static function toUnderScore($str)
+    {
+        return lcfirst(preg_replace_callback('#(?<=.)([A-Z])#', function ($m) {
+            return '_' . strtolower($m[1]);
+        }, $str));
+    }
+
     public function getEntityClass($table, Row $row = NULL)
     {
         return ($this->defaultEntityNamespace !== NULL ? $this->defaultEntityNamespace . '\\' : '') . ucfirst(self::toCamelCase($table));
+    }
+
+    public static function toCamelCase($str)
+    {
+        return preg_replace_callback('#_(.)#', function ($m) {
+            return strtoupper($m[1]);
+        }, $str);
     }
 
     public function getColumn($entityClass, $field)
@@ -42,21 +56,6 @@ class Mapper extends DefaultMapper
             return self::toUnderScore($matches[1]);
         }
         throw new InvalidStateException('Cannot determine table name.');
-    }
-
-
-    public static function toUnderScore($str)
-    {
-        return lcfirst(preg_replace_callback('#(?<=.)([A-Z])#', function ($m) {
-            return '_' . strtolower($m[1]);
-        }, $str));
-    }
-
-    public static function toCamelCase($str)
-    {
-        return preg_replace_callback('#_(.)#', function ($m) {
-            return strtoupper($m[1]);
-        }, $str);
     }
 
 }

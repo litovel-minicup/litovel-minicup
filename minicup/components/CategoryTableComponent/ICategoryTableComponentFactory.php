@@ -7,10 +7,11 @@ namespace Minicup\Components;
  *
  * @author admin
  */
-interface ICategoryTableComponentFactory {
+interface ICategoryTableComponentFactory
+{
     /**
-     * @return \Minicup\Components\CategoryTableComponent
+     * @return CategoryTableComponent
      */
     public function create();
-    
+
 }

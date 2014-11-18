@@ -13,6 +13,13 @@ use Minicup\Model\Repository\TeamRepository;
  */
 final class HomepagePresenter extends BaseFrontPresenter
 {
+
+    /** @var IListOfTeamsComponentFactory @inject */
+    public $LOTCFactory;
+
+    /** @var \Minicup\Components\ITeamDetailComponentFactory @inject */
+    public $TDCFactory;
+
     /** @var MatchRepository */
     private $MR;
 
@@ -25,17 +32,11 @@ final class HomepagePresenter extends BaseFrontPresenter
     /** @var IListOfMatchesComponentFactory */
     private $LOFCFactory;
 
-    /** @var IListOfTeamsComponentFactory @inject */
-    public $LOTCFactory;
-
-    /** @var \Minicup\Components\ITeamDetailComponentFactory @inject */
-    public $TDCFactory;
-
     /**
-     * @param IOnlineReportComponentFactory $ORCFactory
+     * @param IOnlineReportComponentFactory  $ORCFactory
      * @param IListOfMatchesComponentFactory $LOFCFactory
-     * @param MatchRepository $MR
-     * @param TeamRepository $TR
+     * @param MatchRepository                $MR
+     * @param TeamRepository                 $TR
      */
     public function __construct(IOnlineReportComponentFactory $ORCFactory,
                                 IListOfMatchesComponentFactory $LOFCFactory,
@@ -55,8 +56,6 @@ final class HomepagePresenter extends BaseFrontPresenter
 
     public function actionDefault()
     {
-
-
     }
 
     public function createComponentOnlineReportComponent()
@@ -77,7 +76,8 @@ final class HomepagePresenter extends BaseFrontPresenter
     }
 
 
-    public function createComponentTeamDetailComponent(){
+    public function createComponentTeamDetailComponent()
+    {
         $team = $this->TR->find(1);
         return $this->TDCFactory->create($team);
     }

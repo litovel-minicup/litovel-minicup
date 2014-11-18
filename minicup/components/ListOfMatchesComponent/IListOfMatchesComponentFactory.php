@@ -5,7 +5,7 @@ namespace Minicup\Components;
 interface IListOfMatchesComponentFactory
 {
     /**
-     * @return \Minicup\Components\ListOfMatchesComponent
+     * @return ListOfMatchesComponent
      */
     public function create();
 

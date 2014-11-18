@@ -6,14 +6,11 @@ use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Control;
 use Nette\Utils\DateTime;
 
-/**
- *
- */
 class ListOfMatchesComponent extends Control
 {
     /**
      *
-     * @var \Minicup\Model\Repository\MatchRepository
+     * @var MatchRepository
      */
     private $MR;
 

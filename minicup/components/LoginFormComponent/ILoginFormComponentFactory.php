@@ -5,10 +5,11 @@ namespace Minicup\Components;
 /**
  * ILoginFormComponentFactory
  */
-interface ILoginFormComponentFactory {
+interface ILoginFormComponentFactory
+{
     /**
-     * @return \Minicup\Components\LoginFormComponent
+     * @return LoginFormComponent
      */
     public function create();
-    
+
 }

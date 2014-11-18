@@ -15,13 +15,15 @@ class TeamDetailComponent extends Control
     /** @var \Minicup\Model\Repository\TeamRepository */
     private $TR;
 
-    public function __construct(Team $team, TeamRepository $TR){
+    public function __construct(Team $team, TeamRepository $TR)
+    {
         parent::__construct();
         $this->team = $team;
         $this->TR = $TR;
     }
 
-    public function render(){
+    public function render()
+    {
         $this->template->setFile(__DIR__ . '/TeamDetailComponent.latte');
         $this->template->team = $this->team;
         $this->template->render();

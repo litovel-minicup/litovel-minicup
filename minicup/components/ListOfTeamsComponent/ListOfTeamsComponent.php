@@ -19,7 +19,7 @@ class ListOfTeamsComponent extends Control
 
     public function render(Category $category)
     {
-    	$template = $this->template;
+        $template = $this->template;
         $template->setFile(__DIR__ . '/ListOfTeamsComponent.latte');
         $template->category = $category;
         $template->teams = $category->teams;
