@@ -26,10 +26,10 @@ includes:
         - config.ACL.neon
 
 services:
+        router: @Minicup\RouterFactory::createRouter
         - Minicup\Model\UserManager
         - Minicup\ParamService(@container::getParameters())
         - Minicup\RouterFactory
-        router: @Minicup\RouterFactory::createRouter
 
         - LeanMapper\DefaultEntityFactory
         - Minicup\Model\Mapper(%entityNS%)

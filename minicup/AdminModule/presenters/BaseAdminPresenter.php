@@ -3,22 +3,21 @@
 namespace Minicup\AdminModule\Presenters;
 
 use Minicup\Presenters\BasePresenter;
-use Nette\Http\IResponse;
 use Nette\Security\IUserStorage;
-use Nette\Security\User;
 
-/**
- * Base prosenter for adminModule
- */
-abstract class BaseAdminPresenter extends BasePresenter {
-    public function startup() {
+abstract class BaseAdminPresenter extends BasePresenter
+{
+    public function startup()
+    {
         parent::startup();
         if (!$this->user->loggedIn) {
             if ($this->user->logoutReason === IUserStorage::INACTIVITY) {
-                $this->error('Pro neaktivitu jste byl odhlášen, přihlašte se prosím.', IResponse::S403_FORBIDDEN);
+                $message = 'Pro neaktivitu jste byl odhlášen, přihlašte se prosím.';
             } else {
-                $this->error('Pro vstup do této sekce je nutné se přihlásit!', IResponse::S403_FORBIDDEN);
+                $message = 'Pro vstup do této sekce je nutné se přihlásit!';
             }
+            $this->flashMessage($message, 'error');
+            $this->redirect(':Front:Homepage:default', ['backlink' => $this->storeRequest()]);
         }
     }
 }

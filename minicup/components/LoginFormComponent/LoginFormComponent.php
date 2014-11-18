@@ -27,7 +27,10 @@ class LoginFormComponent extends Control
             ->setRequired('Prosím vložte vaše heslo.');
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('send', 'Přihlásit');
-        $form->getElementPrototype()->class = 'ajax';
+        if ($this->backlink != '') {
+            // TODO: fix request restoring with ajax
+            // $form->getElementPrototype()->class[] = 'ajax';
+        }
         $form->onSuccess[] = $this->loginFormValidated;
         return $form;
     }
@@ -38,7 +41,7 @@ class LoginFormComponent extends Control
      */
     public function loginFormValidated($form, $values)
     {
-        $user = $this->getPresenter(TRUE)->getUser();
+        $user = $this->presenter->user;
         try {
             $user->login($values->username, $values->password);
         } catch (AuthenticationException $e) {
@@ -51,9 +54,10 @@ class LoginFormComponent extends Control
         } else {
             $user->setExpiration('20 minutes', TRUE);
         }
-        $this->presenter->flashMessage('Prřihlášení proběhlo úspěšně.', 'success');
+        $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
         $this->presenter->redirect(':Admin:Homepage:');
     }
+
 
     public function handleLogOut()
     {

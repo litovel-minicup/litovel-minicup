@@ -10,18 +10,18 @@ use Minicup\Model\Repository\MatchRepository;
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BaseFrontPresenter
+final class HomepagePresenter extends BaseFrontPresenter
 {
-    /** @var \Minicup\Model\Repository\MatchRepository */
+    /** @var MatchRepository */
     private $MR;
 
-    /** @var \Minicup\Components\IOnlineReportComponentFactory */
+    /** @var IOnlineReportComponentFactory */
     private $ORCFactory;
 
     /** @var IListOfMatchesComponentFactory */
     private $LOFCFactory;
 
-    /** @var  IListOfTeamsComponentFactory @inject */
+    /** @var IListOfTeamsComponentFactory @inject */
     public $LOTCFactory;
 
     /**

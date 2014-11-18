@@ -8,10 +8,12 @@
 
 namespace Minicup\Model\Repository;
 
+use Minicup\Model\Entity\User;
+
 class UserRepository extends Repository {
     /**
      * @throws \Exception
-     * @return \Minicup\Model\Entity\User
+     * @return User
      */
     public function findByUsername($username) {
         $row = $this->connection->select('*')
@@ -19,7 +21,7 @@ class UserRepository extends Repository {
                 ->where('username = %s', $username)
                 ->fetch();
         if ($row === false) {
-            throw new \Exception('Entity was not found.');
+            throw new \Exception('This username was not found.');
         }
         return $this->createEntity($row);
     }

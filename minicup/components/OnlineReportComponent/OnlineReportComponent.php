@@ -12,7 +12,7 @@ class OnlineReportComponent extends Control
 {
 
     /** @var \Minicup\Model\Entity\Match */
-    public $match;
+    private $match;
 
     /** @var \Minicup\Model\Repository\OnlineReportRepository */
     private $ORR;
