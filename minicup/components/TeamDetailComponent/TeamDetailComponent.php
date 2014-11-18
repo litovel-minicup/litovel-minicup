@@ -24,7 +24,6 @@ class TeamDetailComponent extends Control
     public function render(){
         $this->template->setFile(__DIR__ . '/TeamDetailComponent.latte');
         $this->template->team = $this->team;
-        $this->template->TR = $this->TR;
         $this->template->render();
     }
 

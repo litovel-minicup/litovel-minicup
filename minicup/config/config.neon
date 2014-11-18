@@ -50,6 +50,9 @@ services:
         - implement: Minicup\Components\IOnlineReportComponentFactory
           parameters: [match]
           arguments: [%match%]
+        - implement: Minicup\Components\ITeamDetailComponentFactory
+          parameters: [team]
+          arguments: [%team%]
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
