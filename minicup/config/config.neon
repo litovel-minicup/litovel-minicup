@@ -41,6 +41,7 @@ services:
         - Minicup\Model\Repository\OnlineReportRepository
         - Minicup\Model\Repository\MatchTermRepository
         - Minicup\Model\Repository\CategoryRepository
+        - Minicup\Model\Repository\YearRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory

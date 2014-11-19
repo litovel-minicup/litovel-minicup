@@ -4,9 +4,9 @@ namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\IListOfMatchesComponentFactory;
 use Minicup\Components\IListOfTeamsComponentFactory;
-use Minicup\Components\IOnlineReportComponentFactory;
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\MatchRepository;
-use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\Repository\YearRepository;
 
 /**
  * Homepage presenter.
@@ -20,42 +20,30 @@ final class HomepagePresenter extends BaseFrontPresenter
     /** @var \Minicup\Components\ITeamDetailComponentFactory @inject */
     public $TDCFactory;
 
-    /** @var MatchRepository */
-    private $MR;
+    /** @var MatchRepository @inject */
+    public $MR;
 
-    /** @var \Minicup\Model\Repository\TeamRepository */
-    private $TR;
+    /** @var \Minicup\Model\Repository\TeamRepository @inject */
+    public $TR;
 
-    /** @var \Minicup\Components\IOnlineReportComponentFactory */
-    private $ORCFactory;
+    /** @var \Minicup\Components\IOnlineReportComponentFactory @inject */
+    public $ORCFactory;
 
-    /** @var IListOfMatchesComponentFactory */
-    private $LOFCFactory;
+    /** @var IListOfMatchesComponentFactory @inject */
+    public $LOFCFactory;
 
-    /**
-     * @param IOnlineReportComponentFactory  $ORCFactory
-     * @param IListOfMatchesComponentFactory $LOFCFactory
-     * @param MatchRepository                $MR
-     * @param TeamRepository                 $TR
-     */
-    public function __construct(IOnlineReportComponentFactory $ORCFactory,
-                                IListOfMatchesComponentFactory $LOFCFactory,
-                                MatchRepository $MR,
-                                TeamRepository $TR)
+    /** @var YearRepository @inject */
+    public $YR;
+
+
+    public function renderMatches()
     {
-        parent::__construct();
-        $this->ORCFactory = $ORCFactory;
-        $this->LOFCFactory = $LOFCFactory;
-        $this->MR = $MR;
-        $this->TR = $TR;
+        $this->template->years = $this->YR->findAll();
     }
 
-    public function renderDefault()
+    public function renderCategory(Category $category)
     {
-    }
-
-    public function actionDefault()
-    {
+        $this->template->category = $category;
     }
 
     public function createComponentOnlineReportComponent()
