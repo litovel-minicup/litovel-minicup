@@ -1,11 +1,11 @@
 <div class="component" n:snippet>
     <h2 n:snippet="heading">
         <a id="online-report-component--refresh" n:href="refresh!" class="ajax">
-            Zápas {$match->home_team->name} proti {$match->away_team->name} v {$time|date:'%X'}
+            Zápas {$match->homeTeam->name} proti {$match->awayTeam->name} v {$time|date:'%X'}
         </a>
     </h2>
     <div n:snippet="reports">
-    {foreach $match->online_reports as $report}
+    {foreach $match->onlineReports as $report}
         <p style="border:1px solid black;">
             {$report->message}
             <strong style="float:right;">

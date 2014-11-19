@@ -19,6 +19,9 @@ class LoginFormComponent extends Control
         $this->template->render();
     }
 
+    /**
+     * @return Form
+     */
     public function createComponentLoginForm()
     {
         $form = new Form();
