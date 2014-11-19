@@ -2,15 +2,11 @@
 
 namespace Minicup\Components;
 
-/**
- * Description of ICategoryTableFactory
- *
- * @author admin
- */
-interface IListOfMatchesComponentFactory {
+interface IListOfMatchesComponentFactory
+{
     /**
      * @return \Minicup\Components\ListOfMatchesComponent
      */
     public function create();
-    
+
 }

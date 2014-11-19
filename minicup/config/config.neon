@@ -40,11 +40,13 @@ services:
         - Minicup\Model\Repository\TeamRepository
         - Minicup\Model\Repository\OnlineReportRepository
         - Minicup\Model\Repository\MatchTermRepository
+        - Minicup\Model\Repository\CategoryRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IListOfMatchesComponentFactory
+        - Minicup\Components\IListOfTeamsComponentFactory
         - implement: Minicup\Components\IOnlineReportComponentFactory
           parameters: [match]
           arguments: [%match%]
