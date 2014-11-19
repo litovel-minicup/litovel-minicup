@@ -3,10 +3,9 @@
 namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\IListOfMatchesComponentFactory;
+use Minicup\Components\IListOfTeamsComponentFactory;
 use Minicup\Components\IOnlineReportComponentFactory;
-use Minicup\Model\Entity\MatchTerm;
 use Minicup\Model\Repository\MatchRepository;
-use Minicup\Model\Repository\MatchTermRepository;
 
 /**
  * Homepage presenter.
@@ -21,6 +20,9 @@ class HomepagePresenter extends BaseFrontPresenter
 
     /** @var IListOfMatchesComponentFactory */
     private $LOFCFactory;
+
+    /** @var  IListOfTeamsComponentFactory @inject */
+    public $LOTCFactory;
 
     /**
      * @param IOnlineReportComponentFactory $ORCFactory
@@ -57,6 +59,11 @@ class HomepagePresenter extends BaseFrontPresenter
     public function createComponentListOfMatchesComponent()
     {
         return $this->LOFCFactory->create();
+    }
+
+    public function createComponentListOfTeamsComponent()
+    {
+        return $this->LOTCFactory->create();
     }
 
 }

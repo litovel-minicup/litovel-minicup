@@ -18,6 +18,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var ParamService @inject */
     public $PS;
 
+    /** @var Model\Repository\CategoryRepository @inject*/
+    public $CR;
+
     /**
      * Sign-in form factory.
      * @return Nette\Application\UI\Form
@@ -31,5 +34,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         parent::beforeRender();
         $this->template->days = $this->PS['days'];
+        $this->template->categories = $this->CR->findAll();
     }
 }
