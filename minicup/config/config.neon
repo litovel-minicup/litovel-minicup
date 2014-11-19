@@ -1,5 +1,6 @@
 parameters:
     entityNS: 'Minicup\Model\Entity'
+    days: [22-05-2015, 23-05-2015, 24-05-2015]
 
 leanMapper:
     host: localhost
@@ -26,7 +27,7 @@ includes:
 
 services:
         - Minicup\Model\UserManager
-
+        - Minicup\ParamService(@container::getParameters())
         - Minicup\RouterFactory
         router: @Minicup\RouterFactory::createRouter
 
@@ -42,8 +43,11 @@ services:
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
-        - Minicup\Components\IOnlineReportComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IListOfMatchesComponentFactory
+        - implement: Minicup\Components\IOnlineReportComponentFactory
+          parameters: [match]
+          arguments: [%match%]
+
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

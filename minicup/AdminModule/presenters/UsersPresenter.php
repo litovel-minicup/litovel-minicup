@@ -2,10 +2,12 @@
 
 namespace Minicup\AdminModule\Presenters;
 
+use Grido\Grid;
 use Minicup\Model\Entity;
 use Minicup\Model\UserManager;
 use Nette;
 use Nette\Application\UI\Form;
+use Grido\Components\Filters\Filter;
 
 /**
  * Users grid presenter.
@@ -32,9 +34,11 @@ class UsersPresenter extends BaseAdminPresenter
 
     protected function createComponentGrid($name)
     {
-        $grid = new \Grido\Grid($this, $name);
+        $grid = new Grid($this, $name);
         $fluent = $this->DC->select('*')->from('[user]');
         $grid->model = $fluent;
+        $grid->setFilterRenderType(Filter::RENDER_INNER);
+        $grid->perPage = 100;
         $grid->addColumnNumber('id', 'id');
         $grid->addColumnText('username', 'Username')
             ->setFilterText()

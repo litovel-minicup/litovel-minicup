@@ -1,13 +1,14 @@
 <div class="component" n:snippet>
-    <h2>{$control->name}</h2>
+    <h2>Seznam zápasů pro {$date|date:"j. n. Y"}</h2>
     <table class="table">
         <tr>
             <th>id</th>
-            <th>domácí</th>
-            <th>hosté</th>
-            <th>začátek</th>
-            <th>konec</th>
-            <th>hriště</th>
+            <th>Domácí tým</th>
+            <th>Hostující tým</th>
+            <th>Začátek</th>
+            <th>Konec</th>
+            <th>Hřiště</th>
+            <th>Počet online reportů</th>
         </tr>
         {foreach $matches as $match}
             <tr>
@@ -17,6 +18,7 @@
                 <td>{$match->term->start|date:"j. n. Y - G:i"}</td>
                 <td>{$match->term->end|date:"j. n. Y - G:i"}</td>
                 <td>{$match->term->location}</td>
+                <td>{$match->online_reports|length}</td>
             </tr>
         {/foreach}
     </table>

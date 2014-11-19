@@ -2,6 +2,7 @@
 {block body}
     front @layout
     {block content}{/}
-    {control loginForm}
-    {control listOfMatchesComponent}
+    {foreach $days as $day}
+        {control listOfMatchesComponent $day}
+    {/}
 {/}

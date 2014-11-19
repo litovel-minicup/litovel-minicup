@@ -2,6 +2,7 @@
 
 namespace Minicup\Components;
 
+use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\OnlineReport;
 use Minicup\Model\Repository\OnlineReportRepository;
 use Nette\Application\UI\Control;
@@ -16,9 +17,10 @@ class OnlineReportComponent extends Control
     /** @var \Minicup\Model\Repository\OnlineReportRepository */
     private $ORR;
 
-    public function __construct(OnlineReportRepository $ORR)
+    public function __construct(Match $match, OnlineReportRepository $ORR)
     {
         parent::__construct();
+        $this->match = $match;
         $this->ORR = $ORR;
     }
 

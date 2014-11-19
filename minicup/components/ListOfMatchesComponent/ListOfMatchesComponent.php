@@ -4,6 +4,7 @@ namespace Minicup\Components;
 
 use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Control;
+use Nette\Utils\DateTime;
 
 /**
  *
@@ -22,10 +23,11 @@ class ListOfMatchesComponent extends Control
         $this->MR = $MR;
     }
 
-    public function render()
+    public function render(DateTime $datetime)
     {
         $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
-        $this->template->matches = $this->MR->findAll();
+        $this->template->matches = $this->MR->findMatchesByDate($datetime);
+        $this->template->date = $datetime;
         $this->template->render();
 
     }
