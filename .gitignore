@@ -3,5 +3,6 @@
 /temp/
 /log/
 /.idea/
+/vendor/
 config.server.neon
 config.localhost.neon
