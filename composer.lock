@@ -1169,24 +1169,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "4ac7ea2291262a0a4b5ec5e1a6526a8217174b38"
+                "reference": "a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/4ac7ea2291262a0a4b5ec5e1a6526a8217174b38",
-                "reference": "4ac7ea2291262a0a4b5ec5e1a6526a8217174b38",
+                "url": "https://api.github.com/repos/o5/grido/zipball/a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0",
+                "reference": "a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0",
                 "shasum": ""
             },
             "require": {
-                "nette/nette": "2.2.4",
+                "nette/nette": "~2.0",
                 "php": ">=5.3"
             },
             "require-dev": {
                 "dibi/dibi": "@dev",
                 "kdyby/doctrine": "@dev",
                 "mockery/mockery": "@dev",
+                "nette/nette": ">=2.2.4",
                 "nette/tester": "@dev",
-                "squizlabs/php_codesniffer": "~1.5.0"
+                "squizlabs/php_codesniffer": "~2.0.0"
             },
             "suggest": {
                 "symfony/property-access": "Allows to use Grido\\PropertyAccessors\\SymfonyPropertyAccessor"
@@ -1220,7 +1221,7 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2014-11-12 16:30:36"
+            "time": "2014-12-07 00:11:14"
         },
         {
             "name": "tharos/leanmapper",
