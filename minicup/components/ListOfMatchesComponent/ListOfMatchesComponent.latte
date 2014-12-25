@@ -1,5 +1,5 @@
-<div class="component" n:snippet>
-    <h2>Seznam zápasů pro {$date|date:"j. n. Y"}</h2>
+<div class="component">
+    <h2>Seznam zápasů pro {$day->day|date:"j. n. Y"}</h2>
     <table class="table">
         <tr>
             <th>id</th>
@@ -13,12 +13,12 @@
         {foreach $matches as $match}
             <tr>
                 <td>{$match->id}</td>
-                <td>{$match->home_team->name}</td>
-                <td>{$match->away_team->name}</td>
-                <td>{$match->term->start|date:"j. n. Y - G:i"}</td>
-                <td>{$match->term->end|date:"j. n. Y - G:i"}</td>
-                <td>{$match->term->location}</td>
-                <td>{$match->online_reports|length}</td>
+                <td>{$match->homeTeam->name}</td>
+                <td>{$match->awayTeam->name}</td>
+                <td>{$match->matchTerm->start|date:"j. n. Y - G:i"}</td>
+                <td>{$match->matchTerm->end|date:"j. n. Y - G:i"}</td>
+                <td>{$match->matchTerm->location}</td>
+                <td>{$match->onlineReports|length}</td>
             </tr>
         {/foreach}
     </table>

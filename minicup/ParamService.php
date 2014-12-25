@@ -38,6 +38,7 @@ class ParamService extends Object implements \ArrayAccess
 
     public function offsetGet($offset)
     {
+        return NULL;
         if ($this->offsetExists($offset)) {
             return $this->params[$offset];
         } else {

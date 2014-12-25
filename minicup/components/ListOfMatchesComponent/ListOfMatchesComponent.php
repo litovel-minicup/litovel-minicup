@@ -2,6 +2,7 @@
 
 namespace Minicup\Components;
 
+use Minicup\Model\Entity\Day;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Control;
 use Nette\Utils\DateTime;
@@ -20,11 +21,17 @@ class ListOfMatchesComponent extends Control
         $this->MR = $MR;
     }
 
-    public function render(DateTime $datetime)
+    public function render(Day $day)
     {
         $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
-        $this->template->matches = $this->MR->findMatchesByDate($datetime);
-        $this->template->date = $datetime;
+        $matches = [];
+        foreach ($day->matchTerms as $mt) {
+            foreach ($mt->matches as $match) {
+                $matches[] = $match;
+            }
+        }
+        $this->template->matches = $matches;
+        $this->template->day = $day;
         $this->template->render();
 
     }

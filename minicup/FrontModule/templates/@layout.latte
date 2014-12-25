@@ -2,11 +2,9 @@
 {block body}
     front @layout
     {block content}{/}
-    {foreach $days as $day}
-        {control listOfMatchesComponent $day}
-    {/}
+<pre>
+<a n:href="Team:default">Týmy</a>
+    <a n:foreach="$categories as $category" n:href="Team:default $category">Týmy {$category->name}</a>
 
-    {foreach $categories as $category}
-        {control listOfTeamsComponent $category}
-    {/}
+</pre>
 {/}

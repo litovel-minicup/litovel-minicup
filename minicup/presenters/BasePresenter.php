@@ -2,6 +2,7 @@
 
 namespace Minicup\Presenters;
 
+use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Model;
 use Minicup\ParamService;
 use Nette;
@@ -12,17 +13,19 @@ use Nette;
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-    /** @var \Minicup\Components\ILoginFormComponentFactory @inject */
+    /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
 
     /** @var ParamService @inject */
     public $PS;
 
-    /** @var Model\Repository\CategoryRepository @inject*/
+    /** @var Model\Repository\CategoryRepository @inject */
     public $CR;
 
+    /** @var Model\Repository\YearRepository @inject */
+    public $YR;
+
     /**
-     * Sign-in form factory.
      * @return Nette\Application\UI\Form
      */
     protected function createComponentLoginForm()
@@ -33,7 +36,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public function beforeRender()
     {
         parent::beforeRender();
-        $this->template->days = $this->PS['days'];
         $this->template->categories = $this->CR->findAll();
     }
 }
