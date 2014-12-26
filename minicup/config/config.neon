@@ -46,7 +46,9 @@ services:
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
-        - Minicup\Components\IListOfMatchesComponentFactory
+        - implement: Minicup\Components\IListOfMatchesComponentFactory
+          parameters: [controller]
+          arguments: [%controller%]
         - Minicup\Components\IListOfTeamsComponentFactory
         - implement: Minicup\Components\IOnlineReportComponentFactory
           parameters: [match]

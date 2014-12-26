@@ -6,5 +6,8 @@
 <a n:href="Team:default">Týmy</a>
     <a n:foreach="$categories as $category" n:href="Team:default $category">Týmy {$category->name}</a>
 
+
+<a n:href="Match:default">Zápasy</a>
+    <a n:foreach="$categories as $category" n:href="Match:default $category">Zápasy {$category->name}</a>
 </pre>
 {/}

@@ -9,9 +9,3 @@
 	    {/foreach}
     {/ifset}
 {/block}
-
-{block teams}
-<ul n:inner-foreach="$category->teams as $team">
-	<li><a n:href="detail $category, $team">{$team->name}</a></li>
-</ul>
-{/block}

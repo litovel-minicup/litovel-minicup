@@ -2,36 +2,45 @@
 
 namespace Minicup\Components;
 
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Day;
+use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Control;
-use Nette\Utils\DateTime;
 
 class ListOfMatchesComponent extends Control
 {
     /**
-     *
      * @var MatchRepository
      */
     private $MR;
 
-    public function __construct(MatchRepository $MR)
+
+    /**
+     * @var Day|Year|Team|Category|NULL
+     */
+    private $arg;
+
+    /**
+     * @param Day|Year|Team|Category|NULL $arg
+     * @param MatchRepository $MR
+     */
+    public function __construct($arg, MatchRepository $MR)
     {
         parent::__construct();
+        $this->arg = $arg;
         $this->MR = $MR;
     }
 
-    public function render(Day $day)
+    public function render()
     {
-        $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
         $matches = [];
-        foreach ($day->matchTerms as $mt) {
-            foreach ($mt->matches as $match) {
-                $matches[] = $match;
-            }
+        if ($this->arg instanceof Team) {
+            $matches = $this->arg->getMatches();
         }
+        $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
         $this->template->matches = $matches;
-        $this->template->day = $day;
         $this->template->render();
 
     }

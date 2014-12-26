@@ -14,12 +14,15 @@ class TeamDetailComponent extends Control
 
     /** @var \Minicup\Model\Repository\TeamRepository */
     private $TR;
+    /** @var  IListOfMatchesComponentFactory */
+    private $LOMCF;
 
-    public function __construct(Team $team, TeamRepository $TR)
+    public function __construct(Team $team, TeamRepository $TR, IListOfMatchesComponentFactory $LOMCF)
     {
         parent::__construct();
         $this->team = $team;
         $this->TR = $TR;
+        $this->LOMCF = $LOMCF;
     }
 
     public function render()
@@ -27,6 +30,11 @@ class TeamDetailComponent extends Control
         $this->template->setFile(__DIR__ . '/TeamDetailComponent.latte');
         $this->template->team = $this->team;
         $this->template->render();
+    }
+
+    public function createComponentListOfMatchesComponent()
+    {
+        return $this->LOMCF->create($this->team);
     }
 
 }
