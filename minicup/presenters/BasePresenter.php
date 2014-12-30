@@ -4,7 +4,6 @@ namespace Minicup\Presenters;
 
 use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Model;
-use Minicup\ParamService;
 use Nette;
 
 /**
@@ -15,9 +14,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
-
-    /** @var ParamService @inject */
-    public $PS;
 
     /** @var Model\Repository\CategoryRepository @inject */
     public $CR;

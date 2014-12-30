@@ -4,5 +4,4 @@
 /log/
 /.idea/
 /vendor/
-config.server.neon
-config.localhost.neon
+config.local.neon
