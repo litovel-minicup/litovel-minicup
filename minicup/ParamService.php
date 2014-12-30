@@ -7,6 +7,7 @@ use Nette\NotSupportedException;
 use Nette\Object;
 use Nette\Utils\DateTime;
 
+/** @deprecated */
 class ParamService extends Object implements \ArrayAccess
 {
     /** @var array */

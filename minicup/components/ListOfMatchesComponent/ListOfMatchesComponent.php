@@ -37,7 +37,8 @@ class ListOfMatchesComponent extends Control
     {
         $matches = [];
         if ($this->arg instanceof Team) {
-            $matches = $this->arg->getMatches();
+            $matches = $this->MR->findMatchesToTeam($this->arg);
+            $matches = $this->arg->matches;
         }
         $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
         $this->template->matches = $matches;

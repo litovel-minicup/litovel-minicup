@@ -1169,12 +1169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0"
+                "reference": "832081d3367c4377c68ad328e057fd12a30ea89f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0",
-                "reference": "a44aaddbcfbaf8a358888d19290ceb4bc92ba3e0",
+                "url": "https://api.github.com/repos/o5/grido/zipball/832081d3367c4377c68ad328e057fd12a30ea89f",
+                "reference": "832081d3367c4377c68ad328e057fd12a30ea89f",
                 "shasum": ""
             },
             "require": {
@@ -1182,11 +1182,11 @@
                 "php": ">=5.3"
             },
             "require-dev": {
-                "dibi/dibi": "@dev",
-                "kdyby/doctrine": "@dev",
-                "mockery/mockery": "@dev",
+                "dibi/dibi": "~2.2.2",
+                "kdyby/doctrine": "~2.2",
+                "mockery/mockery": "~0.9",
                 "nette/nette": ">=2.2.4",
-                "nette/tester": "@dev",
+                "nette/tester": "~1.3",
                 "squizlabs/php_codesniffer": "~2.0.0"
             },
             "suggest": {
@@ -1221,7 +1221,7 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2014-12-07 00:11:14"
+            "time": "2014-12-28 14:04:15"
         },
         {
             "name": "tharos/leanmapper",

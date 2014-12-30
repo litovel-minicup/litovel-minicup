@@ -31,8 +31,13 @@ services:
         - Minicup\ParamService(@container::getParameters())
         - Minicup\RouterFactory
 
+		# lean mapper
         - LeanMapper\DefaultEntityFactory
         - Minicup\Model\Mapper(%entityNS%)
+        filters: Minicup\Model\Filters
+        leanMapper.connection:
+         setup:
+          - registerFilter('matches', [@filters, 'allMatches'], 'ep')
 
         # repositories
         - Minicup\Model\Repository\MatchRepository
