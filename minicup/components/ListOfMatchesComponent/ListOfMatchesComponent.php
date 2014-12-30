@@ -9,7 +9,7 @@ use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Control;
 
-class ListOfMatchesComponent extends Control
+class ListOfMatchesComponent extends BaseComponent
 {
     /**
      * @var MatchRepository

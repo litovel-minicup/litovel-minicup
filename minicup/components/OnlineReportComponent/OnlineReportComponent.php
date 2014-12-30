@@ -5,10 +5,10 @@ namespace Minicup\Components;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\OnlineReport;
 use Minicup\Model\Repository\OnlineReportRepository;
-use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
-class OnlineReportComponent extends Control
+class OnlineReportComponent extends BaseComponent
 {
 
     /** @var Match */
@@ -53,7 +53,7 @@ class OnlineReportComponent extends Control
     }
 
     /**
-     * @param Form      $form
+     * @param Form $form
      * @param ArrayHash $values
      */
     public function newReportFormSubmitted($form, $values)

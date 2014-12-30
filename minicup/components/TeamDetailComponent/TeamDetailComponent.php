@@ -6,7 +6,7 @@ use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Application\UI\Control;
 
-class TeamDetailComponent extends Control
+class TeamDetailComponent extends BaseComponent
 {
 
     /** @var Team */

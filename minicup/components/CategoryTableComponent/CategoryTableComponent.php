@@ -3,9 +3,8 @@
 namespace Minicup\Components;
 
 use Minicup\Model\Repository\TeamRepository;
-use Nette\Application\UI\Control;
 
-class CategoryTableComponent extends Control
+class CategoryTableComponent extends BaseComponent
 {
     /**
      *
@@ -13,7 +12,7 @@ class CategoryTableComponent extends Control
      */
     private $TR;
 
-    public function __construct(\Minicup\Model\Repository\TeamRepository $TR)
+    public function __construct(TeamRepository $TR)
     {
         parent::__construct();
         $this->TR = $TR;

@@ -7,7 +7,7 @@ use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Utils\ArrayHash;
 
-class LoginFormComponent extends Control
+class LoginFormComponent extends BaseComponent
 {
 
     /** @persistent */
