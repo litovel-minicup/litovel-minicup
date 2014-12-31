@@ -14,8 +14,8 @@
                 <td>{$match->id}</td>
                 <td>{$match->homeTeam->name}</td>
                 <td>{$match->awayTeam->name}</td>
-                <td>{$match->matchTerm->start|date:"j. n. Y - G:i"}</td>
-                <td>{$match->matchTerm->end|date:"j. n. Y - G:i"}</td>
+                <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->start|date:"G:i"}</td>
+                <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->end|date:"G:i"}</td>
                 <td>{$match->matchTerm->location}</td>
                 <td>{$match->onlineReports|length}</td>
             </tr>

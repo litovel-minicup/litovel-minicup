@@ -37,7 +37,6 @@ class ListOfMatchesComponent extends BaseComponent
     {
         $matches = [];
         if ($this->arg instanceof Team) {
-            $matches = $this->MR->findMatchesToTeam($this->arg);
             $matches = $this->arg->matches;
         }
         $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
