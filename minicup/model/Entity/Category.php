@@ -9,6 +9,7 @@ use LeanMapper\Entity;
  * @property string $name czech name of category
  * @property string $slug slug for URL
  * @property Team[] $teams m:belongsToMany
+ * @property Match[] $matches m:belongsToMany
  */
 class Category extends Entity
 {

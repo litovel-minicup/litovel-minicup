@@ -6,16 +6,25 @@ nette:
 		errorPresenter: Error
 		mapping:
 			*: Minicup\*Module\Presenters\*Presenter
-
+	debugger:
+		bar:
+			- JanDrabek\Tracy\GitVersionPanel
+			- NetteExtras\XDebugHelper('PHPSTORM')
 	session:
 		expiration: 14 days
+
 includes:
         - config.ACL.neon
 
 services:
-        router: @Minicup\RouterFactory::createRouter
+
+        router: @Minicup\Router\RouterFactory::createRouter
+        - Minicup\Router\RouterFactory
+        - Nextras\Application\LinkFactory
+
         - Minicup\Model\UserManager
-        - Minicup\RouterFactory
+        - Minicup\Model\MigrationsManager
+
 
 		# lean mapper
         - LeanMapper\DefaultEntityFactory
@@ -33,6 +42,7 @@ services:
         - Minicup\Model\Repository\MatchTermRepository
         - Minicup\Model\Repository\CategoryRepository
         - Minicup\Model\Repository\YearRepository
+        - Minicup\Model\Repository\DayRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory

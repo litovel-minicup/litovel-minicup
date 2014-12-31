@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "68f5663b0cbb8bb3a3ce18523ea232ee",
+    "hash": "7a0adbded23c315563cd0f14545bb429",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -87,6 +87,94 @@
                 "sqlite"
             ],
             "time": "2014-11-04 22:47:23"
+        },
+        {
+            "name": "jandrabek/tracy-gitversion-panel",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/repli2dev/tracy-gitversion-panel.git",
+                "reference": "25fc440dfc2a650aa04430b6fc1e189bdd83f5f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/repli2dev/tracy-gitversion-panel/zipball/25fc440dfc2a650aa04430b6fc1e189bdd83f5f1",
+                "reference": "25fc440dfc2a650aa04430b6fc1e189bdd83f5f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.3.2",
+                "tracy/tracy": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JanDrabek\\Tracy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Vojtěch Vondra",
+                    "homepage": "http://www.vojtechvondra.cz"
+                },
+                {
+                    "name": "Jan Drábek",
+                    "homepage": "http://www.jandrabek.cz"
+                }
+            ],
+            "description": "Tracy DebugBar panel displaying current project git branch.",
+            "keywords": [
+                "branch",
+                "debug",
+                "git",
+                "log",
+                "nette"
+            ],
+            "time": "2014-09-02 13:39:42"
+        },
+        {
+            "name": "jsmitka/nette-xdebug-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jsmitka/Nette-XDebug-Helper.git",
+                "reference": "47124285a91d93af0056e986556887dfc8692546"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jsmitka/Nette-XDebug-Helper/zipball/47124285a91d93af0056e986556887dfc8692546",
+                "reference": "47124285a91d93af0056e986556887dfc8692546",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "2.*",
+                "php": ">= 5.3.0"
+            },
+            "require-dev": {
+                "ext-xdebug": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "XDebugHelper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Smitka",
+                    "email": "jan.smitka@lynt.cz"
+                }
+            ],
+            "description": "Simple extension for Nette Framework, which integrates into the Debug Bar and enables you to easily start and stop a Xdebug session.",
+            "time": "2013-06-21 07:47:09"
         },
         {
             "name": "latte/latte",
@@ -1361,43 +1449,6 @@
                 "nette"
             ],
             "time": "2014-11-08 16:44:23"
-        },
-        {
-            "name": "vvondra/gitbranch-debug-panel",
-            "version": "dev-master",
-            "target-dir": "Vondra",
-            "source": {
-                "type": "git",
-                "url": "git://gist.github.com/3645108.git",
-                "reference": "4715a2bd7fbe5c825eeda45aaddbecba927a824c"
-            },
-            "require": {
-                "nette/nette": "*",
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Vondra": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3"
-            ],
-            "authors": [
-                {
-                    "name": "Vojtěch Vondra",
-                    "homepage": "http://www.vojtechvondra.cz"
-                }
-            ],
-            "description": "Nette DebugBar panel displaying current project git branch.",
-            "keywords": [
-                "debug",
-                "git",
-                "nette"
-            ],
-            "time": "2012-09-05 21:49:00"
         }
     ],
     "packages-dev": [],
@@ -1407,7 +1458,7 @@
         "dibi/dibi": 20,
         "tharos/leanmapper": 20,
         "o5/grido": 20,
-        "vvondra/gitbranch-debug-panel": 20
+        "jsmitka/nette-xdebug-helper": 20
     },
     "prefer-stable": false,
     "platform": {

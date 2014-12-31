@@ -7,6 +7,7 @@
     "tharos/leanmapper": "dev-master",
     "o5/grido": "dev-master",
     "nextras/link-factory": "~1.0",
-    "vvondra/gitbranch-debug-panel": "@dev"
+    "jandrabek/tracy-gitversion-panel": "~1.0",
+    "jsmitka/nette-xdebug-helper": "dev-master"
   }
 }

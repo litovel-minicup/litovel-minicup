@@ -11,8 +11,9 @@ use LeanMapper\Entity;
  * @property Team           $awayTeam m:hasOne(away_team_id:team)
  * @property int            $scoreHome score of home team
  * @property int            $scoreAway score of away team
- * @property MatchTerm      $matchTerm m:hasOne(match_term_id:match_term)
- * @property OnlineReport[] $onlineReports m:belongsToMany(:online_report)
+ * @property int            $played flag
+ * @property MatchTerm      $matchTerm m:hasOne(match_term_id:match_term) term fo this match
+ * @property OnlineReport[] $onlineReports m:belongsToMany(:online_report) reports
  *
  */
 class Match extends Entity

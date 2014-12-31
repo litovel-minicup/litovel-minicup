@@ -17,7 +17,6 @@ class Filters
      */
     public function allMatches(Fluent $statement, Team $team, Property $p)
     {
-        dump($p->getRelationship());
         $statement->removeClause('where')->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
     }
 }

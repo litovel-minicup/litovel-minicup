@@ -1,0 +1,11 @@
+{block body}
+    {ifset $category}
+	    <h3>Seznam zápasů pro kategorii {$category->name}</h3>
+        {control listOfMatchesComponent $category}
+    {else}
+        {foreach $categories as $category}
+            <h3>Seznam zápasů pro kategorii {$category->name}</h3>
+	            {control listOfMatchesComponent $category}
+	    {/foreach}
+    {/ifset}
+{/block}
