@@ -12,8 +12,8 @@
         {foreach $matches as $match}
             <tr>
                 <td>{$match->id}</td>
-                <td>{$match->homeTeam->name}</td>
-                <td>{$match->awayTeam->name}</td>
+                <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
+                <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
                 <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->start|date:"G:i"}</td>
                 <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->end|date:"G:i"}</td>
                 <td>{$match->matchTerm->location}</td>

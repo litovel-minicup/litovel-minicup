@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "247b4afb7fc584c779cf603b7846b7a6",
+    "hash": "68f5663b0cbb8bb3a3ce18523ea232ee",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -1164,6 +1164,52 @@
             "time": "2014-10-26 23:12:20"
         },
         {
+            "name": "nextras/link-factory",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/link-factory.git",
+                "reference": "d0dd9571864b7a373f518d8900086b6f8fe3a549"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/link-factory/zipball/d0dd9571864b7a373f518d8900086b6f8fe3a549",
+                "reference": "d0dd9571864b7a373f518d8900086b6f8fe3a549",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.2",
+                "php": "~5.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "nette/tester": "~1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\Application\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nextras Community",
+                    "homepage": "https://github.com/nextras/link-factory/graphs/contributors"
+                }
+            ],
+            "description": "Simple link factory independent of presenter.",
+            "time": "2014-10-15 22:23:00"
+        },
+        {
             "name": "o5/grido",
             "version": "dev-master",
             "source": {
@@ -1315,6 +1361,43 @@
                 "nette"
             ],
             "time": "2014-11-08 16:44:23"
+        },
+        {
+            "name": "vvondra/gitbranch-debug-panel",
+            "version": "dev-master",
+            "target-dir": "Vondra",
+            "source": {
+                "type": "git",
+                "url": "git://gist.github.com/3645108.git",
+                "reference": "4715a2bd7fbe5c825eeda45aaddbecba927a824c"
+            },
+            "require": {
+                "nette/nette": "*",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Vondra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Vojtěch Vondra",
+                    "homepage": "http://www.vojtechvondra.cz"
+                }
+            ],
+            "description": "Nette DebugBar panel displaying current project git branch.",
+            "keywords": [
+                "debug",
+                "git",
+                "nette"
+            ],
+            "time": "2012-09-05 21:49:00"
         }
     ],
     "packages-dev": [],
@@ -1323,7 +1406,8 @@
     "stability-flags": {
         "dibi/dibi": 20,
         "tharos/leanmapper": 20,
-        "o5/grido": 20
+        "o5/grido": 20,
+        "vvondra/gitbranch-debug-panel": 20
     },
     "prefer-stable": false,
     "platform": {

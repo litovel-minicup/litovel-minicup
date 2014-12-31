@@ -1,10 +1,12 @@
 {
-	"require": {
-		"php": ">= 5.3.7",
-        "nette/nette": "2.2.4",
-		"dg/adminer-custom": "~1.5",
-		"dibi/dibi": "dev-master",
-		"tharos/leanmapper": "dev-master",
-		"o5/grido": "dev-master"
-	}
+  "require": {
+    "php": ">= 5.3.7",
+    "nette/nette": "2.2.4",
+    "dg/adminer-custom": "~1.5",
+    "dibi/dibi": "dev-master",
+    "tharos/leanmapper": "dev-master",
+    "o5/grido": "dev-master",
+    "nextras/link-factory": "~1.0",
+    "vvondra/gitbranch-debug-panel": "@dev"
+  }
 }

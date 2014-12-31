@@ -7,7 +7,6 @@ use Minicup\Model\Entity\Day;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
-use Nette\Application\UI\Control;
 
 class ListOfMatchesComponent extends BaseComponent
 {
@@ -36,9 +35,14 @@ class ListOfMatchesComponent extends BaseComponent
     public function render()
     {
         $matches = [];
+        $this->template->actualID = 0;
         if ($this->arg instanceof Team) {
             $matches = $this->arg->matches;
+            $this->template->actualID = $this->arg->id;
+        } elseif ($this->arg instanceof Category) {
+            $matches = $this->arg->matches;
         }
+
         $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
         $this->template->matches = $matches;
         $this->template->render();
