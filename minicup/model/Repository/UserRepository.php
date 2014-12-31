@@ -22,6 +22,7 @@ class UserRepository extends Repository
 
     /**
      * @throws \Exception
+     * @param $username string
      * @return User
      */
     public function findByUsername($username)

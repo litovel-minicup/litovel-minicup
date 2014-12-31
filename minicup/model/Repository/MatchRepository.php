@@ -10,6 +10,7 @@ class MatchRepository extends Repository
     /**
      * @param $t Team
      * @return Match[]
+     * @deprecated
      */
     public function findMatchesToTeam(Team $t)
     {
