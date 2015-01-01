@@ -3,3 +3,10 @@ leanMapper:
     username:
     password:
     database:
+
+# only for MigrationsManager!
+nette:
+    database:
+        dsn: 'mysql:host=host;dbname=name'
+        user:
+        password:

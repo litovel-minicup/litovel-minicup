@@ -1,18 +1,22 @@
 <?php
 
 namespace Minicup\FrontModule\Presenters;
-
-use Minicup\Components\IListOfMatchesComponentFactory;
-use Minicup\Components\IListOfTeamsComponentFactory;
-use Minicup\Model\Entity\Category;
-use Minicup\Model\Repository\MatchRepository;
-use Minicup\Model\Repository\YearRepository;
+use Minicup\Model\MigrationsManager;
+use Minicup\Model\Repository\CategoryRepository;
 
 /**
  * Homepage presenter.
  */
 final class HomepagePresenter extends BaseFrontPresenter
 {
+    /** @var  MigrationsManager @inject */
+    public $migrator;
 
+    /** @var  CategoryRepository @inject */
+    public $CR;
 
+    public function actionMigrate()
+    {
+        $this->migrator->migrate($this->CR->getBySlug('starsi'));
+    }
 }

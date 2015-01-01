@@ -18,8 +18,6 @@ final class MatchPresenter extends BaseFrontPresenter
     {
         if ($category) {
             $this->template->category = $category;
-        } else {
-            $this->template->categories = $this->CR->findAll();
         }
     }
 

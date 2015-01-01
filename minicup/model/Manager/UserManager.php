@@ -1,6 +1,6 @@
 <?php
 
-namespace Minicup\Model;
+namespace Minicup\Model\Manager;
 
 use Minicup\Model\Entity\User;
 use Minicup\Model\Repository\UserRepository;

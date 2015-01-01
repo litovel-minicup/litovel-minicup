@@ -45,15 +45,15 @@ class RouterFactory
             }];
 
         $front = new RouteList('Front');
-
-        $front[] = new FilterRoute('migrate', 'Homepage:migrate');
-        $front[] = new FilterRoute('tymy[/<category>]', array(
+        $front[] = new Route('', 'Homepage:default');
+        $front[] = new Route('migrate', 'Homepage:migrate');
+        $front[] = new Route('tymy[/<category>]', array(
             'presenter' => 'Team',
             'action' => 'default',
             'category' => $categoryFilter
         ));
 
-        $front[] = new FilterRoute('zapasy[/<category>]', array(
+        $front[] = new Route('zapasy[/<category>]', array(
             'presenter' => 'Match',
             'action' => 'default',
             'category' => $categoryFilter
@@ -68,15 +68,8 @@ class RouterFactory
 
         $router = new RouteList();
         $router[] = $front;
-        $router[] = new FilterRoute('admin/<presenter>/<action>[/<id>]', array(
+        $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
             'module' => 'admin',
-            'presenter' => 'Homepage',
-            'action' => 'default'
-        ));
-
-
-        $router[] = new Route('<presenter>/<action>[/<id>]', array(
-            'module' => 'front',
             'presenter' => 'Homepage',
             'action' => 'default'
         ));
