@@ -22,8 +22,8 @@ services:
         - Minicup\Router\RouterFactory
         - Nextras\Application\LinkFactory
 
-        - Minicup\Model\UserManager
-        - Minicup\Model\MigrationsManager
+        - Minicup\Model\Manager\UserManager
+        - Minicup\Model\Manager\MigrationsManager
 
 
 		# lean mapper
@@ -32,7 +32,8 @@ services:
         filters: Minicup\Model\Filters
         leanMapper.connection:
          setup:
-          - registerFilter('matches', [@filters, 'allMatches'], 'ep')
+          - registerFilter('matches', [@filters, 'joinAllMatches'], 'ep')
+          - registerFilter('info', [@filters, 'joinTeamInfo'])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository

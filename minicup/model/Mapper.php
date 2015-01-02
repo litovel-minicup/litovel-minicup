@@ -2,8 +2,10 @@
 
 namespace Minicup\Model;
 
+use LeanMapper\Caller;
 use LeanMapper\DefaultMapper;
 use LeanMapper\Exception\InvalidStateException;
+use LeanMapper\ImplicitFilters;
 use LeanMapper\Row;
 
 class Mapper extends DefaultMapper
@@ -57,5 +59,14 @@ class Mapper extends DefaultMapper
         }
         throw new InvalidStateException('Cannot determine table name.');
     }
+
+    public function getImplicitFilters($entityClass, Caller $caller = null)
+    {
+        if ($this->trimNamespace($entityClass) === "Team") {
+            return new ImplicitFilters('info');
+        }
+        return [];
+    }
+
 
 }

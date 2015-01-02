@@ -1,7 +1,8 @@
 <?php
 
 namespace Minicup\FrontModule\Presenters;
-use Minicup\Model\MigrationsManager;
+
+use Minicup\Model\Manager\MigrationsManager;
 use Minicup\Model\Repository\CategoryRepository;
 
 /**

@@ -7,8 +7,7 @@ abstract class Repository extends \LeanMapper\Repository
 
     public function find($id)
     {
-        $row = $this->connection->select('*')
-            ->from($this->getTable())
+        $row = $this->createFluent()
             ->where('id = %i', $id)
             ->fetch();
 
@@ -21,9 +20,7 @@ abstract class Repository extends \LeanMapper\Repository
     public function findAll()
     {
         return $this->createEntities(
-            $this->connection->select('*')
-                ->from($this->getTable())
-                ->fetchAll()
+            $this->createFluent()->fetchAll()
         );
     }
 
