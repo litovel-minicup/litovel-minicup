@@ -19,18 +19,19 @@ class HomepagePresenter extends BaseAdminPresenter
     /**
      * @var TeamRepository
      */
-    private $TM;
+    private $TR;
 
-    public function __construct(MatchRepository $MR, TeamRepository $TM)
+
+    public function __construct(MatchRepository $MR, TeamRepository $TR)
     {
         parent::__construct();
         $this->MR = $MR;
-        $this->TM = $TM;
+        $this->TR = $TR;
     }
 
     public function renderDefault()
     {
-        $this->template->teams = $this->TM->findAll();
+        $this->template->teams = $this->TR->findAll();
     }
 
 }

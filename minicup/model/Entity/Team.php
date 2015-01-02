@@ -6,12 +6,14 @@ use LeanMapper\Entity;
 use LeanMapper\Exception\InvalidStateException;
 
 /**
- * @property int           $id
- * @property string        $name czech name of team
- * @property string        $slug slug for URL
- * @property int      $order order of team in table
- * @property Category $category m:hasOne category where is team in
- * @property Match[]       $matches
+ * @property int            $id
+ * @property int            $order = 0 order of team in table
+ * @property Category       $category m:hasOne category where is team in
+ * @property Match[]        $matches
+ * @property int            $actual is this in actual state?
+ * @property Match|NULL     $afterMatch m:hasOne(after_match_id)
+ * @property \DateTime      $inserted
+ * @property TeamInfo $info m:hasOne
  */
 class Team extends Entity
 {
@@ -51,7 +53,15 @@ class Team extends Entity
         };
         @usort($matches, $cmp);
         return $this->entityFactory->createCollection($matches);
-
     }
+
+    public function __get($name /*, array $filterArgs*/)
+    {
+        if ($name !== 'info' && isset($this->info->getCurrentReflection()->getEntityProperties()[$name])) {
+            return $this->info->$name;
+        }
+        return parent::__get($name);
+    }
+
 
 }

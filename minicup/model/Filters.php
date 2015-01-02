@@ -11,13 +11,13 @@ class Filters
 {
 
     /**
-     * @param Fluent $statement
+     * @param Fluent $fluent
      * @param Team $team
      * @param Property $p
      */
-    public function joinAllMatches(Fluent $statement, Team $team, Property $p)
+    public function joinAllMatches(Fluent $fluent, Team $team, Property $p)
     {
-        $statement->removeClause('where')->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
+        $fluent->removeClause('where')->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
     }
 
     /**
@@ -26,5 +26,13 @@ class Filters
     public function joinTeamInfo(Fluent $fluent)
     {
         $fluent->select('[team_info].*')->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]');
+    }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function actualTeams(Fluent $fluent)
+    {
+        $fluent->where('[team.actual] = 1');
     }
 }

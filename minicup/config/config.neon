@@ -24,6 +24,7 @@ services:
 
         - Minicup\Model\Manager\UserManager
         - Minicup\Model\Manager\MigrationsManager
+        - Minicup\Model\Manager\TeamReplicator
 
 
 		# lean mapper
@@ -34,6 +35,7 @@ services:
          setup:
           - registerFilter('matches', [@filters, 'joinAllMatches'], 'ep')
           - registerFilter('info', [@filters, 'joinTeamInfo'])
+          - registerFilter('actual', [@filters, 'actualTeams'])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository

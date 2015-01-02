@@ -5,10 +5,10 @@ namespace Minicup\Model\Repository;
 abstract class Repository extends \LeanMapper\Repository
 {
 
-    public function find($id)
+    public function get($id)
     {
         $row = $this->createFluent()
-            ->where('id = %i', $id)
+            ->where('['.$this->getTable().'.id] = %i', $id)
             ->fetch();
 
         if ($row === false) {
