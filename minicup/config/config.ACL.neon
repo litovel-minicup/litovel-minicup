@@ -7,8 +7,10 @@ services:
             - addRole('admin', 'moderator')
 
             - addResource('users') # TODO resources
-            - addResource('online')
+            - addResource('online-reports')
+            - addResource('teams')
 
             - allow('moderator', 'users', 'view')
-            - allow('moderator', 'online', 'write')
+            - allow('moderator', 'online-reports', 'write')
+            - allow('moderator', 'teams', 'edit')
             - allow('admin')

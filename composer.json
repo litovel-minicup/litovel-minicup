@@ -8,6 +8,7 @@
     "o5/grido": "dev-master",
     "nextras/link-factory": "~1.0",
     "jandrabek/tracy-gitversion-panel": "~1.0",
-    "jsmitka/nette-xdebug-helper": "dev-master"
+    "jsmitka/nette-xdebug-helper": "dev-master",
+    "nextras/forms": "~1.4"
   }
 }

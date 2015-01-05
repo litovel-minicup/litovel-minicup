@@ -12,6 +12,9 @@ nette:
 			- NetteExtras\XDebugHelper('PHPSTORM')
 	session:
 		expiration: 14 days
+	latte:
+	    macros:
+	    - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
 
 includes:
         - config.ACL.neon
@@ -36,11 +39,13 @@ services:
           - registerFilter('matches', [@filters, 'joinAllMatches'], 'ep')
           - registerFilter('info', [@filters, 'joinTeamInfo'])
           - registerFilter('actual', [@filters, 'actualTeams'])
+          - registerFilter('ordered', [@filters, 'orderedTeams'])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository
         - Minicup\Model\Repository\UserRepository
         - Minicup\Model\Repository\TeamRepository
+        - Minicup\Model\Repository\TeamInfoRepository
         - Minicup\Model\Repository\OnlineReportRepository
         - Minicup\Model\Repository\MatchTermRepository
         - Minicup\Model\Repository\CategoryRepository

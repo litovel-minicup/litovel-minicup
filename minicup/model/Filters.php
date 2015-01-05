@@ -25,7 +25,7 @@ class Filters
      */
     public function joinTeamInfo(Fluent $fluent)
     {
-        $fluent->select('[team_info].*')->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]');
+        $fluent->select('[team_info.name], [team_info.slug]')->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]');
     }
 
     /**
@@ -33,6 +33,14 @@ class Filters
      */
     public function actualTeams(Fluent $fluent)
     {
-        $fluent->where('[team.actual] = 1');
+        $fluent->where('[team.is_actual] = 1');
+    }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function orderedTeams(Fluent $fluent)
+    {
+        $fluent->orderBy('[team.order] ASC');
     }
 }

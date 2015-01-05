@@ -25,6 +25,8 @@ use Nette\Object;
  * 4 - foo, actual=1
  * 5 - bar, actual=1
  * 6 - foo-bar, actual=1
+ *
+ * with the sames team_info_id, order, category_id asnd scores
  */
 
 class TeamReplicator extends Object
@@ -45,9 +47,9 @@ class TeamReplicator extends Object
     {
         foreach ($category->teams as $oldTeam) {
             $newTeam = new Team();
-            $newTeam->info = $oldTeam->info;
-            $newTeam->actual = 1;
-            $oldTeam->actual = 0;
+            $newTeam->i = $oldTeam->i;
+            $newTeam->isActual = 1;
+            $oldTeam->isActual = 0;
             $oldTeam->afterMatch = $afterMatch;
         }
 

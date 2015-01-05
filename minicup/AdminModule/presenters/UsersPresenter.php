@@ -5,7 +5,7 @@ namespace Minicup\AdminModule\Presenters;
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use Minicup\Model\Entity;
-use Minicup\Model\UserManager;
+use Minicup\Model\Manager\UserManager;
 use Nette;
 use Nette\Application\UI\Form;
 
