@@ -4,18 +4,17 @@ namespace Minicup\Model;
 
 
 use LeanMapper\Fluent;
-use LeanMapper\Reflection\Property;
 use Minicup\Model\Entity\Team;
+use Nette\Object;
 
-class Filters
+class Filters extends Object
 {
 
     /**
      * @param Fluent $fluent
      * @param Team $team
-     * @param Property $p
      */
-    public function joinAllMatches(Fluent $fluent, Team $team, Property $p)
+    public function joinAllMatches(Fluent $fluent, Team $team)
     {
         $fluent->removeClause('where')->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
     }

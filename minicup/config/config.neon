@@ -23,6 +23,7 @@ services:
 
         router: @Minicup\Router\RouterFactory::createRouter
         - Minicup\Router\RouterFactory
+        - Minicup\Forms\IFormFactory
         - Nextras\Application\LinkFactory
 
         - Minicup\Model\Manager\UserManager
@@ -36,7 +37,7 @@ services:
         filters: Minicup\Model\Filters
         leanMapper.connection:
          setup:
-          - registerFilter('matches', [@filters, 'joinAllMatches'], 'ep')
+          - registerFilter('matches', [@filters, 'joinAllMatches'], 'e')
           - registerFilter('info', [@filters, 'joinTeamInfo'])
           - registerFilter('actual', [@filters, 'actualTeams'])
           - registerFilter('ordered', [@filters, 'orderedTeams'])
@@ -54,10 +55,13 @@ services:
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
-        - Minicup\Components\ILoginFormComponentFactory
+        - implement: Minicup\Components\ILoginFormComponentFactory
+          setup:
+                - setFF()
         - Minicup\Components\IListOfTeamsComponentFactory
 
         - implement: Minicup\Components\IListOfMatchesComponentFactory
+
           parameters: [controller]
           arguments: [%controller%]
         - implement: Minicup\Components\IOnlineReportComponentFactory
