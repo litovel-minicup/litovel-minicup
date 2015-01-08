@@ -55,15 +55,12 @@ services:
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
-        - implement: Minicup\Components\ILoginFormComponentFactory
-          setup:
-                - setFF()
+        - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IListOfTeamsComponentFactory
 
         - implement: Minicup\Components\IListOfMatchesComponentFactory
-
-          parameters: [controller]
-          arguments: [%controller%]
+          parameters: [arg]
+          arguments: [%arg%]
         - implement: Minicup\Components\IOnlineReportComponentFactory
           parameters: [match]
           arguments: [%match%]
