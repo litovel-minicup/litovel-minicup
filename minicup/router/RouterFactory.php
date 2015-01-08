@@ -10,8 +10,9 @@ use Nette\Application\IRouter;
 use Nette\Application\Request;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
+use Nette\Object;
 
-class RouterFactory
+class RouterFactory extends Object
 {
     /** @var  CategoryRepository */
     private $CR;
@@ -63,7 +64,7 @@ class RouterFactory
             'presenter' => 'Team',
             'action' => 'detail',
             'category' => $categoryFilter
-        )))->addFilter('team', array($this, 'teamSlug2Team'), array($this, 'team2TeamSlug'));
+        )))->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
 
 
         $router = new RouteList();
