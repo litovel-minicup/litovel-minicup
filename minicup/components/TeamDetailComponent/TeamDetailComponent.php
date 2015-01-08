@@ -17,6 +17,11 @@ class TeamDetailComponent extends BaseComponent
     /** @var  IListOfMatchesComponentFactory */
     private $LOMCF;
 
+    /**
+     * @param Team $team
+     * @param TeamRepository $TR
+     * @param IListOfMatchesComponentFactory $LOMCF
+     */
     public function __construct(Team $team, TeamRepository $TR, IListOfMatchesComponentFactory $LOMCF)
     {
         parent::__construct();
@@ -32,6 +37,9 @@ class TeamDetailComponent extends BaseComponent
         $this->template->render();
     }
 
+    /**
+     * @return ListOfMatchesComponent
+     */
     public function createComponentListOfMatchesComponent()
     {
         return $this->LOMCF->create($this->team);
