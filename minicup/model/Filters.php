@@ -24,7 +24,7 @@ class Filters extends Object
      */
     public function joinTeamInfo(Fluent $fluent)
     {
-        $fluent->select('[team_info.name], [team_info.slug]')->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]');
+        $fluent->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]')->select('[team_info.name], [team_info.slug]');
     }
 
     /**
