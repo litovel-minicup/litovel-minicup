@@ -1,19 +1,7 @@
-{block body}
+{block content}
     {ifset $category}
-
-        <style>
-        .foo {
-            position: absolute;
-            left: 300px;
-            top: 200px;
-            width: 480px;
-            box-shadow: 0px 0px 2px #636363;
-        }
-        </style>
-        <div class="foo">
         <h3>Seznam týmů pro kategorii {$category->name}</h3>
         {control listOfTeamsComponent $category}
-        </div>
     {else}
         {foreach $categories as $category}
             <h3>Seznam týmů pro kategorii {$category->name}</h3>
