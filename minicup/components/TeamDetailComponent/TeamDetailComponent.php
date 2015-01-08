@@ -4,7 +4,6 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
-use Nette\Application\UI\Control;
 
 class TeamDetailComponent extends BaseComponent
 {
@@ -14,6 +13,7 @@ class TeamDetailComponent extends BaseComponent
 
     /** @var \Minicup\Model\Repository\TeamRepository */
     private $TR;
+
     /** @var  IListOfMatchesComponentFactory */
     private $LOMCF;
 

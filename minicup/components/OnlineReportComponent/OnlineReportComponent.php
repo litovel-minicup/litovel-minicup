@@ -17,6 +17,10 @@ class OnlineReportComponent extends BaseComponent
     /** @var OnlineReportRepository */
     private $ORR;
 
+    /**
+     * @param Match $match
+     * @param OnlineReportRepository $ORR
+     */
     public function __construct(Match $match, OnlineReportRepository $ORR)
     {
         parent::__construct();
@@ -38,9 +42,12 @@ class OnlineReportComponent extends BaseComponent
         $this->redrawControl('heading');
     }
 
+    /**
+     * @return Form
+     */
     public function createComponentNewReportForm()
     {
-        $form = new Form();
+        $form = $this->FF->create();
         $form->addText('message', '', 50)
             ->setRequired('Zprávu prostě musíš vyplnit!');
         $form->addSubmit('info', 'INFO');

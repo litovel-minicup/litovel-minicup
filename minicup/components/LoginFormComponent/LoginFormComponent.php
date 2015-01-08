@@ -2,7 +2,6 @@
 
 namespace Minicup\Components;
 
-use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Utils\ArrayHash;
@@ -10,8 +9,6 @@ use Nette\Utils\ArrayHash;
 class LoginFormComponent extends BaseComponent
 {
 
-    /** @persistent */
-    public $backlink = '';
 
     public function render()
     {
@@ -24,23 +21,19 @@ class LoginFormComponent extends BaseComponent
      */
     public function createComponentLoginForm()
     {
-        $form = new Form();
+        $form = $this->FF->create();
         $form->addText('username', 'Uživatelské jméno')
             ->setRequired('Prosím, zadejte vaše uživatelské jméno.');
         $form->addPassword('password', 'Heslo')
             ->setRequired('Prosím vložte vaše heslo.');
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('send', 'Přihlásit');
-        if ($this->backlink != '') {
-            // TODO: fix request restoring with ajax
-            // $form->getElementPrototype()->class[] = 'ajax';
-        }
         $form->onSuccess[] = $this->loginFormValidated;
         return $form;
     }
 
     /**
-     * @param Form      $form
+     * @param Form $form
      * @param ArrayHash $values
      */
     public function loginFormValidated($form, $values)

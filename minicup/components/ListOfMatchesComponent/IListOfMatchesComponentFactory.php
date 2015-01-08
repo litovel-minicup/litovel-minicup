@@ -10,9 +10,9 @@ use Minicup\Model\Entity\Year;
 interface IListOfMatchesComponentFactory
 {
     /**
-     * @param $controller Day|Team|Category|Year|NULL
+     * @param $arg Day|Team|Category|Year|NULL
      * @return ListOfMatchesComponent
      */
-    public function create($controller);
+    public function create($arg);
 
 }

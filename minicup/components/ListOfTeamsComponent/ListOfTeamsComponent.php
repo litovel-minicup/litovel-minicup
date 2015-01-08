@@ -2,6 +2,7 @@
 
 namespace Minicup\Components;
 
+use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\TeamInfo;
@@ -11,6 +12,7 @@ use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
+use Nette\Utils\ArrayHash;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
 
 class ListOfTeamsComponent extends BaseComponent
@@ -47,16 +49,17 @@ class ListOfTeamsComponent extends BaseComponent
     protected function createComponentTeamEditForm()
     {
         $TR = $this->TR;
-        return new Multiplier(function ($categoryId) use ($TR) {
-            return new Multiplier(function ($teamId) use ($TR, $categoryId) {
-                $f = new Form();
+        $FF = $this->FF;
+        return new Multiplier(function ($categoryId) use ($TR, $FF) {
+            return new Multiplier(function ($teamId) use ($TR, $FF, $categoryId) {
+                $f = $FF->create();
                 $f->getElementPrototype()->class[] = 'form-inline';
                 $f->setRenderer(new Bs3FormRenderer());
                 $f->addText('name')->setRequired();
                 $f->addText('slug')->setRequired();
                 $f->addHidden('categoryId', $categoryId);
                 $f->addSubmit('submit', $teamId ? 'Editovat' : 'Přidat');
-                $f->onSubmit[] = $this->editFormSucceeded;
+                $f->onSuccess[] = $this->editFormSucceeded;
                 try {
                     $team = $TR->get((int)$teamId);
                 } catch (EntityNotFoundException $e) {
@@ -74,12 +77,18 @@ class ListOfTeamsComponent extends BaseComponent
         });
     }
 
-    public function editFormSucceeded(Form $form)
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     * @throws EntityNotFoundException
+     * @throws InvalidValueException
+     */
+    public function editFormSucceeded(Form $form, ArrayHash $values)
     {
-        $category = $this->CR->get($form->values['categoryId']);
-        $name = $form->values['name'];
-        $slug = $form->values['slug'];
-        $teamId = $form->values['teamId'];
+        $category = $this->CR->get($values['categoryId']);
+        $name = $values['name'];
+        $slug = $values['slug'];
+        $teamId = $values['teamId'];
         if ($teamId) {
             $teamInfo = $this->TR->get($teamId)->i;
         } else {

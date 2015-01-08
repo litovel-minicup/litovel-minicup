@@ -4,6 +4,7 @@ namespace Minicup\Components;
 
 use Minicup\Model\Repository\TeamRepository;
 
+// TODO: differences between this and ListOfTeams?
 class CategoryTableComponent extends BaseComponent
 {
     /**
@@ -12,6 +13,9 @@ class CategoryTableComponent extends BaseComponent
      */
     private $TR;
 
+    /**
+     * @param TeamRepository $TR
+     */
     public function __construct(TeamRepository $TR)
     {
         parent::__construct();
