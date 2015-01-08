@@ -7,33 +7,21 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
+use Nette\InvalidStateException;
 use Nette\Object;
 
-
-/*
- * restructure teams from
- *
- * 1 - foo, actual=1
- * 2 - bar, actual=1
- * 3 - foo-bar, actual=1
- *
- * to
- *
- * 1 - foo, actual=0
- * 2 - bar, actual=0
- * 3 - foo-bar, actual=0
- * 4 - foo, actual=1
- * 5 - bar, actual=1
- * 6 - foo-bar, actual=1
- *
- * with the sames team_info_id, order, category_id asnd scores
+/**
+ * Class for creating team history - it's clone actual teams to historically context
+ * @package Minicup\Model\Manager
  */
-
 class TeamReplicator extends Object
 {
     /** @var  TeamRepository */
     private $TR;
 
+    /**
+     * @param TeamRepository $TR
+     */
     public function __construct(TeamRepository $TR)
     {
         $this->TR = $TR;
@@ -45,12 +33,19 @@ class TeamReplicator extends Object
      */
     public function replicate(Category $category, Match $afterMatch = NULL)
     {
+        if (!in_array($afterMatch, $category->matches) && !is_null($afterMatch)) {
+            throw new InvalidStateException('Invalid combination of category and match.');
+        }
         foreach ($category->teams as $oldTeam) {
             $newTeam = new Team();
+            $data = $oldTeam->getData(['i', 'order', 'points', 'scored', 'received', 'category']);
             $newTeam->i = $oldTeam->i;
             $newTeam->isActual = 1;
             $oldTeam->isActual = 0;
+            $newTeam->assign($data);
             $oldTeam->afterMatch = $afterMatch;
+            $this->TR->persist($oldTeam);
+            $this->TR->persist($newTeam);
         }
 
     }
