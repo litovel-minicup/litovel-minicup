@@ -42,8 +42,6 @@ class ListOfMatchesComponent extends BaseComponent
         } elseif ($this->arg instanceof Category) {
             $matches = $this->arg->matches;
         }
-
-        $this->template->setFile(__DIR__ . '/ListOfMatchesComponent.latte');
         $this->template->matches = $matches;
         $this->template->render();
 

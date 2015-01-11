@@ -30,7 +30,6 @@ class OnlineReportComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/OnlineReportComponent.latte');
         $this->template->time = time();
         $this->template->match = $this->match;
         $this->template->render();
