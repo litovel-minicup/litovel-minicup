@@ -10,6 +10,7 @@ use LeanMapper\Entity;
  * @property string $slug slug for URL
  * @property Team[] $teams m:belongsToMany
  * @property Match[] $matches m:belongsToMany
+ * @property-read Team[] $allTeams m:belongsToMany(::category_id)
  */
 class Category extends Entity
 {

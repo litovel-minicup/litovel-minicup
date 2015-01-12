@@ -2,15 +2,18 @@
 
 namespace Minicup\Model\Manager;
 
+use LeanMapper\Exception\InvalidStateException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Day;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\MatchTerm;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\DayRepository;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\MatchTermRepository;
+use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Database\Context;
@@ -20,12 +23,17 @@ use Nette\Utils\Strings;
 
 class MigrationsManager extends Object
 {
+    private $teamTablePrefix = '2014_tymy_';
+    private $matchTablePrefix = '2014_zapasy_';
 
     /** @var  CategoryRepository */
     private $CR;
 
     /** @var  TeamRepository */
     private $TR;
+
+    /** @var TeamInfoRepository */
+    private $TIR;
 
     /** @var  MatchRepository */
     private $MR;
@@ -46,6 +54,7 @@ class MigrationsManager extends Object
     /**
      * @param CategoryRepository $CR
      * @param TeamRepository $TR
+     * @param TeamInfoRepository $TIR
      * @param MatchRepository $MR
      * @param MatchTermRepository $MTR
      * @param DayRepository $DR
@@ -54,6 +63,7 @@ class MigrationsManager extends Object
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
+                                TeamInfoRepository $TIR,
                                 MatchRepository $MR,
                                 MatchTermRepository $MTR,
                                 DayRepository $DR,
@@ -62,6 +72,7 @@ class MigrationsManager extends Object
     {
         $this->CR = $CR;
         $this->TR = $TR;
+        $this->TIR = $TIR;
         $this->MR = $MR;
         $this->MTR = $MTR;
         $this->DR = $DR;
@@ -71,69 +82,107 @@ class MigrationsManager extends Object
 
 
     /**
-     * Migrate old database to new database for $category. Is NOT foolproof! And ofc. decompose this!
+     * Migrate old database to new database for $category.
      * @param Category $category
+     * @param bool $truncate
      */
-    public function migrate(Category $category)
+    public function migrate(Category $category, $truncate = FALSE)
     {
+        if ($truncate) {
+            $this->truncate($category);
+        }
         $year = $this->YR->getActualYear();
-        foreach ($this->con->table('2014_zapasy_' . $category->slug) as $row) {
+        foreach ($this->con->table($this->matchTablePrefix . $category->slug) as $row) {
             /** @var DateTime $play_time */
             $play_time = $row->cas_odehrani;
             $play_time->add(\DateInterval::createFromDateString('1 year'));
-            $homeName = $row->ref('2014_tymy_' . $category->slug, 'ID_domaci')->jmeno;
-            $awayName = $row->ref('2014_tymy_' . $category->slug, 'ID_hoste')->jmeno;
-            $homeNameSlug = Strings::webalize($homeName);
-            $awayNameSlug = Strings::webalize($awayName);
+            $homeName = $row->ref($this->teamTablePrefix . $category->slug, 'ID_domaci')->jmeno;
+            $awayName = $row->ref($this->teamTablePrefix . $category->slug, 'ID_hoste')->jmeno;
+            $homeSlug = Strings::webalize($homeName);
+            $awaySlug = Strings::webalize($awayName);
 
-            $homeTeam = $this->TR->getBySlug($homeNameSlug, $category);
-            $awayTeam = $this->TR->getBySlug($awayNameSlug, $category);
+            $homeTeam = $this->TR->getBySlug($homeSlug, $category);
+            $awayTeam = $this->TR->getBySlug($awaySlug, $category);
 
             if (!$homeTeam) {
-                $homeTeam = new Team();
-                $homeTeam->category = $category;
-                $homeTeam->name = $homeName;
-                $homeTeam->slug = $homeNameSlug;
-                $homeTeam->order = 1;
-                $this->TR->persist($homeTeam);
+                $homeTeam = $this->createTeam($category, $homeName);
             }
             if (!$awayTeam) {
-                $awayTeam = new Team();
-                $awayTeam->category = $category;
-                $awayTeam->name = $awayName;
-                $awayTeam->slug = $awayNameSlug;
-                $awayTeam->order = 1;
-                $this->TR->persist($awayTeam);
+                $awayTeam = $this->createTeam($category, $awayName);
             }
             $match = new Match();
             $match->category = $category;
             $match->homeTeam = $homeTeam;
             $match->awayTeam = $awayTeam;
+            $datetime = new \DibiDateTime($play_time->getTimestamp());
 
-            $dt = new \DibiDateTime($play_time->getTimestamp());
-            $date = clone $dt;
-            $time = clone $dt;
-            $matchTerm = $this->MTR->getByStart($dt);
-            $day = $this->DR->getByDate($date->setTime(0, 0));
-            // TODO: buggy generating days!
-            if (!$matchTerm->day == $day) {
-                $matchTerm = new MatchTerm();
-                $matchTerm->start = $time->setDate(0, 0, 0);
-                $matchTerm->end = $dt->add(\DateInterval::createFromDateString('30 minute'));
-                $day = $this->DR->getByDate($date->setTime(0, 0));
-                if (!$day) {
-                    $day = new Day();
-                    $day->year = $year;
-                    $day->day = $date;
-                    $this->DR->persist($day);
-                }
-                $matchTerm->day = $day;
-                $this->MTR->persist($matchTerm);
+            $matchTerm = $this->MTR->getByStart($datetime);
+            if ($matchTerm) {
+                $match->matchTerm = $matchTerm;
+                $this->MR->persist($match);
+                continue;
             }
+            $day = $this->DR->getByDatetime($datetime);
+            if (!$day) {
+                $day = new Day();
+                $day->year = $year;
+                $date = clone $datetime;
+                $day->day = $date->setTime(0, 0, 0);
+                $this->DR->persist($day);
+            }
+            $matchTerm = new MatchTerm();
+            $matchTerm->day = $day;
+            $start = clone $datetime;
+            $start->setDate(0, 0, 0);
+            $matchTerm->start = $start;
+            $end = clone $datetime;
+            $end->setTimestamp($datetime->getTimestamp() + 0.5 * (60 * 60));
+            $matchTerm->end = $end;
+            $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
-
         }
 
+    }
+
+    /**
+     * @param Category $category
+     * @param string $name
+     * @param string $slug
+     * @return Team
+     * @throws \LeanMapper\Exception\InvalidStateException
+     */
+    private function createTeam(Category $category, $name, $slug = NULL)
+    {
+        if (!$slug) {
+            $slug = Strings::webalize($name);
+        }
+        $teamInfo = $this->TIR->findByCategoryNameSlug($category, $name, $slug);
+        if (!$teamInfo) {
+            $teamInfo = new TeamInfo();
+            $teamInfo->name = $name;
+            $teamInfo->category = $category;
+            $teamInfo->slug = $slug;
+            $this->TIR->persist($teamInfo);
+        }
+        $team = new Team;
+        $team->i = $teamInfo;
+        $team->category = $category;
+        $this->TR->persist($team);
+        return $team;
+    }
+
+    /**
+     * @param Category $category
+     * @throws  InvalidStateException
+     */
+    private function truncate(Category $category)
+    {
+        foreach ($category->matches as $match) {
+            $this->MR->delete($match);
+        }
+        foreach ($category->allTeams as $team) {
+            $this->TR->delete($team);
+        }
     }
 }

@@ -13,7 +13,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property int            $received sum of received goals
  * @property Category       $category m:hasOne category where is team in
  * @property Match[]        $matches
- * @property int            $isActual is this in actual state?
+ * @property int            $isActual = 1 is this in actual state?
  * @property Match|NULL     $afterMatch m:hasOne(after_match_id)
  * @property \DateTime      $inserted
  * @property TeamInfo       $i m:hasOne

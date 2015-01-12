@@ -24,6 +24,9 @@ abstract class Repository extends \LeanMapper\Repository
         return $this->createEntity($row);
     }
 
+    /**
+     * @return Entity[]
+     */
     public function findAll()
     {
         return $this->createEntities(

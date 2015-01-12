@@ -9,6 +9,7 @@ services:
             - addResource('users') # TODO resources
             - addResource('online-reports')
             - addResource('teams')
+            - addResource('migrations')
 
             - allow('moderator', 'users', 'view')
             - allow('moderator', 'online-reports', 'write')
