@@ -1,21 +1,3 @@
-#
-# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
-#
-# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
-# http://nette.org/security-warning
-#
-parameters:
-    entityNS: 'Minicup\Model\Entity'
-
-leanMapper:
-    host: localhost
-    username: root
-    password: ''
-    database: 'minicup-2015'
-    lazy: true
-    charset: utf8
-    profiler: true
-
 php:
 	date.timezone: Europe/Prague
 
@@ -24,27 +6,68 @@ nette:
 		errorPresenter: Error
 		mapping:
 			*: Minicup\*Module\Presenters\*Presenter
-
+	debugger:
+		bar:
+			- JanDrabek\Tracy\GitVersionPanel
+			- NetteExtras\XDebugHelper('PHPSTORM')
 	session:
 		expiration: 14 days
+	latte:
+	    macros:
+	    - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
+
 includes:
         - config.ACL.neon
 
 services:
-        - Minicup\Model\UserManager
 
-        - Minicup\RouterFactory
-        router: @Minicup\RouterFactory::createRouter
+        router: @Minicup\Router\RouterFactory::createRouter
+        - Minicup\Router\RouterFactory
+        - Minicup\Forms\IFormFactory
+        - Nextras\Application\LinkFactory
 
+        - Minicup\Model\Manager\UserManager
+        - Minicup\Model\Manager\MigrationsManager
+        - Minicup\Model\Manager\TeamReplicator
+
+
+		# lean mapper
         - LeanMapper\DefaultEntityFactory
-        - Minicup\Model\Mapper(%entityNS%)
+        - Minicup\Model\Mapper('Minicup\Model\Entity')
+        filters: Minicup\Model\Filters
+        leanMapper.connection:
+         setup:
+          - registerFilter('matches', [@filters, 'joinAllMatches'], 'e')
+          - registerFilter('info', [@filters, 'joinTeamInfo'])
+          - registerFilter('actual', [@filters, 'actualTeams'])
+          - registerFilter('ordered', [@filters, 'orderedTeams'])
 
         # repositories
-        matchRepository: Minicup\Model\Repository\MatchRepository
-        userRepository: Minicup\Model\Repository\UserRepository
-        teamRepository: Minicup\Model\Repository\TeamRepository
+        - Minicup\Model\Repository\MatchRepository
+        - Minicup\Model\Repository\UserRepository
+        - Minicup\Model\Repository\TeamRepository
+        - Minicup\Model\Repository\TeamInfoRepository
+        - Minicup\Model\Repository\OnlineReportRepository
+        - Minicup\Model\Repository\MatchTermRepository
+        - Minicup\Model\Repository\CategoryRepository
+        - Minicup\Model\Repository\YearRepository
+        - Minicup\Model\Repository\DayRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
+        - Minicup\Components\ILoginFormComponentFactory
+        - Minicup\Components\IMigrateFormComponentFactory
+        - Minicup\Components\IListOfTeamsComponentFactory
+
+        - implement: Minicup\Components\IListOfMatchesComponentFactory
+          parameters: [arg]
+          arguments: [%arg%]
+        - implement: Minicup\Components\IOnlineReportComponentFactory
+          parameters: [match]
+          arguments: [%match%]
+        - implement: Minicup\Components\ITeamDetailComponentFactory
+          parameters: [team]
+          arguments: [%team%]
+
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension

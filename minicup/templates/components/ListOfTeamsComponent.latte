@@ -1,0 +1,32 @@
+<div class="component">
+{if $user->isAllowed('teams', 'edit')}
+{foreach $teams as $team}
+    <div>
+        {form teamEditForm-$category->id-$team->id}
+            {input name}
+            {input slug}
+            {input submit, class => "btn btn-primary"}
+        {/form}
+    </div>
+    {/foreach}
+    <div>
+    {form teamEditForm-$category->id-0}
+        {input name}
+        {input slug}
+        {input submit, class => "btn btn-primary"}
+    {/form}
+    </div>
+{else}
+<table class="table">
+{foreach $teams as $team}
+    <tr>
+        <td>{$team->order}</td>
+        <td><a href="{plink detail $category, $team}">{$team->name}</a></td>
+        <td>{$team->scored}:{$team->received}</td>
+        <td>{$team->points}</td>
+        <td>{$team->order}</td>
+    </tr>
+{/foreach}
+</table>
+{/if}
+</div>

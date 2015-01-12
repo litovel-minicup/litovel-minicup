@@ -1,0 +1,12 @@
+<div class="component" style="background-color: lightBlue;">
+    {if !$user->loggedIn}
+        {control loginForm}
+    {else}
+        <a n:href="logOut!">Odhlásit</a>
+    {/if}
+    {ifCurrent ':Admin'}
+
+    {else}
+        <a href={plink ':Admin:Homepage:'}>Administrace</a>
+    {/ifCurrent}
+</div>

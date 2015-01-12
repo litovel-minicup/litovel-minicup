@@ -2,26 +2,41 @@
 
 namespace Minicup\Model\Repository;
 
-abstract class Repository extends \LeanMapper\Repository {
+use LeanMapper\Entity;
+use LeanMapper\Exception\Exception;
 
-    public function find($id) {
-        $row = $this->connection->select('*')
-                ->from($this->getTable())
-                ->where('id = %i', $id)
-                ->fetch();
+abstract class Repository extends \LeanMapper\Repository
+{
 
+    /**
+     * @param $id
+     * @return Entity
+     * @throws EntityNotFoundException
+     */
+    public function get($id)
+    {
+        $row = $this->createFluent()
+            ->where('[' . $this->getTable() . '.id] = %i', $id)
+            ->fetch();
         if ($row === false) {
-            throw new \Exception('Entity was not found.');
+            throw new EntityNotFoundException('Entity was not found.');
         }
         return $this->createEntity($row);
     }
 
-    public function findAll() {
+    /**
+     * @return Entity[]
+     */
+    public function findAll()
+    {
         return $this->createEntities(
-                        $this->connection->select('*')
-                                ->from($this->getTable())
-                                ->fetchAll()
+            $this->createFluent()->fetchAll()
         );
     }
+
+}
+
+class EntityNotFoundException extends Exception
+{
 
 }

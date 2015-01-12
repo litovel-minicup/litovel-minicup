@@ -1,0 +1,5 @@
+<div class="component">
+    {if $user->isAllowed('migrations', 'run')}
+        {control migrateForm}
+    {/if}
+</div>

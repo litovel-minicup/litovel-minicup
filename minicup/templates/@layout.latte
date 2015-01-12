@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+        <script src="{$basePath}/js/nette.forms.js"></script>
+        <script src="{$basePath}/js/nette.ajax.js"></script>
+        <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+        <script>
+            $(function() {
+                    $.nette.init();
+                    $.nette.ext({
+                    success: function () {
+                            $.nette.init();
+                    }});
+            });
+        </script>
+        <style>
+            a[href^="#error:"] {
+                background: red;
+                color: white;
+            }
+            div[id$='Component-'],
+            div[id$='Form-'] {
+                border: 4px solid rgba(0, 0, 255, 0.2);
+            }
+            .flash {
+                background-color: rgba(20, 0, 240, 0.5);
+            }
+        </style>
+    </head>
+    <body>
+    <div n:foreach="$flashes as $flash" class="flash">
+        <p>{$flash->message}</p>
+    </div>
+    <div style="clear:both">
+        <div style="float:right;">
+            {control loginForm}
+        </div>
+    </div>
+    {block body}
+    {/}
+    </body>
+</html>

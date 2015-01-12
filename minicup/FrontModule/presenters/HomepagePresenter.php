@@ -2,28 +2,30 @@
 
 namespace Minicup\FrontModule\Presenters;
 
-use Nette,
-    Minicup\Model\Entity;
+use Minicup\Model\Entity\Team;
+use Minicup\Model\Manager\MigrationsManager;
+use Minicup\Model\Manager\TeamReplicator;
+use Minicup\Model\Repository\CategoryRepository;
+use Minicup\Model\Repository\TeamRepository;
+use Nette\Bridges\Framework\TracyBridge;
+use Tracy\Debugger;
 
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BasePresenter {
-    /**
-     *
-     * @var \Minicup\Components\ICategoryTableComponentFactory
-     */
-    private $CTCFactory;
+final class HomepagePresenter extends BaseFrontPresenter
+{
+    /** @var  TeamReplicator @inject */
+    public $replicator;
 
-    public function __construct(\Minicup\Components\ICategoryTableComponentFactory $CTCFactory) {
-        parent::__construct();
-        $this->CTCFactory = $CTCFactory;
-    }
-    
-    public function renderDefault() {
-    }
+    /** @var  CategoryRepository @inject */
+    public $CR;
 
-    public function createComponentCategoryTableComponent() {
-        return $this->CTCFactory->create();
+    /** @var  TeamRepository @inject */
+    public $TR;
+
+    public function actionDefault()
+    {
+
     }
 }

@@ -1,0 +1,10 @@
+{block content}
+<script src="{$basePath}/js/grido.js"></script>
+<script src="{$basePath}/js/grido.ext.js"></script>
+<link rel="stylesheet" href="{$basePath}/css/grido.css">
+<h2>Uživatelé</h2>
+{if $user->isAllowed('users', 'view')}
+    {control grid}
+{else}
+    Bohužel si nemůžete zobrazit seznam uživatelů.
+{/}

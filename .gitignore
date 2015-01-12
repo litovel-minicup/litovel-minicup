@@ -2,3 +2,6 @@
 /nbproject/
 /temp/
 /log/
+/.idea/
+/vendor/
+config.local.neon
