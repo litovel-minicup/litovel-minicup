@@ -36,7 +36,6 @@ class RouterFactory extends Object
     public function createRouter()
     {
         $CR = $this->CR;
-        $TR = $this->TR;
         $categoryFilter = [
             Route::FILTER_IN => function ($slug) use ($CR) {
                 return $CR->getBySlug($slug);

@@ -136,7 +136,7 @@ class MigrationsManager extends Object
             $start->setDate(0, 0, 0);
             $matchTerm->start = $start;
             $end = clone $datetime;
-            $end->setTimestamp($datetime->getTimestamp() + 0.5 * (60 * 60));
+            $end->setTimestamp((int) $datetime->getTimestamp() + 0.5 * (60 * 60));
             $matchTerm->end = $end;
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
