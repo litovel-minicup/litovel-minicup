@@ -1,0 +1,14 @@
+{extends '../@layout.latte'}
+{block body}
+    <h2>front @layout</h2>
+<pre>
+<a n:href="Team:default">Týmy</a>
+    <a n:foreach="$categories as $_category" n:href="Team:default $_category">Týmy {$_category->name}</a>
+
+
+<a n:href="Match:default">Zápasy</a>
+    <a n:foreach="$categories as $_category" n:href="Match:default $_category">Zápasy {$_category->name}</a>
+</pre>
+<h2>Content block</h2>
+{block content}{/}
+{/}

@@ -12,7 +12,6 @@ class LoginFormComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/LoginFormComponent.latte');
         $this->template->render();
     }
 

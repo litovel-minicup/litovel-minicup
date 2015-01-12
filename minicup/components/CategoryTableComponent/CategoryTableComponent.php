@@ -24,7 +24,6 @@ class CategoryTableComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/CategoryTableComponent.latte');
         $this->template->teams = $this->TR->findAll();
         $this->template->time = time();
         if ($this->getPresenter()->isAjax()) {
