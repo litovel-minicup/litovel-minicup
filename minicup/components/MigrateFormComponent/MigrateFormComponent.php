@@ -68,7 +68,6 @@ class MigrateFormComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/MigrateFormComponent.latte');
         $this->template->render();
     }
 }

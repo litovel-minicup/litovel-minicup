@@ -32,7 +32,6 @@ class TeamDetailComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->setFile(__DIR__ . '/TeamDetailComponent.latte');
         $this->template->team = $this->team;
         $this->template->render();
     }
