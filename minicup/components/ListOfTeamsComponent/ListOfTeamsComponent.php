@@ -26,19 +26,23 @@ class ListOfTeamsComponent extends BaseComponent
     /** @var  CategoryRepository */
     private $CR;
 
-    public function __construct(TeamRepository $TR, TeamInfoRepository $TIR, CategoryRepository $CR)
+    /** @var  Category */
+    private $category;
+
+    public function __construct(Category $category, TeamRepository $TR, TeamInfoRepository $TIR, CategoryRepository $CR)
     {
         parent::__construct();
+        $this->category = $category;
         $this->TR = $TR;
         $this->TIR = $TIR;
         $this->CR = $CR;
     }
 
-    public function render(Category $category)
+    public function render()
     {
         $template = $this->template;
-        $template->category = $category;
-        $template->teams = $category->teams;
+        $template->category = $this->category;
+        $template->teams = $this->category->teams;
         $template->render();
     }
 

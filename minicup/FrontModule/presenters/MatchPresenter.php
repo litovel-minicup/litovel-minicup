@@ -4,9 +4,10 @@ namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\IListOfMatchesComponentFactory;
 use Minicup\Model\Entity\Category;
+use Nette\Application\UI\Multiplier;
 
 /**
- * Team presenter.
+ * Match presenter.
  */
 final class MatchPresenter extends BaseFrontPresenter
 {
@@ -23,7 +24,10 @@ final class MatchPresenter extends BaseFrontPresenter
 
     public function createComponentListOfMatchesComponent()
     {
-        return $this->LOMCFactory->create($this->getParameter('category'));
-
+        $CR = $this->CR;
+        return new Multiplier(function ($categorySlug) use ($CR) {
+            $category = $CR->getBySlug($categorySlug);
+            return $this->LOMCFactory->create($category);
+        });
     }
 }

@@ -6,6 +6,7 @@ use Minicup\Components\IListOfTeamsComponentFactory;
 use Minicup\Components\ITeamDetailComponentFactory;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
+use Nette\Application\UI\Multiplier;
 
 /**
  * Team presenter.
@@ -36,7 +37,11 @@ final class TeamPresenter extends BaseFrontPresenter
 
     public function createComponentListOfTeamsComponent()
     {
-        return $this->LOTCFactory->create();
+        $CR = $this->CR;
+        return new Multiplier(function ($categorySlug) use ($CR) {
+            $category = $CR->getBySlug($categorySlug);
+            return $this->LOTCFactory->create($category);
+        });
     }
 
 

@@ -10,7 +10,7 @@ use Minicup\Model\Entity\Year;
 interface IListOfMatchesComponentFactory
 {
     /**
-     * @param $arg Day|Team|Category|Year|NULL
+     * @param Day|Team|Category|Year|NULL $arg
      * @return ListOfMatchesComponent
      */
     public function create($arg);

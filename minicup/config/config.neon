@@ -57,8 +57,11 @@ services:
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
-        - Minicup\Components\IListOfTeamsComponentFactory
 
+        - Minicup\Components\ICategoryToggleComponentFactory
+        - implement: Minicup\Components\IListOfTeamsComponentFactory
+          parameters: [category]
+          arguments: [%category%]
         - implement: Minicup\Components\IListOfMatchesComponentFactory
           parameters: [arg]
           arguments: [%arg%]

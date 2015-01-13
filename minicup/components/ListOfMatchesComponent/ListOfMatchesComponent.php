@@ -15,7 +15,6 @@ class ListOfMatchesComponent extends BaseComponent
      */
     private $MR;
 
-
     /**
      * @var Day|Year|Team|Category|NULL
      */
