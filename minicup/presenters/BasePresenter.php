@@ -5,6 +5,7 @@ namespace Minicup\Presenters;
 use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Model;
 use Nette;
+use Tracy\Debugger;
 
 /**
  * Base presenter.
@@ -29,6 +30,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         return $this->LFCF->create();
     }
 
+    /**
+     * before render
+     */
     public function beforeRender()
     {
         parent::beforeRender();
