@@ -29,6 +29,7 @@ services:
         - Minicup\Model\Manager\UserManager
         - Minicup\Model\Manager\MigrationsManager
         - Minicup\Model\Manager\TeamReplicator
+        - Minicup\Model\Manager\ReorderManager
 
 
 		# lean mapper
