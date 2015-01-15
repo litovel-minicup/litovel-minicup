@@ -14,9 +14,6 @@ final class HomepagePresenter extends BaseFrontPresenter
     /** @var  TeamReplicator @inject */
     public $replicator;
 
-    /** @var  CategoryRepository @inject */
-    public $CR;
-
     /** @var  TeamRepository @inject */
     public $TR;
 

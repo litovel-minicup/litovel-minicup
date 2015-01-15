@@ -3,6 +3,7 @@
 namespace Minicup\Presenters;
 
 use Minicup\Components\ILoginFormComponentFactory;
+use Minicup\Forms\IFormFactory;
 use Minicup\Model;
 use Nette;
 use Tracy\Debugger;
@@ -15,6 +16,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
+
+    /** @var  IFormFactory @inject */
+    public $FF;
 
     /** @var Model\Repository\CategoryRepository @inject */
     public $CR;
