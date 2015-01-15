@@ -33,9 +33,4 @@ class CategoryTableComponent extends BaseComponent
         }
         $this->template->render();
     }
-
-    public function handleRefresh()
-    {
-        $this->redrawControl();
-    }
 }

@@ -45,9 +45,4 @@ class ListOfMatchesComponent extends BaseComponent
         $this->template->render();
 
     }
-
-    public function handleRefresh()
-    {
-        $this->redrawControl();
-    }
 }

@@ -4,30 +4,32 @@ namespace Minicup\Presenters;
 
 use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Forms\IFormFactory;
-use Minicup\Model;
-use Nette;
-use Tracy\Debugger;
+use Minicup\Model\Repository\CategoryRepository;
+use Minicup\Model\Repository\YearRepository;
+use Nette\Application\UI\Form;
+use Nette\Application\UI\Presenter;
+use Nette\Utils\Strings;
 
 /**
  * Base presenter.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter
+abstract class BasePresenter extends Presenter
 {
 
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
 
-    /** @var  IFormFactory @inject */
+    /** @var IFormFactory @inject */
     public $FF;
 
-    /** @var Model\Repository\CategoryRepository @inject */
+    /** @var CategoryRepository @inject */
     public $CR;
 
-    /** @var Model\Repository\YearRepository @inject */
+    /** @var YearRepository @inject */
     public $YR;
 
     /**
-     * @return Nette\Application\UI\Form
+     * @return Form
      */
     protected function createComponentLoginForm()
     {
@@ -51,7 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         $layout = $this->layout ? $this->layout : 'layout';
         $dir = $this->context->parameters['appDir'];
-        $names = Nette\Utils\Strings::split($this->getName(), '(:)');
+        $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
@@ -77,7 +79,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public function formatTemplateFiles()
     {
         $dir = $this->context->parameters['appDir'];
-        $names = Nette\Utils\Strings::split($this->getName(), '(:)');
+        $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);

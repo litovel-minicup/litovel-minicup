@@ -64,9 +64,6 @@ class BaseComponent extends Control
         return $template;
     }
 
-    /**
-     * render component
-     */
     public function render()
     {
         $this->template->render();
@@ -87,5 +84,10 @@ class BaseComponent extends Control
         } else {
             return parent::__call($name, $args);
         }
+    }
+
+    public function handleRefresh()
+    {
+        $this->redrawControl();
     }
 }
