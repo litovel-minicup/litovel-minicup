@@ -5,7 +5,7 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 
-class MatchRepository extends Repository
+class MatchRepository extends BaseRepository
 {
     /**
      * @param $t Team

@@ -7,7 +7,7 @@ use LeanMapper\Exception\InvalidStateException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 
-class TeamRepository extends Repository
+class TeamRepository extends BaseRepository
 {
     /**
      * @param $slug string

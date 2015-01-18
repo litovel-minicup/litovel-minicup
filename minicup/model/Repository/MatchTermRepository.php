@@ -9,7 +9,7 @@ use Minicup\Model\Entity\MatchTerm;
  * @table match_term
  *
  */
-class MatchTermRepository extends Repository
+class MatchTermRepository extends BaseRepository
 {
     /**
      * @param \DibiDateTime $dt

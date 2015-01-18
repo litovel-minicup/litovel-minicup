@@ -4,8 +4,9 @@ namespace Minicup\Model\Repository;
 
 use LeanMapper\Entity;
 use LeanMapper\Exception\Exception;
+use LeanMapper\Repository;
 
-abstract class Repository extends \LeanMapper\Repository
+abstract class BaseRepository extends Repository
 {
 
     /**

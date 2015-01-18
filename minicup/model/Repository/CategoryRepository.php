@@ -4,7 +4,7 @@ namespace Minicup\Model\Repository;
 
 use Minicup\Model\Entity\Category;
 
-class CategoryRepository extends Repository
+class CategoryRepository extends BaseRepository
 {
     /** @var  Category[] categories indexed by slug */
     private $categories;

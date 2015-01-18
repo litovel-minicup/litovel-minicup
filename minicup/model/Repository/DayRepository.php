@@ -3,7 +3,7 @@
 namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\MatchTerm;
 
-class DayRepository extends Repository
+class DayRepository extends BaseRepository
 {
     /**
      * @param \DibiDateTime $dt

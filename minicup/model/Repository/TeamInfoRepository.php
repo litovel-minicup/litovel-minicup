@@ -5,7 +5,7 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\TeamInfo;
 
-class TeamInfoRepository extends Repository
+class TeamInfoRepository extends BaseRepository
 {
     /**
      * @param $category Category|int

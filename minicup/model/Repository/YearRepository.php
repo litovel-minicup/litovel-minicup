@@ -4,7 +4,7 @@ namespace Minicup\Model\Repository;
 
 use Minicup\Model\Entity\Year;
 
-class YearRepository extends Repository
+class YearRepository extends BaseRepository
 {
     /**
      * @var Year

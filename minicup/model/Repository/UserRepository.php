@@ -4,7 +4,7 @@ namespace Minicup\Model\Repository;
 
 use Minicup\Model\Entity\User;
 
-class UserRepository extends Repository
+class UserRepository extends BaseRepository
 {
     /**
      * @param $username string
