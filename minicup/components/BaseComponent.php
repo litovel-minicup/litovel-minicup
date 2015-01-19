@@ -8,7 +8,7 @@ use Nette\Application\UI\Control;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
 
-class BaseComponent extends Control
+abstract class BaseComponent extends Control
 {
     /** @var  IFormFactory */
     protected $FF;
@@ -64,6 +64,9 @@ class BaseComponent extends Control
         return $template;
     }
 
+    /**
+     * render component
+     */
     public function render()
     {
         $this->template->render();
@@ -86,6 +89,9 @@ class BaseComponent extends Control
         }
     }
 
+    /**
+     * refresh entire component snippet
+     */
     public function handleRefresh()
     {
         $this->redrawControl();

@@ -22,6 +22,9 @@ class TeamRepository extends BaseRepository
         return $row ? $this->createEntity($row) : NULL;
     }
 
+    /**
+     * @return Team[]
+     */
     public function findAll()
     {
         return $this->createEntities(

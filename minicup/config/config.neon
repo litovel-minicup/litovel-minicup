@@ -53,6 +53,7 @@ services:
         - Minicup\Model\Repository\CategoryRepository
         - Minicup\Model\Repository\YearRepository
         - Minicup\Model\Repository\DayRepository
+        - Minicup\Model\Repository\PhotoRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory
