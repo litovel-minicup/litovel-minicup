@@ -12,7 +12,7 @@ class TeamInfoRepository extends BaseRepository
      * @param $name string
      * @param $slug string
      * @throws EntityNotFoundException
-     * @return TeamInfo|NULL
+     * @return TeamInfo
      */
     public function findByCategoryNameSlug($category, $name, $slug)
     {
@@ -24,7 +24,5 @@ class TeamInfoRepository extends BaseRepository
             return $this->createEntity($row);
         }
         throw new EntityNotFoundException('Team info not found');
-
     }
-
 }

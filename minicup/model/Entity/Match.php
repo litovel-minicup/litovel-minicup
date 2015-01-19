@@ -7,8 +7,8 @@ use LeanMapper\Entity;
 /**
  * @property int            $id
  * @property Category       $category m:hasOne
- * @property Team           $homeTeam m:hasOne(home_team_id:team)
- * @property Team           $awayTeam m:hasOne(away_team_id:team)
+ * @property TeamInfo       $homeTeam m:hasOne(home_team_info_id:team_info)
+ * @property TeamInfo       $awayTeam m:hasOne(away_team_info_id:team_info)
  * @property int            $scoreHome score of home team
  * @property int            $scoreAway score of away team
  * @property int            $confirmed flag

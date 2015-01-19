@@ -36,7 +36,7 @@ class ListOfMatchesComponent extends BaseComponent
         $matches = [];
         $this->template->actualID = 0;
         if ($this->arg instanceof Team) {
-            $matches = $this->arg->matches;
+            $matches = $this->arg->i->matches;
             $this->template->actualID = $this->arg->id;
         } elseif ($this->arg instanceof Category) {
             $matches = $this->arg->matches;

@@ -4,6 +4,7 @@ namespace Minicup\Router;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Application\IRouter;
@@ -88,11 +89,11 @@ class RouterFactory extends Object
     }
 
     /**
-     * @param Team $team
+     * @param TeamInfo|Team $team
      * @param Request $request
      * @return string
      */
-    public function team2TeamSlug(Team $team, Request $request)
+    public function team2TeamSlug($team, Request $request)
     {
         return $team->slug;
     }
