@@ -10,6 +10,7 @@ use LeanMapper\Entity;
  * @property string    $name
  * @property int       $actual
  * @property Day[]     $days m:belongsToMany
+ * @property Category[] $categories m:belongsToMany
  */
 class Year extends Entity
 {

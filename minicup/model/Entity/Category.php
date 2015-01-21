@@ -11,6 +11,7 @@ use LeanMapper\Entity;
  * @property Team[] $teams m:belongsToMany
  * @property Match[] $matches m:belongsToMany
  * @property-read Team[] $allTeams m:belongsToMany(::category_id)
+ * @property Year $year m:hasOne
  */
 class Category extends Entity
 {
