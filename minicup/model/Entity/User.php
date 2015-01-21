@@ -5,11 +5,11 @@ namespace Minicup\Model\Entity;
 use LeanMapper\Entity;
 
 /**
- * @property int    $id
- * @property string $username
- * @property string $fullname
- * @property string $password_hash
- * @property string $role
+ * @property int        $id
+ * @property string     $username       user's nick
+ * @property string     $fullname       fullname
+ * @property string     $password_hash  pass. hash
+ * @property string     $role           user role
  *
  */
 class User extends Entity

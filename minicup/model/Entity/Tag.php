@@ -5,11 +5,12 @@ namespace Minicup\Model\Entity;
 use LeanMapper\Entity;
 
 /**
- * @property    int     $id
- * @property    Photo[] $photos m:hasMany(:photo_tag)
- * @property    string  $name
- * @property    string  $slug
- * @property    int     $isGallery = 0
+ * @property    int         $id
+ * @property    Photo[]     $photos m:hasMany(:photo_tag)   photos for this tag
+ * @property    string      $name                           name for tag
+ * @property    string      $slug                           unique slug
+ * @property    int         $isGallery = 0                  flag for gallery
+ * @property    Photo|NULL  $main m:hasOne(main_photo_id)   main photo for tag
  */
 class Tag extends Entity
 {

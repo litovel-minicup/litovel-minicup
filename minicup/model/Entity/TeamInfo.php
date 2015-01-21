@@ -6,12 +6,12 @@ use LeanMapper\Entity;
 use LeanMapper\Exception\InvalidStateException;
 
 /**
- * @property    int         $id
- * @property    Category    $category m:hasOne
- * @property-read   Match[] $matches
- * @property    string      $name   czech name of team
- * @property    string      $slug   slug for URL
- * @property    Team        $team m:belongsToOne
+ * @property        int         $id
+ * @property        Category    $category m:hasOne      category
+ * @property-read   Match[]     $matches                matches for this team
+ * @property        string      $name                   czech name of team
+ * @property        string      $slug                   slug for URL
+ * @property        Team        $team m:belongsToOne    actually connected team
  */
 class TeamInfo extends Entity
 {
