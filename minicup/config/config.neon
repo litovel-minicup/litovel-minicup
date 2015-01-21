@@ -60,7 +60,7 @@ services:
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
 
-        - Minicup\Components\ICategoryToggleComponentFactory
+        - Minicup\Components\ICategoryToggleFormComponentFactory
         - implement: Minicup\Components\IListOfTeamsComponentFactory
           parameters: [category]
           arguments: [%category%]
