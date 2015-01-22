@@ -14,7 +14,27 @@ class MatchRepository extends BaseRepository
      */
     public function findMatchesToTeam(Team $t)
     {
-        $values = $this->connection->select('*')->from($this->getTable())->where('[home_team_id] = ', $t->id, 'OR [away_team_id] = ', $t->id)->fetchAll();
-        return $this->createEntities($values);
+        $rows = $this->connection->select('*')->from($this->getTable())->where('[home_team_id] = ', $t->id, 'OR [away_team_id] = ', $t->id)->fetchAll();
+        return $this->createEntities($rows);
+    }
+
+    /**
+     * @param Team $team1
+     * @param Team $team2
+     * @return Match|NULL
+     */
+    public function getCommonMatchForTeams(Team $team1, Team $team2)
+    {
+        $team1InfoId = $team1->i->id;
+        $team2InfoId = $team2->i->id;
+        $row = $this->createFluent()
+            ->where('
+            ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
+            ([home_team_info_id] = %i AND [away_team_info_id] = %i)',
+                $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId)->fetch();
+        if ($row) {
+            return $this->createEntity($row);
+        }
+        return NULL;
     }
 }
