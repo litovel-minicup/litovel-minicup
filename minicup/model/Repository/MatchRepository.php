@@ -28,9 +28,10 @@ class MatchRepository extends BaseRepository
         $team1InfoId = $team1->i->id;
         $team2InfoId = $team2->i->id;
         $row = $this->createFluent()
-            ->where('
-            ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
-            ([home_team_info_id] = %i AND [away_team_info_id] = %i)',
+            ->where('(
+                ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
+                ([home_team_info_id] = %i AND [away_team_info_id] = %i)
+            ) AND [confirmed] = 1',
                 $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId)->fetch();
         if ($row) {
             return $this->createEntity($row);
