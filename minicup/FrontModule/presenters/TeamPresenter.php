@@ -20,14 +20,14 @@ final class TeamPresenter extends BaseFrontPresenter
     /** @var ITeamDetailComponentFactory @inject */
     public $TDCFactory;
 
-
-    public function renderDefault(Category $category = NULL)
+    public function renderDefault()
     {
-        if ($category) {
-            $this->template->category = $category;
-        } else {
-            $this->template->categories = $this->CR->findAll();
-        }
+    	$this->template->categories = $this->CR->findAll();
+    }
+
+    public function renderList(Category $category)
+    {
+        $this->template->category = $category;
     }
 
     public function renderDetail(Category $category, Team $team)

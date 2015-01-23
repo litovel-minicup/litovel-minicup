@@ -12,6 +12,7 @@ use LeanMapper\Entity;
  * @property Match[]    $matches m:belongsToMany                    matches in this category
  * @property Team[]     $allTeams m:belongsToMany(::category_id)    all historical teams in category
  * @property Year       $year m:hasOne                              year for this category
+ * @property int        $default                                    flag if it's default category
  */
 class Category extends Entity
 {

@@ -9,6 +9,16 @@ use Nette\Object;
 
 class Filters extends Object
 {
+    /**
+     * @param Fluent $fluent
+     * @param int $yearId
+     */
+    public function yearRestrict(Fluent $fluent, $yearId = 0)
+    {
+        if ($yearId) {
+            $fluent->where('[year_id] = %i', $yearId);
+        }
+    }
 
     /**
      * @param Fluent $fluent

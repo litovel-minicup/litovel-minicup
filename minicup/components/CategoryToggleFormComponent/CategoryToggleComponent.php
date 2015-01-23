@@ -32,18 +32,26 @@ class CategoryToggleFormComponent extends BaseComponent
         $this->session = $session->getSection('minicup');
     }
 
-
     /** @return Form */
     protected function createComponentCategoryToggleForm()
     {
         $f = $this->FF->create();
+        $f->setMethod(Form::GET);
+        $select = $f->addSelect('categoryId');
         $items = [];
+        $default = 0;
         /** @var Category $category */
         foreach ($this->YR->getActualYear()->categories as $category) {
             $items[$category->id] = $category->name;
+            if ($category->slug === $this->session['category']) {
+                $default = $category->id;
+            }
+        }
+        $select->setItems($items);
+        if ($default) {
+            $select->setValue($default);
         }
 
-        $f->addSelect('yearId')->setItems($items);
         $f->addSubmit('submit', 'změnit');
         $f->onSuccess[] = $this->categoryToggleFormSucceeded;
         return $f;
@@ -52,6 +60,10 @@ class CategoryToggleFormComponent extends BaseComponent
     /***/
     public function categoryToggleFormSucceeded(Form $form, ArrayHash $values)
     {
-        dump($values);
+        /** @var Category $category */
+        $category = $this->CR->get($values->categoryId);
+        $this->session['category'] = $category->slug;
+        $this->presenter->flashMessage('Preferovaná kategorie úspěšně změněna!','success');
+        $this->presenter->redirect('this', ['category' => $category]);
     }
 }

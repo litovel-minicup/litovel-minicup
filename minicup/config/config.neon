@@ -20,12 +20,13 @@ includes:
         - config.ACL.neon
 
 services:
-
         router: @Minicup\Router\RouterFactory::createRouter
+        year: @Minicup\Model\Repository\YearRepository::getActualYear
         - Minicup\Router\RouterFactory
         - Minicup\Forms\IFormFactory
         - Nextras\Application\LinkFactory
 
+        # application logic services
         - Minicup\Model\Manager\UserManager
         - Minicup\Model\Manager\MigrationsManager
         - Minicup\Model\Manager\TeamReplicator
@@ -36,12 +37,14 @@ services:
         - LeanMapper\DefaultEntityFactory
         - Minicup\Model\Mapper('Minicup\Model\Entity')
         filters: Minicup\Model\Filters
+
         leanMapper.connection:
-         setup:
-          - registerFilter('matches', [@filters, 'joinAllMatches'], 'e')
-          - registerFilter('info', [@filters, 'joinTeamInfo'])
-          - registerFilter('actual', [@filters, 'actualTeams'])
-          - registerFilter('ordered', [@filters, 'orderedTeams'])
+            setup:
+                - registerFilter('matches', [@filters, 'joinAllMatches'], 'e')
+                - registerFilter('info', [@filters, 'joinTeamInfo'])
+                - registerFilter('actual', [@filters, 'actualTeams'])
+                - registerFilter('ordered', [@filters, 'orderedTeams'])
+                - registerFilter('year', [@filters, 'yearRestrict'])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository
@@ -50,10 +53,12 @@ services:
         - Minicup\Model\Repository\TeamInfoRepository
         - Minicup\Model\Repository\OnlineReportRepository
         - Minicup\Model\Repository\MatchTermRepository
-        - Minicup\Model\Repository\CategoryRepository
         - Minicup\Model\Repository\YearRepository
-        - Minicup\Model\Repository\DayRepository
         - Minicup\Model\Repository\PhotoRepository
+        - class: Minicup\Model\Repository\CategoryRepository
+          setup: [injectYear(@year)]
+        - class: Minicup\Model\Repository\DayRepository
+          setup: [injectYear(@year)]
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory

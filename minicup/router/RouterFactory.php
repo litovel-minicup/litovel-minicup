@@ -11,6 +11,8 @@ use Nette\Application\IRouter;
 use Nette\Application\Request;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
+use Nette\Http\Session;
+use Nette\Http\SessionSection;
 use Nette\Object;
 
 class RouterFactory extends Object
@@ -21,14 +23,19 @@ class RouterFactory extends Object
     /** @var  TeamRepository */
     private $TR;
 
+    /** @var  SessionSection */
+    private $session;
+
     /**
      * @param CategoryRepository $CR
-     * @param TeamRepository     $TR
+     * @param TeamRepository $TR
+     * @param Session $session
      */
-    public function __construct(CategoryRepository $CR, TeamRepository $TR)
+    public function __construct(CategoryRepository $CR, TeamRepository $TR, Session $session)
     {
         $this->CR = $CR;
         $this->TR = $TR;
+        $this->session = $session->getSection('minicup');
     }
 
     /**
@@ -37,26 +44,37 @@ class RouterFactory extends Object
     public function createRouter()
     {
         $CR = $this->CR;
+        $session = $this->session;
+        if (!isset($session['category'])) {
+            $session['category'] = $CR->getDefaultCategory()->slug;
+        }
         $categoryFilter = [
-            Route::FILTER_IN => function ($slug) use ($CR) {
-                return $CR->getBySlug($slug);
+            Route::FILTER_IN => function ($slug) use ($CR, $session) {
+                $category = $CR->getBySlug($slug);
+                if ($category) {
+                    $session['category'] = $slug;
+                }
+                return $category;
             },
             Route::FILTER_OUT => function (Category $category) use ($CR) {
                 return $category->slug;
-            }];
+            }
+        ];
 
         $front = new RouteList('Front');
         $front[] = new Route('', 'Homepage:default');
-        $front[] = new Route('migrate', 'Homepage:migrate');
-        $front[] = new Route('tymy[/<category>]', [
+        $front[] = new Route('tymy', 'Team:default');
+        $front[] = new Route('zapasy', 'Match:default');
+
+        $front[] = new Route('tymy/<category>', [
             'presenter' => 'Team',
-            'action' => 'default',
+            'action' => 'list',
             'category' => $categoryFilter
         ]);
 
-        $front[] = new Route('zapasy[/<category>]', [
+        $front[] = new Route('zapasy/<category>', [
             'presenter' => 'Match',
-            'action' => 'default',
+            'action' => 'list',
             'category' => $categoryFilter
         ]);
 
@@ -79,7 +97,7 @@ class RouterFactory extends Object
     }
 
     /**
-     * @param         $teamSlug string
+     * @param $teamSlug
      * @param Request $request
      * @return Team|NULL
      */
