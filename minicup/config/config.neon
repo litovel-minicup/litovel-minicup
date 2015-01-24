@@ -33,7 +33,7 @@ services:
         - Minicup\Model\Manager\ReorderManager
 
         # (s)css & js compiling
-        - Minicup\Components\CssComponentFactory(%wwwDir%)
+        - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
 
 		# lean mapper
         - LeanMapper\DefaultEntityFactory

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "35354ac8aff40ec2ca541debb9f4f86a",
+    "hash": "9473d6472062196dff2a1c4a98a89998",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -310,6 +310,53 @@
                 "twig"
             ],
             "time": "2014-11-08 16:27:57"
+        },
+        {
+            "name": "natxet/CssMin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/natxet/CssMin.git",
+                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
+                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joe Scylla",
+                    "email": "joe.scylla@gmail.com",
+                    "homepage": "https://profiles.google.com/joe.scylla"
+                }
+            ],
+            "description": "Minifying CSS",
+            "homepage": "http://code.google.com/p/cssmin/",
+            "keywords": [
+                "css",
+                "minify"
+            ],
+            "time": "2015-01-21 10:40:33"
         },
         {
             "name": "nette/application",
@@ -1603,7 +1650,8 @@
         "o5/grido": 20,
         "jandrabek/tracy-gitversion-panel": 20,
         "jsmitka/nette-xdebug-helper": 20,
-        "janmarek/webloader": 20
+        "janmarek/webloader": 20,
+        "natxet/cssmin": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
