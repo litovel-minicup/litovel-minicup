@@ -4,4 +4,5 @@
 /log/
 /.idea/
 /vendor/
+/www/temp/
 config.local.neon

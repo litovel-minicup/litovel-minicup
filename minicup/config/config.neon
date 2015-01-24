@@ -32,6 +32,8 @@ services:
         - Minicup\Model\Manager\TeamReplicator
         - Minicup\Model\Manager\ReorderManager
 
+        # (s)css & js compiling
+        - Minicup\Components\CssComponentFactory(%wwwDir%)
 
 		# lean mapper
         - LeanMapper\DefaultEntityFactory
@@ -81,3 +83,4 @@ services:
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
+        webloader: WebLoader\Nette\Extension
