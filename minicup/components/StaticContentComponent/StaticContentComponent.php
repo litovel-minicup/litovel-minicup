@@ -6,7 +6,6 @@ namespace Minicup\Components;
 use Minicup\Misc\Texy;
 use Minicup\Model\Entity\StaticContent;
 use Minicup\Model\Repository\StaticContentRepository;
-use Nextras\Application\LinkFactory;
 
 class StaticContentComponent extends BaseComponent
 {
@@ -22,8 +21,7 @@ class StaticContentComponent extends BaseComponent
     /**
      * @param StaticContent $content
      * @param StaticContentRepository $SCR
-     * @param \Texy $texy
-     * @param LinkFactory $linkFactory
+     * @param Texy $texy
      */
     public function __construct(StaticContent $content, StaticContentRepository $SCR, Texy $texy)
     {
@@ -32,7 +30,6 @@ class StaticContentComponent extends BaseComponent
         $this->texy = $texy;
         $this->content = $content;
     }
-
 
     public function render()
     {
