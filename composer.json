@@ -11,6 +11,7 @@
     "jsmitka/nette-xdebug-helper": "dev-master",
     "nextras/forms": "~1.4",
     "janmarek/webloader": "dev-master",
-    "natxet/CssMin": "@dev"
+    "natxet/CssMin": "@dev",
+    "neeckeloo/closure-compiler-php": "@dev"
   }
 }
