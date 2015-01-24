@@ -4,6 +4,7 @@ namespace Minicup\AdminModule\Presenters;
 
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
+use LeanMapper\Connection;
 use Minicup\Model\Entity;
 use Minicup\Model\Manager\UserManager;
 use Nette\Application\UI\Form;
@@ -16,11 +17,11 @@ use Nette\Utils\ArrayHash;
 class UsersPresenter extends BaseAdminPresenter
 {
 
-    /** @var \DibiConnection @inject */
-    private $DC;
+    /** @var Connection @inject */
+    public $DC;
 
     /** @var UserManager @inject */
-    private $UM;
+    public $UM;
 
     /**
      * @param $name

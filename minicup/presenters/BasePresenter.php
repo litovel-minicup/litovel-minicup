@@ -4,6 +4,7 @@ namespace Minicup\Presenters;
 
 use Minicup\Components\CssComponentFactory;
 use Minicup\Components\ILoginFormComponentFactory;
+use Minicup\Components\JsComponentFactory;
 use Minicup\Forms\IFormFactory;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
@@ -11,6 +12,7 @@ use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
 use WebLoader\Nette\CssLoader;
+use WebLoader\Nette\JavaScriptLoader;
 
 /**
  * Base presenter.
@@ -30,8 +32,11 @@ abstract class BasePresenter extends Presenter
     /** @var YearRepository @inject */
     public $YR;
 
-    /** @var  CssComponentFactory @inject */
+    /** @var CssComponentFactory @inject */
     public $CSSCF;
+
+    /** @var JsComponentFactory @inject */
+    public $JSCF;
 
     /**
      * @return CssLoader
@@ -41,6 +46,11 @@ abstract class BasePresenter extends Presenter
         return $this->CSSCF->create();
     }
 
+    /** @return JavaScriptLoader */
+    protected function createComponentJs()
+    {
+        return $this->JSCF->create();
+    }
 
     /**
      * @return Form

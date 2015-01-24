@@ -34,6 +34,7 @@ services:
 
         # (s)css & js compiling
         - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
+        - Minicup\Components\JsComponentFactory(%wwwDir%, %productionMode%)
 
 		# lean mapper
         - LeanMapper\DefaultEntityFactory
@@ -83,4 +84,3 @@ services:
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
-        webloader: WebLoader\Nette\Extension
