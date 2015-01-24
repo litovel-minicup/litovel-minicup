@@ -20,11 +20,13 @@ includes:
         - config.ACL.neon
 
 services:
-        router: @Minicup\Router\RouterFactory::createRouter
+        router: @Minicup\Router\RouterFactory::create
+        texy: @Minicup\Forms\TexyFactory::create
         year: @Minicup\Model\Repository\YearRepository::getActualYear
         - Minicup\Router\RouterFactory
         - Minicup\Forms\IFormFactory
         - Nextras\Application\LinkFactory
+        - Minicup\Forms\TexyFactory
 
         # application logic services
         - Minicup\Model\Manager\UserManager
@@ -58,6 +60,7 @@ services:
         - Minicup\Model\Repository\MatchTermRepository
         - Minicup\Model\Repository\YearRepository
         - Minicup\Model\Repository\PhotoRepository
+        - Minicup\Model\Repository\StaticContentRepository
         - class: Minicup\Model\Repository\CategoryRepository
           setup: [injectYear(@year)]
         - class: Minicup\Model\Repository\DayRepository
@@ -67,19 +70,22 @@ services:
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
+        - implement: Minicup\Components\IStaticContentComponentFactory
+          parameters: [Minicup\Model\Entity\StaticContent content]
+          arguments: [%content%]
 
         - Minicup\Components\ICategoryToggleFormComponentFactory
         - implement: Minicup\Components\IListOfTeamsComponentFactory
-          parameters: [category]
+          parameters: [Minicup\Model\Entity\Category category]
           arguments: [%category%]
         - implement: Minicup\Components\IListOfMatchesComponentFactory
           parameters: [arg]
           arguments: [%arg%]
         - implement: Minicup\Components\IOnlineReportComponentFactory
-          parameters: [match]
+          parameters: [Minicup\Model\Entity\Match match]
           arguments: [%match%]
         - implement: Minicup\Components\ITeamDetailComponentFactory
-          parameters: [team]
+          parameters: [Minicup\Model\Entity\Team team]
           arguments: [%team%]
 
 extensions:
