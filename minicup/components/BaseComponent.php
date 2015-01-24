@@ -3,7 +3,7 @@
 namespace Minicup\Components;
 
 
-use Minicup\Forms\IFormFactory;
+use Minicup\Misc\IFormFactory;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;

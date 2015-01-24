@@ -11,31 +11,14 @@ use Minicup\Model\Repository\TeamRepository;
  */
 class HomepagePresenter extends BaseAdminPresenter
 {
-    /**
-     * @var MatchRepository
-     */
+    /** @var MatchRepository @inject */
     private $MR;
 
-    /**
-     * @var TeamRepository
-     */
+    /** @var TeamRepository @inject */
     private $TR;
 
-    /** @var  ReorderManager */
+    /** @var ReorderManager @inject */
     private $reorder;
-
-    /**
-     * @param MatchRepository $MR
-     * @param TeamRepository  $TR
-     * @param ReorderManager  $reorder
-     */
-    public function __construct(MatchRepository $MR, TeamRepository $TR, ReorderManager $reorder)
-    {
-        parent::__construct();
-        $this->MR = $MR;
-        $this->TR = $TR;
-        $this->reorder = $reorder;
-    }
 
     public function renderDefault()
     {
@@ -46,4 +29,5 @@ class HomepagePresenter extends BaseAdminPresenter
         $cat = $this->CR->getBySlug('mladsi');
         $this->reorder->reorder($cat);
     }
+
 }

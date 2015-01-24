@@ -1,6 +1,6 @@
 <?php
 
-namespace Minicup\Forms;
+namespace Minicup\Misc;
 
 
 use Nette\Application\UI\Form;

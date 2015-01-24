@@ -21,12 +21,12 @@ includes:
 
 services:
         router: @Minicup\Router\RouterFactory::create
-        texy: @Minicup\Forms\TexyFactory::create
+        texy: @Minicup\Misc\TexyFactory::create
         year: @Minicup\Model\Repository\YearRepository::getActualYear
         - Minicup\Router\RouterFactory
-        - Minicup\Forms\IFormFactory
+        - Minicup\Misc\IFormFactory
         - Nextras\Application\LinkFactory
-        - Minicup\Forms\TexyFactory
+        - Minicup\Misc\TexyFactory
 
         # application logic services
         - Minicup\Model\Manager\UserManager

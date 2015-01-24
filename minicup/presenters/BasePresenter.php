@@ -5,7 +5,7 @@ namespace Minicup\Presenters;
 use Minicup\Components\CssComponentFactory;
 use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Components\JsComponentFactory;
-use Minicup\Forms\IFormFactory;
+use Minicup\Misc\IFormFactory;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
@@ -23,7 +23,7 @@ abstract class BasePresenter extends Presenter
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
 
-    /** @var IFormFactory @inject */
+    /** @var  IFormFactory @inject */
     public $FF;
 
     /** @var CategoryRepository @inject */
