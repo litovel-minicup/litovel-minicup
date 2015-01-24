@@ -10,6 +10,6 @@ interface IListOfTeamsComponentFactory
      * @param $category
      * @return ListOfTeamsComponent
      */
-    public function create($category);
+    public function create(Category $category);
 
 }

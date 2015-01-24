@@ -41,7 +41,7 @@ class RouterFactory extends Object
     /**
      * @return IRouter
      */
-    public function createRouter()
+    public function create()
     {
         $CR = $this->CR;
         $session = $this->session;
