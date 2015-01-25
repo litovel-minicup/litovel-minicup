@@ -1,0 +1,16 @@
+header {
+	background: $light-blue;
+	@include span-columns(12);
+	height: 125px;
+}
+
+.logo__wrapper {
+	@include span-columns(2.5 of 12);
+	background: $dark-blue;
+	height: 125px;
+	.logo__image {
+		width: 70%;
+		margin-left: 15%;
+		margin-top: 5%;
+	}
+}
