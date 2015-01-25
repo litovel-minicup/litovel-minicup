@@ -17,7 +17,7 @@ abstract class BaseAdminPresenter extends BasePresenter
                 $message = 'Pro vstup do této sekce je nutné se přihlásit!';
             }
             $this->flashMessage($message, 'error');
-            $this->redirect(':Front:Homepage:default', ['backlink' => $this->storeRequest()]);
+            $this->redirect(':Front:Homepage:default', array('backlink' => $this->storeRequest()));
         }
     }
 }

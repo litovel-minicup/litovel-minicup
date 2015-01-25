@@ -28,9 +28,10 @@ final class MatchPresenter extends BaseFrontPresenter
     public function createComponentListOfMatchesComponent()
     {
         $CR = $this->CR;
-        return new Multiplier(function ($categorySlug) use ($CR) {
+        $me = $this;
+        return new Multiplier(function ($categorySlug) use ($CR, $me) {
             $category = $CR->getBySlug($categorySlug);
-            return $this->LOMCFactory->create($category);
+            return $me->LOMCFactory->create($category);
         });
     }
 }

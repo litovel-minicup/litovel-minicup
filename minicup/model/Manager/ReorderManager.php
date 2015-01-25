@@ -57,7 +57,7 @@ class ReorderManager extends Object
 
     private function orderByPoints()
     {
-        $this->teamPointsFromPoints = [];
+        $this->teamPointsFromPoints = array();
         foreach ($this->teams as $reorderingTeam) {
             $teamPoints = 0;
             foreach ($this->teams as $comparativeTeam) {
@@ -89,7 +89,7 @@ class ReorderManager extends Object
 
     private function orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamWorsePosition) //$countOfTeamsWithSamePoints -- asi nepotřebuji
     {
-        $teamsToCompare = [];
+        $teamsToCompare = array();
         foreach ($this->teamPointsFromPoints as $key => $foo) {
             if ($foo == $points) {
                 $teamsToCompare[] = $this->teamsEntities[$key];

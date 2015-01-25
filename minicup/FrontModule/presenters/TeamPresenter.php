@@ -38,9 +38,10 @@ final class TeamPresenter extends BaseFrontPresenter
     public function createComponentListOfTeamsComponent()
     {
         $CR = $this->CR;
-        return new Multiplier(function ($categorySlug) use ($CR) {
+        $me = $this;
+        return new Multiplier(function ($categorySlug) use ($CR, $me) {
             $category = $CR->getBySlug($categorySlug);
-            return $this->LOTCFactory->create($category);
+            return $me->LOTCFactory->create($category);
         });
     }
 

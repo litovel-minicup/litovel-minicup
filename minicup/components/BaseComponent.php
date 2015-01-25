@@ -45,7 +45,7 @@ abstract class BaseComponent extends Control
         $template = parent::createTemplate();
         $name = $this->reflection->shortName;
         $dir = $this->presenter->context->parameters['appDir'];
-        $paths = [];
+        $paths = array();
         if ($this->view) {
             $view = $this->view;
             $paths[] = "$dir/templates/components/$name/$view.latte";
@@ -83,7 +83,7 @@ abstract class BaseComponent extends Control
             $this->tryCall($name, $args);
             $view = Strings::lower(Strings::substring($name, 6));
             $this->view = $view;
-            $this->render();
+            return $this->render();
         } else {
             return parent::__call($name, $args);
         }

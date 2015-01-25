@@ -53,8 +53,9 @@ class ListOfTeamsComponent extends BaseComponent
     {
         $TR = $this->TR;
         $FF = $this->FF;
-        return new Multiplier(function ($categoryId) use ($TR, $FF) {
-            return new Multiplier(function ($teamId) use ($TR, $FF, $categoryId) {
+        $me = $this;
+        return new Multiplier(function ($categoryId) use ($TR, $FF, $me) {
+            return new Multiplier(function ($teamId) use ($TR, $FF, $categoryId, $me) {
                 $f = $FF->create();
                 $f->getElementPrototype()->class[] = 'form-inline';
                 $f->setRenderer(new Bs3FormRenderer());
@@ -62,7 +63,7 @@ class ListOfTeamsComponent extends BaseComponent
                 $f->addText('slug')->setRequired();
                 $f->addHidden('categoryId', $categoryId);
                 $f->addSubmit('submit', $teamId ? 'Editovat' : 'Přidat');
-                $f->onSuccess[] = $this->editFormSucceeded;
+                $f->onSuccess[] = $me->editFormSucceeded;
                 try {
                     $team = $TR->get((int)$teamId);
                 } catch (EntityNotFoundException $e) {

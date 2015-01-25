@@ -48,7 +48,7 @@ class RouterFactory extends Object
         if (!isset($session['category'])) {
             $session['category'] = $CR->getDefaultCategory()->slug;
         }
-        $categoryFilter = [
+        $categoryFilter = array(
             Route::FILTER_IN => function ($slug) use ($CR, $session) {
                 $category = $CR->getBySlug($slug);
                 if ($category) {
@@ -59,39 +59,41 @@ class RouterFactory extends Object
             Route::FILTER_OUT => function (Category $category) use ($CR) {
                 return $category->slug;
             }
-        ];
+        );
 
         $front = new RouteList('Front');
         $front[] = new Route('', 'Homepage:default');
         $front[] = new Route('tymy', 'Team:default');
         $front[] = new Route('zapasy', 'Match:default');
 
-        $front[] = new Route('tymy/<category>', [
+        $front[] = new Route('tymy/<category>', array(
             'presenter' => 'Team',
             'action' => 'list',
             'category' => $categoryFilter
-        ]);
+        ));
 
-        $front[] = new Route('zapasy/<category>', [
+        $front[] = new Route('zapasy/<category>', array(
             'presenter' => 'Match',
             'action' => 'list',
             'category' => $categoryFilter
-        ]);
+        ));
 
-        $front[] = (new FilterRoute('<category>/<team>', [
+        $route = new FilterRoute('<category>/<team>', array(
             'presenter' => 'Team',
             'action' => 'detail',
             'category' => $categoryFilter
-        ]))->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
+        ));
+        $route->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
+        $front[] = $route;
 
 
         $router = new RouteList();
         $router[] = $front;
-        $router[] = new Route('admin/<presenter>/<action>[/<id>]', [
+        $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
             'module' => 'admin',
             'presenter' => 'Homepage',
             'action' => 'default'
-        ]);
+        ));
 
         return $router;
     }

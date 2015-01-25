@@ -66,12 +66,12 @@ class UserManager extends Object implements IAuthenticator
         if ($this->UR->existsUsername($username)) {
             throw new InvalidArgumentException('Zadané uživatelské jméno již existuje.');
         }
-        $UE = new User;
-        $UE->username = $username;
-        $UE->password_hash = Passwords::hash($password);
-        $UE->role = $role;
-        $UE->fullname = $fullname;
-        $id = $this->UR->persist($UE);
+        $user = new User;
+        $user->username = $username;
+        $user->password_hash = Passwords::hash($password);
+        $user->role = $role;
+        $user->fullname = $fullname;
+        $id = $this->UR->persist($user);
         return $id;
     }
 }
