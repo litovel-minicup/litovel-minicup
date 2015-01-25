@@ -2,11 +2,24 @@
 
 namespace Minicup\Model\Repository;
 
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 
 class MatchRepository extends BaseRepository
 {
+    /**
+     * @param Category $category
+     * @return Match[]
+     */
+    public function findMatchesByCategory(Category $category)
+    {
+        return $this->createEntities(
+            $this->createFluent()
+                ->applyFilter('confirmed')
+                ->where('[match.category_id] = %i', $category->id)->fetchAll());
+    }
+
     /**
      * @param $t Team
      * @return Match[]

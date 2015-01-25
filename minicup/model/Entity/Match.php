@@ -14,7 +14,6 @@ use LeanMapper\Entity;
  * @property int            $confirmed                                      flag if is it really confirmed
  * @property MatchTerm      $matchTerm m:hasOne(match_term_id:match_term)   term fo this match
  * @property OnlineReport[] $onlineReports m:belongsToMany(:online_report)  reports
- *
  */
 class Match extends Entity
 {

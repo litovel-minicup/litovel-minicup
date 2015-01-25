@@ -12,7 +12,7 @@ use LeanMapper\Entity;
  * @property int            $received           sum of received goals
  * @property Category       $category m:hasOne  category where is team in
  * @property Match[]        $matches            all matches for team
- * @property int            $isActual = 1       flag for actual state
+ * @property int            $actual = 1         flag for actual state
  * @property Match|NULL     $afterMatch m:hasOne(after_match_id)    after this match is this team inserted
  * @property \DateTime|NULL $inserted           datetime of inserted
  * @property TeamInfo       $i m:hasOne         main team info

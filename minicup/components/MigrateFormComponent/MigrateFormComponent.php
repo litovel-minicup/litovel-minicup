@@ -59,7 +59,7 @@ class MigrateFormComponent extends BaseComponent
         }
         $category = $this->CR->get($values->category_id);
         if ($values->confirm) {
-            $this->migrator->migrate($category, $values->truncate);
+            $this->migrator->migrateMatches($category, $values->truncate);
         }
         $this->presenter->flashMessage("Kategorie {$category->name} byla úspěšně zmigrována!", 'success');
         $this->presenter->redirect('this');

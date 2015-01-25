@@ -104,7 +104,7 @@ class ListOfTeamsComponent extends BaseComponent
         if (!$teamId) {
             $team = new Team();
             $team->i = $teamInfo;
-            $team->isActual = 1;
+            $team->actual = 1;
             $team->category = $category;
             $this->TR->persist($team);
         }

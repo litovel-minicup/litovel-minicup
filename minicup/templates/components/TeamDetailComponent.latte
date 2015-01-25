@@ -3,8 +3,12 @@
     id: {$team->id} <br>
     jméno: {$team->name} <br>
     slug: {$team->slug} <br>
-    pořadí: {$team->order} <br>
-    kategorie: {$team->category->name}
+    pořadí: {$team->order}<br>
+    počet zápasů: {$team->matches|length}<br>
+    kategorie: {$team->category->name}<br>
+    vstřelené: {$team->scored}<br>
+    obdržené: {$team->received}<br>
+    body: {$team->points}<br>
     <h3>zápasy</h3>
     {control listOfMatchesComponent}
 </div>

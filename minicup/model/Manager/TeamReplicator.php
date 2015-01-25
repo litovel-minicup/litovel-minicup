@@ -40,8 +40,8 @@ class TeamReplicator extends Object
             $newTeam = new Team();
             $data = $oldTeam->getData(['i', 'order', 'points', 'scored', 'received', 'category']);
             $newTeam->i = $oldTeam->i;
-            $newTeam->isActual = 1;
-            $oldTeam->isActual = 0;
+            $newTeam->actual = 1;
+            $oldTeam->actual = 0;
             $newTeam->assign($data);
             $oldTeam->afterMatch = $afterMatch;
             $this->TR->persist($oldTeam);

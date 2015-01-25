@@ -23,6 +23,6 @@ class TeamInfoRepository extends BaseRepository
         if ($row) {
             return $this->createEntity($row);
         }
-        throw new EntityNotFoundException('Team info not found');
+        return NULL;
     }
 }

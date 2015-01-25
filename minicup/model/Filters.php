@@ -40,9 +40,9 @@ class Filters extends Object
     /**
      * @param Fluent $fluent
      */
-    public function actualTeams(Fluent $fluent)
+    public function actualTeam(Fluent $fluent)
     {
-        $fluent->where('[team.is_actual] = 1');
+        $fluent->where('[team.actual] = 1');
     }
 
     /**
@@ -50,6 +50,14 @@ class Filters extends Object
      */
     public function orderedTeams(Fluent $fluent)
     {
-        $fluent->orderBy('[team.order] ASC');
+        $fluent->orderBy('[team.order] ASC, [team.points] DESC');
+    }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function confirmedMatch(Fluent $fluent)
+    {
+        $fluent->where('[match.confirmed] = 1');
     }
 }
