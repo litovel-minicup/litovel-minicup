@@ -1,4 +1,9 @@
 /**
+ * Import Variables
+ */
+@import "_var";
+
+/**
  * Import Bourbon and Neat
  */
 
@@ -11,20 +16,22 @@
  */
 
 @import "reset";
-@import "_var";
 @import "_header";
 
 body {
+	margin-top: $universal-dis;
 	@include outer-container();
 	height: 100%;
 }
 
 section {
+	margin-top: $universal-dis;
 	@include span-columns(8);
 	background: $grey;
 }
 
 aside {
+	margin-top: $universal-dis;
 	background: $yellow;
 	@include span-columns(4);
 	@include omega();
