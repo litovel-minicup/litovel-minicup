@@ -54,6 +54,11 @@ class MigrationsManager extends Object
     /** @var Context */
     private $con;
 
+    /** @var TeamReplicator  */
+    private $replicator;
+
+    /** @var  TeamDataRefresher */
+    private $TDR;
 
     /**
      * @param CategoryRepository $CR
@@ -64,6 +69,8 @@ class MigrationsManager extends Object
      * @param DayRepository $DR
      * @param YearRepository $YR
      * @param Context $con
+     * @param TeamReplicator $replicator
+     * @param TeamDataRefresher $TDR
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
@@ -72,7 +79,9 @@ class MigrationsManager extends Object
                                 MatchTermRepository $MTR,
                                 DayRepository $DR,
                                 YearRepository $YR,
-                                Context $con)
+                                Context $con,
+                                TeamReplicator $replicator,
+                                TeamDataRefresher $TDR)
     {
         $this->CR = $CR;
         $this->TR = $TR;
@@ -82,16 +91,18 @@ class MigrationsManager extends Object
         $this->DR = $DR;
         $this->YR = $YR;
         $this->con = $con;
+        $this->replicator = $replicator;
+        $this->TDR = $TDR;
     }
 
 
     /**
-     * Migrate old database to new database for $category.
      * @param Category $category
      * @param bool $truncate
      * @param bool $withScore
+     * @param int $limit
      */
-    public function migrateMatches(Category $category, $truncate = FALSE, $withScore = FALSE, $limit = 0)
+    public function migrateMatches(Category $category, $truncate = FALSE, $withScore = FALSE, $limit = NULL)
     {
         if ($truncate) {
             $this->truncate($category);
@@ -134,7 +145,6 @@ class MigrationsManager extends Object
             if ($matchTerm) {
                 $match->matchTerm = $matchTerm;
                 $this->MR->persist($match);
-                continue;
             }
             $day = $this->DR->getByDatetime($datetime);
             if (!$day) {
@@ -155,6 +165,8 @@ class MigrationsManager extends Object
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
+            $this->replicator->replicate($category, $match);
+            $this->TDR->refreshData($category);
         }
 
     }

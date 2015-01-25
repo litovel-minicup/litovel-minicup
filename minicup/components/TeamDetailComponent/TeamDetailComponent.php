@@ -7,14 +7,13 @@ use Minicup\Model\Repository\TeamRepository;
 
 class TeamDetailComponent extends BaseComponent
 {
-
     /** @var Team */
     public $team;
 
-    /** @var \Minicup\Model\Repository\TeamRepository */
+    /** @var TeamRepository */
     private $TR;
 
-    /** @var  IListOfMatchesComponentFactory */
+    /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
 
     /**

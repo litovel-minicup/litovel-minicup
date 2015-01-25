@@ -8,13 +8,6 @@ use Nette\Utils\ArrayHash;
 
 class LoginFormComponent extends BaseComponent
 {
-
-
-    public function render()
-    {
-        $this->template->render();
-    }
-
     /**
      * @return Form
      */
@@ -35,7 +28,7 @@ class LoginFormComponent extends BaseComponent
      * @param Form $form
      * @param ArrayHash $values
      */
-    public function loginFormValidated($form, $values)
+    public function loginFormValidated(Form $form, ArrayHash $values)
     {
         $user = $this->presenter->user;
         try {
@@ -51,7 +44,7 @@ class LoginFormComponent extends BaseComponent
             $user->setExpiration('20 minutes', TRUE);
         }
         $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
-        $this->presenter->redirect(':Admin:Homepage:');
+        $this->presenter->redirect('this');
     }
 
 

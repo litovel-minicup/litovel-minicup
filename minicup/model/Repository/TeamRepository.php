@@ -23,14 +23,20 @@ class TeamRepository extends BaseRepository
     }
 
     /**
+     * @param Team $team
      * @return Team[]
      */
-    public function findAll()
+    public function findHistoricalTeams(Team $team)
     {
-        return $this->createEntities(
-            $this->createFluent()
-                ->fetchAll()
-        );
+        // without using $this->createFluent(), because in createFluent is applied actual filter
+        $id = $team->i->id;
+        $rows = $this->connection->query("
+          SELECT * FROM {$this->getTable()}
+            WHERE [team.team_info_id] = %i
+              AND [team.after_match_id] IN
+                (SELECT [match.id] FROM [match] WHERE [match.home_team_info_id] = %i OR [match.away_team_info_id] = %i)",
+            $id, $id, $id)->fetchAll();
+        return $this->createEntities($rows);
     }
 
     /**
@@ -49,5 +55,15 @@ class TeamRepository extends BaseRepository
         return parent::persist($entity);
     }
 
-
+    /**
+     * @param Category $category
+     * @return Team[]
+     */
+    public function getByCategory(Category $category)
+    {
+        $rows = $this->createFluent()->applyFilter('actual')
+            ->where('[team.category_id] = %i', $category->id)
+            ->fetchAll();
+        return $this->createEntities($rows);
+    }
 }

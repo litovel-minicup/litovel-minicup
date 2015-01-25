@@ -34,6 +34,7 @@ services:
         - Minicup\Model\Manager\TeamReplicator
         - Minicup\Model\Manager\ReorderManager
         - Minicup\Model\Manager\TeamDataRefresher
+        - Minicup\Model\Manager\MatchManager
 
         # (s)css & js compiling
         - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
@@ -72,6 +73,9 @@ services:
         - Minicup\Components\ICategoryTableComponentFactory
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
+        - implement: Minicup\Components\IMatchFormComponentFactory
+          parameters: [Minicup\Model\Entity\Match match]
+          arguments: [%match%]
         - implement: Minicup\Components\IStaticContentComponentFactory
           parameters: [Minicup\Model\Entity\StaticContent content]
           arguments: [%content%]
