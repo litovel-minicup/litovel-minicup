@@ -11,4 +11,21 @@
  */
 
 @import "reset";
-@import "var";
+@import "_var";
+@import "_header";
+
+body {
+	@include outer-container();
+	height: 100%;
+}
+
+section {
+	@include span-columns(8);
+	background: $grey;
+}
+
+aside {
+	background: $yellow;
+	@include span-columns(4);
+	@include omega();
+}

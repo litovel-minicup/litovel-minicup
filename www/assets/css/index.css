@@ -1,4 +1,70 @@
-a[href^="#error:"] {
-    background: red;
-    color: white;
-}
+/**
+ * Import Bourbon and Neat
+ */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit; }
+
+/**
+ * Import Components
+ */
+header {
+  background: #4180ff;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 100%;
+  height: 125px; }
+  header:last-child {
+    margin-right: 0; }
+
+.logo__wrapper {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 18.96686%;
+  background: #0054ff;
+  height: 125px; }
+  .logo__wrapper:last-child {
+    margin-right: 0; }
+  .logo__wrapper .logo__image {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 5%; }
+
+body {
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%; }
+  body::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+section {
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 65.88078%;
+  background: #e1e1e1; }
+  section:last-child {
+    margin-right: 0; }
+
+aside {
+  background: #ffd800;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 31.76157%;
+  margin-right: 0; }
+  aside:last-child {
+    margin-right: 0; }
+
+/*# sourceMappingURL=index.css.map */
