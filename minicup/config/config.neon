@@ -96,4 +96,3 @@ services:
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
-        replicator: Kdyby\Replicator\DI\ReplicatorExtension
