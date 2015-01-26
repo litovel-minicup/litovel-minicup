@@ -39,6 +39,7 @@ class JsComponentFactory extends Object
     {
         $files = new FileCollection($this->wwwPath);
         $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
+        $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
         $files->addFile('assets/js/grido.js');
         $files->addFiles(Finder::findFiles('*.js')->from($this->wwwPath . '/assets/js'));
         $files->addFile('assets/js/main.js');

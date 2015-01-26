@@ -2,7 +2,6 @@
 
 namespace Minicup\Misc;
 
-
 use Nette\Utils\Strings;
 use Nextras\Application\LinkFactory;
 
@@ -37,8 +36,8 @@ class Texy extends \Texy
     }
 
     /**
-     * process [Presenter:action arg1, arg2] to link
-     * @param $text
+     * translate [Presenter:action arg1, arg2] to link with LinkFactory
+     * @param string $text
      * @return string
      */
     public function replaceLinks($text)

@@ -5,7 +5,6 @@ namespace Minicup\Model\Manager;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
-use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Object;
 use Tracy\Debugger;
@@ -25,12 +24,10 @@ class ReorderManager extends Object
     /** @var  TeamRepository */
     private $TR;
 
-    /** @var TeamInfoRepository */
-    private $TIR;
-
     /** @var  MatchRepository */
     private $MR;
 
+    /** @var  Team[] */
     private $teams;
 
     /** @var  Team[] */
@@ -38,10 +35,10 @@ class ReorderManager extends Object
 
     private $teamPointsFromPoints;
 
-    public function __construct(TeamRepository $TR, TeamInfoRepository $TIR, MatchRepository $MR)
+
+    public function __construct(TeamRepository $TR, MatchRepository $MR)
     {
         $this->TR = $TR;
-        $this->TIR = $TIR;
         $this->MR = $MR;
     }
 
@@ -62,9 +59,6 @@ class ReorderManager extends Object
         }
     }
 
-    /**
-     *
-     */
     private function orderByPoints()
     {
         $this->teamPointsFromPoints = array();
@@ -86,9 +80,9 @@ class ReorderManager extends Object
     }
 
     /**
-     * @param      $pointScale
-     * @param      $teamPosition
-     * @param null $teamPoints
+     * @param array $pointScale
+     * @param int $teamPosition
+     * @param int|NULL $teamPoints
      */
     private function teamOrderByInternalPoints($pointScale, $teamPosition, $teamPoints = NULL)
     {
@@ -116,9 +110,9 @@ class ReorderManager extends Object
     }
 
     /**
-     * @param $points
-     * @param $countOfTeamsWithSamePoints
-     * @param $teamWorsePosition
+     * @param int $points
+     * @param int $countOfTeamsWithSamePoints
+     * @param int $teamWorsePosition
      */
     private function orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamWorsePosition)
     {
@@ -153,16 +147,16 @@ class ReorderManager extends Object
                 //order by next rules
             }
         } else {
-            $this->miniTableWithMutalMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamWorsePosition);
+            $this->miniTableWithMutualMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamWorsePosition);
         }
     }
 
     /**
-     * @param $teamsToCompare
-     * @param $countOfTeamsWithSamePoints
-     * @param $teamWorsePosition
+     * @param array $teamsToCompare
+     * @param int $countOfTeamsWithSamePoints
+     * @param int $teamWorsePosition
      */
-    private function miniTableWithMutalMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamWorsePosition)
+    private function miniTableWithMutualMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamWorsePosition)
     {
         $teamPointsFromMiniTable = array();
         foreach (array_keys($teamsToCompare) as $key) {

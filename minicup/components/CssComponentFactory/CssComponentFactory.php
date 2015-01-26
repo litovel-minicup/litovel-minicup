@@ -39,7 +39,10 @@ class CssComponentFactory extends Object
     {
         $files = new FileCollection($this->wwwPath);
         $files->addFile('assets/scss/index.css');
+
         $files->addFiles(Finder::findFiles('*.css')->from($this->wwwPath.'/assets/css'));
+
+        $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
 
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath.'/temp');
         // TODO: add urls fixing

@@ -3,6 +3,7 @@
 namespace Minicup\Model\Manager;
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Object;
@@ -32,7 +33,9 @@ class TeamDataRefresher extends Object
      */
     public function refreshData(Category $category)
     {
+        /** @var Team[] $teams */
         $teams = array();
+        /** @var Team $team */
         foreach ($this->TR->findAll() as $team) {
             $team->points = 0;
             $team->scored = 0;
@@ -51,12 +54,14 @@ class TeamDataRefresher extends Object
             $away->received += $match->scoreHome;
 
             if ($match->scoreHome > $match->scoreAway) {
-                $home->points += 2; //TODO: set as constant
+                $home->points += ReorderManager::POINTS_FOR_WINNER;
+                $away->points += ReorderManager::POINTS_FOR_LOSER;
             } elseif($match->scoreHome < $match->scoreAway) {
-                $away->points += 2;
+                $home->points += ReorderManager::POINTS_FOR_LOSER;
+                $away->points += ReorderManager::POINTS_FOR_WINNER;
             } else {
-                $home->points += 1;
-                $away->points += 1;
+                $home->points += ReorderManager::POINTS_FOR_DRAW;
+                $away->points += ReorderManager::POINTS_FOR_DRAW;
             }
         }
 
