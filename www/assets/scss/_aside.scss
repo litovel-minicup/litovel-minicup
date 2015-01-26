@@ -1,0 +1,24 @@
+.aside {
+	margin-top: $universal-dis;
+	background: $dark--yellow;
+	@include span-columns(4);
+	@include omega();
+}
+
+.upcoming__matches--home {
+	@include span-columns(2 of 4);
+	@include omega();
+	background: $light--yellow;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.upcoming__matches--away {
+	@include span-columns(2 of 4);
+	@include omega();
+	text-align: center;
+	background: $medium--yellow;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

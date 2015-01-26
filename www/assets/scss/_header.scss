@@ -1,16 +1,28 @@
 header {
-	background: $light-blue;
+	background: $light--blue;
 	@include span-columns(12);
-	height: 125px;
+	height: 120px;
 }
 
-.logo__wrapper {
+.logo {
 	@include span-columns(2.5 of 12);
-	background: $dark-blue;
-	height: 125px;
+	background: $dark--blue;
+	height: 120px;
 	.logo__image {
+		max-width: 140px;
 		width: 70%;
+		height: 85%;
 		margin-left: 15%;
 		margin-top: 5%;
+	}
+}
+
+.nav {
+	@include span-columns(5 of 12);
+	@include shift(4.5);
+
+	li {
+		display: inline;
+		color: white;
 	}
 }

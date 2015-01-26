@@ -2,13 +2,33 @@
  * Color Variables
  */
 
-$light-blue: #4180ff;
-$dark-blue: #0054ff;
-$grey: #e1e1e1;
-$yellow: #ffd800;
+	/**
+	 * Blue
+	 */
+
+	$light--blue: #4180ff;
+	$medium--blue: #666666;
+	$dark--blue: #0043c9;
+
+	/**
+	 * Yellow
+	 */
+
+	$dark--yellow: #e0be00; 
+	$medium--yellow: #ffd800;
+	$light--yellow: #fce252;
+
+	/**
+	 * Grey
+	 */
+
+	
+	$dark--grey: #929292; 
+	$medium--grey: #bababa;
+	$light--grey: #e1e1e1;
 
 /**
  * Measure variables
  */
 
-$universal-dis: 8px; 
+$universal-dis: 6px; 
