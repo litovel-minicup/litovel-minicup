@@ -33,7 +33,7 @@ class ListOfMatchesComponent extends BaseComponent
 
     public function render()
     {
-        $matches = [];
+        $matches = array();
         $this->template->actualID = 0;
         if ($this->arg instanceof Team) {
             $matches = $this->arg->i->matches;
