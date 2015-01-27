@@ -1,0 +1,34 @@
+.Box__head {
+	font-family: 'Montserrat';
+	font-size: 24px;
+	padding: 25px 20px;
+}
+
+.Box__head:before {
+	content: "\2663";
+	padding-right: 15px;
+}
+
+.Box__subhead {
+	font-size: 18px;
+	padding: 15px 20px;
+	font-family: 'PTBoldItalic';
+}
+
+.Box__content {
+	padding: 15px 20px;
+	line-height: 1.32;
+}
+
+.Box__content--split--left {
+	@include span-columns(2.5 of 6);
+}
+
+.Box__content--split--right {
+	@include span-columns(2.5 of 6);
+}
+
+.Box__content--split--middle {
+	@include span-columns(1 of 6);
+	text-align: center;
+}

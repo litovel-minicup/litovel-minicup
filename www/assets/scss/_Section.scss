@@ -1,0 +1,4 @@
+.Section {
+	@include span-columns(8);
+	background: $light--grey;
+}
