@@ -57,6 +57,7 @@ class ReorderManager extends Object
         Debugger::barDump($this->teamPointsFromPoints, 'teamPointsFromPoints');
         foreach ($this->teams as $team) {
             Debugger::barDump('i: ' . $team->i->id . ', order: ' . $team->order, $team->id);
+            $this->TR->persist($team);
         }
     }
 
@@ -96,7 +97,7 @@ class ReorderManager extends Object
             foreach (array_keys($teamPoints) as $key) {
                 $teamsToCompare[] = $this->teamsEntities[$key];
             }
-            $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $pointScale[0]);
+            $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $pointScale);
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {

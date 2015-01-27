@@ -4,31 +4,40 @@ namespace Minicup\Components;
 
 
 use Minicup\Misc\EntitiesReplicatorContainer;
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
+use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
-use Tracy\Debugger;
 
 class MatchFormComponent extends BaseComponent
 {
+    /** @var Category */
+    private $category;
+
     /** @var int */
     private $count;
 
-    /** @var  MatchRepository */
+    /** @var MatchRepository */
     private $MR;
 
-    public function __construct($count, MatchRepository $MR)
+    /** @var MatchManager */
+    private $MM;
+
+    public function __construct(Category $category, $count, MatchRepository $MR, MatchManager $MM)
     {
+        $this->category = $category;
         $this->count = $count;
         $this->MR = $MR;
+        $this->MM = $MM;
     }
 
     public function render()
     {
-        $this->template->match = $this->count;
+        $this->template->match = $this->category;
         $this->template->render();
     }
 
@@ -41,22 +50,27 @@ class MatchFormComponent extends BaseComponent
 
         $f = $this->FF->create();
 
-
-
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
             $container->currentGroup = $container->getForm()->addGroup('zápas', FALSE);
-            $container->addText('scoreHome', 'skore home: '.$match->homeTeam->name);
-            $container->addText('scoreAway', 'skore away: '.$match->awayTeam->name);
-        }, $this->MR->findAll(), 1);
-
+            $container
+                ->addText('scoreHome', $match->homeTeam->name)
+                ->setType('number')
+                ->addCondition(Form::INTEGER);
+            $container
+                ->addText('scoreAway', $match->awayTeam->name)
+                ->setType('number')
+                ->addCondition(Form::INTEGER);
+        },
+            $this->MR->findMatchesByCategory($this->category, MatchRepository::UNCONFIRMED),
+            $this->count);
 
         /** @var SubmitButton $addSubmit */
         $addSubmit = $matches->addSubmit('addMatch', 'zobrazit další zápas')
             ->setValidationScope(FALSE)
             ->setAttribute('class', 'ajax')
             ->onClick[] = $this->addMatchClicked;
-        $f->addSubmit('submit','odeslat');
+        $f->addSubmit('submit', 'odeslat');
         $f->onSuccess[] = $this->formSubmitted;
         return $f;
     }
@@ -65,15 +79,28 @@ class MatchFormComponent extends BaseComponent
     {
         /** @var EntitiesReplicatorContainer $matches */
         $this->redrawControl('');
-        $matches = $button->parent;
         $button->parent->createOne();
     }
 
     /***/
     public function formSubmitted(Form $form, ArrayHash $values)
     {
-        Debugger::$maxDepth = 5;
-        $this->template->data = $values;
+        /** @var SubmitButton $submitButton */
+        $submitButton = $form['submit'];
+        if ($submitButton->isSubmittedBy()) {
+            foreach ($values['matches'] as $matchId => $matchData) {
+                // TODO: add Nette validation
+                if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
+                    continue;
+                }
+                /** @var Match $match */
+                $match = $this->MR->get((int)$matchId);
+                $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
+                $this->presenter->flashMessage('Zápas '.$match->homeTeam->name.' vs. '.$match->awayTeam->name.' byl úspěšně zpracován.');
+            }
+
+        }
+        $this->redirect('this');
     }
 
 

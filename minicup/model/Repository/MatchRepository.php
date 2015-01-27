@@ -2,22 +2,34 @@
 
 namespace Minicup\Model\Repository;
 
+use LeanMapper\Fluent;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 
 class MatchRepository extends BaseRepository
 {
+    /** constants for getting matches from db */
+    const CONFIRMED = 'confirmed';
+    const UNCONFIRMED = 'unconfirmed';
+    const BOTH = 'both';
+
+
     /**
      * @param Category $category
+     * @param string $mode
      * @return Match[]
      */
-    public function findMatchesByCategory(Category $category)
+    public function findMatchesByCategory(Category $category, $mode = MatchRepository::BOTH)
     {
-        return $this->createEntities(
-            $this->createFluent()
-                ->applyFilter('confirmed')
-                ->where('[match.category_id] = %i', $category->id)->fetchAll());
+        /** @var Fluent $fluent */
+        $fluent = $this->createFluent()->where('[match.category_id] = %i', $category->id);
+        if ($mode == static::CONFIRMED) {
+            $fluent->applyFilter('confirmed');
+        } elseif ($mode == static::UNCONFIRMED) {
+            $fluent->applyFilter('unconfirmed');
+        }
+        return $this->createEntities($fluent->fetchAll());
     }
 
     /**

@@ -43,7 +43,7 @@ class TeamDataRefresher extends Object
             $teams[$team->id] = $team;
         }
 
-        foreach ($this->MR->findMatchesByCategory($category) as $match) {
+        foreach ($this->MR->findMatchesByCategory($category, MatchRepository::CONFIRMED) as $match) {
             $home = $teams[$match->homeTeam->team->id];
             $away = $teams[$match->awayTeam->team->id];
 

@@ -50,7 +50,7 @@ class Filters extends Object
      */
     public function orderedTeams(Fluent $fluent)
     {
-        $fluent->orderBy('[team.order] ASC, [team.points] DESC');
+        $fluent->orderBy('[team.order] DESC');
     }
 
     /**
@@ -59,5 +59,13 @@ class Filters extends Object
     public function confirmedMatch(Fluent $fluent)
     {
         $fluent->where('[match.confirmed] = 1');
+    }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function unconfirmedMatch(Fluent $fluent)
+    {
+        $fluent->where('[match.confirmed] = 0');
     }
 }

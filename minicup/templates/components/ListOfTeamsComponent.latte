@@ -1,5 +1,5 @@
 <div class="component">
-{if $user->isAllowed('teams', 'edit')}
+{if $user->isAllowed('teams', 'edit') && FALSE}
 {foreach $teams as $team}
     <div>
         {form teamEditForm-$category->id-$team->id}
@@ -18,6 +18,13 @@
     </div>
 {else}
 <table class="table">
+    <tr>
+        <th>pořadí</th>
+        <th>tým</th>
+        <th>score</th>
+        <th>body</th>
+        <th>pořadí</th>
+    </tr>
 {foreach $teams as $team}
     <tr>
         <td>{$team->order}</td>

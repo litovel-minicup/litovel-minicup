@@ -1,16 +1,3 @@
-<div class="component">
-{form matchForm}
-	<table>
-		<tr>
-			<td>{$match->homeTeam->name}</td>
-			<td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->start|date:"G:i"}</td>
-			<td>{$match->awayTeam->name}</td>
-		</tr>
-		<tr>
-			<td>{input scoreHome}</td>
-			<td>{input matchId} : </td>
-			<td>{input scoreAway}</td>
-		</tr>
-	</table>
-{/form}
+<div class="component" n:snippet>
+{control matchForm}
 </div>

@@ -53,6 +53,7 @@ services:
                 - registerFilter(ordered, [@filters, orderedTeams])
                 - registerFilter(year, [@filters, yearRestrict])
                 - registerFilter(confirmed, [@filters, confirmedMatch])
+                - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository
@@ -74,8 +75,8 @@ services:
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
         - implement: Minicup\Components\IMatchFormComponentFactory
-          parameters: [count]
-          arguments: [%count%]
+          parameters: [Minicup\Model\Entity\Category category, count]
+          arguments: [%category%, %count%]
         - implement: Minicup\Components\IStaticContentComponentFactory
           parameters: [Minicup\Model\Entity\StaticContent content]
           arguments: [%content%]
