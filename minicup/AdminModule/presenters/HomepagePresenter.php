@@ -11,14 +11,12 @@ use Minicup\Model\Repository\TeamRepository;
  */
 class HomepagePresenter extends BaseAdminPresenter
 {
+    /** @var ReorderManager @inject */
+    public $reorder;
     /** @var MatchRepository @inject */
     private $MR;
-
     /** @var TeamRepository @inject */
     private $TR;
-
-    /** @var ReorderManager @inject */
-    private $reorder;
 
     public function renderDefault()
     {
