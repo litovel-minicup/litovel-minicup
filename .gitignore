@@ -1,8 +1,8 @@
 /nbproject/private/
 /nbproject/
-/temp/
-/log/
+/temp/*
+/log/*
 /.idea/
 /vendor/
-/www/temp/
+/www/temp/*
 config.local.neon

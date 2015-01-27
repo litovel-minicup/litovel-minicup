@@ -3,13 +3,11 @@
 namespace Minicup\Components;
 
 
-use Minicup\Model\Entity\Match;
-
 interface IMatchFormComponentFactory
 {
     /**
-     * @param Match $match
+     * @param int $count
      * @return MatchFormComponent
      */
-    public function create(Match $match);
+    public function create($count);
 }

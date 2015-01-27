@@ -74,8 +74,8 @@ services:
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
         - implement: Minicup\Components\IMatchFormComponentFactory
-          parameters: [Minicup\Model\Entity\Match match]
-          arguments: [%match%]
+          parameters: [count]
+          arguments: [%count%]
         - implement: Minicup\Components\IStaticContentComponentFactory
           parameters: [Minicup\Model\Entity\StaticContent content]
           arguments: [%content%]
@@ -96,3 +96,4 @@ services:
 
 extensions:
         leanMapper: Minicup\Model\LeanMapperExtension
+        replicator: Minicup\Misc\EntitiesReplicatorExtension
