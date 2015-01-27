@@ -13,6 +13,7 @@
     "janmarek/webloader": "dev-master",
     "natxet/CssMin": "@dev",
     "neeckeloo/closure-compiler-php": "@dev",
-    "texy/texy": "~2.6"
+    "texy/texy": "~2.6",
+    "kdyby/forms-replicator": "@dev"
   }
 }
