@@ -33,6 +33,7 @@ class ReorderManager extends Object
     /** @var  Team[] */
     private $teamsEntities;
 
+    /** @var $teamPointsFromPoints [] */
     private $teamPointsFromPoints;
 
 
@@ -97,16 +98,20 @@ class ReorderManager extends Object
             }
             $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $pointScale[0]);
         } else {
-            foreach ($pointScale as $key => $countOfTeamsWithSamePoints) {
+            foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
-                    $teamID = array_search($key, $teamPoints);
+                    $teamID = array_search($points, $teamPoints);
                     foreach ($this->teams as $team) {
                         if ($team->id == $teamID) {
                             $team->order = $teamPosition;
                         }
                     }
                 } else {
-                    $this->orderByMutualMatch($key, $countOfTeamsWithSamePoints, $teamPosition);
+                    if ($teamPoints == $this->teamPointsFromPoints) {
+                        $this->orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamPosition);
+                    } else {
+                        $this->orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamPosition, $teamPoints);
+                    }
                 }
                 $teamPosition -= $countOfTeamsWithSamePoints;
             }
@@ -118,7 +123,6 @@ class ReorderManager extends Object
      */
     private function orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints)
     {
-        dump($countOfTeamsWithSamePoints);
         if ($countOfTeamsWithSamePoints == 2) {
 
         }
@@ -128,11 +132,15 @@ class ReorderManager extends Object
      * @param int $points
      * @param int $countOfTeamsWithSamePoints
      * @param int $teamWorsePosition
+     * @param array|NULL $teamsPoints
      */
-    private function orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamWorsePosition)
+    private function orderByMutualMatch($points, $countOfTeamsWithSamePoints, $teamWorsePosition, $teamsPoints = NULL)
     {
         $teamsToCompare = array();
-        foreach ($this->teamPointsFromPoints as $key => $teamPoints) {
+        if ($teamsPoints == NULL) {
+            $teamsPoints = $this->teamPointsFromPoints;
+        }
+        foreach ($teamsPoints as $key => $teamPoints) {
             if ($teamPoints == $points) {
                 $teamsToCompare[] = $this->teamsEntities[$key];
             }
@@ -177,7 +185,7 @@ class ReorderManager extends Object
         foreach (array_keys($teamsToCompare) as $key) {
             $teamPointsFromMiniTable[$key] = 0;
         }
-        for ($mainTeam = 0; $mainTeam < $countOfTeamsWithSamePoints; $mainTeam++) {
+        for ($mainTeam = 0; $mainTeam < $countOfTeamsWithSamePoints - 1; $mainTeam++) {
             for ($comparedTeam = $mainTeam + 1; $comparedTeam < $countOfTeamsWithSamePoints; $comparedTeam++) {
                 $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[$mainTeam], $teamsToCompare[$comparedTeam]);
                 if ($commonMatch != NULL && $commonMatch->scoreHome != $commonMatch->scoreAway) {
