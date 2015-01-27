@@ -1,8 +1,17 @@
-/nbproject/private/
+# IDE folders
 /nbproject/
+/.idea/
+
+# temp folders
 /temp/*
 /log/*
-/.idea/
-/vendor/
 /www/temp/*
+
+# composer
+/vendor/
+
+# compiled css file
+/assets/css/index.css
+
+# local configuration
 config.local.neon
