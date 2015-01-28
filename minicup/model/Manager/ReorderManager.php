@@ -126,8 +126,10 @@ class ReorderManager extends Object
     /**
      * Do array with teams to compare
      *
-     * @param $teamPoints
-     * @return array
+     * @param array    $teamPoints
+     * @param int|NULL $compare
+     *
+     * @return array[]
      */
     private function teamsToCompare($teamPoints, $compare = NULL)
     {
@@ -143,7 +145,9 @@ class ReorderManager extends Object
     /**
      * Reorder by difference ratio scored and received in fullTable
      *
-     * @param $teamsToCompare
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamWithSamePoints
+     * @param int   $teamPosition
      */
     private function orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
@@ -153,9 +157,9 @@ class ReorderManager extends Object
     /**
      * Return team entity with $teamID
      *
-     * @param $teamPosition
-     * @param $winnerTeamID
-     * @param $loserTeamID
+     * @param int $teamID
+     *
+     * @return int
      */
     private function getEntityOfTeam($teamID)
     {
