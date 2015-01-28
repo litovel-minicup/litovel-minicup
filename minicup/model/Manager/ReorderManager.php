@@ -96,18 +96,21 @@ class ReorderManager extends Object
      * @param array      $pointScale
      * @param int        $teamPosition
      * @param array|NULL $teamPoints
+     * @param str|NULL   $recursionFrom
      */
-    private function teamOrderByInternalPoints($pointScale, $teamPosition, $teamPoints = NULL)
+    private function teamOrderByInternalPoints($pointScale, $teamPosition, $teamPoints = NULL, $recursionFrom = NULL)
     {
         if ($teamPoints == NULL) {
             $teamPoints = $this->teamPointsFromPoints;
         }
 
         ksort($pointScale);
-        if (count($pointScale) == 1) {
+        if (count($pointScale) == 1 && $recursionFrom == NULL) {
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+        } elseif (count($pointScale) == 1 && $recursionFrom == "miniTableWithScoreDifference") {
+            //reorder by next rule
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -162,7 +165,7 @@ class ReorderManager extends Object
                 $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
             }
         } else {
-            //order by scoreDifference in minitable
+            $this->miniTableWithScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         }
     }
 
@@ -180,6 +183,28 @@ class ReorderManager extends Object
                 return $team;
             }
         }
+    }
+
+    /**
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamWithSamePoints
+     * @param int   $teamPosition
+     */
+    private function miniTableWithScoreDifference($teamsToCompare, $countOfTeamWithSamePoints, $teamPosition)
+    {
+        $teamPointsFromScore = array();
+        foreach ($teamsToCompare as $mainTeam) {
+            $teamPoints = 0;
+            foreach ($teamsToCompare as $comparativeTeam) {
+                if ($mainTeam->scored - $mainTeam->received > $comparativeTeam->scored - $comparativeTeam->received) {
+                    $teamPoints += 1;
+                }
+            }
+            $teamPointsFromScore[$mainTeam->id] = $teamPoints;
+        }
+        $pointScale = array_count_values($teamPointsFromScore);
+        dump($teamPointsFromScore, $pointScale);
+        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, "miniTableWithScoreDifference");
     }
 
     /**
@@ -208,7 +233,7 @@ class ReorderManager extends Object
                     $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
                 }
             } else if ($commonMatch == NULL) {
-                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints . $teamPosition);  //mutualMatch == FALSE
+                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);  //mutualMatch == FALSE
             } else {
                 $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
             }
