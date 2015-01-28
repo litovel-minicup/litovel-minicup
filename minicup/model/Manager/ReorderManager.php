@@ -107,7 +107,7 @@ class ReorderManager extends Object
         if (count($pointScale) == 1) {
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
-            $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+            $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -149,9 +149,21 @@ class ReorderManager extends Object
      * @param int   $countOfTeamWithSamePoints
      * @param int   $teamPosition
      */
-    private function orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    private function orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
-
+        if ($countOfTeamsWithSamePoints == 2) {
+            if ($teamsToCompare[0]->scored - $teamsToCompare[0]->received == $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
+                //order by next rule
+            } elseif ($teamsToCompare[0]->scored - $teamsToCompare[0]->received > $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
+                $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
+                $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
+            } else {
+                $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition - 1;
+                $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
+            }
+        } else {
+            //order by scoreDifference in minitable
+        }
     }
 
     /**
@@ -159,7 +171,7 @@ class ReorderManager extends Object
      *
      * @param int $teamID
      *
-     * @return int
+     * @return team
      */
     private function getEntityOfTeam($teamID)
     {
@@ -189,18 +201,16 @@ class ReorderManager extends Object
             $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);
             if ($commonMatch != NULL AND $commonMatch->scoreHome != $commonMatch->scoreAway) {
                 if ($teamsToCompare[0]->i->id == $commonMatch->homeTeam->id XOR $commonMatch->scoreHome > $commonMatch->scoreAway) {
-                    $winnerTeamID = $teamsToCompare[1]->id;
-                    $loserTeamID = $teamsToCompare[0]->id;
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
                 } else {
-                    $winnerTeamID = $teamsToCompare[0]->id;
-                    $loserTeamID = $teamsToCompare[1]->id;
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
                 }
-                $this->getEntityOfTeam($loserTeamID)->order = $teamPosition;
-                $this->getEntityOfTeam($winnerTeamID)->order = $teamPosition - 1;
             } else if ($commonMatch == NULL) {
-                $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints . $teamPosition);  //mutualMatch == FALSE
+                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints . $teamPosition);  //mutualMatch == FALSE
             } else {
-                $this->orderByDifferenceBetweenScoredAndReceived($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
             }
         } else {
             $this->miniTableWithMutualMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
