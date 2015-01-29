@@ -13,7 +13,7 @@ abstract class BaseComponent extends Control
     /** @var  IFormFactory */
     protected $FF;
 
-    /** @var String|null */
+    /** @var String|NULL */
     protected $view = NULL;
 
     /**
@@ -60,7 +60,7 @@ abstract class BaseComponent extends Control
                 return $template;
             }
         }
-        $template->setFile($path);
+        $template->setFile($paths[0]);
         return $template;
     }
 

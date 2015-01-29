@@ -35,14 +35,21 @@ class JsComponentFactory extends Object
     /**
      * @return JavaScriptLoader
      */
-    public function create()
+    public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
         $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
-        $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
-        $files->addFile('assets/js/grido.js');
-        $files->addFiles(Finder::findFiles('*.js')->from($this->wwwPath . '/assets/js'));
-        $files->addFile('assets/js/main.js');
+
+        if ($module === 'front') {
+            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
+            $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
+            $files->addFile('assets/js/main.js');
+
+        } elseif($module === 'admin') {
+            $files->addFile('assets/js/admin/grido.js');
+            $files->addFile('assets/js/admin/grido.ext.js');
+            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
+        }
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/temp');
 

@@ -11,6 +11,7 @@ use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
+use Tracy\Debugger;
 use WebLoader\Nette\CssLoader;
 use WebLoader\Nette\JavaScriptLoader;
 
@@ -38,18 +39,29 @@ abstract class BasePresenter extends Presenter
     /** @var JsComponentFactory @inject */
     public $JSCF;
 
+    /** @var string */
+    protected $module;
+
     /**
-     * @return CssLoader
+     * set module property
      */
+    protected function startup()
+    {
+        parent::startup();
+        $splitName = Strings::split($this->getName(), '(:)');
+        $this->module = Strings::lower($splitName[0]);
+    }
+
+    /** @return CssLoader */
     protected function createComponentCss()
     {
-        return $this->CSSCF->create();
+        return $this->CSSCF->create($this->module);
     }
 
     /** @return JavaScriptLoader */
     protected function createComponentJs()
     {
-        return $this->JSCF->create();
+        return $this->JSCF->create($this->module);
     }
 
     /**
@@ -113,6 +125,11 @@ abstract class BasePresenter extends Presenter
             "$dir/templates/$module/$presenter/$this->view.latte",
         );
         return $list;
+    }
+
+    protected function shutdown($response)
+    {
+        Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
     }
 
 

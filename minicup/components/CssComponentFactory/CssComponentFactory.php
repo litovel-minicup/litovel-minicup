@@ -7,6 +7,7 @@ use Nette\Object;
 use Nette\Utils\Finder;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
+use WebLoader\InvalidArgumentException;
 use WebLoader\Nette\CssLoader;
 
 /**
@@ -33,18 +34,22 @@ class CssComponentFactory extends Object
     }
 
     /**
+     * @param string $module
      * @return CssLoader
+     * @throws InvalidArgumentException
      */
-    public function create()
+    public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-        $files->addFile('assets/scss/index.css');
 
-        $files->addFiles(Finder::findFiles('*.css')->from($this->wwwPath.'/assets/css'));
-
-        $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
-
-        $compiler = Compiler::createCssCompiler($files, $this->wwwPath.'/temp');
+        if ($module === 'front') {
+            $files->addFile('assets/scss/index.css');
+            $files->addFiles(Finder::findFiles('*.css')->in(($this->wwwPath . '/assets/css')));
+            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
+        } elseif ($module === 'admin') {
+            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
+        }
+        $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/temp');
         // TODO: add urls fixing
         //$compiler->addFilter(new CssUrlsFilter());
 
