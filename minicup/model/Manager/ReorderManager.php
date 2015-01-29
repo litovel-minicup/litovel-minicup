@@ -110,7 +110,9 @@ class ReorderManager extends Object
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } elseif (count($pointScale) == 1 && $recursionFrom == "miniTableWithScoreDifference") {
-            //reorder by next rule
+            $teamsToCompare = $this->teamsToCompare($teamPoints);
+            $countOfTeamsWithSamePoints = count($teamsToCompare);
+            $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -148,15 +150,20 @@ class ReorderManager extends Object
     /**
      * Reorder by difference ratio scored and received in fullTable
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamWithSamePoints
-     * @param int   $teamPosition
+     * @param array  $teamsToCompare
+     * @param int    $countOfTeamWithSamePoints
+     * @param int    $teamPosition
+     * @param boolen $mutualMatch
      */
-    private function orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    private function orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition, $mutualMatch = TRUE)
     {
         if ($countOfTeamsWithSamePoints == 2) {
             if ($teamsToCompare[0]->scored - $teamsToCompare[0]->received == $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
-                //order by next rule
+                if ($mutualMatch == FALSE) {
+                    //reorder by end rule
+                } else {
+                    $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+                }
             } elseif ($teamsToCompare[0]->scored - $teamsToCompare[0]->received > $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
                 $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
                 $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
@@ -166,6 +173,31 @@ class ReorderManager extends Object
             }
         } else {
             $this->miniTableWithScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+        }
+    }
+
+    /**
+     * Compare team score difference in mini table from mini table
+     *
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamsWithSamePoints
+     * @param int   $teamPosition
+     */
+    private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    {
+        if ($countOfTeamsWithSamePoints == 2) {
+            $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);
+            if ($commonMatch == NULL or $commonMatch->scoreHome - $commonMatch->scoreAway == 0) {
+                //order by next rule
+            } else {
+                if ($teamsToCompare[0]->i->id == $commonMatch->homeTeam->id XOR $commonMatch->scoreHome - $commonMatch->scoreAway > 0) {
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
+                } else {
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
+                }
+            }
         }
     }
 
@@ -186,6 +218,8 @@ class ReorderManager extends Object
     }
 
     /**
+     * Compare team score difference in mini table from full table
+     *
      * @param array $teamsToCompare
      * @param int   $countOfTeamWithSamePoints
      * @param int   $teamPosition
@@ -203,7 +237,6 @@ class ReorderManager extends Object
             $teamPointsFromScore[$mainTeam->id] = $teamPoints;
         }
         $pointScale = array_count_values($teamPointsFromScore);
-        dump($teamPointsFromScore, $pointScale);
         $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, "miniTableWithScoreDifference");
     }
 
@@ -233,7 +266,8 @@ class ReorderManager extends Object
                     $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
                 }
             } else if ($commonMatch == NULL) {
-                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);  //mutualMatch == FALSE
+                $mutualMatch = FALSE;
+                $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition, $mutualMatch);
             } else {
                 $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
             }
