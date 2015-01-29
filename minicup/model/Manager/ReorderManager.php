@@ -3,6 +3,7 @@
 namespace Minicup\Model\Manager;
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Object;
@@ -59,9 +60,9 @@ class ReorderManager extends Object
 
         $this->orderByPoints();
 
-        #foreach ($this->teams as $team){
-        #    $this->TR->persist($team);
-        #}
+        foreach ($this->teams as $team) {
+            $this->TR->persist($team);
+        }
 
         $this->debug();
     }
@@ -113,7 +114,9 @@ class ReorderManager extends Object
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } elseif (count($pointScale) == 1 && $recursionFrom == "miniTableWithScoreDifferenceFromMiniTable") {
-            //reorde by next rule
+            $teamsToCompare = $this->teamsToCompare($teamPoints);
+            $countOfTeamsWithSamePoints = count($teamsToCompare);
+            $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -161,7 +164,7 @@ class ReorderManager extends Object
         if ($countOfTeamsWithSamePoints == 2) {
             if ($teamsToCompare[0]->scored - $teamsToCompare[0]->received == $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
                 if ($mutualMatch == FALSE) {
-                    //reorder by end rule
+                    $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
                 } else {
                     $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
                 }
@@ -178,6 +181,23 @@ class ReorderManager extends Object
     }
 
     /**
+     * Set same order for all teams
+     *
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamsWithSamePoints
+     * @param int   $teamPosition
+     */
+    private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    {
+        $teamPosition = $teamPosition - ($countOfTeamsWithSamePoints - 1);
+        foreach ($teamsToCompare as $team) {
+            $team->order = $teamPosition;
+        }
+
+    }
+
+
+    /**
      * Compare team score difference in mini table from mini table
      *
      * @param array $teamsToCompare
@@ -189,7 +209,7 @@ class ReorderManager extends Object
         if ($countOfTeamsWithSamePoints == 2) {
             $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);
             if ($commonMatch == NULL or $commonMatch->scoreHome - $commonMatch->scoreAway == 0) {
-                //order by next rule
+                $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
             } else {
                 if ($teamsToCompare[0]->i->id == $commonMatch->homeTeam->id XOR $commonMatch->scoreHome - $commonMatch->scoreAway > 0) {
                     $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
