@@ -22,7 +22,7 @@ includes:
 services:
         router: @Minicup\Router\RouterFactory::create
         texy: @Minicup\Misc\TexyFactory::create
-        year: @Minicup\Model\Repository\YearRepository::getActualYear
+        year: @Minicup\Model\Repository\YearRepository::getSelectedYear
         - Minicup\Router\RouterFactory
         - Minicup\Misc\IFormFactory
         - Nextras\Application\LinkFactory
@@ -36,7 +36,7 @@ services:
         - Minicup\Model\Manager\TeamDataRefresher
         - Minicup\Model\Manager\MatchManager
 
-        # (s)css & js compiling
+        # css & js compiling
         - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
         - Minicup\Components\JsComponentFactory(%wwwDir%, %productionMode%)
 
@@ -65,10 +65,8 @@ services:
         - Minicup\Model\Repository\YearRepository
         - Minicup\Model\Repository\PhotoRepository
         - Minicup\Model\Repository\StaticContentRepository
-        - class: Minicup\Model\Repository\CategoryRepository
-          setup: [injectYear(@year)]
-        - class: Minicup\Model\Repository\DayRepository
-          setup: [injectYear(@year)]
+        - Minicup\Model\Repository\CategoryRepository
+        - Minicup\Model\Repository\DayRepository
         
         # component factories
         - Minicup\Components\ICategoryTableComponentFactory

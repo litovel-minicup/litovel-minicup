@@ -2,26 +2,33 @@
 
 namespace Minicup\Model\Repository;
 
+use LeanMapper\Connection;
+use LeanMapper\IEntityFactory;
+use LeanMapper\IMapper;
 use Minicup\Model\Entity\Day;
 use Minicup\Model\Entity\MatchTerm;
-use Minicup\Model\Entity\Year;
 
 class DayRepository extends BaseRepository
 {
-    /** @var  Year */
-    private $year;
+    /** @var  YearRepository */
+    private $YR;
 
     /**
-     * @param Year $year
+     * @param Connection $connection
+     * @param IMapper $mapper
+     * @param IEntityFactory $entityFactory
+     * @param YearRepository $YR
      */
-    public function injectYear(Year $year)
+    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR)
     {
-        $this->year = $year;
+        $this->YR = $YR;
+        parent::__construct($connection, $mapper, $entityFactory);
     }
 
     protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
     {
-        return parent::createFluent($this->year->id);
+        $year = $this->YR->getSelectedYear();
+        return parent::createFluent($year->id);
     }
 
     /**
@@ -39,7 +46,7 @@ class DayRepository extends BaseRepository
      */
     public function findAll()
     {
-        return $this->year->days;
+        return $this->YR->getSelectedYear()->days;
     }
 
 

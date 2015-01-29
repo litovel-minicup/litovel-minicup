@@ -41,7 +41,7 @@ class CategoryToggleFormComponent extends BaseComponent
         $items = [];
         $default = 0;
         /** @var Category $category */
-        foreach ($this->YR->getActualYear()->categories as $category) {
+        foreach ($this->YR->getSelectedYear()->categories as $category) {
             $items[$category->id] = $category->name;
             if ($category->slug === $this->session['category']) {
                 $default = $category->id;

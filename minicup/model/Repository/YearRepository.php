@@ -9,20 +9,40 @@ class YearRepository extends BaseRepository
     /**
      * @var Year
      */
-    private $actualYear;
+    private $selectedYear;
 
     /**
      * @return Year
      */
-    public function getActualYear()
+    public function getSelectedYear()
     {
-        if (!$this->actualYear) {
-            $this->actualYear = $this->createEntity(
-                $this->connection
-                    ->select('*')
-                    ->from($this->getTable())
+        if (!$this->selectedYear) {
+            $this->selectedYear = $this->createEntity(
+                $this->createFluent()
                     ->where('actual = 1')->fetch());
         }
-        return $this->actualYear;
+        return $this->selectedYear;
     }
+
+    /**
+     * @param Year $year
+     */
+    public function setSelectedYear(Year $year)
+    {
+        $this->selectedYear = $year;
+    }
+
+    /**
+     * @param string $slug
+     * @return Year|NULL
+     */
+    public function getBySlug($slug)
+    {
+        return $this->createEntity(
+            $this->createFluent()
+                ->where('slug = %s', $slug)
+                ->fetch());
+    }
+
+
 }

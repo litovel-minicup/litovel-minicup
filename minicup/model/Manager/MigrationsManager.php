@@ -107,7 +107,7 @@ class MigrationsManager extends Object
         if ($truncate) {
             $this->truncate($category);
         }
-        $year = $this->YR->getActualYear();
+        $year = $this->YR->getSelectedYear();
         $data = $this->con->table($this->matchTablePrefix . $category->slug)->order('cas_odehrani ASC')->limit($limit);
         if ($limit) {
             $data->limit($limit);

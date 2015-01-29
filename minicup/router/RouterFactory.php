@@ -5,8 +5,10 @@ namespace Minicup\Router;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\TeamInfo;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\Repository\YearRepository;
 use Nette\Application\IRouter;
 use Nette\Application\Request;
 use Nette\Application\Routers\Route;
@@ -23,6 +25,9 @@ class RouterFactory extends Object
     /** @var  TeamRepository */
     private $TR;
 
+    /** @var YearRepository */
+    private $YR;
+
     /** @var  SessionSection */
     private $session;
 
@@ -31,10 +36,11 @@ class RouterFactory extends Object
      * @param TeamRepository $TR
      * @param Session $session
      */
-    public function __construct(CategoryRepository $CR, TeamRepository $TR, Session $session)
+    public function __construct(CategoryRepository $CR, TeamRepository $TR, YearRepository $YR, Session $session)
     {
         $this->CR = $CR;
         $this->TR = $TR;
+        $this->YR = $YR;
         $this->session = $session->getSection('minicup');
     }
 
@@ -44,6 +50,7 @@ class RouterFactory extends Object
     public function create()
     {
         $CR = $this->CR;
+        $YR = $this->YR;
         $session = $this->session;
         if (!isset($session['category'])) {
             $session['category'] = $CR->getDefaultCategory()->slug;
@@ -61,31 +68,63 @@ class RouterFactory extends Object
             }
         );
 
-        $front = new RouteList('Front');
-        $front[] = new Route('', 'Homepage:default');
-        $front[] = new Route('tymy', 'Team:default');
-        $front[] = new Route('zapasy', 'Match:default');
+        $yearFilter = array(
+            Route::FILTER_IN => function ($slug) use ($YR, $session) {
+                $year = $YR->getBySlug($slug);
+                if ($year) {
+                    $session['year'] = $slug;
+                    $YR->setSelectedYear($year);
+                }
+                return $year;
+            },
+            Route::FILTER_OUT => function (Year $year) {
+                return $year->slug;
+            },
+            Route::VALUE => $YR->getSelectedYear()
+        );
 
-        $front[] = new Route('tymy/<category>', array(
+        $front = new RouteList('Front');
+        $front[] = new Route('[<year>/]', array(
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'year' => $yearFilter
+        ));
+
+        $front[] = new Route('[<year>/]tymy', array(
+            'presenter' => 'Team',
+            'action' => 'default',
+            'year' => $yearFilter
+        ));
+
+        $front[] = new Route('[<year>/]zapasy', array(
+            'presenter' => 'Match',
+            'action' => 'default',
+            'year' => $yearFilter
+        ));
+
+        $front[] = new Route('[<year>/]tymy/<category>', array(
             'presenter' => 'Team',
             'action' => 'list',
+            'year' => $yearFilter,
             'category' => $categoryFilter
         ));
 
-        $front[] = new Route('zapasy/<category>', array(
+        $front[] = new Route('[<year>/]zapasy/<category>', array(
             'presenter' => 'Match',
             'action' => 'list',
+            'year' => $yearFilter,
             'category' => $categoryFilter
         ));
 
-        $route = new FilterRoute('<category>/<team>', array(
+        $route = new FilterRoute('[<year>/]<category>/<team>', array(
             'presenter' => 'Team',
             'action' => 'detail',
+            'year' => $yearFilter,
             'category' => $categoryFilter
         ));
+
         $route->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
         $front[] = $route;
-
 
         $router = new RouteList();
         $router[] = $front;
