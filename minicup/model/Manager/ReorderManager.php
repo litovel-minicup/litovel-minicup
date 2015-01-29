@@ -3,7 +3,6 @@
 namespace Minicup\Model\Manager;
 
 use Minicup\Model\Entity\Category;
-use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\Object;
@@ -113,6 +112,8 @@ class ReorderManager extends Object
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+        } elseif (count($pointScale) == 1 && $recursionFrom == "miniTableWithScoreDifferenceFromMiniTable") {
+            //reorde by next rule
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -198,6 +199,8 @@ class ReorderManager extends Object
                     $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
                 }
             }
+        } else {
+            $this->miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         }
     }
 
@@ -215,6 +218,38 @@ class ReorderManager extends Object
                 return $team;
             }
         }
+    }
+
+    /**
+     * Compare team score difference in mini table from mini table
+     *
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamsWithSamePoints
+     * @param int   $teamPosition
+     */
+    private function miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    {
+        $teamPointsFromScore = array();
+        foreach ($teamsToCompare as $team) {
+            $teamPointsFromScore[$team->id] = 0;
+        }
+        for ($mainTeam = 0; $mainTeam < $countOfTeamsWithSamePoints - 1; $mainTeam++) {
+            for ($comparedTeam = $mainTeam + 1; $comparedTeam < $countOfTeamsWithSamePoints; $comparedTeam++) {
+                $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[$mainTeam], $teamsToCompare[$comparedTeam]);
+                if ($commonMatch != NULL && $commonMatch->scoreHome - $commonMatch->scoreAway != 0) {
+                    $score = $commonMatch->scoreHome - $commonMatch->scoreAway;
+                    if ($teamsToCompare[array_search($teamsToCompare[$mainTeam], $teamsToCompare)]->i->id == $commonMatch->homeTeam->id) {
+                        $teamPointsFromScore[$teamsToCompare[$mainTeam]->id] += $score;
+                        $teamPointsFromScore[$teamsToCompare[$comparedTeam]->id] += -$score;
+                    } else {
+                        $teamPointsFromScore[$teamsToCompare[$mainTeam]->id] += -$score;
+                        $teamPointsFromScore[$teamsToCompare[$comparedTeam]->id] += $score;
+                    }
+                }
+            }
+        }
+        $pointScale = array_count_values($teamPointsFromScore);
+        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, 'miniTableWithScoreDifferenceFromMiniTable');
     }
 
     /**
@@ -237,7 +272,7 @@ class ReorderManager extends Object
             $teamPointsFromScore[$mainTeam->id] = $teamPoints;
         }
         $pointScale = array_count_values($teamPointsFromScore);
-        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, "miniTableWithScoreDifference");
+        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, 'miniTableWithScoreDifference');
     }
 
     /**
@@ -265,7 +300,7 @@ class ReorderManager extends Object
                     $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
                     $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
                 }
-            } else if ($commonMatch == NULL) {
+            } else if (!$commonMatch) {
                 $mutualMatch = FALSE;
                 $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition, $mutualMatch);
             } else {
