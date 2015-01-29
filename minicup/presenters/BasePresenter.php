@@ -129,7 +129,9 @@ abstract class BasePresenter extends Presenter
 
     protected function shutdown($response)
     {
-        Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
+        if ($this->getParameter('year')) {
+            Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
+        }
     }
 
 

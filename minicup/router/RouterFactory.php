@@ -84,10 +84,9 @@ class RouterFactory extends Object
         );
 
         $front = new RouteList('Front');
-        $front[] = new Route('[<year>/]', array(
+        $front[] = new Route('', array(
             'presenter' => 'Homepage',
-            'action' => 'default',
-            'year' => $yearFilter
+            'action' => 'default'
         ));
 
         $front[] = new Route('[<year>/]tymy', array(
