@@ -13,10 +13,39 @@
 		background: $medium--yellow;
 	}
 
+	&__content {
+		padding: 0px;
+
+		ul {
+			padding: 15px 0px;
+		}
+
+		li {
+			padding: 2px 15px;
+		}
+
+		&--split--left {
+			background: $light--yellow;
+		}
+
+		&--split--right {
+			background: $medium--yellow;
+			text-align: right;
+		}
+
+		&--split--middle {
+			background: $dark--yellow;
+			color: white;
+			text-align: center;
+			font-family: "Montserrat";
+		}
+
+		&__vs
+
+	}
+
 	&__list--rank {@include span-columns(0.5 of 4);}
 	&__list--team {@include span-columns(2.25 of 4);}
 	&__list--score {@include span-columns(0.75 of 4);}
 	&__list--points {@include span-columns(0.5 of 4);}
-
-	li {text-align: left;}
 }

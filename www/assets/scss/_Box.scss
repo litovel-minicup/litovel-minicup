@@ -25,14 +25,17 @@
 
 	&__content--split--left {
 		@include span-columns(2.5 of 6);
+		@include omega();
 	}
 
 	&__content--split--right {
 		@include span-columns(2.5 of 6);
+		@include omega();
 	}
 
 	&__content--split--middle {
 		@include span-columns(1 of 6);
+		@include omega();
 		text-align: center;
 
 }
