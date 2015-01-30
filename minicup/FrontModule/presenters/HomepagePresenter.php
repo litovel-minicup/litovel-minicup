@@ -2,23 +2,31 @@
 
 namespace Minicup\FrontModule\Presenters;
 
-use Minicup\Model\Manager\TeamReplicator;
-use Minicup\Model\Repository\CategoryRepository;
-use Minicup\Model\Repository\TeamRepository;
+use Minicup\Components\IMatchFormComponentFactory;
+use Minicup\Components\IStaticContentComponentFactory;
+use Minicup\Components\StaticContentComponent;
+use Minicup\Model\Repository\StaticContentRepository;
 
 /**
  * Homepage presenter.
  */
 final class HomepagePresenter extends BaseFrontPresenter
 {
-    /** @var  TeamReplicator @inject */
-    public $replicator;
+    /** @var IStaticContentComponentFactory @inject */
+    public $SCCF;
 
-    /** @var  TeamRepository @inject */
-    public $TR;
+    /** @var StaticContentRepository @inject */
+    public $SCR;
 
-    public function actionDefault()
+    /**
+     * @return StaticContentComponent
+     */
+    protected function createComponentStaticContent()
     {
-
+        return $this->SCCF->create($this->SCR->get(1));
     }
+
+    /** @var IMatchFormComponentFactory @inject */
+    public $MFCF;
+
 }

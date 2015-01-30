@@ -4,6 +4,10 @@ namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\CategoryToggleFormComponent;
 use Minicup\Components\ICategoryToggleFormComponentFactory;
+use Minicup\Components\IListOfMatchesComponentFactory;
+use Minicup\Components\IListOfTeamsComponentFactory;
+use Minicup\Components\ListOfMatchesComponent;
+use Minicup\Components\ListOfTeamsComponent;
 use Minicup\Model\Entity\Category;
 use Minicup\Presenters\BasePresenter;
 use Nette\Http\Session;
@@ -17,11 +21,17 @@ abstract class BaseFrontPresenter extends BasePresenter
     /** @var Category @persistent */
     public $category;
 
-    /** @var  Session @inject */
+    /** @var Session @inject */
     public $session;
 
-    /** @var  ICategoryToggleFormComponentFactory @inject */
+    /** @var ICategoryToggleFormComponentFactory @inject */
     public $CTCF;
+
+    /** @var IListOfMatchesComponentFactory @inject */
+    public $LOMCF;
+
+    /** @var IListOfTeamsComponentFactory @inject */
+    public $LOTCF;
 
     /**
      * @return CategoryToggleFormComponent
@@ -29,6 +39,22 @@ abstract class BaseFrontPresenter extends BasePresenter
     protected function createComponentCategoryToggleFormComponent()
     {
         return $this->CTCF->create();
+    }
+
+    /**
+     * @return ListOfMatchesComponent
+     */
+    protected function createComponentListOfMatches()
+    {
+        return $this->LOMCF->create($this->category);
+    }
+
+    /**
+     * @return ListOfTeamsComponent
+     */
+    protected function createComponentListOfTeams()
+    {
+        return $this->LOTCF->create($this->category);
     }
 
     protected function startup()
