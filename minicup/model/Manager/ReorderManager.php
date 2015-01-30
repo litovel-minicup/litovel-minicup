@@ -21,24 +21,24 @@ class ReorderManager extends Object
     const POINTS_FOR_DRAW = 1;
     const POINTS_FOR_LOSER = 0;
 
-    /** @var  TeamRepository */
+    /** @var TeamRepository */
     private $TR;
 
-    /** @var  MatchRepository */
+    /** @var MatchRepository */
     private $MR;
 
-    /** @var  Team[] */
+    /** @var Team[] */
     private $teams;
 
-    /** @var  Team[] */
+    /** @var Team[] */
     private $teamsEntities;
 
-    /** @var $teamPointsFromPoints [] */
+    /** @var array $teamPointsFromPoints */
     private $teamPointsFromPoints;
 
     /**
-     * @param TeamRepository  $TR
-     * @param MatchRepository $MR
+     * @param TeamRepository    $TR
+     * @param MatchRepository   $MR
      */
     public function __construct(TeamRepository $TR, MatchRepository $MR)
     {
@@ -93,10 +93,10 @@ class ReorderManager extends Object
     /**
      * Reorder team by internal points
      *
-     * @param array      $pointScale
-     * @param int        $teamPosition
-     * @param array|NULL $teamPoints
-     * @param str|NULL   $recursionFrom
+     * @param array         $pointScale
+     * @param int           $teamPosition
+     * @param array|NULL    $teamPoints
+     * @param string|NULL   $recursionFrom
      */
     private function teamOrderByInternalPoints($pointScale, $teamPosition, $teamPoints = NULL, $recursionFrom = NULL)
     {
@@ -135,10 +135,10 @@ class ReorderManager extends Object
     /**
      * Do array with teams to compare
      *
-     * @param array    $teamPoints
-     * @param int|NULL $compare
+     * @param array     $teamPoints
+     * @param int|NULL  $compare
      *
-     * @return array[]
+     * @return Team[]
      */
     private function teamsToCompare($teamPoints, $compare = NULL)
     {
@@ -154,10 +154,10 @@ class ReorderManager extends Object
     /**
      * Reorder by difference ratio scored and received in fullTable
      *
-     * @param array  $teamsToCompare
-     * @param int    $countOfTeamWithSamePoints
-     * @param int    $teamPosition
-     * @param boolen $mutualMatch
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
+     * @param boolean   $mutualMatch
      */
     private function orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition, $mutualMatch = TRUE)
     {
@@ -183,9 +183,9 @@ class ReorderManager extends Object
     /**
      * Set same order for all teams
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamsWithSamePoints
-     * @param int   $teamPosition
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
      */
     private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
@@ -200,9 +200,9 @@ class ReorderManager extends Object
     /**
      * Compare team score difference in mini table from mini table
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamsWithSamePoints
-     * @param int   $teamPosition
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
      */
     private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
@@ -233,19 +233,15 @@ class ReorderManager extends Object
      */
     private function getEntityOfTeam($teamID)
     {
-        foreach ($this->teams as $team) {
-            if ($team->id == $teamID) {
-                return $team;
-            }
-        }
+        return $this->teamsEntities[$teamID];
     }
 
     /**
      * Compare team score difference in mini table from mini table
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamsWithSamePoints
-     * @param int   $teamPosition
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
      */
     private function miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
@@ -275,9 +271,9 @@ class ReorderManager extends Object
     /**
      * Compare team score difference in mini table from full table
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamWithSamePoints
-     * @param int   $teamPosition
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamWithSamePoints
+     * @param int       $teamPosition
      */
     private function miniTableWithScoreDifference($teamsToCompare, $countOfTeamWithSamePoints, $teamPosition)
     {
@@ -298,10 +294,10 @@ class ReorderManager extends Object
     /**
      * Reorder team by mutual match
      *
-     * @param int        $countOfTeamsWithSamePoints
-     * @param int        $points
-     * @param int        $teamPosition
-     * @param array|NULL $teamPoints
+     * @param int           $countOfTeamsWithSamePoints
+     * @param int           $points
+     * @param int           $teamPosition
+     * @param array|NULL    $teamPoints
      */
     private function orderByMutualMatch($countOfTeamsWithSamePoints, $points, $teamPosition, $teamPoints = NULL)
     {
@@ -334,9 +330,9 @@ class ReorderManager extends Object
     /**
      * Compare mutual match in table, for 3+ teams
      *
-     * @param array $teamsToCompare
-     * @param int   $countOfTeamsWithSamePoints
-     * @param int   $teamPosition
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
      */
     private function miniTableWithMutualMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
@@ -357,8 +353,8 @@ class ReorderManager extends Object
                         $teamPointsFromMiniTable[$comparedTeam] += static::POINTS_FOR_LOSER;
                     }
                 } else if ($commonMatch != NULL) {
-                    $teamPointsFromMiniTable[$mainTeam] += $this::POINTS_FOR_DRAW;
-                    $teamPointsFromMiniTable[$comparedTeam] += $this::POINTS_FOR_DRAW;
+                    $teamPointsFromMiniTable[$mainTeam] += static::POINTS_FOR_DRAW;
+                    $teamPointsFromMiniTable[$comparedTeam] += static::POINTS_FOR_DRAW;
                 }
             }
         }

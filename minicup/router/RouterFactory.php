@@ -32,9 +32,10 @@ class RouterFactory extends Object
     private $session;
 
     /**
-     * @param CategoryRepository $CR
-     * @param TeamRepository $TR
-     * @param Session $session
+     * @param CategoryRepository    $CR
+     * @param TeamRepository        $TR
+     * @param YearRepository        $YR
+     * @param Session               $session
      */
     public function __construct(CategoryRepository $CR, TeamRepository $TR, YearRepository $YR, Session $session)
     {
@@ -137,8 +138,8 @@ class RouterFactory extends Object
     }
 
     /**
-     * @param $teamSlug
-     * @param Request $request
+     * @param string    $teamSlug
+     * @param Request   $request
      * @return Team|NULL
      */
     public function teamSlug2Team($teamSlug, Request $request)
@@ -147,8 +148,8 @@ class RouterFactory extends Object
     }
 
     /**
-     * @param TeamInfo|Team $team
-     * @param Request $request
+     * @param TeamInfo|Team     $team
+     * @param Request           $request
      * @return string
      */
     public function team2TeamSlug($team, Request $request)
