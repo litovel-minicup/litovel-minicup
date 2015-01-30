@@ -4,10 +4,12 @@ namespace Minicup\Components;
 
 
 use Closure\RemoteCompiler;
+use Nette\Http\IRequest;
 use Nette\Object;
 use Nette\Utils\Finder;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
+use WebLoader\InvalidArgumentException;
 use WebLoader\Nette\JavaScriptLoader;
 
 /**
@@ -22,18 +24,25 @@ class JsComponentFactory extends Object
     /** @var  bool */
     private $productionMode;
 
+    /** @var IRequest */
+    private $request;
+
     /**
      * @param string $wwwPath
-     * @param bool $productionMode
+     * @param string $productionMode
+     * @param IRequest $request
      */
-    public function __construct($wwwPath, $productionMode)
+    public function __construct($wwwPath, $productionMode, IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
+        $this->request = $request;
     }
 
     /**
+     * @param string $module
      * @return JavaScriptLoader
+     * @throws InvalidArgumentException
      */
     public function create($module)
     {
@@ -45,7 +54,7 @@ class JsComponentFactory extends Object
             $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
             $files->addFile('assets/js/main.js');
 
-        } elseif($module === 'admin') {
+        } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
@@ -61,7 +70,7 @@ class JsComponentFactory extends Object
                 return $remoteCompiler->compile()->getCompiledCode();
             });
         }
-        $control = new JavaScriptLoader($compiler, '/temp');
+        $control = new JavaScriptLoader($compiler, $this->request->getUrl()->baseUrl . '/temp');
         return $control;
     }
 }

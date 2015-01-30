@@ -3,6 +3,8 @@
 namespace Minicup\Components;
 
 
+use Nette\Http\IRequest;
+use Nette\Http\Request;
 use Nette\Object;
 use Nette\Utils\Finder;
 use WebLoader\Compiler;
@@ -22,15 +24,19 @@ class CssComponentFactory extends Object
     /** @var  bool */
     private $productionMode;
 
+    /** @var IRequest */
+    private $request;
 
     /**
      * @param string $wwwPath
      * @param bool $productionMode
+     * @param Request $request
      */
-    public function __construct($wwwPath, $productionMode)
+    public function __construct($wwwPath, $productionMode,  IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
+        $this->request = $request;
     }
 
     /**
@@ -58,7 +64,7 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
-        $control = new CssLoader($compiler, '/temp');
+        $control = new CssLoader($compiler, $this->request->getUrl()->baseUrl.'/temp');
         return $control;
     }
 }
