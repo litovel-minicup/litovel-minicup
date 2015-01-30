@@ -25,6 +25,7 @@ class CategoryToggleFormComponent extends BaseComponent
     public function __construct(CategoryRepository $CR, YearRepository $YR, Session $session)
     {
         $this->CR = $CR;
+        $this->YR = $YR;
         $this->session = $session->getSection('minicup');
     }
 
