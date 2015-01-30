@@ -3,12 +3,9 @@
 namespace Minicup\Components;
 
 
-use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
-use Nette\Application\UI\Form;
 use Nette\Http\Session;
-use Nette\Utils\ArrayHash;
 
 class CategoryToggleFormComponent extends BaseComponent
 {
@@ -28,42 +25,22 @@ class CategoryToggleFormComponent extends BaseComponent
     public function __construct(CategoryRepository $CR, YearRepository $YR, Session $session)
     {
         $this->CR = $CR;
-        $this->YR = $YR;
         $this->session = $session->getSection('minicup');
     }
 
-    /** @return Form */
-    protected function createComponentCategoryToggleForm()
+    public function render()
     {
-        $f = $this->FF->create();
-        $f->setMethod(Form::GET);
-        $select = $f->addSelect('categoryId');
-        $items = [];
-        $default = 0;
-        /** @var Category $category */
-        foreach ($this->YR->getSelectedYear()->categories as $category) {
-            $items[$category->id] = $category->name;
-            if ($category->slug === $this->session['category']) {
-                $default = $category->id;
-            }
-        }
-        $select->setItems($items);
-        if ($default) {
-            $select->setValue($default);
-        }
-
-        $f->addSubmit('submit', 'změnit');
-        $f->onSuccess[] = $this->categoryToggleFormSucceeded;
-        return $f;
+        $this->template->selectedCategory = $this->CR->getBySlug($this->session['category']);
+        $this->template->categories = $this->YR->getSelectedYear()->categories;
+        parent::render();
     }
 
-    /***/
-    public function categoryToggleFormSucceeded(Form $form, ArrayHash $values)
+    public function handleChangeCategory($slug)
     {
-        /** @var Category $category */
-        $category = $this->CR->get($values->categoryId);
+        $category = $this->CR->getBySlug($slug);
         $this->session['category'] = $category->slug;
-        $this->presenter->flashMessage('Preferovaná kategorie úspěšně změněna!','success');
-        $this->presenter->redirect('this', ['category' => $category]);
+        $this->presenter->flashMessage('Preferovaná kategorie úspěšně změněna!', 'success');
+        $this->presenter->redirect('this', array('category' => $category));
     }
+
 }

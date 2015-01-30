@@ -1,83 +1,319 @@
-/*
-Error: Invalid CSS after "		&__vs": expected "{", was "}"
-        on line 45 of scss/_Aside.scss
-        from line 23 of scss/index.scss
-
-40: 			font-family: "Montserrat";
-41: 		}
-42: 
-43: 		&__vs
-44: 
-45: 	}
-46: 
-47: 	&__list--rank {@include span-columns(0.5 of 4);}
-48: 	&__list--team {@include span-columns(2.25 of 4);}
-49: 	&__list--score {@include span-columns(0.75 of 4);}
-50: 	&__list--points {@include span-columns(0.5 of 4);}
-
-Backtrace:
-scss/_Aside.scss:45
-scss/index.scss:23
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:1163:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:1099:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:1094:in `tok!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:641:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:711:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:661:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:653:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:642:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:711:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:661:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:653:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:642:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:635:in `ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:660:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:650:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:117:in `stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/scss/parser.rb:42:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/engine.rb:393:in `_to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/engine.rb:299:in `to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:313:in `block in visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:88:in `block in with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:88:in `with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:312:in `visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:157:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:489:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:469:in `on_file_changed'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:328:in `block in watch'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/listener.rb:252:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/listener.rb:252:in `on_change'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/adapter.rb:254:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+/**
+ * Import Variables
+ */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
 */
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Invalid CSS after \"		&__vs\": expected \"{\", was \"}\"\A         on line 45 of scss/_Aside.scss\A         from line 23 of scss/index.scss\A \A 40: 			font-family: \"Montserrat\";\A 41: 		}\A 42: \A 43: 		&__vs\A 44: \A 45: 	}\A 46: \A 47: 	&__list--rank {@include span-columns(0.5 of 4);}\A 48: 	&__list--team {@include span-columns(2.25 of 4);}\A 49: 	&__list--score {@include span-columns(0.75 of 4);}\A 50: 	&__list--points {@include span-columns(0.5 of 4);}"; }
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+a {
+  text-decoration: none;
+  color: black; }
+
+/*# sourceMappingURL=reset.css.map */
+/**
+ * Color Variables
+ */
+/**
+ * Blue
+ */
+/**
+ * Yellow
+ */
+/**
+ * Grey
+ */
+/**
+ * Measure variables
+ */
+@font-face {
+  font-family: 'MontserratBold';
+  src: url("../font/Montserrat-Bold.ttf") format("truetype");
+  /* Safari, Android, iOS */ }
+@font-face {
+  font-family: 'Montserrat';
+  src: url("../font/Montserrat.ttf") format("truetype");
+  /* Safari, Android, iOS */ }
+@font-face {
+  font-family: 'PTRegular';
+  src: url("../font/PT_Serif-Web-Regular.ttf") format("truetype");
+  /* Safari, Android, iOS */ }
+@font-face {
+  font-family: 'PTBoldItalic';
+  src: url("../font/PT_Serif-Web-BoldItalic.ttf") format("truetype");
+  /* Safari, Android, iOS */ }
+@font-face {
+  font-family: 'MontserratLight';
+  src: url("../font/Montserrat-Light.otf") format("opentype"); }
+/**
+ * Import Bourbon and Neat
+ */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit; }
+
+/**
+ * Import Components
+ */
+.Box__head {
+  font-family: 'Montserrat';
+  font-size: 18px;
+  padding: 25px 20px; }
+  .Box__head:before {
+    content: "\2663";
+    padding-right: 15px; }
+.Box__subhead {
+  font-size: 16px;
+  padding: 15px 20px;
+  height: 3em;
+  font-family: 'PTBoldItalic'; }
+.Box__content {
+  padding: 15px 20px;
+  line-height: 1.32; }
+.Box__content--split--left {
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 41.25442%;
+  margin-right: 0; }
+  .Box__content--split--left:last-child {
+    margin-right: 0; }
+.Box__content--split--right {
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 41.25442%;
+  margin-right: 0; }
+  .Box__content--split--right:last-child {
+    margin-right: 0; }
+.Box__content--split--middle {
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 16.07774%;
+  margin-right: 0;
+  text-align: center; }
+  .Box__content--split--middle:last-child {
+    margin-right: 0; }
+
+.Header {
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 100%;
+  background: #4180ff;
+  height: 120px;
+  font-family: 'Montserrat';
+  font-size: 15px; }
+  .Header:last-child {
+    margin-right: 0; }
+  .Header__logo {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 16.37324%;
+    margin-right: 0;
+    background: #0043c9;
+    height: 120px; }
+    .Header__logo:last-child {
+      margin-right: 0; }
+    .Header__logo__image {
+      max-width: 140px;
+      width: 70%;
+      margin-left: 15%;
+      margin-top: 15%; }
+  .Header__toggle {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 12.1919%;
+    border: 2px solid #0043c9;
+    height: 100%; }
+    .Header__toggle:last-child {
+      margin-right: 0; }
+    .Header__toggle__anchor {
+      height: 50%; }
+      .Header__toggle__anchor a {
+        color: #0043c9;
+        position: absolute;
+        margin: 20px 3%; }
+      .Header__toggle__anchor:hover {
+        background: white; }
+      .Header__toggle__anchor--active {
+        background: #0043c9; }
+        .Header__toggle__anchor--active a {
+          color: white; }
+  .Header__nav {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 58.18662%;
+    margin-left: 12.54401%;
+    margin-top: 10px;
+    height: 100px; }
+    .Header__nav:last-child {
+      margin-right: 0; }
+    .Header__nav li {
+      float: left;
+      display: block;
+      margin-right: 0.60514%;
+      width: 13.76702%;
+      margin-top: 15px;
+      height: 70px;
+      text-align: center; }
+      .Header__nav li:last-child {
+        margin-right: 0; }
+      .Header__nav li:hover {
+        background: white;
+        color: red; }
+      .Header__nav li a {
+        line-height: 70px;
+        color: white; }
+
+.Article__head {
+  color: white;
+  background: #bababa; }
+.Article__heading {
+  font-family: "Montserrat";
+  font-size: 34px;
+  padding-top: 5px; }
+.Article__date {
+  font-family: "PTBoldItalic";
+  padding-top: 15px; }
+.Article__content {
+  font-family: "PTRegular";
+  padding-top: 15px;
+  padding-bottom: 40px;
+  font-size: 16px; }
+
+.Aside {
+  margin-top: 4px;
+  background: #fce252;
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 41.46127%;
+  margin-right: 0; }
+  .Aside:last-child {
+    margin-right: 0; }
+  .Aside__head {
+    background: #EDBE00; }
+  .Aside__subhead {
+    background: #ffd800; }
+  .Aside__content {
+    padding: 0px; }
+    .Aside__content ul {
+      padding: 15px 0px; }
+    .Aside__content li {
+      padding: 2px 15px; }
+    .Aside__content--split--left {
+      background: #fce252; }
+    .Aside__content--split--right {
+      background: #ffd800;
+      text-align: right; }
+    .Aside__content--split--middle {
+      background: #EDBE00;
+      color: white;
+      text-align: center;
+      font-family: "Montserrat"; }
+    .Aside__content__vs {
+      text-align: center;
+      margin-top: 60px;
+      height: 70px; }
+  .Aside__list--rank {
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 11.56915%; }
+    .Aside__list--rank:last-child {
+      margin-right: 0; }
+  .Aside__list--team {
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 55.78457%; }
+    .Aside__list--team:last-child {
+      margin-right: 0; }
+  .Aside__list--score {
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 17.88564%; }
+    .Aside__list--score:last-child {
+      margin-right: 0; }
+  .Aside__list--points {
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 11.56915%; }
+    .Aside__list--points:last-child {
+      margin-right: 0; }
+
+.Section {
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 58.18662%;
+  background: #e1e1e1;
+  margin-top: 4px; }
+  .Section:last-child {
+    margin-right: 0; }
+
+body {
+  margin-top: 4px;
+  max-width: 1145px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%; }
+  body::after {
+    clear: both;
+    content: "";
+    display: table; }
