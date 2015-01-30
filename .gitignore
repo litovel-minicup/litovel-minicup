@@ -20,4 +20,7 @@ config.local.neon
 /assets/.sass-cach
 
 # compiler cache
-/assets/.sass-cache
+www/assets/.sass-cache
+
+# map files	
+www/assets/css
