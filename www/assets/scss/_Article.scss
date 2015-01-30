@@ -1,21 +1,23 @@
-.Article__head {
+.Article {
+	&__head {
 	color: white;
 	background: $medium--grey;
-}
+	}
 
-.Article__heading {
-	font-family: "Montserrat";
-	font-size: 30px;
-	padding: 15px 0;
-}
+	&__heading {
+		font-family: "Montserrat";
+		font-size: 30px;
+		padding: 15px 0;
+	}
 
-.Article__date {
-	font-family: "PTBoldItalic";	
-	padding: 10px 0;
-}
+	&__date {
+		font-family: "PTBoldItalic";	
+		padding: 10px 0;
+	}
 
-.Article__content {
-	font-family: "PTRegular";
-	padding: 10px 0; 
-	font-size: 16px;
+	&__content {
+		font-family: "PTRegular";
+		padding: 10px 0; 
+		font-size: 16px;
+	}
 }

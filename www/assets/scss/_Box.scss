@@ -1,34 +1,34 @@
-.Box__head {
-	font-family: 'Montserrat';
-	font-size: 24px;
-	padding: 25px 20px;
-}
-
-.Box__head:before {
-	content: "\2663";
-	padding-right: 15px;
-}
-
-.Box__subhead {
+.Box {
+	&__head {
+		font-family: 'Montserrat';
+		font-size: 24px;
+		padding: 25px 20px;
+		&:before {
+			content: "\2663";
+			padding-right: 15px;
+		}
+	}
+	&__subhead {
 	font-size: 18px;
 	padding: 15px 20px;
 	font-family: 'PTBoldItalic';
-}
+	}
 
-.Box__content {
-	padding: 15px 20px;
-	line-height: 1.32;
-}
+	&__content {
+		padding: 15px 20px;
+		line-height: 1.32;
+	}
 
-.Box__content--split--left {
-	@include span-columns(2.5 of 6);
-}
+	&__content--split--left {
+		@include span-columns(2.5 of 6);
+	}
 
-.Box__content--split--right {
-	@include span-columns(2.5 of 6);
-}
+	&__content--split--right {
+		@include span-columns(2.5 of 6);
+	}
 
-.Box__content--split--middle {
-	@include span-columns(1 of 6);
-	text-align: center;
+	&__content--split--middle {
+		@include span-columns(1 of 6);
+		text-align: center;
+}
 }
