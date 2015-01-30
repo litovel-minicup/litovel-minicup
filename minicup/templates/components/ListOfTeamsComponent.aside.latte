@@ -1,0 +1,6 @@
+<ul n:foreach="$teams as $team">
+	<li class="Aside__list--rank">{$team->order}</li>
+	<li class="Aside__list--team">{$team->name}</li>
+	<li class="Aside__list--score">{$team->scored}:{$team->received}</li>
+	<li class="Aside__list--points">{$team->points}</li>
+</ul>
