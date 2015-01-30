@@ -8,6 +8,8 @@ use LeanMapper\Repository;
 
 abstract class BaseRepository extends Repository
 {
+    const ORDER_ASC = 'ASC';
+    const ORDER_DESC = 'DESC';
 
     /**
      * @param $id

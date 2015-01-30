@@ -35,6 +35,7 @@ class TeamInfo extends Entity
             $matches[$match->id]->makeAlive($this->entityFactory, null, $this->mapper);
         }
         /**
+         * compare matches by start datetime
          * @param $match1 Match
          * @param $match2 Match
          * @return int

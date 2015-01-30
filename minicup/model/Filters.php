@@ -3,8 +3,10 @@
 namespace Minicup\Model;
 
 
+use LeanMapper\Exception\InvalidArgumentException;
 use LeanMapper\Fluent;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Repository\BaseRepository;
 use Nette\Object;
 
 class Filters extends Object
@@ -23,6 +25,7 @@ class Filters extends Object
     /**
      * @param Fluent $fluent
      * @param Team $team
+     * @deprecated
      */
     public function joinAllMatches(Fluent $fluent, Team $team)
     {
@@ -48,7 +51,7 @@ class Filters extends Object
     /**
      * @param Fluent $fluent
      */
-    public function orderedTeams(Fluent $fluent)
+    public function orderTeams(Fluent $fluent)
     {
         $fluent->orderBy('[team.order] ASC');
     }
@@ -67,5 +70,23 @@ class Filters extends Object
     public function unconfirmedMatch(Fluent $fluent)
     {
         $fluent->where('[match.confirmed] = 0');
+    }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderMatches(Fluent $fluent, $order = BaseRepository::ORDER_ASC)
+    {
+        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent
+            ->leftJoin('match_term')->as('mt')
+            ->on('[match.match_term_id] = mt.[id]')
+            ->leftJoin('day')->as('d')
+            ->on('d.[id] = mt.[day_id]')
+            ->orderBy("d.[day] $order, mt.[start] $order");
     }
 }

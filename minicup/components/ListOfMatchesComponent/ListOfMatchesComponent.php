@@ -31,7 +31,7 @@ class ListOfMatchesComponent extends BaseComponent
         $this->MR = $MR;
     }
 
-    public function render()
+    public function render($mode = 'all', $limit = 0)
     {
         $matches = array();
         $this->template->actualID = 0;
@@ -39,7 +39,14 @@ class ListOfMatchesComponent extends BaseComponent
             $matches = $this->arg->i->matches;
             $this->template->actualID = $this->arg->id;
         } elseif ($this->arg instanceof Category) {
-            $matches = $this->arg->matches;
+            if ($mode == 'current') {
+                $matches = $this->MR->getCurrentMatches($this->arg, $limit);
+            } elseif ($mode == 'next') {
+                $matches = $this->MR->getNextMatches($this->arg, $limit);
+            } else {
+                $matches = $this->arg->matches;
+            }
+
         }
         $this->template->matches = $matches;
         $this->template->render();

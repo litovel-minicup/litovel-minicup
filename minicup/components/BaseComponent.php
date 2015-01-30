@@ -83,7 +83,7 @@ abstract class BaseComponent extends Control
             $this->tryCall($name, $args);
             $view = Strings::lower(Strings::substring($name, 6));
             $this->view = $view;
-            return $this->render();
+            return call_user_func_array($this->render, $args);
         } else {
             return parent::__call($name, $args);
         }

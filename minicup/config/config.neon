@@ -50,10 +50,11 @@ services:
                 - registerFilter(matches, [@filters, joinAllMatches], e)
                 - registerFilter(info, [@filters, joinTeamInfo])
                 - registerFilter(actual, [@filters, actualTeam])
-                - registerFilter(ordered, [@filters, orderedTeams])
+                - registerFilter(ordered, [@filters, orderTeams])
                 - registerFilter(year, [@filters, yearRestrict])
                 - registerFilter(confirmed, [@filters, confirmedMatch])
                 - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
+                - registerFilter(orderMatches, [@filters, orderMatches])
 
         # repositories
         - Minicup\Model\Repository\MatchRepository

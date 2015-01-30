@@ -44,7 +44,7 @@ abstract class BaseFrontPresenter extends BasePresenter
     /**
      * @return ListOfMatchesComponent
      */
-    protected function createComponentListOfMatchesComponent()
+    protected function createComponentListOfMatchesAsideComponent()
     {
         return $this->LOMCF->create($this->category);
     }

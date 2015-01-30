@@ -7,6 +7,10 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 
+/**
+ * Class MatchRepository
+ * @package Minicup\Model\Repository
+ */
 class MatchRepository extends BaseRepository
 {
     /** constants for getting matches from db */
@@ -22,8 +26,7 @@ class MatchRepository extends BaseRepository
      */
     public function findMatchesByCategory(Category $category, $mode = MatchRepository::BOTH)
     {
-        /** @var Fluent $fluent */
-        $fluent = $this->createFluent()->where('[match.category_id] = %i', $category->id);
+        $fluent = $this->createCategoryFluent($category);
         if ($mode == static::CONFIRMED) {
             $fluent->applyFilter('confirmed');
         } elseif ($mode == static::UNCONFIRMED) {
@@ -33,15 +36,39 @@ class MatchRepository extends BaseRepository
     }
 
     /**
-     * @param $t Team
+     * @param Category  $category
+     * @param int       $limit
      * @return Match[]
-     * @deprecated
      */
-    public function findMatchesToTeam(Team $t)
+    public function getCurrentMatches(Category $category, $limit = 0)
     {
-        $rows = $this->connection->select('*')->from($this->getTable())->where('[home_team_id] = ', $t->id, 'OR [away_team_id] = ', $t->id)->fetchAll();
-        return $this->createEntities($rows);
+        $fluent = $this->createCategoryFluent($category, $limit);
+        $dt = new \DibiDateTime();
+        $date = clone $dt;
+        $time = clone $dt;
+        $date->setTime(0, 0, 0);
+        $time->setDate(0, 0, 0);
+        $fluent = $fluent
+            ->where('[mt.start] < %s AND [mt.end] > %s', $time->format('H:i:s'), $time->format('H:i:s'))
+            ->where('[d.day] = %s', $date->format('Y-m-d'));
+        return $this->createEntities($fluent->fetchAll());
     }
+
+    /**
+     * @param Category  $category
+     * @param int       $limit
+     * @return Match[]
+     */
+    public function getNextMatches(Category $category, $limit = 0)
+    {
+        $fluent = $this->createCategoryFluent($category, $limit);
+        $dt = new \DibiDateTime();
+        // TODO: repair this fucking datetimes!
+        $fluent = $fluent
+            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp());
+        return $this->createEntities($fluent->fetchAll());
+    }
+
 
     /**
      * @param Team $team1
@@ -62,5 +89,22 @@ class MatchRepository extends BaseRepository
             return $this->createEntity($row);
         }
         return NULL;
+    }
+
+    /**
+     * provide to fluent aliases 'mt'(match_term) and 'd'(day) joined to match
+     * @param Category $category
+     * @param string $order
+     * @param int $limit
+     * @return Fluent
+     */
+    private function createCategoryFluent(Category $category, $limit = 0, $order = BaseRepository::ORDER_ASC)
+    {
+        $fluent = $this->createFluent($order)->where('[match.category_id] = %i', $category->id);
+        if ($limit) {
+            $fluent->limit($limit);
+        }
+
+        return $fluent;
     }
 }
