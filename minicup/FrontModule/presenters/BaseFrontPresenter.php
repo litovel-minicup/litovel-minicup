@@ -3,9 +3,9 @@
 namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\CategoryToggleFormComponent;
+use Minicup\Components\ICategoryTableComponentFactory;
 use Minicup\Components\ICategoryToggleFormComponentFactory;
 use Minicup\Components\IListOfMatchesComponentFactory;
-use Minicup\Components\IListOfTeamsComponentFactory;
 use Minicup\Components\ListOfMatchesComponent;
 use Minicup\Components\ListOfTeamsComponent;
 use Minicup\Model\Entity\Category;
@@ -30,8 +30,8 @@ abstract class BaseFrontPresenter extends BasePresenter
     /** @var IListOfMatchesComponentFactory @inject */
     public $LOMCF;
 
-    /** @var IListOfTeamsComponentFactory @inject */
-    public $LOTCF;
+    /** @var ICategoryTableComponentFactory @inject */
+    public $CTF;
 
     /**
      * @return CategoryToggleFormComponent
@@ -44,7 +44,7 @@ abstract class BaseFrontPresenter extends BasePresenter
     /**
      * @return ListOfMatchesComponent
      */
-    protected function createComponentListOfMatches()
+    protected function createComponentListOfMatchesComponent()
     {
         return $this->LOMCF->create($this->category);
     }
@@ -52,9 +52,9 @@ abstract class BaseFrontPresenter extends BasePresenter
     /**
      * @return ListOfTeamsComponent
      */
-    protected function createComponentListOfTeams()
+    protected function createComponentCategoryTableComponent()
     {
-        return $this->LOTCF->create($this->category);
+        return $this->CTF->create($this->category);
     }
 
     protected function startup()

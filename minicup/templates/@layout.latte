@@ -11,69 +11,8 @@
     <div n:foreach="$flashes as $flash" class="flash">
         <p>{$flash->message}</p>
     </div>
+    {block body}{/block}
 
-    <div class="Header">
-        <div class="Header__logo">
-            <img src="assets/img/logo.png" class="Header__logo__image">
-        </div>
-        <div class="Header__toggle">
-            {control categoryToggleFormComponent}
-        </div>
-
-        <div class="Header__nav">
-            <ul>
-                <li><a href="">novinky</a></li>
-                <li><a href="">informace</a></li>
-                <li><a href="">zápasy</a></li>
-                <li><a href="">tabulky</a></li>
-                <li><a href="">týmy</a></li>
-                <li><a href="">foto</a></li>
-                <li><a href="">sponzoři</a></li>
-            </ul>   
-        </div>
-    </div>
-
-    <div class="Section">
-        <div class="Article">
-            <div class="Article__head Box__head">Novinky</div>
-            <div class="Box__content">
-                <div class="Article__heading">MINICUP 2014 slavnostně ukončen</div>
-                <div class="Article__date">28.5.2018</div>
-                <div class="Article__content">Před malou chvílí byl slavnostně ukončen mezinárodní turnaj miniházené MINICUP 2014 v Litovli! Kategorii mladší miniházené ovládl domácí Tatran Litovel, ve starších o vzájemný zápas vyhrála Velká Bystřice! Gratulujeme, fotky z dnešního dne pro vás připravujeme a k večeru budou v kategorii Fotogalerie.</div>
-
-                <div class="Article__heading">Aktualizace po sobotě</div>
-                <div class="Article__date">28.5.2018</div>
-                <div class="Article__content">Oficiální sobotní výsledky můžete najít aktualizované v sekci Tabulky. Také byly přidány fotky za dnešní den. Na prvních místech přenocují celky Tatranu Litovel a Velké Bystřice. Nedělní den bude ve znamení dohrávky turnaje a slavnostního vyhlášení, které se bude konat v 15:00 na hale. Těšíme se na vás!</div>
-            </div>      
-        </div>
-    </div>
-
-    <div class="Aside">
-        <!-- TODO: from .Aside div create AsideComponent --> 
-        <div class="Box__head Aside__head">Nadcházející zápasy</div>
-        <div class="Box__content Aside__content">
-            {control listOfMatches:aside}
-        </div>
-        <div class="Box__head Aside__head">Právě hrané zápasy</div>
-        <div class="Box__content Aside__content">
-            {control listOfMatches:aside}
-        </div>
-        <div class="Box__head Aside__head">Pořadí</div>
-        <div class="Box__subhead Aside__subhead">
-            <ul>
-                <li class="Aside__list--rank">#</li>
-                <li class="Aside__list--team">Tým</li>
-                <li class="Aside__list--score">Skóre</li>
-                <li class="Aside__list--points">Body</li>
-            </ul>
-        </div>
-        <div class="Box__content">
-            {control listOfTeams:aside}
-        </div>
-    </div>
-    <!--
     {block login}{/block}
-    -->
-    {block body}{/}
     </body>
 </html>

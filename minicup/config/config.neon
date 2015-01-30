@@ -69,9 +69,12 @@ services:
         - Minicup\Model\Repository\DayRepository
         
         # component factories
-        - Minicup\Components\ICategoryTableComponentFactory
+
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
+        - implement: Minicup\Components\ICategoryTableComponentFactory
+          parameters: [Minicup\Model\Entity\Category category]
+          arguments: [%category%]
         - implement: Minicup\Components\IMatchFormComponentFactory
           parameters: [Minicup\Model\Entity\Category category, count]
           arguments: [%category%, %count%]

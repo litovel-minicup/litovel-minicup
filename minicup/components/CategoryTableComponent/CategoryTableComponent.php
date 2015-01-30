@@ -2,35 +2,23 @@
 
 namespace Minicup\Components;
 
-use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\Entity\Category;
 
-// TODO: differences between this and ListOfTeams?
 class CategoryTableComponent extends BaseComponent
 {
-    /**
-     *
-     * @var TeamRepository
-     */
-    private $TR;
 
-    /**
-     * @param TeamRepository $TR
-     */
-    public function __construct(TeamRepository $TR)
+    /** @var Category */
+    private $category;
+
+    public function __construct(Category $category)
     {
         parent::__construct();
-        $this->TR = $TR;
+        $this->category = $category;
     }
 
     public function render()
     {
-        $this->template->teams = $this->TR->findAll();
-        $this->template->time = time();
-        if ($this->getPresenter()->isAjax()) {
-            $this->template->state = 'ajax';
-        } else {
-            $this->template->state = 'render';
-        }
-        $this->template->render();
+        $this->template->teams = $this->category->teams;
+        parent::render();
     }
 }

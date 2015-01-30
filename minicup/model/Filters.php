@@ -50,7 +50,7 @@ class Filters extends Object
      */
     public function orderedTeams(Fluent $fluent)
     {
-        $fluent->orderBy('[team.order] DESC');
+        $fluent->orderBy('[team.order] ASC');
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 namespace Minicup\Components;
+use Minicup\Model\Entity\Category;
 
 /**
  * Description of ICategoryTableFactory
@@ -10,8 +11,9 @@ namespace Minicup\Components;
 interface ICategoryTableComponentFactory
 {
     /**
+     * @param Category $category
      * @return CategoryTableComponent
      */
-    public function create();
+    public function create(Category $category);
 
 }
