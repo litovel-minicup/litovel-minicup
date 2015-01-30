@@ -1,24 +1,22 @@
-.aside {
+.Aside {
 	margin-top: $universal-dis;
-	background: $dark--yellow;
-	@include span-columns(4);
-	@include omega();
-}
-
-.upcoming__matches--home {
-	@include span-columns(2 of 4);
-	@include omega();
 	background: $light--yellow;
-	text-align: center;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-.upcoming__matches--away {
-	@include span-columns(2 of 4);
+	@include span-columns(5);
 	@include omega();
-	text-align: center;
-	background: $medium--yellow;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	
+	&__head {
+		background: $dark--yellow;
+	}
+
+
+	&__subhead {
+		background: $medium--yellow;
+	}
+
+	&__list--rank {@include span-columns(0.5 of 4);}
+	&__list--team {@include span-columns(2.25 of 4);}
+	&__list--score {@include span-columns(0.75 of 4);}
+	&__list--points {@include span-columns(0.5 of 4);}
+
+	li {text-align: left;}
 }
