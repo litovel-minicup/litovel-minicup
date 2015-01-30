@@ -15,3 +15,9 @@
 
 # local configuration
 config.local.neon
+
+# compiler cache
+/assets/.sass-cach
+
+# compiler cache
+/assets/.sass-cache
