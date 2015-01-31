@@ -60,7 +60,7 @@ class JsComponentFactory extends Object
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
         }
 
-        $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/temp');
+        $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
 
         if ($this->productionMode) {
             $compiler->addFilter(function ($code) {
@@ -70,7 +70,7 @@ class JsComponentFactory extends Object
                 return $remoteCompiler->compile()->getCompiledCode();
             });
         }
-        $control = new JavaScriptLoader($compiler, $this->request->getUrl()->baseUrl . '/temp');
+        $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }
 }

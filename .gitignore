@@ -5,7 +5,7 @@
 # temp folders
 /temp/*
 /log/*
-/www/temp/*
+/www/webtemp/*
 
 # composer
 /vendor/
@@ -17,10 +17,10 @@
 config.local.neon
 
 # compiler cache
-/assets/.sass-cach
+www/assets/.sass-cach
 
 # compiler cache
 www/assets/.sass-cache
 
-# map files	
-www/assets/css
+# map files
+*.map.*

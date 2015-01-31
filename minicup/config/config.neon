@@ -8,7 +8,6 @@ nette:
 			*: Minicup\*Module\Presenters\*Presenter
 	debugger:
 		bar:
-			- JanDrabek\Tracy\GitVersionPanel
 			- NetteExtras\XDebugHelper(PHPSTORM)
 	session:
 		expiration: 14 days
@@ -50,7 +49,7 @@ services:
                 - registerFilter(matches, [@filters, joinAllMatches], e)
                 - registerFilter(info, [@filters, joinTeamInfo])
                 - registerFilter(actual, [@filters, actualTeam])
-                - registerFilter(ordered, [@filters, orderTeams])
+                - registerFilter(orderTeams, [@filters, orderTeams])
                 - registerFilter(year, [@filters, yearRestrict])
                 - registerFilter(confirmed, [@filters, confirmedMatch])
                 - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
