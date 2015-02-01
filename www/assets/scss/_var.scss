@@ -7,16 +7,16 @@
 	 */
 
 	$light--blue: #4180ff;
-	$medium--blue: #666666;
-	$dark--blue: #0043c9;
+	$medium--blue: darken($light--blue, 10%);
+	$dark--blue: darken($light--blue, 25%);
 
 	/**
 	 * Yellow
 	 */
 
-	$dark--yellow: #EDBE00; 
 	$medium--yellow: #ffd800;
-	$light--yellow: #fce252;
+	$dark--yellow: darken($medium--yellow, 4%); 
+	$light--yellow: lighten($medium--yellow, 15%);
 
 	/**
 	 * Grey

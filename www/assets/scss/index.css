@@ -104,23 +104,16 @@ html {
  * Import Components
  */
 .Box__head {
-  float: left;
-  display: block;
-  margin-right: 0.35211%;
-  width: 100%;
   font-family: 'Montserrat';
-  font-size: 24px;
-  padding: 25px 20px;
-  letter-spacing: -1.5px; }
-  .Box__head:last-child {
-    margin-right: 0; }
+  font-size: 18px;
+  padding: 25px 20px; }
   .Box__head:before {
     content: "\2663";
-    padding-right: 20px; }
+    padding-right: 15px; }
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
-  height: 7em;
+  height: 3em;
   font-family: 'PTBoldItalic'; }
 .Box__content {
   padding: 15px 20px;
@@ -158,7 +151,7 @@ html {
   width: 100%;
   background: #4180ff;
   height: 120px;
-  font-family: 'MontserratBold';
+  font-family: 'Montserrat';
   font-size: 15px; }
   .Header:last-child {
     margin-right: 0; }
@@ -168,7 +161,7 @@ html {
     margin-right: 0.35211%;
     width: 16.37324%;
     margin-right: 0;
-    background: #0040c1;
+    background: #0043c9;
     height: 120px; }
     .Header__logo:last-child {
       margin-right: 0; }
@@ -182,20 +175,20 @@ html {
     display: block;
     margin-right: 0.35211%;
     width: 12.1919%;
-    border: 2px solid #0040c1;
+    border: 2px solid #0043c9;
     height: 100%; }
     .Header__toggle:last-child {
       margin-right: 0; }
     .Header__toggle__anchor {
       height: 50%; }
       .Header__toggle__anchor a {
-        color: #0040c1;
+        color: #0043c9;
         position: absolute;
         margin: 20px 3%; }
       .Header__toggle__anchor:hover {
         background: white; }
       .Header__toggle__anchor--active {
-        background: #0040c1; }
+        background: #0043c9; }
         .Header__toggle__anchor--active a {
           color: white; }
   .Header__nav {
@@ -231,8 +224,7 @@ html {
 .Article__heading {
   font-family: "Montserrat";
   font-size: 34px;
-  padding-top: 5px;
-  letter-spacing: -1.5px; }
+  padding-top: 5px; }
 .Article__date {
   font-family: "PTBoldItalic";
   padding-top: 15px; }
@@ -244,7 +236,7 @@ html {
 
 .Aside {
   margin-top: 4px;
-  background: #ffe44d;
+  background: #fce252;
   float: left;
   display: block;
   margin-right: 0.35211%;
@@ -253,8 +245,7 @@ html {
   .Aside:last-child {
     margin-right: 0; }
   .Aside__head {
-    background: #ebc700;
-    letter-spacing: -1.5px; }
+    background: #EDBE00; }
   .Aside__subhead {
     background: #ffd800; }
   .Aside__content {
@@ -264,12 +255,12 @@ html {
     .Aside__content li {
       padding: 2px 15px; }
     .Aside__content--split--left {
-      background: #ffe44d; }
+      background: #fce252; }
     .Aside__content--split--right {
       background: #ffd800;
       text-align: right; }
     .Aside__content--split--middle {
-      background: #ebc700;
+      background: #EDBE00;
       color: white;
       text-align: center;
       font-family: "Montserrat"; }
@@ -321,9 +312,7 @@ body {
   max-width: 1145px;
   margin-left: auto;
   margin-right: auto;
-  height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  height: 100%; }
   body::after {
     clear: both;
     content: "";

@@ -1,17 +1,20 @@
 .Box {
 	&__head {
+		@include span-columns(12);
 		font-family: 'Montserrat';
-		font-size: 18px;
-		padding: 25px 20px;
+		font-size: 24px;
+		padding: 25px 20px;	
+		letter-spacing: -1.5px;
 		&:before {
 			content: "\2663";
-			padding-right: 15px;
+			padding-right: 20px;
 		}
 	}
+
 	&__subhead {
 	font-size: 16px;
 	padding: 15px 20px;
-	height: 3em;
+	height: 7em;
 	font-family: 'PTBoldItalic';
 	
 	}
