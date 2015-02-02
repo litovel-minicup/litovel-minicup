@@ -7,7 +7,7 @@
 
     <div class="Box__content--split--middle Aside__content--split--middle">
         <ul n:inner-foreach="$matches as $match">
-            <li>{$match->matchTerm->start|date:"G:i"}</li>
+            <li>{$match->matchTerm|matchStart}</li>
         </ul>
     </div>
 

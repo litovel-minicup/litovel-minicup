@@ -87,6 +87,6 @@ class Filters extends Object
             ->on('[match.match_term_id] = mt.[id]')
             ->leftJoin('day')->as('d')
             ->on('d.[id] = mt.[day_id]')
-            ->orderBy("d.[day] $order, mt.[start] $order");
+            ->orderBy("d.[day] $order, mt.[start] $order, [match.id] $order");
     }
 }

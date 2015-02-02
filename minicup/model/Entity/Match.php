@@ -17,5 +17,19 @@ use LeanMapper\Entity;
  */
 class Match extends Entity
 {
+    /**
+     * @return int|string
+     */
+    public function getScoreHome()
+    {
+        return $this->__get('scoreHome') ? $this->__get('scoreHome') : ' - ';
+    }
 
+    /**
+     * @return int|string
+     */
+    public function getScoreAway()
+    {
+        return $this->__get('scoreAway') ? $this->__get('scoreAway') : ' - ';
+    }
 }

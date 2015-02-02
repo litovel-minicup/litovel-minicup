@@ -4,8 +4,11 @@ namespace Minicup\Components;
 
 
 use Minicup\Misc\IFormFactory;
+use Minicup\Model\Entity\MatchTerm;
 use Nette\Application\UI\Control;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
+use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Utils\Strings;
 
 abstract class BaseComponent extends Control
@@ -96,4 +99,25 @@ abstract class BaseComponent extends Control
     {
         $this->redrawControl();
     }
+
+    /**
+     * @return ITemplate
+     */
+    public function getTemplate()
+    {
+        /** @var Template $template */
+        $template = parent::getTemplate();
+        $latte = $template->getLatte();
+        $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n. Y"));
+        });
+        $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->start, "G:i"));
+        });
+        $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->end, "G:i"));
+        });
+        return $template;
+    }
+
 }

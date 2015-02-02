@@ -24,7 +24,7 @@ abstract class BasePresenter extends Presenter
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
 
-    /** @var  IFormFactory @inject */
+    /** @var IFormFactory @inject */
     public $FF;
 
     /** @var CategoryRepository @inject */

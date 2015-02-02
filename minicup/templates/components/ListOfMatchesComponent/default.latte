@@ -5,19 +5,15 @@
             <th>Scóre</th>
             <th>Hostující tým</th>
             <th>Začátek</th>
-            <th>Konec</th>
-            <th>Hřiště</th>
-            <th>Počet online reportů</th>
+            <th>Datum</th>
         </tr>
         {foreach $matches as $match}
             <tr>
                 <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                 <td>{$match->scoreHome} : {$match->scoreAway}</td>
                 <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
-                <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->start|date:"G:i"}</td>
-                <td>{$match->matchTerm->day->day|date:"j. n. Y"} - {$match->matchTerm->end|date:"G:i"}</td>
-                <td>{$match->matchTerm->location}</td>
-                <td>{$match->onlineReports|length}</td>
+                <td>{$match->matchTerm|matchStart} - {$match->matchTerm|matchEnd}</td>
+                <td>{$match->matchTerm|matchDate}</td>
             </tr>
         {/foreach}
     </table>
