@@ -72,7 +72,9 @@ services:
 
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
-        - Minicup\Components\IAsideComponentFactory
+        - implement: Minicup\Components\IAsideComponentFactory
+          parameters: [Minicup\Model\Entity\Category category]
+          arguments: [%category%]
         - implement: Minicup\Components\ICategoryTableComponentFactory
           parameters: [Minicup\Model\Entity\Category category]
           arguments: [%category%]

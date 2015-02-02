@@ -1,0 +1,22 @@
+<div class="Aside">
+    <div class="Box__head Aside__head">Právě hrané zápasy</div>
+    <div class="Box__content Aside__content">
+        {control listOfMatchesAsideComponent:aside current, 4}
+    </div>
+    <div class="Box__head Aside__head">Následující zápasy</div>
+    <div class="Box__content Aside__content">
+        {control listOfMatchesAsideComponent:aside next, 4}
+    </div>
+    <div class="Box__head Aside__head">Pořadí</div>
+    <div class="Box__subhead Aside__subhead">
+        <ul>
+            <li class="Aside__list--rank">#</li>
+            <li class="Aside__list--team">Tým</li>
+            <li class="Aside__list--score">Skóre</li>
+            <li class="Aside__list--points">Body</li>
+        </ul>
+    </div>
+    <div class="Box__content">
+        {control categoryTableComponent:aside}
+    </div>
+</div>

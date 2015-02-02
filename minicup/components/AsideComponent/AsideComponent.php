@@ -3,6 +3,8 @@
 namespace Minicup\Components;
 
 
+use Minicup\Model\Entity\Category;
+
 class AsideComponent extends BaseComponent
 {
     /** @var ICategoryTableComponentFactory */
@@ -11,11 +13,30 @@ class AsideComponent extends BaseComponent
     /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
 
-    public function __construct(IListOfMatchesComponentFactory $LOMCF, ICategoryToggleFormComponentFactory $CTCF)
+    /** @var Category */
+    private $category;
+
+    public function __construct(Category $category, IListOfMatchesComponentFactory $LOMCF, ICategoryTableComponentFactory $CTCF)
     {
-        $this->LOMF = $LOMCF;
+        $this->category = $category;
+        $this->LOMCF = $LOMCF;
         $this->CTCF = $CTCF;
     }
 
+    /**
+     * @return ListOfMatchesComponent
+     */
+    protected function createComponentListOfMatchesAsideComponent()
+    {
+        return $this->LOMCF->create($this->category);
+    }
+
+    /**
+     * @return CategoryTableComponent
+     */
+    protected function createComponentCategoryTableComponent()
+    {
+        return $this->CTCF->create($this->category);
+    }
 
 }

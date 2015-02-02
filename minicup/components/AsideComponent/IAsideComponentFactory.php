@@ -3,8 +3,13 @@
 namespace Minicup\Components;
 
 
+use Minicup\Model\Entity\Category;
+
 interface IAsideComponentFactory
 {
-    /** @return AsideComponent */
-    public function create();
+    /**
+     * @param Category $category
+     * @return AsideComponent
+     */
+    public function create(Category $category);
 }
