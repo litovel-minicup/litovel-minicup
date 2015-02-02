@@ -60,6 +60,7 @@ services:
         - Minicup\Model\Repository\UserRepository
         - Minicup\Model\Repository\TeamRepository
         - Minicup\Model\Repository\TeamInfoRepository
+        - Minicup\Model\Repository\TagRepository
         - Minicup\Model\Repository\OnlineReportRepository
         - Minicup\Model\Repository\MatchTermRepository
         - Minicup\Model\Repository\YearRepository

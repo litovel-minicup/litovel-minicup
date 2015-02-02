@@ -17,4 +17,14 @@ class TagRepository extends BaseRepository
         $row = $this->createFluent()->where('[slug] = %s', $slug)->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
+
+    /**
+     * @param string[] $slugs
+     * @return Tag[]
+     */
+    public function findBySlugs(array $slugs)
+    {
+        $rows = $this->createFluent()->where('[slug] IN (%s)', $slugs)->fetchAll();
+        return $this->createEntities($rows);
+    }
 }
