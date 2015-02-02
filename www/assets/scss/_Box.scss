@@ -1,0 +1,42 @@
+.Box {
+	&__head {
+		font-family: 'Montserrat';
+		font-size: 18px;
+		padding: 25px 20px;
+		&:before {
+			content: "\2663";
+			padding-right: 15px;
+		}
+	}
+	&__subhead {
+	font-size: 16px;
+	padding: 15px 20px;
+	height: 3em;
+	font-family: 'PTBoldItalic';
+	
+	}
+
+	&__content {
+		padding: 15px 20px;
+		line-height: 1.32;
+
+
+	}
+
+	&__content--split--left {
+		@include span-columns(2.5 of 6);
+		@include omega();
+	}
+
+	&__content--split--right {
+		@include span-columns(2.5 of 6);
+		@include omega();
+	}
+
+	&__content--split--middle {
+		@include span-columns(1 of 6);
+		@include omega();
+		text-align: center;
+
+}
+}

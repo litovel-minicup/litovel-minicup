@@ -2,33 +2,79 @@
 
 namespace Minicup\Presenters;
 
+use Minicup\Components\CssComponentFactory;
 use Minicup\Components\ILoginFormComponentFactory;
-use Minicup\Model;
-use Nette;
+use Minicup\Components\JsComponentFactory;
+use Minicup\Misc\IFormFactory;
+use Minicup\Model\Repository\CategoryRepository;
+use Minicup\Model\Repository\YearRepository;
+use Nette\Application\UI\Form;
+use Nette\Application\UI\Presenter;
+use Nette\Utils\Strings;
+use Tracy\Debugger;
+use WebLoader\Nette\CssLoader;
+use WebLoader\Nette\JavaScriptLoader;
 
 /**
  * Base presenter.
  */
-abstract class BasePresenter extends Nette\Application\UI\Presenter
+abstract class BasePresenter extends Presenter
 {
 
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
 
-    /** @var Model\Repository\CategoryRepository @inject */
+    /** @var IFormFactory @inject */
+    public $FF;
+
+    /** @var CategoryRepository @inject */
     public $CR;
 
-    /** @var Model\Repository\YearRepository @inject */
+    /** @var YearRepository @inject */
     public $YR;
 
+    /** @var CssComponentFactory @inject */
+    public $CSSCF;
+
+    /** @var JsComponentFactory @inject */
+    public $JSCF;
+
+    /** @var string */
+    protected $module;
+
     /**
-     * @return Nette\Application\UI\Form
+     * set module property
+     */
+    protected function startup()
+    {
+        parent::startup();
+        $splitName = Strings::split($this->getName(), '(:)');
+        $this->module = Strings::lower($splitName[0]);
+    }
+
+    /** @return CssLoader */
+    protected function createComponentCss()
+    {
+        return $this->CSSCF->create($this->module);
+    }
+
+    /** @return JavaScriptLoader */
+    protected function createComponentJs()
+    {
+        return $this->JSCF->create($this->module);
+    }
+
+    /**
+     * @return Form
      */
     protected function createComponentLoginForm()
     {
         return $this->LFCF->create();
     }
 
+    /**
+     * before render
+     */
     public function beforeRender()
     {
         parent::beforeRender();
@@ -43,17 +89,17 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         $layout = $this->layout ? $this->layout : 'layout';
         $dir = $this->context->parameters['appDir'];
-        $names = Nette\Utils\Strings::split($this->getName(), '(:)');
+        $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = [
+        $list = array(
             "$dir/templates/$module/$presenter/@$layout.latte",
             "$dir/templates/$module/$presenter.@$layout.latte",
             "$dir/templates/$module.$presenter.@$layout.latte",
             "$dir/templates/$module/@$layout.latte",
             "$dir/templates/$module.@$layout.latte",
-        ];
+        );
         do {
             $list[] = "$dir/templates/@$layout.latte";
             $dir = dirname($dir);
@@ -69,16 +115,23 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public function formatTemplateFiles()
     {
         $dir = $this->context->parameters['appDir'];
-        $names = Nette\Utils\Strings::split($this->getName(), '(:)');
+        $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = [
+        $list = array(
             "$dir/templates/$module.$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter/$this->view.latte",
-        ];
+        );
         return $list;
+    }
+
+    protected function shutdown($response)
+    {
+        if ($this->getParameter('year')) {
+            Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
+        }
     }
 
 

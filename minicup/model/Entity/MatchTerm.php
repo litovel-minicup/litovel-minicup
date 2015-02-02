@@ -6,12 +6,11 @@ use LeanMapper\Entity;
 
 /**
  * @property int        $id
- * @property \DateTime  $start
- * @property \DateTime  $end
- * @property string     $location
- * @property Day        $day m:hasOne(day_id:day)
- * @property Match[]    $matches m:belongsToMany
- *
+ * @property \DateTime  $start                      datetime of start this MT
+ * @property \DateTime  $end                        datetime of end this MT
+ * @property string     $location                   location
+ * @property Day        $day m:hasOne(day_id:day)   in which day is?
+ * @property Match[]    $matches m:belongsToMany    what matches are played in this term?
  */
 class MatchTerm extends Entity
 {

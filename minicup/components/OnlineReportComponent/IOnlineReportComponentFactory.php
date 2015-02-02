@@ -13,6 +13,6 @@ interface IOnlineReportComponentFactory
      * @param $match Match
      * @return OnlineReportComponent
      */
-    public function create($match);
+    public function create(Match $match);
 
 }

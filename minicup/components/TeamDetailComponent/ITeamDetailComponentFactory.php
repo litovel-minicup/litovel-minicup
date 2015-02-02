@@ -13,5 +13,5 @@ interface ITeamDetailComponentFactory
      * @param $team Team
      * @return TeamDetailComponent
      */
-    public function create($team);
+    public function create(Team $team);
 }

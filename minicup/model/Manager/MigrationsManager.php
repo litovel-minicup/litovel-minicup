@@ -21,35 +21,44 @@ use Nette\Object;
 use Nette\Utils\DateTime;
 use Nette\Utils\Strings;
 
+/**
+ * provide migration from 2014 minicup db to 2015 db
+ * @package Minicup\Model\Manager
+ */
 class MigrationsManager extends Object
 {
     private $teamTablePrefix = '2014_tymy_';
     private $matchTablePrefix = '2014_zapasy_';
 
-    /** @var  CategoryRepository */
+    /** @var CategoryRepository */
     private $CR;
 
-    /** @var  TeamRepository */
+    /** @var TeamRepository */
     private $TR;
 
     /** @var TeamInfoRepository */
     private $TIR;
 
-    /** @var  MatchRepository */
+    /** @var MatchRepository */
     private $MR;
 
-    /** @var  MatchTermRepository */
+    /** @var MatchTermRepository */
     private $MTR;
 
     /** @var DayRepository */
     private $DR;
 
-    /** @var  YearRepository */
+    /** @var YearRepository */
     private $YR;
 
-    /** @var  Context */
+    /** @var Context */
     private $con;
 
+    /** @var TeamReplicator  */
+    private $replicator;
+
+    /** @var  TeamDataRefresher */
+    private $TDR;
 
     /**
      * @param CategoryRepository $CR
@@ -60,6 +69,8 @@ class MigrationsManager extends Object
      * @param DayRepository $DR
      * @param YearRepository $YR
      * @param Context $con
+     * @param TeamReplicator $replicator
+     * @param TeamDataRefresher $TDR
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
@@ -68,7 +79,9 @@ class MigrationsManager extends Object
                                 MatchTermRepository $MTR,
                                 DayRepository $DR,
                                 YearRepository $YR,
-                                Context $con)
+                                Context $con,
+                                TeamReplicator $replicator,
+                                TeamDataRefresher $TDR)
     {
         $this->CR = $CR;
         $this->TR = $TR;
@@ -78,21 +91,28 @@ class MigrationsManager extends Object
         $this->DR = $DR;
         $this->YR = $YR;
         $this->con = $con;
+        $this->replicator = $replicator;
+        $this->TDR = $TDR;
     }
 
 
     /**
-     * Migrate old database to new database for $category.
      * @param Category $category
      * @param bool $truncate
+     * @param bool $withScore
+     * @param int $limit
      */
-    public function migrate(Category $category, $truncate = FALSE)
+    public function migrateMatches(Category $category, $truncate = FALSE, $withScore = FALSE, $limit = NULL)
     {
         if ($truncate) {
             $this->truncate($category);
         }
-        $year = $this->YR->getActualYear();
-        foreach ($this->con->table($this->matchTablePrefix . $category->slug) as $row) {
+        $year = $this->YR->getSelectedYear();
+        $data = $this->con->table($this->matchTablePrefix . $category->slug)->order('cas_odehrani ASC')->limit($limit);
+        if ($limit) {
+            $data->limit($limit);
+        }
+        foreach ($data as $row) {
             /** @var DateTime $play_time */
             $play_time = $row->cas_odehrani;
             $play_time->add(\DateInterval::createFromDateString('1 year'));
@@ -112,15 +132,19 @@ class MigrationsManager extends Object
             }
             $match = new Match();
             $match->category = $category;
-            $match->homeTeam = $homeTeam;
-            $match->awayTeam = $awayTeam;
+            $match->homeTeam = $homeTeam->i;
+            $match->awayTeam = $awayTeam->i;
+            if ($withScore) {
+                $match->scoreHome = $row->SCR_domaci;
+                $match->scoreAway = $row->SCR_hoste;
+                $match->confirmed = 1;
+            }
             $datetime = new \DibiDateTime($play_time->getTimestamp());
 
             $matchTerm = $this->MTR->getByStart($datetime);
             if ($matchTerm) {
                 $match->matchTerm = $matchTerm;
                 $this->MR->persist($match);
-                continue;
             }
             $day = $this->DR->getByDatetime($datetime);
             if (!$day) {
@@ -136,11 +160,13 @@ class MigrationsManager extends Object
             $start->setDate(0, 0, 0);
             $matchTerm->start = $start;
             $end = clone $datetime;
-            $end->setTimestamp($datetime->getTimestamp() + 0.5 * (60 * 60));
+            $end->setTimestamp((int)$datetime->getTimestamp() + 0.5 * (60 * 60));
             $matchTerm->end = $end;
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
+            $this->replicator->replicate($category, $match);
+            $this->TDR->refreshData($category);
         }
 
     }

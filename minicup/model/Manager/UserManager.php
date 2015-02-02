@@ -2,16 +2,20 @@
 
 namespace Minicup\Model\Manager;
 
+
+use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\User;
+use Minicup\Model\Repository\EntityNotFoundException;
 use Minicup\Model\Repository\UserRepository;
-use Nette;
+use Nette\InvalidArgumentException;
+use Nette\Object;
+use Nette\Security\AuthenticationException;
+use Nette\Security\IAuthenticator;
+use Nette\Security\Identity;
 use Nette\Security\Passwords;
 
 
-/**
- * Users management.
- */
-class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
+class UserManager extends Object implements IAuthenticator
 {
 
     /** @var UserRepository */
@@ -25,27 +29,27 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
     /**
      * Performs an authentication.
      * @param   $credentials array
-     * @return Nette\Security\Identity
-     * @throws Nette\Security\AuthenticationException
+     * @return  Identity
+     * @throws  AuthenticationException
      */
     public function authenticate(array $credentials)
     {
         list($username, $password) = $credentials;
 
         try {
-            $UE = $this->UR->findByUsername($username);
-        } catch (\Exception $ex) {
-            throw new Nette\Security\AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
+            $user = $this->UR->findByUsername($username);
+        } catch (EntityNotFoundException $e) {
+            throw new AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
         }
 
-        if (!Passwords::verify($password, $UE->password_hash)) {
-            throw new Nette\Security\AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
-        } elseif (Passwords::needsRehash($UE->password_hash)) {
-            $UE->password_hash = Passwords::hash($password);
-            $this->UR->persist($UE);
+        if (!Passwords::verify($password, $user->password_hash)) {
+            throw new AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
+        } elseif (Passwords::needsRehash($user->password_hash)) {
+            $user->password_hash = Passwords::hash($password);
+            $this->UR->persist($user);
         }
 
-        return new Nette\Security\Identity($UE->id, $UE->role, array('fullname' => $UE->fullname));
+        return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
     }
 
     /**
@@ -54,21 +58,21 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
      * @param $password string
      * @param $fullname string
      * @param $role string
-     * @throws \Exception
+     * @throws InvalidValueException
      * @return int
      */
     public function add($username, $password, $fullname, $role = 'guest')
     {
         if ($this->UR->existsUsername($username)) {
-            throw new \Exception('Zadané uživatelské jméno již existuje.');
+            throw new InvalidArgumentException('Zadané uživatelské jméno již existuje.');
         }
-        $UE = new User;
-        $UE->username = $username;
-        $UE->password_hash = Passwords::hash($password);
-        $UE->role = $role;
-        $UE->fullname = $fullname;
-        $id = $this->UR->persist($UE);
+        $user = new User;
+        $user->username = $username;
+        $user->password_hash = Passwords::hash($password);
+        $user->role = $role;
+        $user->fullname = $fullname;
+        $id = $this->UR->persist($user);
         return $id;
     }
-
 }
+

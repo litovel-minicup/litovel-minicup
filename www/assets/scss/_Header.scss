@@ -1,0 +1,79 @@
+.Header {
+	@include span-columns(12);
+
+	background: $light--blue;
+	height: 120px;
+	font-family: 'Montserrat';
+	font-size: 15px;
+	
+	&__logo {
+		@include span-columns(2 of 12);
+		@include omega();
+
+		background: $dark--blue;
+		height: 120px;
+		&__image {
+			max-width: 140px;
+			width: 70%;
+			margin-left: 15%;
+			margin-top: 15%;
+		}
+	}
+
+	&__toggle {
+		@include span-columns(1.5 of 12);
+
+		border: 2px solid $dark--blue;
+		height: 100%;
+
+		&__anchor {
+			height: 50%;
+
+			a {
+				color: $dark--blue;
+				position: absolute;
+				margin: 20px 3%;
+			}
+
+			&:hover {
+				background: white;
+			}
+
+			&--active {
+				background: $dark--blue;
+				a {
+					color: white;
+				}
+			}
+		}
+	}
+
+	&__nav {
+
+	@include span-columns(7 of 12);
+	@include shift(1.5);
+
+	margin-top: 10px;
+	height: 100px;
+
+		li {
+			@include span-columns(1 of 7);
+			margin-top: 15px;
+			height: 70px;
+			text-align: center;
+
+			&:hover {
+				background: white;
+				color: red;
+			}
+
+			a {
+				line-height: 70px;
+				color: white;
+			}
+		}
+
+
+	}
+
+}

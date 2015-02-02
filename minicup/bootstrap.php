@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+umask(0);
 $configurator = new Nette\Configurator;
 
 //$configurator->setDebugMode(\Tracy\Debugger::DEVELOPMENT); // enable for your remote IP

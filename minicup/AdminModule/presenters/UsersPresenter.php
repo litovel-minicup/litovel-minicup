@@ -4,50 +4,29 @@ namespace Minicup\AdminModule\Presenters;
 
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
+use LeanMapper\Connection;
 use Minicup\Model\Entity;
 use Minicup\Model\Manager\UserManager;
-use Nette;
 use Nette\Application\UI\Form;
+use Nette\InvalidArgumentException;
+use Nette\Utils\ArrayHash;
 
 /**
- * Users grid presenter.
+ * Users administration presenter.
  */
 class UsersPresenter extends BaseAdminPresenter
 {
 
-    /**
-     * @var \DibiConnection
-     */
-    private $DC;
+    /** @var Connection @inject */
+    public $DC;
+
+    /** @var UserManager @inject */
+    public $UM;
 
     /**
-     * @var UserManager
+     * @param $name
+     * @return Grid
      */
-    private $UM;
-
-    public function __construct(\DibiConnection $DC, UserManager $UM)
-    {
-        parent::__construct();
-        $this->DC = $DC;
-        $this->UM = $UM;
-    }
-
-    public function userFormSuccess($form, $values)
-    {
-        try {
-            $this->UM->add(
-                $values->username,
-                $values->password,
-                $values->fullname,
-                $values->role);
-        } catch (\Exception $ex) {
-            $form->addError($ex->getMessage());
-            return FALSE;
-        }
-        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
-        $this->redirect('Homepage:default');
-    }
-
     protected function createComponentGrid($name)
     {
         $grid = new Grid($this, $name);
@@ -66,24 +45,46 @@ class UsersPresenter extends BaseAdminPresenter
         return $grid;
     }
 
+    /**
+     * @return Form
+     */
     protected function createComponentUserForm()
     {
-        $form = new Form();
-        $form->addText('username', 'uživatelské jméno')
+        $f = $this->FF->create();
+        $f->addText('username', 'uživatelské jméno')
             ->setRequired();
-        $form->addText('fullname', 'celé jméno')
+        $f->addText('fullname', 'celé jméno')
             ->setRequired();
-        $form->addPassword('password', 'heslo')
+        $f->addPassword('password', 'heslo')
             ->setRequired('Zadejte prosím heslo');
-        $form->addPassword('password_check', 'kontrola hesla')
+        $f->addPassword('password_check', 'kontrola hesla')
             ->setOmitted(TRUE)
-            ->addConditionOn($form['password'], Form::FILLED)
+            ->addConditionOn($f['password'], Form::FILLED)
             ->addRule(Form::FILLED, 'Zadejte prosím heslo znovu pro ověření.')
-            ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $form['password']);
-        $form->addSelect('role', 'role uživatele', Array('admin' => 'administrátor', 'moderator' => 'moderátor'));
-        $form->addSubmit('submit', 'vytvořit');
-        $form->onSuccess[] = $this->userFormSuccess;
-        return $form;
+            ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $f['password']);
+        $f->addSelect('role', 'role uživatele', Array('admin' => 'administrátor', 'moderator' => 'moderátor'));
+        $f->addSubmit('submit', 'vytvořit');
+        $f->onSuccess[] = $this->userFormSuccess;
+        return $f;
     }
 
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     */
+    public function userFormSuccess(Form $form, ArrayHash $values)
+    {
+        try {
+            $this->UM->add(
+                $values->username,
+                $values->password,
+                $values->fullname,
+                $values->role);
+        } catch (InvalidArgumentException $ex) {
+            $form->addError($ex->getMessage());
+            return;
+        }
+        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
+        $this->redirect('Homepage:default');
+    }
 }

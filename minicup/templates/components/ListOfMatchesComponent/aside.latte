@@ -1,0 +1,19 @@
+<div class="component">
+    <div class="Box__content--split--left Aside__content--split--left">
+        <ul n:inner-foreach="$matches as $match">
+            <li>{$match->homeTeam->name}</li>
+        </ul>
+    </div>
+
+    <div class="Box__content--split--middle Aside__content--split--middle">
+        <ul n:inner-foreach="$matches as $match">
+            <li>{$match->matchTerm|matchStart}</li>
+        </ul>
+    </div>
+
+    <div class="Box__content--split--right Aside__content--split--right">
+        <ul n:inner-foreach="$matches as $match">
+            <li>{$match->awayTeam->name}</li>
+        </ul>
+    </div>
+</div>

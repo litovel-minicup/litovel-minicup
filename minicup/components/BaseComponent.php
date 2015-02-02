@@ -3,16 +3,20 @@
 namespace Minicup\Components;
 
 
-use Minicup\Forms\IFormFactory;
+use Minicup\Misc\IFormFactory;
+use Minicup\Model\Entity\MatchTerm;
 use Nette\Application\UI\Control;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
+use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Utils\Strings;
 
-class BaseComponent extends Control
+abstract class BaseComponent extends Control
 {
     /** @var  IFormFactory */
     protected $FF;
 
-    /** @var String|null  */
+    /** @var String|NULL */
     protected $view = NULL;
 
     /**
@@ -23,6 +27,9 @@ class BaseComponent extends Control
         $this->FF = $FF;
     }
 
+    /**
+     * @param $presenter
+     */
     protected function attached($presenter)
     {
         if ($presenter instanceof Presenter) {
@@ -32,17 +39,85 @@ class BaseComponent extends Control
         parent::attached($presenter);
     }
 
+    /**
+     * adding views
+     * @return \Nette\Application\UI\ITemplate
+     */
     protected function createTemplate()
     {
         $template = parent::createTemplate();
         $name = $this->reflection->shortName;
-        if ($this->view) {
-            $name .= '.'.$this->view;
-        }
         $dir = $this->presenter->context->parameters['appDir'];
-        $template->setFile("$dir/templates/components/$name.latte");
+        $paths = array();
+        if ($this->view) {
+            $view = $this->view;
+            $paths[] = "$dir/templates/components/$name/$view.latte";
+            $paths[] = "$dir/templates/components/$name.$view.latte";
+        } else {
+            $paths[] = "$dir/templates/components/$name/default.latte";
+            $paths[] = "$dir/templates/components/$name.latte";
+        }
+        foreach ($paths as $path) {
+            if (is_file($path)) {
+                $template->setFile($path);
+                return $template;
+            }
+        }
+        $template->setFile($paths[0]);
         return $template;
     }
 
+    /**
+     * render component
+     */
+    public function render()
+    {
+        $this->template->render();
+    }
+
+    /**
+     * @param string $name
+     * @param array $args
+     * @return mixed
+     */
+    public function __call($name, $args)
+    {
+        if (substr($name, 0, 6) == "render" && $name !== "render") {
+            $this->tryCall($name, $args);
+            $view = Strings::lower(Strings::substring($name, 6));
+            $this->view = $view;
+            return call_user_func_array($this->render, $args);
+        } else {
+            return parent::__call($name, $args);
+        }
+    }
+
+    /**
+     * refresh entire component snippet
+     */
+    public function handleRefresh()
+    {
+        $this->redrawControl();
+    }
+
+    /**
+     * @return ITemplate
+     */
+    public function getTemplate()
+    {
+        /** @var Template $template */
+        $template = parent::getTemplate();
+        $latte = $template->getLatte();
+        $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n. Y"));
+        });
+        $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->start, "G:i"));
+        });
+        $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
+            return $latte->invokeFilter('date', array($matchTerm->end, "G:i"));
+        });
+        return $template;
+    }
 
 }

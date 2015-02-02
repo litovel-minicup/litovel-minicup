@@ -5,14 +5,14 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\TeamInfo;
 
-class TeamInfoRepository extends Repository
+class TeamInfoRepository extends BaseRepository
 {
     /**
      * @param $category Category|int
      * @param $name string
      * @param $slug string
      * @throws EntityNotFoundException
-     * @return TeamInfo|NULL
+     * @return TeamInfo
      */
     public function findByCategoryNameSlug($category, $name, $slug)
     {
@@ -23,8 +23,6 @@ class TeamInfoRepository extends Repository
         if ($row) {
             return $this->createEntity($row);
         }
-        throw new EntityNotFoundException('Team info not found');
-
+        return NULL;
     }
-
 }

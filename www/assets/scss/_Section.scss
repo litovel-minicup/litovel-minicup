@@ -1,0 +1,5 @@
+.Section {
+	@include span-columns(7);
+	background: $light--grey;
+	margin-top: $universal-dis;
+}
