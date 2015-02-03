@@ -1,12 +1,12 @@
 <?php
 
-namespace components\GalleryComponent;
-
-
-use Minicup\Components\GalleryComponent;
+namespace Minicup\Components;
 
 interface IGalleryComponentFactory
 {
-    /** @return GalleryComponent */
-    public function create();
+    /**
+     * @param array $tags
+     * @return GalleryComponent
+     */
+    public function create(array $tags);
 }

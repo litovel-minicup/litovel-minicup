@@ -8,8 +8,13 @@ use LeanMapper\Repository;
 
 abstract class BaseRepository extends Repository
 {
+    /** constants for ordering options  */
     const ORDER_ASC = 'ASC';
     const ORDER_DESC = 'DESC';
+
+    /** constants for selecting from array of conditions */
+    const METHOD_OR = 'OR';
+    const METHOD_AND = 'AND';
 
     /**
      * @param $id

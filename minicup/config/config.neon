@@ -73,6 +73,9 @@ services:
 
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
+        - implement: Minicup\Components\IGalleryComponentFactory
+          parameters: [array tags]
+          arguments: [%tags%]
         - implement: Minicup\Components\IAsideComponentFactory
           parameters: [Minicup\Model\Entity\Category category]
           arguments: [%category%]

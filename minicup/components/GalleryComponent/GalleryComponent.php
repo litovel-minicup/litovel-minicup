@@ -19,7 +19,7 @@ class GalleryComponent extends BaseComponent
     private $tags;
 
     /**
-     * @param Tag[]|string[] $tags
+     * @param Tag[] $tags
      * @param PhotoRepository $PR
      * @param TagRepository $TR
      */
@@ -27,12 +27,18 @@ class GalleryComponent extends BaseComponent
     {
         $this->PR = $PR;
         $this->TR = $TR;
-        if ($tags) {
-            if (!$tags[0] instanceof Tag) {
-                $tags = $this->TR->findBySlugs($tags);
-            }
-        }
         $this->tags = $tags;
+    }
+
+    public function render()
+    {
+        if (count($this->tags) == 0) {
+            $this->view = 'mainTags';
+        } else {
+            $photos = $this->PR->findByTags($this->tags);
+            $this->template->photos = $photos;
+        }
+        parent::render();
     }
 
 
