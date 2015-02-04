@@ -1,0 +1,24 @@
+<script>
+$(function() {
+    $(".target").dropper({
+        action: {link upload!},
+        maxSize: 104857600
+    }).on('fileComplete.dropper', function(e, file, response) {
+        for (var key in response.snippets) {
+          if (response.snippets.hasOwnProperty(key)) {
+            $('#'+key).html(response.snippets[key]);
+          }
+        }
+    }).on('fileProgress.dropper', function(e, file, percent) {
+        console.log(percent);
+        console.log(file);
+    });
+});
+
+
+
+</script>
+<div class="target"></div>
+<div n:snippet="files">
+    <div n:foreach="$files as $file">{$file->getName()}</div>
+</div>

@@ -51,10 +51,11 @@ class CssComponentFactory extends Object
         if ($module === 'front') {
             $files->addFile('assets/css/index.css');
             $files->addFiles(Finder::findFiles('*.css')->in(($this->wwwPath . '/assets/css')));
-            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
+            $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
         } elseif ($module === 'admin') {
-            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
+
         }
+        $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
         // TODO: add urls fixing
         //$compiler->addFilter(new CssUrlsFilter());

@@ -48,9 +48,10 @@ class JsComponentFactory extends Object
     {
         $files = new FileCollection($this->wwwPath);
         $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
+        $files->addFile($this->wwwPath.'/assets/js/nette.ajax.js');
 
         if ($module === 'front') {
-            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
+            $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
             $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
             $files->addFile('assets/js/main.js');
 

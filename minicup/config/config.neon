@@ -73,6 +73,7 @@ services:
 
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
+        - Minicup\Components\IPhotoUploadComponent
         - implement: Minicup\Components\IGalleryComponentFactory
           parameters: [array tags]
           arguments: [%tags%]
