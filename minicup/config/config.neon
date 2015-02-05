@@ -34,6 +34,7 @@ services:
         - Minicup\Model\Manager\ReorderManager
         - Minicup\Model\Manager\TeamDataRefresher
         - Minicup\Model\Manager\MatchManager
+        - Minicup\Model\Manager\PhotoManager(%wwwDir%)
 
         # css & js compiling
         - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
@@ -73,7 +74,8 @@ services:
 
         - Minicup\Components\ILoginFormComponentFactory
         - Minicup\Components\IMigrateFormComponentFactory
-        - Minicup\Components\IPhotoUploadComponent
+        - implement: Minicup\Components\IPhotoUploadComponent
+          arguments: [%wwwDir%]
         - implement: Minicup\Components\IGalleryComponentFactory
           parameters: [array tags]
           arguments: [%tags%]
