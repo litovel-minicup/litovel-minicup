@@ -101,6 +101,7 @@ abstract class BaseComponent extends Control
     }
 
     /**
+     * TODO: add filter to access to photos and thumbnails
      * @return ITemplate
      */
     public function getTemplate()

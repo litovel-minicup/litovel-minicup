@@ -10,6 +10,7 @@ use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 use Nette\Utils\Random;
 
+// TODO: add forms to add tags with autocompleting thru ajax
 class PhotoUploadComponent extends BaseComponent
 {
     /** @var Request */

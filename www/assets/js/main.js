@@ -6,6 +6,7 @@ $(function ($) {
         }
     });
 
+    // TODO: move to another droppler init file
     var $uploadDropper = $('#upload-dropper');
     var initDropper = function ($el) {
         $el.dropper({
@@ -31,6 +32,7 @@ $(function ($) {
     });
     $uploadDropper.on('fileStart.dropper', function(e, file) {
         e.data = {};
+        // TODO: fixed adding info about uploaded files
         e.data.postData = {key:5};
         console.log(e);
     });

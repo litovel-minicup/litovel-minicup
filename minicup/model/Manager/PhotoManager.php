@@ -41,6 +41,7 @@ class PhotoManager extends Object
             $photo = new Photo();
             $filename = substr(md5($prefix.$file->name.time()), 0, 8);
             $photo->filename = "$filename";
+            // TODO: add thumbnails generation
             $img->save("$this->wwwPath/upload/photos/$filename.png");
             $this->PR->persist($photo);
             $photos[] = $photo;
