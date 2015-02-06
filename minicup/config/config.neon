@@ -1,3 +1,7 @@
+parameters:
+    texyLinkPrefix: :Front
+    entityFQN: Minicup\Model\Entity
+
 php:
 	date.timezone: Europe/Prague
 
@@ -16,96 +20,95 @@ nette:
 	    - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
 
 includes:
-        - config.ACL.neon
+    - config.ACL.neon
 
 services:
-        router: @Minicup\Router\RouterFactory::create
-        texy: @Minicup\Misc\TexyFactory::create
-        year: @Minicup\Model\Repository\YearRepository::getSelectedYear
-        - Minicup\Router\RouterFactory
-        - Minicup\Misc\IFormFactory
-        - Nextras\Application\LinkFactory
-        - Minicup\Misc\TexyFactory
+    router: @Minicup\Router\RouterFactory::create
+    texy: @Minicup\Misc\TexyFactory::create
+    year: @Minicup\Model\Repository\YearRepository::getSelectedYear
+    - Minicup\Router\RouterFactory
+    - Minicup\Misc\IFormFactory
+    - Nextras\Application\LinkFactory
+    - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
 
-        # application logic services
-        - Minicup\Model\Manager\UserManager
-        - Minicup\Model\Manager\MigrationsManager
-        - Minicup\Model\Manager\TeamReplicator
-        - Minicup\Model\Manager\ReorderManager
-        - Minicup\Model\Manager\TeamDataRefresher
-        - Minicup\Model\Manager\MatchManager
-        - Minicup\Model\Manager\PhotoManager(%wwwDir%)
+    # application logic services
+    - Minicup\Model\Manager\UserManager
+    - Minicup\Model\Manager\MigrationsManager
+    - Minicup\Model\Manager\TeamReplicator
+    - Minicup\Model\Manager\ReorderManager
+    - Minicup\Model\Manager\TeamDataRefresher
+    - Minicup\Model\Manager\MatchManager
+    - Minicup\Model\Manager\PhotoManager(%wwwDir%)
 
-        # css & js compiling
-        - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
-        - Minicup\Components\JsComponentFactory(%wwwDir%, %productionMode%)
+    # css & js compiling
+    - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
+    - Minicup\Components\JsComponentFactory(%wwwDir%, %productionMode%)
 
-		# lean mapper
-        - LeanMapper\DefaultEntityFactory
-        - Minicup\Model\Mapper(Minicup\Model\Entity)
-        filters: Minicup\Model\Filters
+    # lean mapper
+    - LeanMapper\DefaultEntityFactory
+    - Minicup\Model\Mapper(%entityFQN%)
+    filters: Minicup\Model\Filters
 
-        leanMapper.connection:
-            setup:
-                - registerFilter(matches, [@filters, joinAllMatches], e)
-                - registerFilter(info, [@filters, joinTeamInfo])
-                - registerFilter(actual, [@filters, actualTeam])
-                - registerFilter(orderTeams, [@filters, orderTeams])
-                - registerFilter(year, [@filters, yearRestrict])
-                - registerFilter(confirmed, [@filters, confirmedMatch])
-                - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
-                - registerFilter(orderMatches, [@filters, orderMatches])
+    leanMapper.connection:
+        setup:
+            - registerFilter(matches, [@filters, joinAllMatches], e)
+            - registerFilter(info, [@filters, joinTeamInfo])
+            - registerFilter(actual, [@filters, actualTeam])
+            - registerFilter(orderTeams, [@filters, orderTeams])
+            - registerFilter(year, [@filters, yearRestrict])
+            - registerFilter(confirmed, [@filters, confirmedMatch])
+            - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
+            - registerFilter(orderMatches, [@filters, orderMatches])
 
-        # repositories
-        - Minicup\Model\Repository\MatchRepository
-        - Minicup\Model\Repository\UserRepository
-        - Minicup\Model\Repository\TeamRepository
-        - Minicup\Model\Repository\TeamInfoRepository
-        - Minicup\Model\Repository\TagRepository
-        - Minicup\Model\Repository\OnlineReportRepository
-        - Minicup\Model\Repository\MatchTermRepository
-        - Minicup\Model\Repository\YearRepository
-        - Minicup\Model\Repository\PhotoRepository
-        - Minicup\Model\Repository\StaticContentRepository
-        - Minicup\Model\Repository\CategoryRepository
-        - Minicup\Model\Repository\DayRepository
-        
-        # component factories
+    # repositories
+    - Minicup\Model\Repository\MatchRepository
+    - Minicup\Model\Repository\UserRepository
+    - Minicup\Model\Repository\TeamRepository
+    - Minicup\Model\Repository\TeamInfoRepository
+    - Minicup\Model\Repository\TagRepository
+    - Minicup\Model\Repository\OnlineReportRepository
+    - Minicup\Model\Repository\MatchTermRepository
+    - Minicup\Model\Repository\YearRepository
+    - Minicup\Model\Repository\PhotoRepository
+    - Minicup\Model\Repository\StaticContentRepository
+    - Minicup\Model\Repository\CategoryRepository
+    - Minicup\Model\Repository\DayRepository
 
-        - Minicup\Components\ILoginFormComponentFactory
-        - Minicup\Components\IMigrateFormComponentFactory
-        - implement: Minicup\Components\IPhotoUploadComponent
-          arguments: [%wwwDir%]
-        - implement: Minicup\Components\IGalleryComponentFactory
-          parameters: [array tags]
-          arguments: [%tags%]
-        - implement: Minicup\Components\IAsideComponentFactory
-          parameters: [Minicup\Model\Entity\Category category]
-          arguments: [%category%]
-        - implement: Minicup\Components\ICategoryTableComponentFactory
-          parameters: [Minicup\Model\Entity\Category category]
-          arguments: [%category%]
-        - implement: Minicup\Components\IMatchFormComponentFactory
-          parameters: [Minicup\Model\Entity\Category category, count]
-          arguments: [%category%, %count%]
-        - implement: Minicup\Components\IStaticContentComponentFactory
-          parameters: [Minicup\Model\Entity\StaticContent content]
-          arguments: [%content%]
+    # component factories
 
-        - Minicup\Components\ICategoryToggleFormComponentFactory
-        - implement: Minicup\Components\IListOfTeamsComponentFactory
-          parameters: [Minicup\Model\Entity\Category category]
-          arguments: [%category%]
-        - implement: Minicup\Components\IListOfMatchesComponentFactory
-          parameters: [arg]
-          arguments: [%arg%]
-        - implement: Minicup\Components\IOnlineReportComponentFactory
-          parameters: [Minicup\Model\Entity\Match match]
-          arguments: [%match%]
-        - implement: Minicup\Components\ITeamDetailComponentFactory
-          parameters: [Minicup\Model\Entity\Team team]
-          arguments: [%team%]
+    - Minicup\Components\ILoginFormComponentFactory
+    - Minicup\Components\IMigrateFormComponentFactory
+    - Minicup\Components\ICategoryToggleFormComponentFactory
+    - implement: Minicup\Components\IPhotoUploadComponent
+      arguments: [%wwwDir%]
+    - implement: Minicup\Components\IGalleryComponentFactory
+      parameters: [array tags]
+      arguments: [%tags%]
+    - implement: Minicup\Components\IAsideComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\ICategoryTableComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\IMatchFormComponentFactory
+      parameters: [Minicup\Model\Entity\Category category, count]
+      arguments: [%category%, %count%]
+    - implement: Minicup\Components\IStaticContentComponentFactory
+      parameters: [Minicup\Model\Entity\StaticContent content]
+      arguments: [%content%]
+    - implement: Minicup\Components\IListOfTeamsComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\IListOfMatchesComponentFactory
+      parameters: [arg]
+      arguments: [%arg%]
+    - implement: Minicup\Components\IOnlineReportComponentFactory
+      parameters: [Minicup\Model\Entity\Match match]
+      arguments: [%match%]
+    - implement: Minicup\Components\ITeamDetailComponentFactory
+      parameters: [Minicup\Model\Entity\Team team]
+      arguments: [%team%]
 
 extensions:
-        leanMapper: Minicup\Model\LeanMapperExtension
-        replicator: Minicup\Misc\EntitiesReplicatorExtension
+    leanMapper: Minicup\Model\LeanMapperExtension
+    replicator: Minicup\Misc\EntitiesReplicatorExtension

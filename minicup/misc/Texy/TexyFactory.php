@@ -10,12 +10,17 @@ class TexyFactory extends Object
     /** @var  LinkFactory */
     private $linkFactory;
 
+    /** @var string */
+    private $modulePrefix;
+
     /**
      * @param LinkFactory $linkFactory
+     * @param string $modulePrefix
      */
-    public function __construct(LinkFactory $linkFactory)
+    public function __construct($modulePrefix, LinkFactory $linkFactory)
     {
         $this->linkFactory = $linkFactory;
+        $this->modulePrefix = $modulePrefix;
     }
 
     /**
@@ -23,7 +28,7 @@ class TexyFactory extends Object
      */
     public function create()
     {
-        $t = new Texy('Front:', $this->linkFactory);
+        $t = new Texy($this->modulePrefix, $this->linkFactory);
         //TODO: configuration texy
         return $t;
     }
