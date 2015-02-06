@@ -1,7 +1,7 @@
 {
   "require": {
     "php": ">= 5.3.7",
-    "nette/nette": "@dev",
+    "nette/nette": "~2.3.0",
     "dg/adminer-custom": "~1.5",
     "dibi/dibi": "dev-master",
     "tharos/leanmapper": "dev-master",
@@ -15,5 +15,7 @@
     "neeckeloo/closure-compiler-php": "@dev",
     "texy/texy": "~2.6",
     "kdyby/forms-replicator": "@dev"
-  }
+  },
+  "minimum-stability": "beta",
+  "prefer-stable": true
 }

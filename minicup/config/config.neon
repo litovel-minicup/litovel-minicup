@@ -3,21 +3,23 @@ parameters:
     entityFQN: Minicup\Model\Entity
 
 php:
-	date.timezone: Europe/Prague
+    date.timezone: Europe/Prague
 
-nette:
-	application:
-		errorPresenter: Error
-		mapping:
-			*: Minicup\*Module\Presenters\*Presenter
-	debugger:
-		bar:
-			- NetteExtras\XDebugHelper(PHPSTORM)
-	session:
-		expiration: 14 days
-	latte:
-	    macros:
-	    - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
+application:
+    errorPresenter: Error
+    mapping:
+        *: Minicup\*Module\Presenters\*Presenter
+
+tracy:
+    bar:
+        - NetteExtras\XDebugHelper(PHPSTORM)
+
+session:
+    expiration: 14 days
+
+latte:
+    macros:
+    - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
 
 includes:
     - config.ACL.neon
