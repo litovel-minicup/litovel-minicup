@@ -1,13 +1,24 @@
 .Box {
 	&__head {
-		@include span-columns(12);
-		font-family: 'Montserrat';
-		font-size: 24px;
-		padding: 25px 20px;	
-		letter-spacing: -1.5px;
-		&:before {
-			content: "\2663";
-			padding-right: 20px;
+		
+		&__icon {
+			@include span-columns(1.5);
+			@include omega();
+			height: 75px;
+			img {
+				width: 25px;
+				margin-top: 25px;
+				margin-left: 32%;
+			}
+		}
+
+		&__text {
+			@include span-columns(10.5);
+			font-family: 'Montserrat';
+			font-size: 24px;
+			height: 75px;
+			padding: 25px 5px;
+			letter-spacing: -1.5px;
 		}
 	}
 
@@ -20,7 +31,7 @@
 	}
 
 	&__content {
-		padding: 15px 20px;
+		padding: 50px 20px;
 		line-height: 1.32;
 
 

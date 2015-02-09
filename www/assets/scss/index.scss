@@ -22,6 +22,7 @@
 @import "_Article";
 @import "_Aside";
 @import "_Section";
+@import "_Footer";
 
 
 body {
@@ -30,5 +31,4 @@ body {
 	height: 100%;
 	-webkit-font-smoothing:antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
 }

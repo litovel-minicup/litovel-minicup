@@ -66,6 +66,9 @@ a {
  * Grey
  */
 /**
+ * Black
+ */
+/**
  * Measure variables
  */
 @font-face {
@@ -74,7 +77,7 @@ a {
   /* Safari, Android, iOS */ }
 @font-face {
   font-family: 'Montserrat';
-  src: url("../font/Montserrat.ttf") format("truetype");
+  src: url("../font/Montserrat-Regular.ttf") format("truetype");
   /* Safari, Android, iOS */ }
 @font-face {
   font-family: 'PTRegular';
@@ -103,27 +106,38 @@ html {
 /**
  * Import Components
  */
-.Box__head {
+.Box__head__icon {
   float: left;
   display: block;
   margin-right: 0.35211%;
-  width: 100%;
+  width: 12.1919%;
+  margin-right: 0;
+  height: 75px; }
+  .Box__head__icon:last-child {
+    margin-right: 0; }
+  .Box__head__icon img {
+    width: 25px;
+    margin-top: 25px;
+    margin-left: 32%; }
+.Box__head__text {
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 87.45599%;
   font-family: 'Montserrat';
   font-size: 24px;
-  padding: 25px 20px;
+  height: 75px;
+  padding: 25px 5px;
   letter-spacing: -1.5px; }
-  .Box__head:last-child {
+  .Box__head__text:last-child {
     margin-right: 0; }
-  .Box__head:before {
-    content: "\2663";
-    padding-right: 20px; }
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
   height: 7em;
   font-family: 'PTBoldItalic'; }
 .Box__content {
-  padding: 15px 20px;
+  padding: 50px 20px;
   line-height: 1.32; }
 .Box__content--split--left {
   float: left;
@@ -176,7 +190,7 @@ html {
       max-width: 140px;
       width: 70%;
       margin-left: 15%;
-      margin-top: 15%; }
+      margin-top: 7%; }
   .Header__toggle {
     float: left;
     display: block;
@@ -191,7 +205,7 @@ html {
       .Header__toggle__anchor a {
         color: #0040c1;
         position: absolute;
-        margin: 20px 3%; }
+        margin: 20px 50px; }
       .Header__toggle__anchor:hover {
         background: white; }
       .Header__toggle__anchor--active {
@@ -202,8 +216,8 @@ html {
     float: left;
     display: block;
     margin-right: 0.35211%;
-    width: 58.18662%;
-    margin-left: 12.54401%;
+    width: 8.01056%;
+    margin-left: 58.53873%;
     margin-top: 10px;
     height: 100px; }
     .Header__nav:last-child {
@@ -211,8 +225,8 @@ html {
     .Header__nav li {
       float: left;
       display: block;
-      margin-right: 0.60514%;
-      width: 13.76702%;
+      margin-right: 4.3956%;
+      width: 100%;
       margin-top: 15px;
       height: 70px;
       text-align: center; }
@@ -224,22 +238,25 @@ html {
       .Header__nav li a {
         line-height: 70px;
         color: white; }
+        .Header__nav li a:hover {
+          color: #4180ff; }
 
-.Article__head {
-  color: white;
+.Article__head__icon {
   background: #bababa; }
+.Article__head__text {
+  background: #bababa;
+  color: white; }
 .Article__heading {
   font-family: "Montserrat";
   font-size: 34px;
-  padding-top: 5px;
   letter-spacing: -1.5px; }
 .Article__date {
   font-family: "PTBoldItalic";
-  padding-top: 15px; }
+  padding-top: 50px; }
 .Article__content {
   font-family: "PTRegular";
   padding-top: 15px;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
   font-size: 16px; }
 
 .Aside {
@@ -253,8 +270,12 @@ html {
   .Aside:last-child {
     margin-right: 0; }
   .Aside__head {
-    background: #ebc700;
     letter-spacing: -1.5px; }
+    .Aside__head__icon {
+      background: #ffd800; }
+    .Aside__head__text {
+      background: #ffd800;
+      color: black; }
   .Aside__subhead {
     background: #ffd800; }
   .Aside__content {
@@ -266,7 +287,7 @@ html {
     .Aside__content--split--left {
       background: #ffe44d; }
     .Aside__content--split--right {
-      background: #ffd800;
+      background: #ffe44d;
       text-align: right; }
     .Aside__content--split--middle {
       background: #ebc700;
@@ -315,6 +336,29 @@ html {
   margin-top: 4px; }
   .Section:last-child {
     margin-right: 0; }
+
+.Footer {
+  background: #4A4A4A;
+  margin-top: 4px;
+  color: white;
+  font-family: "Montserrat";
+  height: 100px;
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 100%; }
+  .Footer:last-child {
+    margin-right: 0; }
+  .Footer__block {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 33.09859%;
+    margin-left: 33.4507%;
+    margin-top: 45px;
+    text-align: center; }
+    .Footer__block:last-child {
+      margin-right: 0; }
 
 body {
   margin-top: 4px;

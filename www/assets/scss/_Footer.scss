@@ -1,0 +1,15 @@
+.Footer {
+	background: $light--black;
+	margin-top: $universal-dis;
+	color: white;
+	font-family: "Montserrat";
+	height: 100px;
+	@include span-columns(12);
+
+	&__block {
+		@include span-columns(4);
+		@include shift(4);
+		margin-top: 45px;
+		text-align: center;
+	}
+}

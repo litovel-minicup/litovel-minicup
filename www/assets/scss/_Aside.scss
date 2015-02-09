@@ -5,8 +5,16 @@
 	@include omega();
 	
 	&__head {
-		background: $dark--yellow;
-			letter-spacing: -1.5px;
+		letter-spacing: -1.5px;
+
+		&__icon {
+			background: $medium--yellow;
+		}
+
+		&__text {
+			background: $medium--yellow;
+			color: black;
+		}
 	}
 
 
@@ -30,7 +38,7 @@
 		}
 
 		&--split--right {
-			background: $medium--yellow;
+			background: $light--yellow;
 			text-align: right;
 		}
 
