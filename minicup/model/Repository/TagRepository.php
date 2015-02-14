@@ -27,4 +27,14 @@ class TagRepository extends BaseRepository
         $rows = $this->createFluent()->where('[slug] IN (%s)', $slugs)->fetchAll();
         return $this->createEntities($rows);
     }
+
+    /**
+     * @param string $term
+     * @return Tag[]
+     */
+    public function findLikeTerm($term)
+    {
+        $rows = $this->createFluent()->where('[slug] LIKE %~like~', $term)->fetchAll();
+        return $this->createEntities($rows);
+    }
 }

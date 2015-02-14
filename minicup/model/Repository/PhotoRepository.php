@@ -35,4 +35,13 @@ class PhotoRepository extends BaseRepository
         return $photos;
     }
 
+    /**
+     * @param int[] $ids
+     * @return Photo[]
+     */
+    public function findByIds(array $ids)
+    {
+        return $ids ? $this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) : array();
+    }
+
 }

@@ -49,16 +49,17 @@ class JsComponentFactory extends Object
         $files = new FileCollection($this->wwwPath);
         $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
         $files->addFile($this->wwwPath.'/assets/js/nette.ajax.js');
+        $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
+        $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
             $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
-            $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
-            $files->addFile('assets/js/main.js');
 
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
+            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js');
         }
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
