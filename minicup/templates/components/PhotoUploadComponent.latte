@@ -1,7 +1,5 @@
+<p>Maximální velikost souboru je 10MB, optimální rozlišení je cca 1000x1000.</p>
 <div id="upload-dropper" data-upload-id={$uploadId} data-upload-link={link upload!}></div>
-<ul n:snippet="photos-list">
-    <li n:foreach="$photos as $photo" data-id={$photo->id}><img  src="{$basePath}/upload/photos/{$photo->filename}"></li>
-</ul>
 <script>
 $(function() {
     var $uploadDropper = $('#upload-dropper');
@@ -12,37 +10,78 @@ $(function() {
     	return params;
     };
     initSelect2($select2, dataFn);
+    var uploadTemplate = $("#uploadTemplate").html();
+	
+	$uploadDropper.on('fileStart.dropper', function(e, file) {
+        $tmpl = $(uploadTemplate);
+        $('#upload-list').append($tmpl);
+        $tmpl.attr('data-name', file.name).find('p').text(file.name);
+    });
+
+    $uploadDropper.on('fileProgress.dropper', function (e, file, percent) {
+		$('#upload-list').find('.upload[data-name="' + file.name + '"] .progress-bar').width(percent + '%');
+    });
+
+    $uploadDropper.on('fileComplete.dropper', function (e, file) {
+		$('#upload-list').find('.upload[data-name="' + file.name + '"]').removeClass('.active').fadeOut(500, function() {
+			$(this).remove();
+			initSelect2($select2, dataFn);
+		});
+    });
 });
 </script>
-<div id="upload-list" n:inner-for="$x=1; $x < 2; $x++">
-	<div class="panel panel-default row">
-		<div class="row">
-	  		<div class="col-md-3">
-	      		<img class="img-thumbnail" src="{$basePath}/upload/photos/a5f12a24" alt="">
+<script type="text/template" id="uploadTemplate" n:syntax="off">
+<div class="col-md-2 upload">
+	<div class="thumbnail">
+		<p></p>
+		<div class="caption">
+			<div class="progress">
+  				<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+<div id="upload-list" class="row">
+</div>
+<div class="photo-list" n:snippet="photos-list">
+	<div class="row">
+	<!-- TODO: from this foreach make new component - PhotoEditComponent -->
+		<div id="photo-{$photo->id}" n:foreach="$photos as $photo" class="col-md-3">
+			<div class="thumbnail">
+			  	<img class="img-thumbnail" src="{$basePath}/upload/photos/{$photo->filename}" alt="">
+			  	<div class="caption">
+			    	<h4>{$photo->id}</h4>
+			    	<form>
+						<div class="form-group">
+							<label for="tags">Tagy:</label>
+							<select multiple="multiple"
+									name="tags"
+									class="form-control select2"
+									data-tags="true"
+									data-placeholder="Vyberte tagy ... "
+									data-ajax--url={link tags!}
+									data-ajax--cache="true"
+									data-ajax--delay="350"
+									data-ajax--method="POST"
+									data-minimum-input-length="0"></select>
+							<script>
+					  			$(function() {
+								    var $select2 = $('#photo-{$photo->id} .select2');
+								    var dataFn = function (params) {
+								    	return params;
+								    };
+								    initSelect2($select2, dataFn);
+								});
+  							</script>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Uložit</button>
+							<button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Smazat</button>
+				    	</div>
+				    </form>
+				</div>
 	  		</div>
-		  	<div class="col-md-8">
-		    	<h3>foto name</h3>
-		    	<form>
-					<div class="form-group">
-						<label for="tags">Super select</label>
-						<select multiple="multiple"
-								name="tags" id="select"
-								class="form-control"
-								data-tags="true"
-								data-placeholder="Vyberte tagy ... "
-								data-ajax--url={link tags!}
-								data-ajax--cache="true"
-								data-ajax--delay="350"
-								data-ajax--method="POST"
-								data-minimum-input-length="1"></select>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Uložit</button>
-						<button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Smazat</button>
-			    	</div>
-			    </form>
-		  	</div>
-		  	<div class="col-md-1"></div>
 		</div>
 	</div>
 </div>

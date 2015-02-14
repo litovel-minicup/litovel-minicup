@@ -54,18 +54,20 @@ class PhotoUploadComponent extends BaseComponent
         $this->TR = $TR;
         $this->PR = $PR;
         $this->PM = $PM;
-        $uploadId = $this->httpRequest->getPost('uploadId', NULL);
+        $uploadId = $this->session['uploadId'];
         if ($uploadId) {
             $this->uploadId = $uploadId;
         } else {
             $this->uploadId = Random::generate(20);
         }
+        $this->session['uploadId'] = $this->uploadId;
     }
 
     public function render()
     {
         if (!isset($this->template->photos)) {
-            $this->template->photos = $this->photos;
+            $ids = is_array($this->session[$this->uploadId]) ? $this->session[$this->uploadId] : array();
+            $this->template->photos = $this->PR->findByIds($ids);
         }
         $this->template->uploadId = $this->uploadId;
         parent::render();
@@ -101,5 +103,11 @@ class PhotoUploadComponent extends BaseComponent
             $results[] = array('id' => $tag->id , 'text' => $tag->slug);
         }
         $this->presenter->sendJson(array('results' => $results));
+    }
+
+    /***/
+    public function handleDelete($id)
+    {
+        
     }
 }

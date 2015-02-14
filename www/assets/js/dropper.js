@@ -1,7 +1,9 @@
 var initDropper = function ($el) {
     $el.dropper({
         action: $el.data('upload-link'),
-        maxSize: 52428800,
+        maxSize: 10000000, // 10 MB
+        maxQueue: 2,
+        label: 'Přetáhni soubory nebo klikni pro jejich pro výběr...',
         postData: {uploadId: $el.data('upload-id')}
     });
     $el.on('fileComplete.dropper', function (e, file, response) {
@@ -22,6 +24,7 @@ var initDropper = function ($el) {
     $el.on('fileComplete.dropper', onFinally);
     $el.on('fileError.dropper', onFinally);
     $el.on('fileStart.dropper', function(e, file) {
-        // TODO add cover
+        console.log(file);
+
     });
 };
