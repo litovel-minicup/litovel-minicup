@@ -2,7 +2,7 @@
 namespace Minicup\Components;
 
 
-interface IPhotoUploadComponent
+interface IPhotoUploadComponentFactory
 {
     /** @return PhotoUploadComponent */
     public function create();

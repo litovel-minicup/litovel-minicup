@@ -37,7 +37,6 @@ class PhotoManager extends Object
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
             }
-            $img = $file->toImage();
             $photo = new Photo();
             $filename = substr(md5($prefix.$file->name.time()), 0, 8);
             $photo->filename = "$filename";
@@ -50,4 +49,7 @@ class PhotoManager extends Object
         return $photos;
     }
 
+    public function delete(Photo $photo) {
+        return unlink("{$this->wwwPath}/upload/photos/{$photo->filename}.png");
+    }
 }

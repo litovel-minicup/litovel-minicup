@@ -4,11 +4,10 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Photo;
-use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
+use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
@@ -29,15 +28,17 @@ class PhotoUploadComponent extends BaseComponent
     /** @var TagRepository */
     private $TR;
 
-    /** @var String */
-    private $uploadId;
-
     /** @var PhotoManager */
     private $PM;
 
+    /** @var IPhotoEditComponentFactory */
+    private $PECF;
+
+    /** @var String */
+    private $uploadId;
+
     /** @var Photo[] */
     private $photos = array();
-
 
     /**
      * @param string $wwwPath
@@ -46,14 +47,16 @@ class PhotoUploadComponent extends BaseComponent
      * @param PhotoRepository $PR
      * @param TagRepository $TR
      * @param PhotoManager $PM
+     * @param IPhotoEditComponentFactory $PECF
      */
-    public function __construct($wwwPath, Session $session, Request $httpRequest, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM)
+    public function __construct($wwwPath, Session $session, Request $httpRequest, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM, IPhotoEditComponentFactory $PECF)
     {
         $this->httpRequest = $httpRequest;
         $this->session = $session->getSection('photoUpload');
         $this->TR = $TR;
         $this->PR = $PR;
         $this->PM = $PM;
+        $this->PECF = $PECF;
         $uploadId = $this->session['uploadId'];
         if ($uploadId) {
             $this->uploadId = $uploadId;
@@ -86,28 +89,21 @@ class PhotoUploadComponent extends BaseComponent
     }
 
     /**
-     * provide data about tags for select2 by optional term in post parameters
-     *
-     * @throws AbortException
+     * @return PhotoEditComponent
      */
-    public function handleTags() {
-        $term = $this->httpRequest->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id , 'text' => $tag->slug);
-        }
-        $this->presenter->sendJson(array('results' => $results));
+    protected function createComponentPhotoEditComponent()
+    {
+        $PECF = $this->PECF;
+        $PR = $this->PR;
+        $PUC = $this;
+        return new Multiplier(function ($id) use ($PECF, $PR, $PUC) {
+            $photo = $PR->get($id);
+            $PEC = $PECF->create($photo);
+            $PEC->onDelete[] = function (Photo $photo) use ($PUC) {
+                $PUC->redrawControl('photos-list');
+            };
+            return $PEC;
+        });
     }
 
-    /***/
-    public function handleDelete($id)
-    {
-        
-    }
 }

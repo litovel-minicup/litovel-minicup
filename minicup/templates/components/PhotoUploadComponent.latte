@@ -1,31 +1,27 @@
-<p>Maximální velikost souboru je 10MB, optimální rozlišení je cca 1000x1000.</p>
+<p>Víc jak 10MB Ti nevezmu, optimálně rozlišení tak 1000x1000px. <small>P.S. nedoporučuji nahrávat více fotek s identickým názvem.</small></p>
 <div id="upload-dropper" data-upload-id={$uploadId} data-upload-link={link upload!}></div>
 <script>
 $(function() {
-    var $uploadDropper = $('#upload-dropper');
+    var $uploadDropper = $('#upload-dropper'),
+    	$uploadList = $('#upload-list'),
+    	uploadTemplate = $("#uploadTemplate").html();
+
     initDropper($uploadDropper);
 
-    var $select2 = $('#select');
-    var dataFn = function (params) {
-    	return params;
-    };
-    initSelect2($select2, dataFn);
-    var uploadTemplate = $("#uploadTemplate").html();
-	
 	$uploadDropper.on('fileStart.dropper', function(e, file) {
         $tmpl = $(uploadTemplate);
-        $('#upload-list').append($tmpl);
+        $uploadList.append($tmpl);
         $tmpl.attr('data-name', file.name).find('p').text(file.name);
     });
 
     $uploadDropper.on('fileProgress.dropper', function (e, file, percent) {
-		$('#upload-list').find('.upload[data-name="' + file.name + '"] .progress-bar').width(percent + '%');
+		$uploadList.find('.upload[data-name="' + file.name + '"] .progress-bar').width(percent + '%');
     });
 
     $uploadDropper.on('fileComplete.dropper', function (e, file) {
-		$('#upload-list').find('.upload[data-name="' + file.name + '"]').removeClass('.active').fadeOut(500, function() {
+		$uploadList.find('.upload[data-name="' + file.name + '"]').fadeOut(500, function() {
 			$(this).remove();
-			initSelect2($select2, dataFn);
+			toastr.success('Tak tohle se Ti povedlo, ' + file.name + ' byl úspěšně nahrán!', 'Dobře ty!');
 		});
     });
 });
@@ -33,7 +29,6 @@ $(function() {
 <script type="text/template" id="uploadTemplate" n:syntax="off">
 <div class="col-md-2 upload">
 	<div class="thumbnail">
-		<p></p>
 		<div class="caption">
 			<div class="progress">
   				<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"></div>
@@ -46,44 +41,28 @@ $(function() {
 </div>
 <div class="photo-list" n:snippet="photos-list">
 	<div class="row">
-	<!-- TODO: from this foreach make new component - PhotoEditComponent -->
-		<div id="photo-{$photo->id}" n:foreach="$photos as $photo" class="col-md-3">
-			<div class="thumbnail">
-			  	<img class="img-thumbnail" src="{$basePath}/upload/photos/{$photo->filename}" alt="">
-			  	<div class="caption">
-			    	<h4>{$photo->id}</h4>
-			    	<form>
-						<div class="form-group">
-							<label for="tags">Tagy:</label>
-							<select multiple="multiple"
-									name="tags"
-									class="form-control select2"
-									data-tags="true"
-									data-placeholder="Vyberte tagy ... "
-									data-ajax--url={link tags!}
-									data-ajax--cache="true"
-									data-ajax--delay="350"
-									data-ajax--method="POST"
-									data-minimum-input-length="0"></select>
-							<script>
-					  			$(function() {
-								    var $select2 = $('#photo-{$photo->id} .select2');
-								    var dataFn = function (params) {
-								    	return params;
-								    };
-								    initSelect2($select2, dataFn);
-								});
-  							</script>
-						</div>
-						<div class="form-group">
-							<button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Uložit</button>
-							<button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Smazat</button>
-				    	</div>
-				    </form>
-				</div>
-	  		</div>
+		<div n:foreach="$photos as $photo" class="col-md-3">
+            {control photoEditComponent-$photo->id}
 		</div>
 	</div>
 </div>
-
+<div class="row">
+	<div class="col-md-7">
+        <label for="tags-all">Tagy pro všechny fotky:</label>
+        <select multiple="multiple"
+                name="tags-all"
+                class="form-control select2"
+                data-tags="true"
+                data-placeholder="Otaguj je všechny!"
+                data-ajax--url={link tags!}
+                data-ajax--cache="true"
+                data-ajax--delay="350"
+                data-ajax--method="POST"
+                data-minimum-input-length="0"></select>
+	</div>
+	<div class="col-md-5 form-group btn-group">
+	    <button n:href='save!' id="" class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok"></i> Všechny potvrdit</button>
+		<button data-toggle="modal" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove"></i> Všechny smazat!</button>
+	</div>
+</div>
 

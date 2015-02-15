@@ -3,15 +3,11 @@ var initDropper = function ($el) {
         action: $el.data('upload-link'),
         maxSize: 10000000, // 10 MB
         maxQueue: 2,
-        label: 'Přetáhni soubory nebo klikni pro jejich pro výběr...',
+        label: 'Natáhni soubory přímo nebo si to proklikni..',
         postData: {uploadId: $el.data('upload-id')}
     });
     $el.on('fileComplete.dropper', function (e, file, response) {
-        for (var key in response.snippets) {
-            if (response.snippets.hasOwnProperty(key)) {
-                $('#' + key).html(response.snippets[key]);
-            }
-        }
+        redrawSnippets(response.snippets);
     });
     $el.on('fileProgress.dropper', function (e, file, percent) {
         console.log(percent);

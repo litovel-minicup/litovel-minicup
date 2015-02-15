@@ -1,11 +1,10 @@
-var initSelect2 = function ($el, dataFn) {
+var initSelect2 = function ($el) {
     $el.select2({
         tags: true,
         tokenSeparators: [',', ' '],
         minimumInputLength: 0,
         ajax: {
-            dataType: 'json',
-            data: dataFn
+            dataType: 'json'
         }
     });
 };

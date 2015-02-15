@@ -1,0 +1,58 @@
+<div id="photo-{$photo->id}" class="thumbnail">
+    <img class="img-thumbnail" src="{$basePath}/upload/photos/{$photo->filename}.png" alt="">
+    <div class="caption">
+        <h4>{$photo->id}</h4>
+        <form>
+            <div class="form-group">
+                <label for="tags-{$photo->id}">Tagy:</label>
+                <select multiple="multiple"
+                        name="tags-{$photo->id}"
+                        class="form-control select2"
+                        data-tags="true"
+                        data-placeholder="Otaguj to ..."
+                        data-ajax--url={link tags!}
+                        data-ajax--cache="true"
+                        data-ajax--delay="350"
+                        data-ajax--method="POST"
+                        data-minimum-input-length="0"></select>
+                <script>
+                    $(function() {
+                        var $photo = $('#photo-{$photo->id}');
+                        initSelect2($photo.find('.select2'));
+                        $photo.find('.delete').on('click', function(e) {
+                            e.preventDefault();
+                            $.post({link delete!}, { id: {$photo->id}}, function(response, textStatus, xhr) {
+                                redrawSnippets(response.snippets);
+                                $photo.find('.modal').modal('hide');
+                                toastr.success('Fotka {$photo->id} byla úspěšně smazána!');
+                            });
+                        });
+                    });
+                </script>
+            </div>
+            <div class="form-group">
+                <button n:href="save!" id="" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Potvrdit</button>
+                <button data-toggle="modal" data-target="#photo-{$photo->id} .modal" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Smazat</button>
+            </div>
+        </form>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"></button>
+            <h4 class="modal-title">Jenom pro jistotu</h4>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Máš naprostou jistotu, že tu fotku chceš smazat?</p>
+            <small>Už je nahraná v aplikaci a víš, jak je to s rychlostí internetu...</small>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">nechci!</button>
+            <button type="button" class="btn btn-danger delete"><i class="glyphicon glyphicon-remove"></i> Rychle smazat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

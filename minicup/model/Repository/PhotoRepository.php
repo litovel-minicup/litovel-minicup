@@ -15,8 +15,8 @@ class PhotoRepository extends BaseRepository
     public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory)
     {
         parent::__construct($connection, $mapper, $entityFactory);
-        $this->events->registerCallback(Events::EVENT_AFTER_PERSIST, function () {
-            //TODO: saving image to FS
+        $this->events->registerCallback(Events::EVENT_AFTER_DELETE, function (Photo $photo) {
+
         });
     }
 
@@ -41,7 +41,15 @@ class PhotoRepository extends BaseRepository
      */
     public function findByIds(array $ids)
     {
-        return $ids ? $this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) : array();
+        if (!$ids) {
+            return array();
+        }
+        $photos = array();
+        foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $photo) {
+            $photos[$photo->id] = $photo;
+        }
+        return $photos;
+
     }
 
 }

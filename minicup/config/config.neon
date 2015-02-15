@@ -81,7 +81,10 @@ services:
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
-    - implement: Minicup\Components\IPhotoUploadComponent
+    - implement: Minicup\Components\IPhotoEditComponentFactory
+      parameters: [Minicup\Model\Entity\Photo photo]
+      arguments: [%photo%]
+    - implement: Minicup\Components\IPhotoUploadComponentFactory
       arguments: [%wwwDir%]
     - implement: Minicup\Components\IGalleryComponentFactory
       parameters: [array tags]

@@ -55,6 +55,7 @@ class CssComponentFactory extends Object
             $files->addFile('assets/css/jquery.fs.dropper.css');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
+            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css');
         }
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
         // TODO: add urls fixing

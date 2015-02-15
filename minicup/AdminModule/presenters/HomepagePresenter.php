@@ -2,7 +2,7 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Minicup\Components\IPhotoUploadComponent;
+use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Model\Manager\ReorderManager;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TagRepository;
@@ -17,7 +17,7 @@ class HomepagePresenter extends BaseAdminPresenter
     /** @var MatchRepository @inject */
     private $MR;
 
-    /** @var  IPhotoUploadComponent @inject */
+    /** @var  IPhotoUploadComponentFactory @inject */
     public $PUC;
 
     /** @var  TagRepository @inject */
