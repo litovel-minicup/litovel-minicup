@@ -9,6 +9,7 @@ use Nette\Application\UI\Control;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
 
 abstract class BaseComponent extends Control
@@ -117,6 +118,9 @@ abstract class BaseComponent extends Control
         });
         $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
             return $latte->invokeFilter('date', array($matchTerm->end, "G:i"));
+        });
+        $template->addFilter('toJson', function (array $array) {
+            return Json::encode($array);
         });
         return $template;
     }

@@ -61,6 +61,7 @@ services:
             - registerFilter(confirmed, [@filters, confirmedMatch])
             - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
             - registerFilter(orderMatches, [@filters, orderMatches])
+            - registerFilter(activePhotos, [@filters, activePhotos])
 
     # repositories
     - Minicup\Model\Repository\MatchRepository

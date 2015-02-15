@@ -1,26 +1,22 @@
-var initDropper = function ($el) {
-    $el.dropper({
-        action: $el.data('upload-link'),
-        maxSize: 10000000, // 10 MB
-        maxQueue: 2,
-        label: 'Natáhni soubory přímo nebo si to proklikni..',
-        postData: {uploadId: $el.data('upload-id')}
+var initDropper = function ($dropper, $dropperList, itemTemplate) {
+    $dropper.dropper();
+    $dropper.on('fileStart.dropper', function (e, file) {
+        var $tmpl = $(itemTemplate);
+        $dropperList.append($tmpl);
+        $tmpl.attr('data-name', file.name).find('p').text(file.name);
     });
-    $el.on('fileComplete.dropper', function (e, file, response) {
-        redrawSnippets(response.snippets);
+    $dropper.on('fileProgress.dropper', function (e, file, percent) {
+        $dropperList.find('.upload[data-name="' + file.name + '"] .progress-bar').width(percent + '%');
     });
-    $el.on('fileProgress.dropper', function (e, file, percent) {
-        console.log(percent);
-        console.log(file);
-    });
-    var onFinally = function(event, file, e) {
-        //TODO detach cover
-        //TODO ajax for slug multiselect
-    };
-    $el.on('fileComplete.dropper', onFinally);
-    $el.on('fileError.dropper', onFinally);
-    $el.on('fileStart.dropper', function(e, file) {
-        console.log(file);
 
+    $dropper.on('fileComplete.dropper', function (e, file, response) {
+        $dropperList.find('.upload[data-name="' + file.name + '"]').fadeOut(500, function () {
+            $(this).remove();
+            toastr.success('Tak tohle se Ti povedlo, ' + file.name + ' byl úspěšně nahrán!', 'Dobře ty!');
+        });
+    });
+
+    $dropper.on('fileError.dropper', function (e, file, msg) {
+        toastr.error('Ajaj, se souborem ' + file.name + ' je něco špatně: ' + msg, 'Je to špatný');
     });
 };

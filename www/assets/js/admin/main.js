@@ -1,10 +1,10 @@
 $(function () {
     toastr.options = {
         "closeButton": false,
-        "newestOnTop": false,
+        "newestOnTop": true,
         "progressBar": false,
         "positionClass": "toast-top-right",
-        "preventDuplicates": true,
+        "preventDuplicates": false,
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
@@ -15,7 +15,11 @@ $(function () {
         "showMethod": "slideDown",
         "hideMethod": "fadeOut"
     };
-    $(document).ajaxError(function() {
+    $(document).ajaxError(function () {
         toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to na nic');
+    }).ajaxSuccess(function (event, request, settings) {
+        if (request.responseJSON && request.responseJSON.snippets) {
+            redrawSnippets(request.responseJSON.snippets);
+        }
     });
 });

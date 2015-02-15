@@ -89,4 +89,12 @@ class Filters extends Object
             ->on('d.[id] = mt.[day_id]')
             ->orderBy("d.[day] $order, mt.[start] $order, [match.id] $order");
     }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function activePhotos(Fluent $fluent)
+    {
+        $fluent->where('[photo.active] = 1');
+    }
 }

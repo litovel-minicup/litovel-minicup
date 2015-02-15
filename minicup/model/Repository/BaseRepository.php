@@ -42,6 +42,24 @@ abstract class BaseRepository extends Repository
         );
     }
 
+    /**
+     * @param int[] $ids
+     * @return Entity[]
+     */
+    public function findByIds(array $ids)
+    {
+        if (!$ids) {
+            return array();
+        }
+        $photos = array();
+        foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $photo) {
+            $photos[$photo->id] = $photo;
+        }
+        return $photos;
+
+    }
+
+
 }
 
 class EntityNotFoundException extends Exception

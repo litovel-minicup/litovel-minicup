@@ -4,11 +4,9 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Photo;
-use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
 use Nette\Http\Request;
 
 class PhotoEditComponent extends BaseComponent
@@ -30,6 +28,9 @@ class PhotoEditComponent extends BaseComponent
 
     /** @var callable[] */
     public $onDelete;
+
+    /** @var callable[] */
+    public $onSave;
 
     /**
      * @param Photo $photo
@@ -53,27 +54,6 @@ class PhotoEditComponent extends BaseComponent
         parent::render();
     }
 
-    /**
-     * Provide data about tags for select2 by optional term in post parameters
-     *
-     * @throws AbortException
-     */
-    public function handleTags()
-    {
-        $term = $this->request->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->slug);
-        }
-        $this->presenter->sendJson(array('results' => $results));
-    }
-
     /***/
     public function handleDelete()
     {
@@ -83,4 +63,27 @@ class PhotoEditComponent extends BaseComponent
         $this->PM->delete($this->photo);
     }
 
+    public function handleSave()
+    {
+        $this->photo->active = 1;
+        $this->PR->persist($this->photo);
+        $this->onSave($this->photo);
+    }
+
+    public function handleSaveTags()
+    {
+        foreach ($this->photo->tags as $tag) {
+            $this->photo->removeFromTags($tag);
+        }
+        if (!$this->request->post['tags']) {
+            $this->PR->persist($this->photo);
+            return;
+        }
+        foreach ($this->request->post['tags'] as $id) {
+            $id = (int)$id;
+            $this->photo->addToTags($id);
+        }
+        $this->PR->persist($this->photo);
+        $this->redrawControl();
+    }
 }

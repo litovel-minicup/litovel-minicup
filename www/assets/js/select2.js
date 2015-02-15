@@ -7,4 +7,5 @@ var initSelect2 = function ($el) {
             dataType: 'json'
         }
     });
+    return $el;
 };

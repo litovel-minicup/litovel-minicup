@@ -1,31 +1,13 @@
-<p>Víc jak 10MB Ti nevezmu, optimálně rozlišení tak 1000x1000px. <small>P.S. nedoporučuji nahrávat více fotek s identickým názvem.</small></p>
-<div id="upload-dropper" data-upload-id={$uploadId} data-upload-link={link upload!}></div>
-<script>
-$(function() {
-    var $uploadDropper = $('#upload-dropper'),
-    	$uploadList = $('#upload-list'),
-    	uploadTemplate = $("#uploadTemplate").html();
+<div class="alert alert-info">Víc jak 10MB Ti nevezmu, optimálně rozlišení tak 1000x1000px. <small>P.S. nedoporučuji nahrávat více fotek s identickým názvem.</small></div>
+{? $dropperOptions = array(
+    "action" => $control->link('upload!'),
+    "maxSize" => 10242880,
+    "maxQueue" => 2,
+    "label" => "Natáhni soubory přímo nebo si to proklikni..",
+    "postData" => array("uploadId" => $uploadId));
+}
+<div id="upload-dropper" data-dropper-options={$dropperOptions|toJson}></div>
 
-    initDropper($uploadDropper);
-
-	$uploadDropper.on('fileStart.dropper', function(e, file) {
-        $tmpl = $(uploadTemplate);
-        $uploadList.append($tmpl);
-        $tmpl.attr('data-name', file.name).find('p').text(file.name);
-    });
-
-    $uploadDropper.on('fileProgress.dropper', function (e, file, percent) {
-		$uploadList.find('.upload[data-name="' + file.name + '"] .progress-bar').width(percent + '%');
-    });
-
-    $uploadDropper.on('fileComplete.dropper', function (e, file) {
-		$uploadList.find('.upload[data-name="' + file.name + '"]').fadeOut(500, function() {
-			$(this).remove();
-			toastr.success('Tak tohle se Ti povedlo, ' + file.name + ' byl úspěšně nahrán!', 'Dobře ty!');
-		});
-    });
-});
-</script>
 <script type="text/template" id="uploadTemplate" n:syntax="off">
 <div class="col-md-2 upload">
 	<div class="thumbnail">
@@ -37,32 +19,83 @@ $(function() {
 	</div>
 </div>
 </script>
-<div id="upload-list" class="row">
-</div>
-<div class="photo-list" n:snippet="photos-list">
-	<div class="row">
-		<div n:foreach="$photos as $photo" class="col-md-3">
-            {control photoEditComponent-$photo->id}
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-7">
-        <label for="tags-all">Tagy pro všechny fotky:</label>
-        <select multiple="multiple"
-                name="tags-all"
-                class="form-control select2"
-                data-tags="true"
-                data-placeholder="Otaguj je všechny!"
-                data-ajax--url={link tags!}
-                data-ajax--cache="true"
-                data-ajax--delay="350"
-                data-ajax--method="POST"
-                data-minimum-input-length="0"></select>
-	</div>
-	<div class="col-md-5 form-group btn-group">
-	    <button n:href='save!' id="" class="btn btn-lg btn-success"><i class="glyphicon glyphicon-ok"></i> Všechny potvrdit</button>
-		<button data-toggle="modal" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove"></i> Všechny smazat!</button>
-	</div>
+
+<div id="upload-list" class="row"></div>
+
+<div>
+    <div class="photo-list panel panel-default row">
+        <div class="panel-heading">
+            <h3 class="panel-title">Nahrané fotky</h3>
+        </div>
+        <div n:class="$photos?row, panel-body" n:snippet="photos-list">
+            <div n:foreach="$photos as $photo" class="col-md-4">
+                {control photoEditComponent-$photo->id}
+            </div>
+            <div class="alert alert-warning" n:if="!$photos"><i class="glyphicon glyphicon-cloud-upload"></i> Prozatím jsi nic nenahrál, co takhle se činit?</div>
+        </div>
+        <div class="col-md-6">
+            <select multiple="multiple"
+                    name="tags-all"
+                    id="select2-all"
+                    class="form-control select2"
+                    data-tags="true"
+                    data-placeholder="Otaguj je všechny!"
+                    data-ajax--url="{link tags!}"
+                    data-ajax--cache="true"
+                    data-ajax--delay="350"
+                    data-ajax--method="POST"
+                    data-minimum-input-length="1"></select>
+        </div>
+        <div class="col-md-2">
+            <div class="btn btn-info" id="tag-all"><i class="glyphicon glyphicon-tags"></i> Otagovat všechny</div>
+        </div>
+        <div class="col-md-4 form-group btn-group">
+            <div class="btn btn-success" id="save-all"><i class="glyphicon glyphicon-ok"></i> Vlož je všechny!</div>
+            <div class="btn btn-danger" data-toggle="modal" data-target="#modal-delete-all.modal"><i class="glyphicon glyphicon-trash"></i> Všechny rychle smazat!</div>
+        </div>
+    </div>
 </div>
 
+<!-- Delete confirm modal for all photos -->
+<div id="modal-delete-all" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h4 class="modal-title">Jenom pro jistotu</h4>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Máš naprostou jistotu, že chceš <strong>všechny</strong> zbývající fotky <strong>smazat</strong>?</p>
+        <small>Všechny už jsou na serveru nahrané a víš, jak je to s rychlostí internetu...</small>
+      </div>
+      <div class="modal-footer">
+        <div type="button" class="btn btn-danger" id="delete-all"><i class="glyphicon glyphicon-trash"></i> Všechny rychle smazat!</div>
+        <div type="button" class="btn btn-default" data-dismiss="modal">Nechci!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(function (){
+        var $dropperList = $('#upload-list'),
+            itemTemplate = $("#uploadTemplate").html();
+            $dropper = $('#upload-dropper'),
+        initDropper($dropper, $dropperList, itemTemplate);
+        $('#modal-delete-all').find('#delete-all').on('click', function(e) {
+            e.preventDefault();
+            $('.photo-delete').click();
+            $('.modal').modal('hide');
+        });
+        $('#save-all').on('click', function(e) {
+            e.preventDefault();
+            $('.photo-save').click();
+        });
+        $select2all = initSelect2($('#select2-all'));
+        $('#tag-all').on('click', function(e) {
+            $.post({link tagsAll!}, { tags: $select2all.val()}, function(data, textStatus, xhr) {
+                toastr.success('Otagovány všechny fotky!', 'Výborně!');
+            });
+        });
+    });
+</script>
