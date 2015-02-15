@@ -52,7 +52,8 @@ class CssComponentFactory extends Object
             $files->addFile('assets/css/reset.css');
             $files->addFile('assets/css/index.css');
         } elseif ($module === 'admin') {
-            $files->addFile('assets/css/jquery.fs.dropper.css');
+            $files->addFile('assets/css/admin/jquery.fs.dropper.css');
+            $files->addFile('assets/css/admin/index.css');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css');
