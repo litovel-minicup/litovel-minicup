@@ -41,7 +41,7 @@ class PhotoManager extends Object
             $filename = substr(md5($prefix.$file->name.time()), 0, 8);
             $photo->filename = "$filename";
             // TODO: add thumbnails generation
-            $file->move("$this->wwwPath/upload/photos/$filename.png");
+            $file->move("$this->wwwPath/media/original/$filename.png");
             $this->PR->persist($photo);
             $photos[] = $photo;
         }
@@ -50,6 +50,6 @@ class PhotoManager extends Object
     }
 
     public function delete(Photo $photo) {
-        return unlink("{$this->wwwPath}/upload/photos/{$photo->filename}.png");
+        return unlink("{$this->wwwPath}/media/original/{$photo->filename}.png");
     }
 }

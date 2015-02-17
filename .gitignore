@@ -26,5 +26,6 @@ www/assets/.sass-cache
 *.map.*
 
 # media uploads
-www/upload/photos/*
-www/upload/thumbs/*
+www/media/photo/*
+www/media/thumb/*
+www/media/original/*

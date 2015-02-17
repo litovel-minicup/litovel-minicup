@@ -134,6 +134,10 @@ class RouterFactory extends Object
             'action' => 'default'
         ));
 
+        $router[] = new Route('media/<action>/<slug>', array(
+            'presenter' => 'Media',
+        ));
+
         return $router;
     }
 
