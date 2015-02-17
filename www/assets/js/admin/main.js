@@ -15,8 +15,10 @@ $(function () {
         "showMethod": "slideDown",
         "hideMethod": "fadeOut"
     };
+
+
     $(document).ajaxError(function () {
-        toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to na nic');
+        toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
     }).ajaxSuccess(function (event, request, settings) {
         if (request.responseJSON && request.responseJSON.snippets) {
             redrawSnippets(request.responseJSON.snippets);

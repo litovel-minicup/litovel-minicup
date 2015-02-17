@@ -11,7 +11,6 @@ use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 use WebLoader\Nette\CssLoader;
 use WebLoader\Nette\JavaScriptLoader;
 
@@ -129,9 +128,7 @@ abstract class BasePresenter extends Presenter
 
     protected function shutdown($response)
     {
-        if ($this->getParameter('year')) {
-            Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
-        }
+
     }
 
 

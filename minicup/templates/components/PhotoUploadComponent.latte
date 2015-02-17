@@ -5,7 +5,8 @@
     "maxSize" => 10242880,
     "maxQueue" => 2,
     "label" => "Natáhni soubory přímo nebo si to proklikni..",
-    "postData" => array("uploadId" => $uploadId));
+    "postData" => array("uploadId" => $uploadId),
+    "allowedTypes" => array('image/png', 'image/jpeg'));
 }
 <div id="upload-dropper" data-dropper-options={$dropperOptions|toJson}></div>
 
@@ -104,8 +105,8 @@
 <script>
     $(function (){
         var $dropperList = $('#upload-list'),
-            itemTemplate = $("#uploadTemplate").html();
-            $dropper = $('#upload-dropper'),
+            itemTemplate = $("#uploadTemplate").html(),
+            $dropper = $('#upload-dropper');
         initDropper($dropper, $dropperList, itemTemplate);
 
 

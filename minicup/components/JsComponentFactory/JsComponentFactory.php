@@ -47,7 +47,7 @@ class JsComponentFactory extends Object
     public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-        $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
+        $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js');
         $files->addFile($this->wwwPath.'/assets/js/nette.ajax.js');
         $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
         $files->addFile('assets/js/main.js');
@@ -59,7 +59,7 @@ class JsComponentFactory extends Object
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addFile('assets/js/admin/main.js');
-            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
+            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js');
         }
