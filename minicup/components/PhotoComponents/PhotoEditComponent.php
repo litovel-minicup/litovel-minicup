@@ -54,13 +54,10 @@ class PhotoEditComponent extends BaseComponent
         parent::render();
     }
 
-    /***/
     public function handleDelete()
     {
         $this->onDelete($this->photo);
         $this->PR->delete($this->photo);
-        // TODO use events!
-        $this->PM->delete($this->photo);
     }
 
     public function handleSave()

@@ -1,7 +1,6 @@
 <?php
 
 namespace Minicup\FrontModule\Presenters;
-use Minicup\Components\IPhotoUploadComponent;
 
 /**
  * Homepage presenter.
