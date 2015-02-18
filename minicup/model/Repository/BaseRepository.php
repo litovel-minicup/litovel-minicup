@@ -8,6 +8,7 @@ use LeanMapper\Repository;
 
 abstract class BaseRepository extends Repository
 {
+
     /** constants for ordering options  */
     const ORDER_ASC = 'ASC';
     const ORDER_DESC = 'DESC';
@@ -15,6 +16,16 @@ abstract class BaseRepository extends Repository
     /** constants for selecting from array of conditions */
     const METHOD_OR = 'OR';
     const METHOD_AND = 'AND';
+
+    /**
+     * @param string $event
+     * @param callable $callback
+     */
+    public function registerCallback($event, $callback)
+    {
+        $this->events->registerCallback($event, $callback);
+    }
+
 
     /**
      * @param $id

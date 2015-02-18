@@ -30,7 +30,7 @@ services:
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
     - Minicup\Misc\IFormFactory
-    - Nextras\Application\LinkFactory
+    - Minicup\Misc\FilterLoader
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
 
     # application logic services

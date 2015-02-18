@@ -5,10 +5,12 @@ namespace Minicup\Presenters;
 use Minicup\Components\CssComponentFactory;
 use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Components\JsComponentFactory;
+use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
 use WebLoader\Nette\CssLoader;
@@ -24,7 +26,10 @@ abstract class BasePresenter extends Presenter
     public $LFCF;
 
     /** @var IFormFactory @inject */
-    public $FF;
+    public $formFactory;
+
+    /** @var FilterLoader @inject */
+    public $filterLoader;
 
     /** @var CategoryRepository @inject */
     public $CR;
@@ -126,10 +131,12 @@ abstract class BasePresenter extends Presenter
         return $list;
     }
 
-    protected function shutdown($response)
+    /**
+     * Loads base filters from filter loader.
+     * @return ITemplate
+     */
+    public function createTemplate()
     {
-
+        return $this->filterLoader->loadFilters(parent::createTemplate());
     }
-
-
 }

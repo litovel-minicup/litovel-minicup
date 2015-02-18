@@ -2,24 +2,24 @@
 
 namespace Minicup\Misc;
 
+use Nette\Application\LinkGenerator;
 use Nette\Object;
-use Nextras\Application\LinkFactory;
 
 class TexyFactory extends Object
 {
-    /** @var  LinkFactory */
-    private $linkFactory;
+    /** @var  LinkGenerator */
+    private $linkGenerator;
 
     /** @var string */
     private $modulePrefix;
 
     /**
-     * @param LinkFactory $linkFactory
+     * @param LinkFactory $linkGenerator
      * @param string $modulePrefix
      */
-    public function __construct($modulePrefix, LinkFactory $linkFactory)
+    public function __construct($modulePrefix, LinkGenerator $linkGenerator)
     {
-        $this->linkFactory = $linkFactory;
+        $this->linkGenerator = $linkGenerator;
         $this->modulePrefix = $modulePrefix;
     }
 
@@ -28,8 +28,8 @@ class TexyFactory extends Object
      */
     public function create()
     {
-        $t = new Texy($this->modulePrefix, $this->linkFactory);
-        //TODO: configuration texy
+        $t = new Texy($this->modulePrefix, $this->linkGenerator);
+        //TODO: custom texy configuration
         return $t;
     }
 }

@@ -3,29 +3,39 @@
 namespace Minicup\Components;
 
 
+use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
-use Minicup\Model\Entity\MatchTerm;
 use Nette\Application\UI\Control;
-use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
-use Nette\Bridges\ApplicationLatte\Template;
-use Nette\Utils\Json;
 use Nette\Utils\Strings;
 
 abstract class BaseComponent extends Control
 {
     /** @var  IFormFactory */
-    protected $FF;
+    protected $formFactory;
+
+    /**
+     * @var FilterLoader
+     */
+    protected $filterLoader;
 
     /** @var String|NULL */
     protected $view = NULL;
 
     /**
-     * @param IFormFactory $FF
+     * @param IFormFactory $formFactory
      */
-    public function injectFF(IFormFactory $FF)
+    public function injectFormFactory(IFormFactory $formFactory)
     {
-        $this->FF = $FF;
+        $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @param FilterLoader $filterLoader
+     */
+    public function injectFilterLoader(FilterLoader $filterLoader)
+    {
+        $this->filterLoader = $filterLoader;
     }
 
     /**
@@ -34,7 +44,6 @@ abstract class BaseComponent extends Control
     protected function attached($presenter)
     {
         if ($presenter instanceof Presenter) {
-            // TODO: exists better solution for this problem?
             $presenter->context->callInjects($this);
         }
         parent::attached($presenter);
@@ -46,7 +55,7 @@ abstract class BaseComponent extends Control
      */
     protected function createTemplate()
     {
-        $template = parent::createTemplate();
+        $template = $this->filterLoader->loadFilters(parent::createTemplate());
         $name = $this->reflection->shortName;
         $dir = $this->presenter->context->parameters['appDir'];
         $paths = array();
@@ -100,29 +109,4 @@ abstract class BaseComponent extends Control
     {
         $this->redrawControl();
     }
-
-    /**
-     * TODO: add filter to access to photos and thumbnails
-     * @return ITemplate
-     */
-    public function getTemplate()
-    {
-        /** @var Template $template */
-        $template = parent::getTemplate();
-        $latte = $template->getLatte();
-        $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n. Y"));
-        });
-        $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->start, "G:i"));
-        });
-        $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->end, "G:i"));
-        });
-        $template->addFilter('toJson', function (array $array) {
-            return Json::encode($array);
-        });
-        return $template;
-    }
-
 }

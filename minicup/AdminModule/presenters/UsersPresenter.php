@@ -50,7 +50,7 @@ class UsersPresenter extends BaseAdminPresenter
      */
     protected function createComponentUserForm()
     {
-        $f = $this->FF->create();
+        $f = $this->formFactory->create();
         $f->addText('username', 'uživatelské jméno')
             ->setRequired();
         $f->addText('fullname', 'celé jméno')

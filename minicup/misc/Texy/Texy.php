@@ -2,26 +2,26 @@
 
 namespace Minicup\Misc;
 
+use Nette\Application\LinkGenerator;
 use Nette\Utils\Strings;
-use Nextras\Application\LinkFactory;
 
 class Texy extends \Texy
 {
-    /** @var  LinkFactory */
-    private $linkFactory;
+    /** @var LinkGenerator */
+    private $linkGenerator;
 
     /** @var  string */
     private $destinationPrefix;
 
     /**
      * @param $destinationPrefix
-     * @param LinkFactory $linkFactory
+     * @param LinkFactory $linkGenerator
      */
-    public function __construct($destinationPrefix, LinkFactory $linkFactory)
+    public function __construct($destinationPrefix, LinkGenerator $linkGenerator)
     {
         parent::__construct();
         $this->destinationPrefix = $destinationPrefix;
-        $this->linkFactory = $linkFactory;
+        $this->linkGenerator = $linkGenerator;
     }
 
     /**
@@ -51,7 +51,7 @@ class Texy extends \Texy
                 $args = Strings::replace($args, '# *#');
                 $args = Strings::split($args, '#,#');
             }
-            $link = $me->linkFactory->link($destination, $args);
+            $link = $me->linkGenerator->link($destination, $args);
             return '[' . $link . ']';
         });
     }

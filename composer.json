@@ -5,7 +5,6 @@
     "dibi/dibi": "dev-master",
     "tharos/leanmapper": "dev-master",
     "o5/grido": "dev-master",
-    "nextras/link-factory": "~1.0",
     "jandrabek/tracy-gitversion-panel": "dev-master",
     "jsmitka/nette-xdebug-helper": "dev-master",
     "nextras/forms": "~1.4",
