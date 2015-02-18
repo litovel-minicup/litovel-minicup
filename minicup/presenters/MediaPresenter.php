@@ -3,6 +3,7 @@
 namespace Minicup\Presenters;
 
 
+use Minicup\Model\Manager\PhotoManager;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\FileResponse;
 use Nette\Application\UI\Presenter;
@@ -11,10 +12,11 @@ use Nette\Utils\UnknownImageFileException;
 
 class MediaPresenter extends Presenter
 {
+    /** @var PhotoManager @inject */
+    public $PM;
 
     public function actionThumb($slug)
     {
-        // TODO: to config!
         $this->providePhoto($slug, "thumb", array(300, 300));
     }
 
