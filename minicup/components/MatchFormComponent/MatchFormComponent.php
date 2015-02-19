@@ -48,7 +48,7 @@ class MatchFormComponent extends BaseComponent
     {
         $me = $this;
 
-        $f = $this->FF->create();
+        $f = $this->formFactory->create();
 
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {

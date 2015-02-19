@@ -46,7 +46,7 @@ class OnlineReportComponent extends BaseComponent
      */
     public function createComponentNewReportForm()
     {
-        $form = $this->FF->create();
+        $form = $this->formFactory->create();
         $form->addText('message', '', 50)
             ->setRequired('Zprávu prostě musíš vyplnit!');
         $form->addSubmit('info', 'INFO');

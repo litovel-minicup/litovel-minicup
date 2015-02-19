@@ -13,7 +13,7 @@ class LoginFormComponent extends BaseComponent
      */
     public function createComponentLoginForm()
     {
-        $form = $this->FF->create();
+        $form = $this->formFactory->create();
         $form->addText('username', 'Uživatelské jméno')
             ->setRequired('Prosím, zadejte vaše uživatelské jméno.');
         $form->addPassword('password', 'Heslo')

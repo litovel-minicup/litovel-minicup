@@ -31,7 +31,7 @@ class MigrateFormComponent extends BaseComponent
      */
     public function createComponentMigrateForm()
     {
-        $f = $this->FF->create();
+        $f = $this->formFactory->create();
         $categories = $this->CR->findAll();
         $select = [];
         foreach ($categories as $category) {
