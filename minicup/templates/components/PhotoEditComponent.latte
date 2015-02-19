@@ -1,5 +1,5 @@
 <div class="thumbnail photo-{$photo->id}" data-id="{$photo->id}" n:snippet>
-    <img class="img-thumbnail" src={plink :Media:thumb "$photo->filename.png"} alt="">
+    <img class="img-thumbnail" src={plink :Media:thumb $photo->filename} alt="">
     <div class="caption">
         <h4>{$photo->id}</h4>
         <form>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="modal-body row">
                     <div class="col-md-4 thumbnail">
-                        <img src="{$basePath}/media/thumb/{$photo->filename}.png" alt="">
+                        <img src="{$basePath}/media/thumb/{$photo->filename}" alt="">
                     </div>
                     <div class="col-md-8">
                         <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>

@@ -5,8 +5,10 @@ namespace Minicup\Model\Manager;
 use LeanMapper\Events;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
+use Nette\FileNotFoundException;
 use Nette\Http\FileUpload;
 use Nette\InvalidArgumentException;
+use Nette\InvalidStateException;
 use Nette\Object;
 use Nette\Utils\Image;
 use Nette\Utils\Random;
@@ -26,6 +28,8 @@ class PhotoManager extends Object
     const PHOTO_MEDIUM = "medium";
     const PHOTO_FULL = "full";
 
+    const DEFAULT_FLAG = Image::FILL;
+
     /**
      * type => (width, height, flags)
      * @var array
@@ -34,6 +38,15 @@ class PhotoManager extends Object
         PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
         PhotoManager::PHOTO_MEDIUM => array(),
         PhotoManager::PHOTO_FULL => array(),
+    );
+
+    /**
+     * mime type => file extension
+     * @var array
+     */
+    public static $extensions = array(
+        'image/png' => 'png',
+        'image/jpeg' => 'jpg'
     );
 
     /**
@@ -50,8 +63,12 @@ class PhotoManager extends Object
         });
     }
 
-    /***/
-    private function formatPhotoPath($format, $filename)
+    /**
+     * @param string $format
+     * @param string $filename
+     * @return string
+     */
+    public function formatPhotoPath($format, $filename)
     {
         // TODO FIX IMAGE EXTENSIONS!
         return "$this->wwwPath/media/" . $format . "/$filename.png";
@@ -73,7 +90,7 @@ class PhotoManager extends Object
                 continue;
             }
             $photo = new Photo();
-            $filename = substr(md5($prefix . $file->name . time()), 0, 8);
+            $filename = substr(md5($prefix . $file->sanitizedName . time()), 0, 10) . '.' . $this::$extensions[$file->contentType];
             $photo->filename = (string)$filename;
             $file->move($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
             $this->PR->persist($photo);
@@ -95,6 +112,10 @@ class PhotoManager extends Object
     /**
      * @param string|Photo $photo
      * @param string $format
+     * @throws InvalidArgumentException
+     * @throws FileNotFoundException
+     * @throws InvalidStateException
+     * @return string
      */
     public function getInFormat($photo, $format)
     {
@@ -102,10 +123,27 @@ class PhotoManager extends Object
             throw new InvalidArgumentException('Unknown photo format!');
         }
 
+        $filename = $photo;
         if (is_string($photo)) {
-
+            $photo = $this->PR->getByFilename($photo);
         }
 
+        if (!$photo) {
+            throw new FileNotFoundException("Photo {$filename} not found!");
+        }
 
+        $requested = $this->formatPhotoPath($format, $photo->filename);
+        if (file_exists($requested)) {
+            throw new InvalidStateException('Apache fails with ' . $requested);
+        }
+
+        $original = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $filename);
+        $flag = $this::DEFAULT_FLAG;
+        if (isset($this::$resolutions[$format][2])) {
+            $flag = $this::$resolutions[$format][2];
+        }
+        $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][0], $flag);
+        $image->sharpen()->save($requested);
+        return $requested;
     }
 }

@@ -22,4 +22,14 @@ class PhotoRepository extends BaseRepository
         }
         return $photos;
     }
+
+    /**
+     * @param string $filename
+     * @return Photo|NULL
+     */
+    public function getByFilename($filename)
+    {
+        $row = $this->createFluent()->where('filename = ?', $filename)->fetch();
+        return $row ? $this->createEntity($row) : NULL;
+    }
 }

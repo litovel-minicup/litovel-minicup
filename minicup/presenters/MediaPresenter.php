@@ -7,8 +7,7 @@ use Minicup\Model\Manager\PhotoManager;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\FileResponse;
 use Nette\Application\UI\Presenter;
-use Nette\Utils\Image;
-use Nette\Utils\UnknownImageFileException;
+use Nette\FileNotFoundException;
 
 class MediaPresenter extends Presenter
 {
@@ -17,39 +16,21 @@ class MediaPresenter extends Presenter
 
     public function actionThumb($slug)
     {
-        $this->providePhoto($slug, "thumb", array(300, 300));
+        try {
+            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_THUMB);
+        } catch (FileNotFoundException $e) {
+            throw new BadRequestException($e->getMessage());
+        }
+        $this->sendResponse(new FileResponse($requested));
     }
 
-    public function actionPhoto($slug)
+    public function actionMedium($slug)
     {
-        $this->providePhoto($slug, "photo", array(NULL, NULL));
-    }
-
-
-    /**
-     * @param string $slug
-     * @param string $type
-     * @param int[] $dimensions
-     * @throws BadRequestException
-     * @throws UnknownImageFileException
-     */
-    private function providePhoto($slug, $type, $dimensions)
-    {
-        $wwwDir = $this->context->parameters['wwwDir'];
-        $requested = $wwwDir . "/media/$type/$slug";
-        if (file_exists($requested)) {
-            // never?
-            $this->sendResponse(new FileResponse($requested));
+        try {
+            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_MEDIUM);
+        } catch (FileNotFoundException $e) {
+            throw new BadRequestException($e->getMessage());
         }
-        $original = $wwwDir . "/media/original/$slug";
-        if (file_exists($original)) {
-            $image = Image::fromFile($original);
-            $image->resize($dimensions[0], $dimensions[1], Image::FILL);
-            $image->sharpen();
-            $image->save($requested);
-            $image->send();
-            $this->sendResponse(new FileResponse($requested));
-        }
-        throw new BadRequestException('Requested photo not found!');
+        $this->sendResponse(new FileResponse($requested));
     }
 }
