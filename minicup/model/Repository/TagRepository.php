@@ -37,4 +37,13 @@ class TagRepository extends BaseRepository
         $rows = $this->createFluent()->where('[slug] LIKE %~like~', $term)->fetchAll();
         return $this->createEntities($rows);
     }
+
+    /**
+     * @return Tag[]
+     */
+    public function findMainTags()
+    {
+        $rows = $this->createFluent()->where('[is_main] = 1')->fetchAll();
+        return $this->createEntities($rows);
+    }
 }

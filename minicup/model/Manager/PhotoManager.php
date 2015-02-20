@@ -24,6 +24,7 @@ class PhotoManager extends Object
     /** @internal */
     const PHOTO_ORIGINAL = "original";
 
+    const PHOTO_SMALL = "small";
     const PHOTO_THUMB = "thumb";
     const PHOTO_MEDIUM = "medium";
     const PHOTO_FULL = "full";
@@ -35,9 +36,10 @@ class PhotoManager extends Object
      * @var array
      */
     public static $resolutions = array(
+        PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
         PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(),
-        PhotoManager::PHOTO_FULL => array(),
+        PhotoManager::PHOTO_MEDIUM => array(1200, 1200),
+        PhotoManager::PHOTO_FULL => array(2000, 2000),
     );
 
     /**
@@ -71,6 +73,7 @@ class PhotoManager extends Object
     public function formatPhotoPath($format, $filename)
     {
         // TODO FIX IMAGE EXTENSIONS!
+        @mkdir("$this->wwwPath/media/" . $format . "/");
         return "$this->wwwPath/media/" . $format . "/$filename.png";
     }
 

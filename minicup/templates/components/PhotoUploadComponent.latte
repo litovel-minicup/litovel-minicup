@@ -132,7 +132,7 @@
         });
 
 
-        $select2all = initSelect2($('#select2-all'));
+        $select2all = initTagsSelect2($('#select2-all'));
         $('#tag-all').on('click', function(e) {
             $.post({link tagsAll!}, { tags: $select2all.val()}, function(data, textStatus, xhr) {
                 toastr.success('Otagovány všechny fotky!', 'Výborně!');

@@ -47,6 +47,7 @@ class CssComponentFactory extends Object
     {
         $files = new FileCollection($this->wwwPath);
 
+        $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
         if ($module === 'front') {
             $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
             $files->addFile('assets/css/reset.css');
@@ -54,7 +55,6 @@ class CssComponentFactory extends Object
         } elseif ($module === 'admin') {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
             $files->addFile('assets/css/admin/index.css');
-            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
             $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
             $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css');
         }
@@ -67,7 +67,7 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
-        $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
+        $control = new CssLoader($compiler, $this->request->url->scriptPath . 'webtemp');
         return $control;
     }
 }

@@ -33,4 +33,14 @@ class MediaPresenter extends Presenter
         }
         $this->sendResponse(new FileResponse($requested));
     }
+
+    public function actionSmall($slug)
+    {
+        try {
+            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_SMALL);
+        } catch (FileNotFoundException $e) {
+            throw new BadRequestException($e->getMessage());
+        }
+        $this->sendResponse(new FileResponse($requested));
+    }
 }

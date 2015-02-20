@@ -20,7 +20,7 @@
                 <script>
                     $(function() {
                         var $photo = $('.photo-{$photo->id}');
-                        var select2 = initSelect2($photo.find('.select2'));
+                        var select2 = initTagsSelect2($photo.find('.select2'));
                         $photo.find('img').on('click', function(e) {
                             $(this).parent('.photo-{$photo->id}').toggleClass('selected')
                                     .trigger('minicup.photo.recount');

@@ -1,4 +1,4 @@
-var initSelect2 = function ($el) {
+var initTagsSelect2 = function ($el) {
     $el.select2({
         tags: true,
         tokenSeparators: [',', ' '],

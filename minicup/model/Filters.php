@@ -95,6 +95,7 @@ class Filters extends Object
      */
     public function activePhotos(Fluent $fluent)
     {
-        $fluent->where('[photo.active] = 1');
+        // TODO: fix active columns in M:N
+        //$fluent->where('[active] = 1');
     }
 }
