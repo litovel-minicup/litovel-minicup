@@ -51,9 +51,9 @@ class GalleryComponent extends BaseComponent
      */
     public function handleTags()
     {
-        $term = isset($this->presenter->request->parameters['term']) ? $this->presenter->request->parameters['term'] : NULL;
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
+        $params = $this->presenter->request->parameters;
+        if (isset($params['term'])) {
+            $tags = $this->TR->findLikeTerm($params['term']);
         } else {
             $tags = $this->TR->findAll();
         }

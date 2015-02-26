@@ -12,31 +12,39 @@
       <a class="navbar-brand" n:href="Homepage:default">Minicup 2015</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Správa fotek<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li class="{ifCurrent upload}active{/}"><a n:href="upload">Upload</a></li>
+            <li class="{ifCurrent upload}active{/}"><a n:href="Homepage:upload">Upload</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Týmy<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
-            <li><a n:href="">{$_category->name}</a></li>
+            <li><a href="">{$_category->name}</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Vkládání výsledků<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
+            <li><a n:href="Match:confirm $_category">{$_category->name}</a></li>
           </ul>
         </li>
       </ul>
+      <p class="navbar-text navbar-right"><a class="navbar-link" n:href=":Front:Homepage:">Zpět do veřejné sekce</a></p>
     </div>
   </div>
 </nav>
 {/block}
 
 {block body}
-    {include #navbar}
+  {include #navbar}
 	<div class="container">
-	    {block content}
-	{/}
-	</div>
+  {snippet flashes}
+    <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+  {/snippet}
+    {block content}{/}
+</div>
 {/block}

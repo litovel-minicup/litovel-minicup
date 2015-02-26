@@ -20,4 +20,11 @@ abstract class BaseAdminPresenter extends BasePresenter
             $this->redirect(':Front:Homepage:default', array('backlink' => $this->storeRequest()));
         }
     }
+
+    protected function afterRender()
+    {
+        $this->redrawControl('flashes');
+    }
+
+
 }

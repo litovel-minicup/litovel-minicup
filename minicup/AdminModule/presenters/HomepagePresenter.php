@@ -18,7 +18,7 @@ class HomepagePresenter extends BaseAdminPresenter
     /** @var IPhotoUploadComponentFactory @inject */
     public $PUC;
 
-    /** @var  TagRepository @inject */
+    /** @var TagRepository @inject */
     public $TR;
 
     /**

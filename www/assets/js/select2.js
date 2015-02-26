@@ -4,7 +4,12 @@ var initTagsSelect2 = function ($el) {
         tokenSeparators: [',', ' '],
         minimumInputLength: 0,
         ajax: {
-            dataType: 'json'
+            dataType: 'json',
+            data: function(term, page) {
+                return {
+                    term: term['term']
+                };
+            }
         }
     });
     return $el;

@@ -57,7 +57,6 @@ class EntitiesReplicatorContainer extends RContainer
         $container = $this->createContainer($name);
         $container->currentGroup = $this->currentGroup;
         $this->addComponent($container, $name);
-
         $_entity = NULL;
         /** @var Entity $entity */
         foreach ($this->entities as $entity) {

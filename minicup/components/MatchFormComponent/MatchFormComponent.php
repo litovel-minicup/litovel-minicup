@@ -52,7 +52,7 @@ class MatchFormComponent extends BaseComponent
 
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
-            $container->currentGroup = $container->getForm()->addGroup('zápas', FALSE);
+            $container->currentGroup = $container->getForm()->addGroup('Zápas', FALSE);
             $container
                 ->addText('scoreHome', $match->homeTeam->name)
                 ->setType('number')
@@ -66,8 +66,8 @@ class MatchFormComponent extends BaseComponent
             $this->count);
 
         /** @var SubmitButton $addSubmit */
-        $addSubmit = $matches->addSubmit('addMatch', 'zobrazit další zápas')
-            ->setValidationScope(FALSE)
+        $matches->addSubmit('addMatch', 'zobrazit další zápas')
+            ->setValidationScope(NULL)
             ->setAttribute('class', 'ajax')
             ->onClick[] = $this->addMatchClicked;
         $f->addSubmit('submit', 'odeslat');
@@ -77,9 +77,8 @@ class MatchFormComponent extends BaseComponent
 
     public function addMatchClicked(SubmitButton $button)
     {
-        /** @var EntitiesReplicatorContainer $matches */
-        $this->redrawControl('');
         $button->parent->createOne();
+        $this->redrawControl();
     }
 
     /***/
@@ -98,9 +97,8 @@ class MatchFormComponent extends BaseComponent
                 $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
                 $this->presenter->flashMessage('Zápas '.$match->homeTeam->name.' vs. '.$match->awayTeam->name.' byl úspěšně zpracován.');
             }
-
+            $this->redirect('this');
         }
-        $this->redirect('this');
     }
 
 
