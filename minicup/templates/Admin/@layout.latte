@@ -23,13 +23,19 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Týmy<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
-            <li><a href="">{$_category->name}</a></li>
+            <li><a n:href="Team:list $_category">{$_category->name}</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Vkládání výsledků<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
             <li><a n:href="Match:confirm $_category">{$_category->name}</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Přehled zápasů<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
+            <li><a n:href="Match:list $_category">{$_category->name}</a></li>
           </ul>
         </li>
       </ul>
