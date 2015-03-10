@@ -98,4 +98,17 @@ class Filters extends Object
         // TODO: fix active columns in M:N
         //$fluent->where('[active] = 1');
     }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderNews(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
+    {
+        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy('[added]'.$order);
+    }
 }

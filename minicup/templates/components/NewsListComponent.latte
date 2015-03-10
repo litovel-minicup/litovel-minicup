@@ -1,0 +1,11 @@
+<div class="Article">
+    <div class="Article__head__icon Box__head__icon">
+        <img src="assets/img/testIcon.png" alt="">
+    </div>
+    <div class="Article__head__text Box__head__text">Novinky</div>
+    <div n:inner-foreach="$news as $new" class="Box__content">
+        <div class="Article__heading">{$new->title}</div>
+        <div class="Article__date">{$new->added|date}</div>
+        <div class="Article__content">{$new->content}</div>
+    </div>
+</div>

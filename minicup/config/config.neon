@@ -58,6 +58,7 @@ services:
             - registerFilter(unconfirmed, [@filters, unconfirmedMatch])
             - registerFilter(orderMatches, [@filters, orderMatches])
             - registerFilter(activePhotos, [@filters, activePhotos])
+            - registerFilter(orderNews, [@filters, orderNews])
 
     # repositories
     - Minicup\Model\Repository\MatchRepository
@@ -72,12 +73,14 @@ services:
     - Minicup\Model\Repository\StaticContentRepository
     - Minicup\Model\Repository\CategoryRepository
     - Minicup\Model\Repository\DayRepository
+    - Minicup\Model\Repository\NewsRepository
 
     # component factories
 
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
+    - Minicup\Components\INewsListComponentFactory
     - implement: Minicup\Components\IPhotoEditComponentFactory
       parameters: [Minicup\Model\Entity\Photo photo]
       arguments: [%photo%]
