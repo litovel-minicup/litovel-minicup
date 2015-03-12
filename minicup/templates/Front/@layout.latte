@@ -1,30 +1,36 @@
 {extends '../@layout.latte'}
 {block body}
-    <div class="Header">
-            <div class="Header__logo">
-                <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image">
-            </div>
-            <div class="Header__toggle">
-                {control categoryToggleFormComponent}
-            </div>
 
-            <div class="Header__nav">
-                <ul>
-                    <li><a href="">novinky</a></li>
-                    <li><a href="">informace</a></li>
-                    <li><a n:href="Team:list $category">Týmy</a></li>
-                    <li><a n:href="Match:list $category">Zápasy</a></li>
-                    <li><a n:href="Gallery:default">foto</a></li>
-                    <li><a href="">tabulky</a></li>
-                    <li><a href="">týmy</a></li>
-                    <li><a href="">sponzoři</a></li>
-                </ul>
-            </div>
+    <div class="Header">
+
+        <div class="Header__hamburger">
+            &#9776
         </div>
 
+        <div class="Header__logo">
+                <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image">
+        </div>
+
+        <div class="Header__toggle">
+                {control categoryToggleFormComponent}
+        </div>
+
+        <div class="Header__nav">
+            <ul>    
+                <a href="novinky.html"><li>novinky</li></a>
+                <a href="informace.html"><li>informace</li></a>
+                <a href=""><li>tabulky</li></a>
+                <a n:href="Team:list $category"><li>týmy</li></a>
+                <a n:href="Match:list $category"><li>zápasy</li></a>
+                <a href=""><li>sponzoři</li></a>
+                <a n:href="Gallery:default"><li>foto</li></a>
+            </ul>   
+        </div>
+    </div>  
+
         <div class="Section">
-        {block content}
-        {/block}
+            {block content}
+            {/block}
         </div>
 
         {control asideComponent}

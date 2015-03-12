@@ -1,13 +1,16 @@
 <div class="Aside">
-    <div class="Box__head Aside__head">Právě hrané zápasy</div>
+    <div class="Aside__head__icon Box__head__icon"><img src="assets/img/rec.png" alt=""></div>
+    <div class="Aside__head__text Box__head__text">Hranné zápasy</div>
     <div class="Box__content Aside__content">
-        {control listOfMatchesAsideComponent:aside current, 4}
+        {control listOfMatchesAsideComponent:aside current, 2}
     </div>
-    <div class="Box__head Aside__head">Následující zápasy</div>
+    <div class="Aside__head__icon Box__head__icon"><img src="assets/img/testIconBlack.png" alt=""></div>
+        <div class="Aside__head__text Box__head__text">Nadcházející zápasy</div>
     <div class="Box__content Aside__content">
         {control listOfMatchesAsideComponent:aside next, 4}
     </div>
-    <div class="Box__head Aside__head">Pořadí</div>
+    <div class="Aside__head__icon Box__head__icon"><img src="assets/img/testIconBlack.png" alt=""></div>
+    <div class="Aside__head__text Box__head__text">Pořadí</div>
     <div class="Box__subhead Aside__subhead">
         <ul>
             <li class="Aside__list--rank">#</li>
