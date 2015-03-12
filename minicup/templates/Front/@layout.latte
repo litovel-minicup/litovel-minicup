@@ -1,6 +1,10 @@
 {extends '../@layout.latte'}
 {block body}
+<<<<<<< HEAD
 
+=======
+<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+>>>>>>> FETCH_HEAD
     <div class="Header">
 
         <div class="Header__hamburger">
@@ -13,6 +17,23 @@
 
         <div class="Header__toggle">
                 {control categoryToggleFormComponent}
+<<<<<<< HEAD
+=======
+            </div>
+
+            <div class="Header__nav">
+                <ul>
+                    <a href=""><li>novinky</li></a>
+                    <a href=""><li>informace</li></a>
+                    <a n:href="Team:list $category"><li>Týmy</li></a>
+                    <a n:href="Match:list $category"><li>Zápasy</li></a>
+                    <a n:href="Gallery:default"><li>foto</li></a>
+                    <a href=""><li>tabulky</li></a>
+                    <a href=""><li>týmy</li></a>
+                    <a href=""><li>sponzoři</li></a>
+                </ul>
+            </div>
+>>>>>>> FETCH_HEAD
         </div>
 
         <div class="Header__nav">
@@ -31,9 +52,12 @@
         <div class="Section">
             {block content}
             {/block}
+<<<<<<< HEAD
+=======
+            {control loginForm}
+>>>>>>> FETCH_HEAD
         </div>
 
         {control asideComponent}
-{/block}
 
-{block login}{control loginForm}{/}
+{/block}

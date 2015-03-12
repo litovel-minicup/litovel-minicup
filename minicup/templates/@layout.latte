@@ -5,12 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {control css}
         {control js}
-        <title></title>
+        <title n:snippet="title">{block title|striptags|trim}{ifset $title}{$title}{/ifset}{/block}{ifset title} | {/ifset}MINICUP 2015</title>
     </head>
     <body>
     <!-- TODO: templates! -->
     {block body}{/block}
-
-    {block login}{/block}
     </body>
 </html>

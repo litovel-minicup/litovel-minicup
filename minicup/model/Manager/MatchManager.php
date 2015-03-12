@@ -34,7 +34,6 @@ class MatchManager extends Object
         $this->connection = $connection;
     }
 
-
     /**
      * @param Match $match
      * @param $scoreHome
