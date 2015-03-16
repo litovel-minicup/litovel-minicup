@@ -137,7 +137,7 @@ html {
   height: 7em;
   font-family: 'PTBoldItalic'; }
 .Box__content {
-  padding: 50px 20px;
+  padding: 30px 20px;
   line-height: 1.32; }
 .Box__content--split--left {
   float: left;
@@ -172,40 +172,82 @@ html {
   width: 100%;
   background: #4180ff;
   height: 120px;
-  font-family: 'MontserratBold';
-  font-size: 15px; }
+  font-family: 'MontserratBold'; }
   .Header:last-child {
     margin-right: 0; }
+  .Header__hamburger {
+    display: none;
+    color: white;
+    text-align: center;
+    font-size: 35px; }
+    @media screen and (max-width: 960px) {
+      .Header__hamburger {
+        display: block !important;
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: 33.09859%;
+        margin-right: 0;
+        background: #4180ff;
+        padding-top: 40px;
+        height: 120px; }
+        .Header__hamburger:last-child {
+          margin-right: 0; } }
   .Header__logo {
     float: left;
     display: block;
     margin-right: 0.35211%;
-    width: 16.37324%;
+    width: -0.35211%;
     margin-right: 0;
     background: #0040c1;
-    height: 120px; }
+    width: 175px;
+    height: 100%; }
     .Header__logo:last-child {
       margin-right: 0; }
+    @media screen and (max-width: 960px) {
+      .Header__logo {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: 33.09859%;
+        margin-right: 0; }
+        .Header__logo:last-child {
+          margin-right: 0; } }
     .Header__logo__image {
-      max-width: 140px;
-      width: 70%;
-      margin-left: 15%;
-      margin-top: 7%; }
+      margin-top: 13px;
+      margin-left: 23px; }
+      @media screen and (max-width: 960px) {
+        .Header__logo__image {
+          margin-left: 25%; } }
   .Header__toggle {
     float: left;
     display: block;
     margin-right: 0.35211%;
-    width: 12.1919%;
+    width: -0.35211%;
+    width: 120px;
+    height: 100%;
     border: 2px solid #0040c1;
-    height: 100%; }
+    font-size: 13px;
+    text-transform: uppercase; }
     .Header__toggle:last-child {
       margin-right: 0; }
+    @media screen and (max-width: 960px) {
+      .Header__toggle {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: 33.09859%; }
+        .Header__toggle:last-child {
+          margin-right: 0; } }
     .Header__toggle__anchor {
       height: 50%; }
       .Header__toggle__anchor a {
         color: #0040c1;
         position: absolute;
-        margin: 20px 50px; }
+        margin: 20px 35px; }
+        @media screen and (max-width: 960px) {
+          .Header__toggle__anchor a {
+            margin: 20px 12%; } }
       .Header__toggle__anchor:hover {
         background: white; }
       .Header__toggle__anchor--active {
@@ -216,30 +258,52 @@ html {
     float: left;
     display: block;
     margin-right: 0.35211%;
-    width: 8.01056%;
-    margin-left: 58.53873%;
+    width: -0.35211%;
+    float: right;
+    width: 650px;
+    height: 100px;
     margin-top: 10px;
-    height: 100px; }
+    font-size: 14px; }
     .Header__nav:last-child {
       margin-right: 0; }
-    .Header__nav li {
-      float: left;
-      display: block;
-      margin-right: 4.3956%;
-      width: 100%;
-      margin-top: 15px;
-      height: 70px;
-      text-align: center; }
-      .Header__nav li:last-child {
-        margin-right: 0; }
-      .Header__nav li:hover {
+    @media screen and (max-width: 960px) {
+      .Header__nav {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: 100%;
+        margin-top: 0px;
+        background: #4180ff; }
+        .Header__nav:last-child {
+          margin-right: 0; } }
+    .Header__nav a {
+      line-height: 85px;
+      color: white;
+      margin-top: 5px;
+      margin-left: 5px;
+      }
+      .Header__nav a li {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: -0.35211%;
+        width: 87px;
+        height: 85px;
+        text-align: center;
+        margin-top: 7.5px; 
+        transition: 0.1s background ease-in;
+      }
+      .Header__nav a li:hover {
+        transition: 0.5s background ease-out; 
         background: white;
-        color: red; }
-      .Header__nav li a {
-        line-height: 70px;
-        color: white; }
-        .Header__nav li a:hover {
-          color: #4180ff; }
+        color: #4180ff;
+      }
+        .Header__nav a li:last-child {
+          margin-right: 0; }
+      }
+      .Header__nav a:hover {
+        background: white;
+        color: #4180ff; }
 
 .Article__head__icon {
   background: #bababa; }
@@ -249,10 +313,11 @@ html {
 .Article__heading {
   font-family: "Montserrat";
   font-size: 34px;
+  padding-top: 20px;
   letter-spacing: -1.5px; }
 .Article__date {
   font-family: "PTBoldItalic";
-  padding-top: 50px; }
+  padding-top: 10px; }
 .Article__content {
   font-family: "PTRegular";
   padding-top: 15px;
@@ -269,6 +334,14 @@ html {
   margin-right: 0; }
   .Aside:last-child {
     margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .Aside {
+      float: left;
+      display: block;
+      margin-right: 0.5291%;
+      width: 100%; }
+      .Aside:last-child {
+        margin-right: 0; } }
   .Aside__head {
     letter-spacing: -1.5px; }
     .Aside__head__icon {
@@ -336,6 +409,50 @@ html {
   margin-top: 4px; }
   .Section:last-child {
     margin-right: 0; }
+  @media screen and (max-width: 768px) {
+    .Section {
+      float: left;
+      display: block;
+      margin-right: 0.5291%;
+      width: 100%; }
+      .Section:last-child {
+        margin-right: 0; } }
+
+@media screen and (max-width: 960px) {
+  .Header {
+    margin-bottom: 100px; } }
+.Table__head__icon {
+  background: #bababa; }
+.Table__head__text {
+  background: #bababa;
+  color: white; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: white !important; }
+  table thead {
+    background: green; }
+    table thead tr {
+      height: 50px;
+      background: #929292; }
+      table thead tr .th--hover {
+        background: #666; }
+      table thead tr th {
+        line-height: 50px; }
+  table tbody tr td {
+    padding: 15px;
+    font-size: 18px; }
+  table tbody tr td:first-child {
+    width: 45%;
+    background: #777; }
+  table tbody tr td:nth-child(2) {
+    width: 10%;
+    background: #bababa;
+    font-family: "Montserrat"; }
+  table tbody tr td:last-child {
+    width: 45%;
+    text-align: right; }
 
 .Footer {
   background: #4A4A4A;
@@ -372,5 +489,15 @@ body {
     clear: both;
     content: "";
     display: table; }
+
+.grid-test-again {
+  background: red;
+  height: 150px;
+  float: left;
+  display: block;
+  margin-right: 0.35211%;
+  width: 100%; }
+  .grid-test-again:last-child {
+    margin-right: 0; }
 
 /*# sourceMappingURL=index.css.map */
