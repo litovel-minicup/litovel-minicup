@@ -1,8 +1,8 @@
 <div class="component">
-    {if !$user->loggedIn}
+{*     {if !$user->loggedIn}
         {control loginForm}
     {else}
         <a n:href="logOut!">Odhlásit</a>
-    {/if}
+    {/if} *}
         <a href={plink ':Admin:Homepage:'}>Administrace</a>
 </div>

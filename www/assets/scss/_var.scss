@@ -24,8 +24,8 @@
 
 	
 	$dark--grey: #929292; 
-	$medium--grey: #bababa;
 	$light--grey: #e1e1e1;
+	$medium--grey: darken($light--grey, 10%);
 	
 	/**
 	 * Black

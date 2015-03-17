@@ -90,6 +90,52 @@ a {
 @font-face {
   font-family: 'MontserratLight';
   src: url("../font/Montserrat-Light.otf") format("opentype"); }
+@font-face {
+  font-family: 'icomoon';
+  src: url("../font/icomoon.eot?-dmswos");
+  src: url("../font/icomoon.eot?#iefix-dmswos") format("embedded-opentype"), url("../font/icomoon.woff?-dmswos") format("woff"), url("../font/icomoon.ttf?-dmswos") format("truetype"), url("../font/icomoon.svg?-dmswos#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+[class^="icon__"], [class*=" icon__"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 36px;
+  text-align: center;
+  padding-top: 20px;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon__live:before {
+  content: "\e600"; }
+
+.icon__matches:before {
+  content: "\e601"; }
+
+.icon__news:before {
+  content: "\e602";
+  color: white; }
+
+.icon__photo:before {
+  content: "\e603"; }
+
+.icon__tables:before {
+  content: "\e604"; }
+
+.icon__teams:before {
+  content: "\e605"; }
+
+.icon__score:before {
+  content: "\e606"; }
+
+.icon__upcoming:before {
+  content: "\e607"; }
+
 /**
  * Import Bourbon and Neat
  */
@@ -106,38 +152,36 @@ html {
 /**
  * Import Components
  */
-.Box__head__icon {
-  float: left;
-  display: block;
-  margin-right: 0.35211%;
-  width: 12.1919%;
-  margin-right: 0;
-  height: 75px; }
-  .Box__head__icon:last-child {
-    margin-right: 0; }
-  .Box__head__icon img {
-    width: 25px;
-    margin-top: 25px;
-    margin-left: 32%; }
-.Box__head__text {
-  float: left;
-  display: block;
-  margin-right: 0.35211%;
-  width: 87.45599%;
-  font-family: 'Montserrat';
-  font-size: 24px;
-  height: 75px;
-  padding: 25px 5px;
-  letter-spacing: -1.5px; }
-  .Box__head__text:last-child {
-    margin-right: 0; }
+.Box__head {
+  /* Vyplnit celeho potomka, nyni jenom 99% */ }
+  .Box__head__icon {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 12.1919%;
+    margin-right: 0;
+    height: 75px; }
+    .Box__head__icon:last-child {
+      margin-right: 0; }
+  .Box__head__text {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: 87.45599%;
+    font-family: 'Montserrat';
+    font-size: 24px;
+    height: 75px;
+    padding: 25px 5px;
+    letter-spacing: -1.5px; }
+    .Box__head__text:last-child {
+      margin-right: 0; }
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
   height: 7em;
   font-family: 'PTBoldItalic'; }
 .Box__content {
-  padding: 50px 20px;
+  padding: 95px 20px 5px 20px;
   line-height: 1.32; }
 .Box__content--split--left {
   float: left;
@@ -216,8 +260,8 @@ html {
     float: left;
     display: block;
     margin-right: 0.35211%;
-    width: 8.01056%;
-    margin-left: 58.53873%;
+    width: 58.18662%;
+    margin-left: 8.36268%;
     margin-top: 10px;
     height: 100px; }
     .Header__nav:last-child {
@@ -225,8 +269,8 @@ html {
     .Header__nav li {
       float: left;
       display: block;
-      margin-right: 4.3956%;
-      width: 100%;
+      margin-right: 0.60514%;
+      width: 11.9705%;
       margin-top: 15px;
       height: 70px;
       text-align: center; }
@@ -242,9 +286,9 @@ html {
           color: #4180ff; }
 
 .Article__head__icon {
-  background: #bababa; }
+  background: #c8c8c8; }
 .Article__head__text {
-  background: #bababa;
+  background: #c8c8c8;
   color: white; }
 .Article__heading {
   font-family: "Montserrat";
@@ -252,11 +296,11 @@ html {
   letter-spacing: -1.5px; }
 .Article__date {
   font-family: "PTBoldItalic";
-  padding-top: 50px; }
+  padding-top: 10px; }
 .Article__content {
   font-family: "PTRegular";
   padding-top: 15px;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
   font-size: 16px; }
 
 .Aside {

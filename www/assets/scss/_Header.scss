@@ -50,14 +50,14 @@
 
 	&__nav {
 
-	@include span-columns(1 of 12);
-	@include shift(7);
+	@include span-columns(7 of 12);
+	@include shift(1);
 
 	margin-top: 10px;
 	height: 100px;
 
 		li {
-			@include span-columns(1 of 1);
+			@include span-columns(7/8 of 7);
 			margin-top: 15px;
 			height: 70px;
 			text-align: center;
@@ -80,3 +80,4 @@
 	}
 
 }
+
