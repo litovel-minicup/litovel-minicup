@@ -31,7 +31,7 @@ class CategoryRepository extends BaseRepository
     protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
     {
         $year = $this->YR->getSelectedYear();
-        return parent::createFluent($year->id);
+        return parent::createFluent(array_merge(array($year), func_get_args()));
     }
 
     /**

@@ -16,9 +16,9 @@ header('Retry-After: 300'); // 5 minutes in seconds
 
 <title>Aplikace se dočasně nedostupná</title>
 
-<h1>Pardon</h1>
+<h1>Omlouváme se</h1>
 
-<p>Webová aplikace je momentálně pod údržbou. Zkuste to prosím za chvíli.</p>
+<p>MINICUP je momentálně pod údržbou. Zkuste to prosím za chvíli.</p>
 
 <?php
 

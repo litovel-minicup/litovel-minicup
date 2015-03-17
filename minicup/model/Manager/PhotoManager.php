@@ -93,7 +93,7 @@ class PhotoManager extends Object
                 continue;
             }
             $photo = new Photo();
-            $filename = substr(md5($prefix . $file->sanitizedName . time()), 0, 10) . '.' . $this::$extensions[$file->contentType];
+            $filename = substr(md5($prefix . $file->sanitizedName . time()), 0, 10) . '.' . static::$extensions[$file->contentType];
             $photo->filename = (string)$filename;
             $file->move($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
             $this->PR->persist($photo);
