@@ -7,7 +7,7 @@
 
 		&__text {
 			background: $medium--grey;
-			color: white;
+			color: darken($medium--grey, 40%);
 		}
 	}
 

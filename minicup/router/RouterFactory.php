@@ -90,6 +90,11 @@ class RouterFactory extends Object
             'action' => 'default'
         ));
 
+        $front[] = new Route('informace', array(
+            'presenter' => 'Homepage',
+            'action' => 'informations'
+        ));
+
         $front[] = new Route('[<year>/]foto', array(
             'presenter' => 'Gallery',
             'action' => 'default',

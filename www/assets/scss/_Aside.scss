@@ -8,12 +8,12 @@
 		letter-spacing: -1.5px;
 
 		&__icon {
-			background: $medium--yellow;
+			background: $dark--yellow;
 		}
 
 		&__text {
-			background: $medium--yellow;
-			color: black;
+			background: $dark--yellow;
+			color: darken($medium--yellow, 20%);
 		}
 	}
 
@@ -34,16 +34,16 @@
 		}
 
 		&--split--left {
-			background: $light--yellow;
+			background: $medium--yellow;
 		}
 
 		&--split--right {
-			background: $light--yellow;
+			background: $medium--yellow;
 			text-align: right;
 		}
 
 		&--split--middle {
-			background: $dark--yellow;
+			background: $light--yellow;
 			color: white;
 			text-align: center;
 			font-family: "Montserrat";
