@@ -1,0 +1,11 @@
+.Sponsors {
+
+	&__images {
+		@include span-columns(3 of 12);
+  		@include omega(4n);
+  		height: 100px;
+  		background: red;
+  		margin-bottom: 5px;
+	}
+
+} 

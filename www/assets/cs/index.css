@@ -103,8 +103,9 @@ a {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 32px;
+  font-size: 36px;
   text-align: center;
+  padding-top: 20px;
   line-height: 1;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
@@ -112,7 +113,7 @@ a {
 
 .icon__live:before {
   content: "\e600";
-  color: #907800; }
+  color: #998200; }
 
 .icon__matches:before {
   content: "\e601"; }
@@ -132,11 +133,11 @@ a {
 
 .icon__score:before {
   content: "\e606";
-  color: #907800; }
+  color: #998200; }
 
 .icon__upcoming:before {
   content: "\e607";
-  color: #907800; }
+  color: #998200; }
 
 /**
  * Import Bourbon and Neat
@@ -155,50 +156,57 @@ html {
  * Import Components
  */
 .Box__head {
-  width: 100%;
-  display: table;
-  width: 100%;
-  table-layout: fixed; }
+  /* Vyplnit celeho potomka, nyni jenom 99% */ }
   .Box__head__icon {
-    display: table-cell;
-    width: 12.5%;
-    line-height: 75px; }
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 11.56915%;
+    margin-right: 0;
+    height: 75px; }
+    .Box__head__icon:last-child {
+      margin-right: 0; }
   .Box__head__text {
-    display: table-cell;
-    width: 87.5%;
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 87.36702%;
     font-family: 'Montserrat';
     font-size: 24px;
-    line-height: 75px;
+    height: 75px;
+    padding: 25px 5px;
     letter-spacing: -1.5px; }
+    .Box__head__text:last-child {
+      margin-right: 0; }
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
-  height: 75px;
+  height: 7em;
   font-family: 'PTBoldItalic'; }
 .Box__content {
-  padding: 15px 20px 5px 20px;
+  padding: 95px 20px 5px 20px;
   line-height: 1.32; }
 .Box__content--split--left {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 40.8363%;
+  margin-right: 2.15054%;
+  width: 40.41219%;
   margin-right: 0; }
   .Box__content--split--left:last-child {
     margin-right: 0; }
 .Box__content--split--right {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 40.8363%;
+  margin-right: 2.15054%;
+  width: 40.41219%;
   margin-right: 0; }
   .Box__content--split--right:last-child {
     margin-right: 0; }
 .Box__content--split--middle {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 15.48043%;
+  margin-right: 2.15054%;
+  width: 14.87455%;
   margin-right: 0;
   text-align: center; }
   .Box__content--split--middle:last-child {
@@ -207,7 +215,7 @@ html {
 .Header {
   float: left;
   display: block;
-  margin-right: 0.70671%;
+  margin-right: 1.06383%;
   width: 100%;
   background: #4180ff;
   height: 120px;
@@ -218,8 +226,8 @@ html {
   .Header__logo {
     float: left;
     display: block;
-    margin-right: 0.70671%;
-    width: 16.07774%;
+    margin-right: 1.06383%;
+    width: 15.78014%;
     margin-right: 0;
     background: #0040c1;
     height: 120px; }
@@ -233,12 +241,10 @@ html {
   .Header__toggle {
     float: left;
     display: block;
-    margin-right: 0.70671%;
-    width: 11.88163%;
+    margin-right: 1.06383%;
+    width: 11.56915%;
     border: 2px solid #0040c1;
-    height: 100%;
-    text-transform: uppercase;
-    font-size: 13px; }
+    height: 100%; }
     .Header__toggle:last-child {
       margin-right: 0; }
     .Header__toggle__anchor {
@@ -246,7 +252,7 @@ html {
       .Header__toggle__anchor a {
         color: #0040c1;
         position: absolute;
-        margin: 22px 45px; }
+        margin: 20px 50px; }
       .Header__toggle__anchor:hover {
         background: white; }
       .Header__toggle__anchor--active {
@@ -256,19 +262,18 @@ html {
   .Header__nav {
     float: left;
     display: block;
-    margin-right: 0.70671%;
-    width: 58.03887%;
-    margin-left: 8.39223%;
+    margin-right: 1.06383%;
+    width: 57.89007%;
+    margin-left: 8.42199%;
     margin-top: 10px;
-    height: 100px;
-    text-transform: lowercase; }
+    height: 100px; }
     .Header__nav:last-child {
       margin-right: 0; }
     .Header__nav li {
       float: left;
       display: block;
-      margin-right: 1.21766%;
-      width: 11.43455%;
+      margin-right: 1.83767%;
+      width: 10.89204%;
       margin-top: 15px;
       height: 70px;
       text-align: center; }
@@ -282,60 +287,6 @@ html {
         color: white; }
         .Header__nav li a:hover {
           color: #4180ff; }
-
-.Header__nav {
-  float: left;
-  display: block;
-  margin-right: 0.35211%;
-  width: -0.35211%;
-  float: right;
-  width: 650px;
-  height: 100px;
-  margin-top: 10px;
-  font-size: 14px; }
-
-.Header__nav:last-child {
-  margin-right: 0; }
-
-@media screen and (max-width: 960px) {
-  .Header__nav {
-    float: left;
-    display: block;
-    margin-right: 0.35211%;
-    width: 100%;
-    margin-top: 0px;
-    background: #4180ff; }
-
-  .Header__nav:last-child {
-    margin-right: 0; } }
-.Header__nav a {
-  line-height: 85px;
-  color: white;
-  margin-top: 5px;
-  margin-left: 5px; }
-
-.Header__nav a li {
-  float: left;
-  display: block;
-  margin-right: 0.35211%;
-  width: -0.35211%;
-  width: 87px;
-  height: 85px;
-  text-align: center;
-  margin-top: 7.5px;
-  transition: 0.1s background ease-in; }
-
-.Header__nav a li:hover {
-  transition: 0.5s background ease-out;
-  background: white;
-  color: #4180ff; }
-
-.Header__nav a li:last-child {
-  margin-right: 0; }
-
-.Header__nav a:hover {
-  background: white;
-  color: #4180ff; }
 
 .Article__head__icon {
   background: #c8c8c8; }
@@ -355,40 +306,25 @@ html {
   padding-bottom: 30px;
   font-size: 16px; }
 
-.Sponsors__images {
-  float: left;
-  display: block;
-  margin-right: 0.70671%;
-  width: 24.46996%;
-  height: 100px;
-  background: red;
-  margin-bottom: 5px; }
-  .Sponsors__images:last-child {
-    margin-right: 0; }
-  .Sponsors__images:nth-child(4n) {
-    margin-right: 0; }
-  .Sponsors__images:nth-child(4n+1) {
-    clear: left; }
-
 .Aside {
-  margin-top: 8px;
-  background: #ffe033;
+  margin-top: 12px;
+  background: #ffe44d;
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 41.25442%;
+  margin-right: 1.06383%;
+  width: 41.0461%;
   margin-right: 0; }
   .Aside:last-child {
     margin-right: 0; }
   .Aside__head {
     letter-spacing: -1.5px; }
     .Aside__head__icon {
-      background: #f6cd00; }
+      background: #ebc700; }
     .Aside__head__text {
-      background: #f6cd00;
-      color: #907800; }
+      background: #ebc700;
+      color: #998200; }
   .Aside__subhead {
-    background: #ffd802; }
+    background: #ffd800; }
   .Aside__content {
     padding: 0px; }
     .Aside__content ul {
@@ -396,12 +332,12 @@ html {
     .Aside__content li {
       padding: 2px 15px; }
     .Aside__content--split--left {
-      background: #ffe033; }
+      background: #ffd800; }
     .Aside__content--split--right {
-      background: #ffe033;
+      background: #ffd800;
       text-align: right; }
     .Aside__content--split--middle {
-      background: #ffd802;
+      background: #ffe44d;
       color: white;
       text-align: center;
       font-family: "Montserrat"; }
@@ -412,60 +348,60 @@ html {
   .Aside__list--rank {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 10.61828%; }
+    margin-right: 3.26087%;
+    width: 9.64674%; }
     .Aside__list--rank:last-child {
       margin-right: 0; }
   .Aside__list--team {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 55.30914%; }
+    margin-right: 3.26087%;
+    width: 54.82337%; }
     .Aside__list--team:last-child {
       margin-right: 0; }
   .Aside__list--score {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 17.00269%; }
+    margin-right: 3.26087%;
+    width: 16.10054%; }
     .Aside__list--score:last-child {
       margin-right: 0; }
   .Aside__list--points {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 10.61828%; }
+    margin-right: 3.26087%;
+    width: 9.64674%; }
     .Aside__list--points:last-child {
       margin-right: 0; }
 
 .Section {
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 58.03887%;
+  margin-right: 1.06383%;
+  width: 57.89007%;
   background: #e1e1e1;
-  margin-top: 8px; }
+  margin-top: 12px; }
   .Section:last-child {
     margin-right: 0; }
 
 .Footer {
   background: #4A4A4A;
-  margin-top: 8px;
+  margin-top: 12px;
   color: white;
   font-family: "Montserrat";
   height: 100px;
   float: left;
   display: block;
-  margin-right: 0.70671%;
+  margin-right: 1.06383%;
   width: 100%; }
   .Footer:last-child {
     margin-right: 0; }
   .Footer__block {
     float: left;
     display: block;
-    margin-right: 0.70671%;
-    width: 32.86219%;
-    margin-left: 33.5689%;
+    margin-right: 1.06383%;
+    width: 32.62411%;
+    margin-left: 33.68794%;
     margin-top: 45px;
     text-align: center; }
     .Footer__block:last-child {
@@ -482,3 +418,5 @@ body {
     clear: both;
     content: "";
     display: table; }
+
+/*# sourceMappingURL=index.css.map */

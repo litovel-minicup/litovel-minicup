@@ -43,10 +43,10 @@
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 36px;
+  font-size: 32px;
   text-align: center;
-  padding-top: 20px;
   line-height: 1;
+
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
@@ -55,7 +55,7 @@
 
 .icon__live:before {
   content: "\e600";
-  color: darken($medium--yellow, 20%);
+  color: darken($dark--yellow, 20%);
 }
 
 .icon__matches:before {
@@ -64,7 +64,9 @@
 
 .icon__news:before {
   content: "\e602";
-  color: darken($medium--grey, 40%);}
+  color: darken($medium--grey, 40%);
+}
+
 
 .icon__photo:before {
   content: "\e603";
@@ -80,12 +82,12 @@
 
 .icon__score:before {
   content: "\e606";
-  color: darken($medium--yellow, 20%);
+  color: darken($dark--yellow, 20%);
 }
 
 .icon__upcoming:before {
   content: "\e607";
-  color: darken($medium--yellow, 20%);
+  color: darken($dark--yellow, 20%);
 }
 
 

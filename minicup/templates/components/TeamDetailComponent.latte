@@ -1,6 +1,15 @@
-<div class="component">
-    <h2>{$control->name}</h2>
-    id: {$team->id} <br>
+{block content}
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+        </div>
+        <div class="Article__head__text Box__head__text">Týmy / {$team->name}</div>
+        </div>
+        <div class="Box__content">
+
+        </div>
+    </div>
+
     jméno: {$team->name} <br>
     slug: {$team->slug} <br>
     pořadí: {$team->order}<br>
@@ -11,4 +20,3 @@
     body: {$team->points}<br>
     <h3>zápasy</h3>
     {control listOfMatchesComponent}
-</div>

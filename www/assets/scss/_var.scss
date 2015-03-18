@@ -14,9 +14,9 @@
 	 * Yellow
 	 */
 
-	$medium--yellow: #ffd800;
-	$dark--yellow: darken($medium--yellow, 4%); 
-	$light--yellow: lighten($medium--yellow, 15%);
+	$medium--yellow: lighten(#e8c400, 5%);
+	$dark--yellow: lighten(#cdab00, 8%); 
+	$light--yellow: lighten(#ffd800, 10%);
 
 	/**
 	 * Grey
@@ -38,4 +38,4 @@
  * Measure variables
  */
 
-$universal-dis: 12px; 
+$universal-dis: 8px; 

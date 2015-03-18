@@ -25,6 +25,8 @@
 
 		border: 2px solid $dark--blue;
 		height: 100%;
+		text-transform: uppercase;
+		font-size: 13px;
 
 		&__anchor {
 			height: 50%;
@@ -32,7 +34,7 @@
 			a {
 				color: $dark--blue;
 				position: absolute;
-				margin: 20px 50px;
+				margin: 22px 45px;
 			}
 
 			&:hover {
@@ -55,6 +57,7 @@
 
 	margin-top: 10px;
 	height: 100px;
+	text-transform: lowercase;
 
 		li {
 			@include span-columns(7/8 of 7);
@@ -79,5 +82,56 @@
 
 	}
 
+
+
 }
 
+.Header__nav {
+    float: left;
+    display: block;
+    margin-right: 0.35211%;
+    width: -0.35211%;
+    float: right;
+    width: 650px;
+    height: 100px;
+    margin-top: 10px;
+    font-size: 14px; }
+    .Header__nav:last-child {
+      margin-right: 0; }
+    @media screen and (max-width: 960px) {
+      .Header__nav {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: 100%;
+        margin-top: 0px;
+        background: #4180ff; }
+        .Header__nav:last-child {
+          margin-right: 0; } }
+    .Header__nav a {
+      line-height: 85px;
+      color: white;
+      margin-top: 5px;
+      margin-left: 5px;
+      }
+      .Header__nav a li {
+        float: left;
+        display: block;
+        margin-right: 0.35211%;
+        width: -0.35211%;
+        width: 87px;
+        height: 85px;
+        text-align: center;
+        margin-top: 7.5px; 
+        transition: 0.1s background ease-in;
+      }
+      .Header__nav a li:hover {
+        transition: 0.5s background ease-out; 
+        background: white;
+        color: #4180ff;
+      }
+        .Header__nav a li:last-child {
+          margin-right: 0; }
+      .Header__nav a:hover {
+        background: white;
+        color: #4180ff; }

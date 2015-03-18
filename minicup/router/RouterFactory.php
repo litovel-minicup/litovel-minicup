@@ -95,6 +95,11 @@ class RouterFactory extends Object
             'action' => 'informations'
         ));
 
+        $front[] = new Route('sponzori', array(
+            'presenter' => 'Homepage',
+            'action' => 'sponsors'
+        ));
+
         $front[] = new Route('[<year>/]foto', array(
             'presenter' => 'Gallery',
             'action' => 'default',
