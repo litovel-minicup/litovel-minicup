@@ -123,12 +123,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/janmarek/WebLoader.git",
-                "reference": "00de2c8772c121f3de9d80b1922f2179a23b36fe"
+                "reference": "fc0384c4965cdd2245a078e5658461bbc90f05f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/janmarek/WebLoader/zipball/00de2c8772c121f3de9d80b1922f2179a23b36fe",
-                "reference": "00de2c8772c121f3de9d80b1922f2179a23b36fe",
+                "url": "https://api.github.com/repos/janmarek/WebLoader/zipball/fc0384c4965cdd2245a078e5658461bbc90f05f4",
+                "reference": "fc0384c4965cdd2245a078e5658461bbc90f05f4",
                 "shasum": ""
             },
             "require": {
@@ -198,7 +198,7 @@
                 "nette",
                 "webloader"
             ],
-            "time": "2015-02-21 15:03:15"
+            "time": "2015-03-15 20:30:51"
         },
         {
             "name": "jsmitka/nette-xdebug-helper",
@@ -1607,28 +1607,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "e4308ac4a1584be958260fea8dd0f4af146702e4"
+                "reference": "e02004f8c475a9c13a00f01d2359669314c6404f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/e4308ac4a1584be958260fea8dd0f4af146702e4",
-                "reference": "e4308ac4a1584be958260fea8dd0f4af146702e4",
+                "url": "https://api.github.com/repos/o5/grido/zipball/e02004f8c475a9c13a00f01d2359669314c6404f",
+                "reference": "e02004f8c475a9c13a00f01d2359669314c6404f",
                 "shasum": ""
             },
             "require": {
                 "nette/nette": "~2.0",
-                "php": ">=5.3"
+                "php": ">=5.3",
+                "symfony/property-access": "~2.6"
             },
             "require-dev": {
-                "dibi/dibi": "~2.2.2",
-                "kdyby/doctrine": "~2.2",
-                "mockery/mockery": "~0.9",
+                "dibi/dibi": "~2.3.1",
+                "kdyby/doctrine": "~2.3.0",
+                "mockery/mockery": "~0.9.3",
                 "nette/nette": "~2.2.0",
-                "nette/tester": "~1.3",
-                "squizlabs/php_codesniffer": "~2.0.0"
-            },
-            "suggest": {
-                "symfony/property-access": "Allows to use Grido\\PropertyAccessors\\SymfonyPropertyAccessor"
+                "nette/tester": "@dev",
+                "squizlabs/php_codesniffer": "~2.3.0"
             },
             "type": "library",
             "autoload": {
@@ -1659,7 +1657,68 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2015-02-25 20:12:53"
+            "time": "2015-03-25 21:50:08"
+        },
+        {
+            "name": "symfony/property-access",
+            "version": "v2.6.5",
+            "target-dir": "Symfony/Component/PropertyAccess",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/PropertyAccess.git",
+                "reference": "0ce73304d8acd87ab3a75155c889f9cc8ac9d28d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/PropertyAccess/zipball/0ce73304d8acd87ab3a75155c889f9cc8ac9d28d",
+                "reference": "0ce73304d8acd87ab3a75155c889f9cc8ac9d28d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\PropertyAccess\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony PropertyAccess Component",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "access",
+                "array",
+                "extraction",
+                "index",
+                "injection",
+                "object",
+                "property",
+                "property path",
+                "reflection"
+            ],
+            "time": "2015-03-07 07:40:15"
         },
         {
             "name": "texy/texy",
@@ -1818,17 +1877,17 @@
         },
         {
             "name": "zendframework/zend-escaper",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Escaper",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendEscaper.git",
-                "reference": "67c8f76ff6d899a5619a4ab27c3b46ed3ae743fc"
+                "reference": "b3ca10e16ef875f836d46f08045349e39589766c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendEscaper/zipball/67c8f76ff6d899a5619a4ab27c3b46ed3ae743fc",
-                "reference": "67c8f76ff6d899a5619a4ab27c3b46ed3ae743fc",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendEscaper/zipball/b3ca10e16ef875f836d46f08045349e39589766c",
+                "reference": "b3ca10e16ef875f836d46f08045349e39589766c",
                 "shasum": ""
             },
             "require": {
@@ -1855,21 +1914,21 @@
                 "escaper",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Http",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendHttp.git",
-                "reference": "1758f768120fdd173e22ed45230a8e49b6155766"
+                "reference": "35f52485d4170ebcdac1f00cb24a1b0856214c2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendHttp/zipball/1758f768120fdd173e22ed45230a8e49b6155766",
-                "reference": "1758f768120fdd173e22ed45230a8e49b6155766",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendHttp/zipball/35f52485d4170ebcdac1f00cb24a1b0856214c2f",
+                "reference": "35f52485d4170ebcdac1f00cb24a1b0856214c2f",
                 "shasum": ""
             },
             "require": {
@@ -1901,21 +1960,21 @@
                 "http",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         },
         {
             "name": "zendframework/zend-loader",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Loader",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendLoader.git",
-                "reference": "521ba8650f70d512f9790921153d39eedcabed43"
+                "reference": "fcca80907c35f0827f992b7a58adbbff4baf728e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendLoader/zipball/521ba8650f70d512f9790921153d39eedcabed43",
-                "reference": "521ba8650f70d512f9790921153d39eedcabed43",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendLoader/zipball/fcca80907c35f0827f992b7a58adbbff4baf728e",
+                "reference": "fcca80907c35f0827f992b7a58adbbff4baf728e",
                 "shasum": ""
             },
             "require": {
@@ -1942,21 +2001,21 @@
                 "loader",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Stdlib",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendStdlib.git",
-                "reference": "280e4ee6a8fea96b3de00a39174758b4002a7358"
+                "reference": "3f6e2416183d4879a983680e1165f14164b262f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendStdlib/zipball/280e4ee6a8fea96b3de00a39174758b4002a7358",
-                "reference": "280e4ee6a8fea96b3de00a39174758b4002a7358",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendStdlib/zipball/3f6e2416183d4879a983680e1165f14164b262f4",
+                "reference": "3f6e2416183d4879a983680e1165f14164b262f4",
                 "shasum": ""
             },
             "require": {
@@ -1995,21 +2054,21 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         },
         {
             "name": "zendframework/zend-uri",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Uri",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendUri.git",
-                "reference": "72c7e6b146b6d16e71c5529bfcdb45a7148adc33"
+                "reference": "6dd5ee4b2543c785aa4e06643aaddf9c46f69039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendUri/zipball/72c7e6b146b6d16e71c5529bfcdb45a7148adc33",
-                "reference": "72c7e6b146b6d16e71c5529bfcdb45a7148adc33",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendUri/zipball/6dd5ee4b2543c785aa4e06643aaddf9c46f69039",
+                "reference": "6dd5ee4b2543c785aa4e06643aaddf9c46f69039",
                 "shasum": ""
             },
             "require": {
@@ -2039,21 +2098,21 @@
                 "uri",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         },
         {
             "name": "zendframework/zend-validator",
-            "version": "2.3.4",
+            "version": "2.3.7",
             "target-dir": "Zend/Validator",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/Component_ZendValidator.git",
-                "reference": "f048d85d523c9bb2b16f0660412560efd9d257c1"
+                "reference": "53ceee562ce689a6a610c7bb0bc8157c7ec63a45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/Component_ZendValidator/zipball/f048d85d523c9bb2b16f0660412560efd9d257c1",
-                "reference": "f048d85d523c9bb2b16f0660412560efd9d257c1",
+                "url": "https://api.github.com/repos/zendframework/Component_ZendValidator/zipball/53ceee562ce689a6a610c7bb0bc8157c7ec63a45",
+                "reference": "53ceee562ce689a6a610c7bb0bc8157c7ec63a45",
                 "shasum": ""
             },
             "require": {
@@ -2101,7 +2160,7 @@
                 "validator",
                 "zf2"
             ],
-            "time": "2015-01-14 16:44:17"
+            "time": "2015-03-12 16:55:53"
         }
     ],
     "packages-dev": [],

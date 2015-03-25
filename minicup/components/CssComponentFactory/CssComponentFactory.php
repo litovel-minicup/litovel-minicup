@@ -6,6 +6,7 @@ namespace Minicup\Components;
 use Nette\Http\IRequest;
 use Nette\Http\Request;
 use Nette\Object;
+use Nette\Utils\Strings;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
@@ -46,7 +47,7 @@ class CssComponentFactory extends Object
     public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-
+        $control = $this;
         $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
         if ($module === 'front') {
             $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
@@ -60,7 +61,12 @@ class CssComponentFactory extends Object
         }
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
         // TODO: add urls fixing
-        //$compiler->addFilter(new CssUrlsFilter());
+        // $compiler->addFileFilter(new CssUrlFilter("assets/", $this->request));
+
+        // TODO: Errrghh!!!
+        $compiler->addFileFilter(function ($code, Compiler $loader, $file = null) use ($control) {
+            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . "assets/");
+        });
 
         if ($this->productionMode) {
             $compiler->addFilter(function ($code) {
