@@ -20,6 +20,10 @@ session:
 includes:
     - config.ACL.neon
 
+decorator:
+	Minicup\Components\BaseComponent:
+		inject: yes
+
 services:
     router: @Minicup\Router\RouterFactory::create
     texy: @Minicup\Misc\TexyFactory::create
@@ -76,7 +80,6 @@ services:
     - Minicup\Model\Repository\NewsRepository
 
     # component factories
-
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
