@@ -3,13 +3,11 @@
 namespace Minicup\Presenters;
 
 use Minicup\Components\CssComponentFactory;
-use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Components\JsComponentFactory;
 use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
-use Nette\Application\UI\Form;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
@@ -21,10 +19,6 @@ use WebLoader\Nette\JavaScriptLoader;
  */
 abstract class BasePresenter extends Presenter
 {
-
-    /** @var ILoginFormComponentFactory @inject */
-    public $LFCF;
-
     /** @var IFormFactory @inject */
     public $formFactory;
 
@@ -66,14 +60,6 @@ abstract class BasePresenter extends Presenter
     protected function createComponentJs()
     {
         return $this->JSCF->create($this->module);
-    }
-
-    /**
-     * @return Form
-     */
-    protected function createComponentLoginForm()
-    {
-        return $this->LFCF->create();
     }
 
     /**

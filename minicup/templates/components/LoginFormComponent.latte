@@ -1,8 +1,9 @@
-<div class="component">
-{*     {if !$user->loggedIn}
-        {control loginForm}
-    {else}
-        <a n:href="logOut!">Odhlásit</a>
-    {/if} *}
-        <a href={plink ':Admin:Homepage:'}>Administrace</a>
-</div>
+<form n:name="loginForm" class="form-signin">
+    <h2 class="form-signin-heading">MINICUP 2015</h2>
+    {input username class=>form-control}
+    {input password class=>form-control}
+    {label remember class=>checkbox}
+        {input remember}
+    {/label}
+    {input submit class=>"btn btn-lg btn-primary btn-block"}
+</form>

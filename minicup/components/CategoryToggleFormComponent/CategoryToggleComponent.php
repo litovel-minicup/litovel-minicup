@@ -40,7 +40,6 @@ class CategoryToggleFormComponent extends BaseComponent
     {
         $category = $this->CR->getBySlug($slug);
         $this->session['category'] = $category->slug;
-        $this->presenter->flashMessage('Preferovaná kategorie úspěšně změněna!', 'success');
         $this->presenter->redirect('this', array('category' => $category));
     }
 
