@@ -1,5 +1,5 @@
 parameters:
-    texyLinkPrefix: :Front
+    texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
 
 php:

@@ -19,12 +19,17 @@ class FilterLoader extends Object
     /** @var LinkGenerator */
     private $linkGenerator;
 
+    /** @var Texy */
+    private $texy;
+
     /**
      * @param LinkGenerator $linkGenerator
+     * @param Texy $texy
      */
-    public function __construct(LinkGenerator $linkGenerator)
+    public function __construct(LinkGenerator $linkGenerator, Texy $texy)
     {
         $this->linkGenerator = $linkGenerator;
+        $this->texy = $texy;
     }
 
 
@@ -41,6 +46,7 @@ class FilterLoader extends Object
 
         $latte = $template->getLatte();
         $generator = $this->linkGenerator;
+        $texy = $this->texy;
 
         $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
             return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n. Y"));
@@ -58,8 +64,13 @@ class FilterLoader extends Object
             return Json::encode($array);
         });
 
-        $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator){
+        $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
+            // TODO
             return $generator->link(':Media:photo');
+        });
+
+        $template->addFilter('texy', function ($string) use ($texy) {
+            return $texy->process($string);
         });
 
         return $template;

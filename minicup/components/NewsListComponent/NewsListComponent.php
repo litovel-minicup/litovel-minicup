@@ -3,7 +3,10 @@
 namespace Minicup\Components;
 
 
+use Minicup\Model\Entity\News;
 use Minicup\Model\Repository\NewsRepository;
+use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 class NewsListComponent extends BaseComponent
 {
@@ -16,6 +19,31 @@ class NewsListComponent extends BaseComponent
     public function __construct(NewsRepository $NR)
     {
         $this->NR = $NR;
+    }
+
+    /**
+     * @return Form
+     */
+    public function createComponentNewNewsForm()
+    {
+        $f = $this->formFactory->create();
+        $f->addText("title")->setRequired();
+        $f->addTextArea("content")->setRequired();
+        $f->addSubmit("submit", "Přidat novinku");
+        $f->onSuccess[] = $this->newNewsSubmitted;
+        return $f;
+    }
+
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     */
+    public function newNewsSubmitted(Form $form, ArrayHash $values)
+    {
+        $news = new News($values);
+        $news->added = new \DibiDateTime();
+        $this->NR->persist($news);
+        $this->presenter->redirect("this");
     }
 
     public function render()

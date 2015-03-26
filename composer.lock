@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "a3e5ac86f7f3d80bb7927a9830991c73e10d4624"
+                "reference": "94f34a2a33de503fe74b693e87d70ded343f3887"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/a3e5ac86f7f3d80bb7927a9830991c73e10d4624",
-                "reference": "a3e5ac86f7f3d80bb7927a9830991c73e10d4624",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/94f34a2a33de503fe74b693e87d70ded343f3887",
+                "reference": "94f34a2a33de503fe74b693e87d70ded343f3887",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2015-02-25 14:22:04"
+            "time": "2015-03-12 14:11:04"
         },
         {
             "name": "jandrabek/tracy-gitversion-panel",
