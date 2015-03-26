@@ -4,6 +4,7 @@ namespace Minicup\Presenters;
 
 
 use Minicup\Model\Manager\PhotoManager;
+use Nette\Application;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\FileResponse;
 use Nette\Application\UI\Presenter;
@@ -14,30 +15,18 @@ class MediaPresenter extends Presenter
     /** @var PhotoManager @inject */
     public $PM;
 
-    public function actionThumb($slug)
+    public static function formatActionMethod($action)
     {
-        try {
-            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_THUMB);
-        } catch (FileNotFoundException $e) {
-            throw new BadRequestException($e->getMessage());
+        if (isset(PhotoManager::$resolutions[$action])) {
+            return "servePhoto";
         }
-        $this->sendResponse(new FileResponse($requested));
+        return parent::formatActionMethod($action);
     }
 
-    public function actionMedium($slug)
+    public function servePhoto($slug)
     {
         try {
-            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_MEDIUM);
-        } catch (FileNotFoundException $e) {
-            throw new BadRequestException($e->getMessage());
-        }
-        $this->sendResponse(new FileResponse($requested));
-    }
-
-    public function actionSmall($slug)
-    {
-        try {
-            $requested = $this->PM->getInFormat($slug, PhotoManager::PHOTO_SMALL);
+            $requested = $this->PM->getInFormat($slug, $this->action);
         } catch (FileNotFoundException $e) {
             throw new BadRequestException($e->getMessage());
         }
