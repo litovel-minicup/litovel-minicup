@@ -84,3 +84,12 @@ class PhotoEditComponent extends BaseComponent
         $this->redrawControl();
     }
 }
+
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
+}

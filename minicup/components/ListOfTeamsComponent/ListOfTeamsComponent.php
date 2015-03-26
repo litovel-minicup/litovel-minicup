@@ -39,3 +39,13 @@ class ListOfTeamsComponent extends BaseComponent
     }
 
 }
+
+interface IListOfTeamsComponentFactory
+{
+    /**
+     * @param $category
+     * @return ListOfTeamsComponent
+     */
+    public function create(Category $category);
+
+}

@@ -44,3 +44,9 @@ class CategoryToggleFormComponent extends BaseComponent
     }
 
 }
+
+interface ICategoryToggleFormComponentFactory
+{
+    /** @return CategoryToggleFormComponent */
+    public function create();
+}

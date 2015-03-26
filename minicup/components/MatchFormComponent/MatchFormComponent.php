@@ -100,6 +100,14 @@ class MatchFormComponent extends BaseComponent
             $this->redirect('this');
         }
     }
+}
 
-
+interface IMatchFormComponentFactory
+{
+    /**
+     * @param Category $category
+     * @param int $count
+     * @return MatchFormComponent
+     */
+    public function create(Category $category, $count);
 }

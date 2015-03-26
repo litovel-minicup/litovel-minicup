@@ -67,3 +67,12 @@ class GalleryComponent extends BaseComponent
 
 
 }
+
+interface IGalleryComponentFactory
+{
+    /**
+     * @param array $tags
+     * @return GalleryComponent
+     */
+    public function create(array $tags);
+}

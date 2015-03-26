@@ -71,3 +71,10 @@ class MigrateFormComponent extends BaseComponent
         $this->template->render();
     }
 }
+
+interface IMigrateFormComponentFactory
+{
+    /** @return MigrateFormComponent */
+    public function create();
+
+}

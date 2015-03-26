@@ -76,5 +76,14 @@ class OnlineReportComponent extends BaseComponent
         $this->ORR->persist($ORE);
         $this->redrawControl();
     }
+}
+
+interface IOnlineReportComponentFactory
+{
+    /**
+     * @param $match Match
+     * @return OnlineReportComponent
+     */
+    public function create(Match $match);
 
 }

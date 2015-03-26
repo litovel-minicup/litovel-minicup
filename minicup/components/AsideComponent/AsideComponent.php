@@ -40,3 +40,12 @@ class AsideComponent extends BaseComponent
     }
 
 }
+
+interface IAsideComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return AsideComponent
+     */
+    public function create(Category $category);
+}

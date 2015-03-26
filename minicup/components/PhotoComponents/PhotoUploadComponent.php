@@ -66,7 +66,7 @@ class PhotoUploadComponent extends BaseComponent
             $this->uploadId = Random::generate(20);
         }
         $this->session['uploadId'] = $this->uploadId;
-        $this->photos = (array) $this->session[$this->uploadId];
+        $this->photos = (array)$this->session[$this->uploadId];
 
     }
 
@@ -151,4 +151,10 @@ class PhotoUploadComponent extends BaseComponent
         }
         $this->redrawControl('photos-list');
     }
+}
+
+interface IPhotoUploadComponentFactory
+{
+    /** @return PhotoUploadComponent */
+    public function create();
 }

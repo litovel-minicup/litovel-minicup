@@ -53,3 +53,14 @@ class ListOfMatchesComponent extends BaseComponent
 
     }
 }
+
+interface IListOfMatchesComponentFactory
+{
+    /**
+     * @param Day|Team|Category|Year|NULL $arg
+     * @return ListOfMatchesComponent
+     */
+    public function create($arg);
+
+}
+

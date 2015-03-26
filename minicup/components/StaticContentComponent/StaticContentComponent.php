@@ -37,3 +37,12 @@ class StaticContentComponent extends BaseComponent
         $this->template->render();
     }
 }
+
+interface IStaticContentComponentFactory
+{
+    /**
+     * @param StaticContent $content
+     * @return StaticContentComponent
+     */
+    public function create(StaticContent $content);
+}

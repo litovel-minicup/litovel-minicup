@@ -47,3 +47,12 @@ class LoginFormComponent extends BaseComponent
         $this->presenter->redirect(':Admin:Homepage:');
     }
 }
+
+interface ILoginFormComponentFactory
+{
+    /**
+     * @return LoginFormComponent
+     */
+    public function create();
+
+}

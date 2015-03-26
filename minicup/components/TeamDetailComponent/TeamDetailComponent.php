@@ -42,5 +42,13 @@ class TeamDetailComponent extends BaseComponent
     {
         return $this->LOMCF->create($this->team);
     }
+}
 
+interface ITeamDetailComponentFactory
+{
+    /**
+     * @param $team Team
+     * @return TeamDetailComponent
+     */
+    public function create(Team $team);
 }
