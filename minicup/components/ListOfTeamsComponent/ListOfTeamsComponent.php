@@ -32,10 +32,9 @@ class ListOfTeamsComponent extends BaseComponent
 
     public function render()
     {
-        $template = $this->template;
-        $template->category = $this->category;
-        $template->teams = $this->category->teams;
-        $template->render();
+        $this->template->category = $this->category;
+        $this->template->teams = $this->category->teams;
+        parent::render();
     }
 
 }

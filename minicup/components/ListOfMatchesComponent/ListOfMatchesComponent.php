@@ -49,7 +49,7 @@ class ListOfMatchesComponent extends BaseComponent
 
         }
         $this->template->matches = $matches;
-        $this->template->render();
+        parent::render();
 
     }
 }

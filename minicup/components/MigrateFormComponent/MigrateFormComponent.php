@@ -2,6 +2,7 @@
 
 namespace Minicup\Components;
 
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\MigrationsManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\EntityNotFoundException;
@@ -33,7 +34,7 @@ class MigrateFormComponent extends BaseComponent
     {
         $f = $this->formFactory->create();
         $categories = $this->CR->findAll();
-        $select = [];
+        $select = array();
         foreach ($categories as $category) {
             $select[$category->id] = $category->name;
         }
@@ -57,18 +58,13 @@ class MigrateFormComponent extends BaseComponent
             $this->presenter->flashMessage('Nemáš práva na migrování databáze!', 'error');
             $this->presenter->redirect('this');
         }
+        /** @var Category $category */
         $category = $this->CR->get($values->category_id);
         if ($values->confirm) {
             $this->migrator->migrateMatches($category, $values->truncate);
         }
         $this->presenter->flashMessage("Kategorie {$category->name} byla úspěšně zmigrována!", 'success');
         $this->presenter->redirect('this');
-    }
-
-
-    public function render()
-    {
-        $this->template->render();
     }
 }
 

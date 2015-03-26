@@ -32,7 +32,7 @@ class TeamDetailComponent extends BaseComponent
     public function render()
     {
         $this->template->team = $this->team;
-        $this->template->render();
+        parent::render();
     }
 
     /**

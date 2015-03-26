@@ -32,7 +32,7 @@ class OnlineReportComponent extends BaseComponent
     {
         $this->template->time = time();
         $this->template->match = $this->match;
-        $this->template->render();
+        parent::render();
     }
 
     public function handleRefresh()

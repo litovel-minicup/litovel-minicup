@@ -21,6 +21,7 @@ class NewsListComponent extends BaseComponent
     public function render()
     {
         $this->template->news = $this->NR->findLastNews();
+        parent::render();
     }
 }
 

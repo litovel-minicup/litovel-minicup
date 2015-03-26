@@ -34,7 +34,7 @@ class StaticContentComponent extends BaseComponent
     public function render()
     {
         $this->template->content = $this->texy->process($this->content->content);
-        $this->template->render();
+        parent::render();
     }
 }
 

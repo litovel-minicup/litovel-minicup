@@ -38,7 +38,7 @@ class MatchFormComponent extends BaseComponent
     public function render()
     {
         $this->template->match = $this->category;
-        $this->template->render();
+        parent::render();
     }
 
     /**
