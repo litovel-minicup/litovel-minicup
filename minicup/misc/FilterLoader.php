@@ -70,6 +70,7 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('texy', function ($string) use ($texy) {
+            // TODO: cache processed content
             return $texy->process($string);
         });
 

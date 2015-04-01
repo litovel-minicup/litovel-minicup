@@ -28,7 +28,7 @@ class NewsListComponent extends BaseComponent
     {
         $f = $this->formFactory->create();
         $f->addText("title")->setRequired();
-        $f->addTextArea("content")->setRequired();
+        $f->addTextArea("content")->setRequired()->getControlPrototype()->attrs["style"] = "width: 100%; max-width: 100%;";
         $f->addSubmit("submit", "Přidat novinku");
         $f->onSuccess[] = $this->newNewsSubmitted;
         return $f;

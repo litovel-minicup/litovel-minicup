@@ -235,24 +235,25 @@ html {
     display: block;
     margin-right: 0.70671%;
     width: 11.88163%;
+    font-size: 0;
     border: 2px solid #0040c1;
     height: 100%;
     text-transform: uppercase;
-    font-size: 13px; }
+    position: relative; }
     .Header__toggle:last-child {
       margin-right: 0; }
     .Header__toggle__anchor {
-      height: 50%; }
-      .Header__toggle__anchor a {
-        color: #0040c1;
-        position: absolute;
-        margin: 22px 45px; }
+      font-size: 13px;
+      display: block;
+      height: 50%;
+      color: #0040c1;
+      padding: 22px 45px; }
       .Header__toggle__anchor:hover {
-        background: white; }
+        background: white;
+        color: #0040c1; }
       .Header__toggle__anchor--active {
-        background: #0040c1; }
-        .Header__toggle__anchor--active a {
-          color: white; }
+        background: #0040c1;
+        color: white; }
   .Header__nav {
     float: left;
     display: block;
@@ -482,3 +483,5 @@ body {
     clear: both;
     content: "";
     display: table; }
+
+/*# sourceMappingURL=index.css.map */

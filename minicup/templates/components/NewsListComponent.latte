@@ -8,6 +8,7 @@
         <div class="Article__heading">Nová novinka</div>
         <div class="Article__heading">{input title}</div>
         <div class="Article__date">{input content}</div>
+        <div class="Article__content">{block help|texy|noescape}Zatím se podporuje syntax "Texy!":http://texy.info/cs/syntax, možná bude markdown.{/block}</div>
         <div class="Article__content">{input submit}</div>
     </form>
     <div n:inner-foreach="$news as $new" class="Box__content">

@@ -4,8 +4,10 @@ namespace Minicup\Model\Manager;
 
 
 use LeanMapper\Connection;
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Repository\MatchRepository;
+use Minicup\Model\Repository\MatchTermRepository;
 use Nette\Object;
 
 class MatchManager extends Object
@@ -25,13 +27,17 @@ class MatchManager extends Object
     /** @var Connection */
     private $connection;
 
-    public function __construct(MatchRepository $MR, TeamDataRefresher $TDR, TeamReplicator $replicator, ReorderManager $RM, Connection $connection)
+    /** @var MatchTermRepository */
+    private $MTR;
+
+    public function __construct(MatchRepository $MR, TeamDataRefresher $TDR, TeamReplicator $replicator, ReorderManager $RM, Connection $connection, MatchTermRepository $MTR)
     {
         $this->MR = $MR;
         $this->TDR = $TDR;
         $this->replicator = $replicator;
         $this->RM = $RM;
         $this->connection = $connection;
+        $this->MTR = $MTR;
     }
 
     /**
@@ -58,5 +64,13 @@ class MatchManager extends Object
             throw $e;
         }
         $this->connection->commit();
+    }
+
+    /***/
+    public function isPlayingTime(Category $category)
+    {
+        $now = new \DibiDateTime();
+        return (bool) $this->MTR->getInTime($now);
+
     }
 }

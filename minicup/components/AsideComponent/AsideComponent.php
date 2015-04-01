@@ -4,6 +4,7 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Manager\MatchManager;
 
 class AsideComponent extends BaseComponent
 {
@@ -16,11 +17,29 @@ class AsideComponent extends BaseComponent
     /** @var Category */
     private $category;
 
-    public function __construct(Category $category, IListOfMatchesComponentFactory $LOMCF, ICategoryTableComponentFactory $CTCF)
+    /** @var MatchManager */
+    private $MM;
+
+    /**
+     * @param Category $category
+     * @param IListOfMatchesComponentFactory $LOMCF
+     * @param ICategoryTableComponentFactory $CTCF
+     * @param MatchManager $MM
+     */
+    public function __construct(Category $category, IListOfMatchesComponentFactory $LOMCF, ICategoryTableComponentFactory $CTCF, MatchManager $MM)
     {
         $this->category = $category;
         $this->LOMCF = $LOMCF;
         $this->CTCF = $CTCF;
+        $this->MM = $MM;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlayingTime()
+    {
+        return $this->MM->isPlayingTime($this->category);
     }
 
     /**

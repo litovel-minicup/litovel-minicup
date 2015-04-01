@@ -30,6 +30,7 @@ class TexyFactory extends Object
     {
         $t = new Texy($this->modulePrefix, $this->linkGenerator);
         //TODO: custom texy configuration
+        $t->setOutputMode(Texy::HTML5);
         return $t;
     }
 }
