@@ -1,31 +1,31 @@
 <div class="component" n:snippet>
-{form matchForm}
-	{foreach $form['matches']->containers as $id => $match}
-		{formContainer $match}
-			<div class="row">
-				<div class="col-md-5 col-md-push-1 col-md-pull-1">
-					{input $match['scoreHome'] class=>"form-control"}
-				</div>
-				<div class="col-md-5 col-md-push-1 col-md-pull-1">
-					{input $match['scoreAway'] class=>"form-control"}
-				</div>
-			<div class="row">
-			</div>
-				<div class="col-md-5 col-md-push-1 col-md-pull-1 text-right">
-					{label $match['scoreHome'] class=>"input-label"/}
-				</div>
-				<div class="col-md-5 col-md-push-1 col-md-pull-1">
-					{label $match['scoreAway'] class=>"input-label"/}
-				</div>
-			</div>
-		{/formContainer}
-	{/foreach}
-<div class="row">
-	<div class="col-md-3 col-md-push-9">
-		<input type="submit" class="btn btn-primary btn-success btn-lg" value="odeslat" n:name=submit>
-		{input $form['matches']['addMatch'] class => "btn btn-info ajax"}
-	</div>
-</div>
-{/form}
+    {form matchForm}
+    {foreach $form['matches']->containers as $id => $match}
+        {formContainer $match}
+            <div class="row">
+                <div class="col-md-5 col-md-push-1 col-md-pull-1">
+                    {input $match['scoreHome'] class=>"form-control"}
+                </div>
+                <div class="col-md-5 col-md-push-1 col-md-pull-1">
+                    {input $match['scoreAway'] class=>"form-control"}
+                </div>
+                <div class="row">
+                </div>
+                <div class="col-md-5 col-md-push-1 col-md-pull-1 text-right">
+                    {label $match['scoreHome'] class=>"input-label"/}
+                </div>
+                <div class="col-md-5 col-md-push-1 col-md-pull-1">
+                    {label $match['scoreAway'] class=>"input-label"/}
+                </div>
+            </div>
+        {/formContainer}
+    {/foreach}
+        <div class="row" n:if="!$control[matchForm][matches]->empty">
+            <div class="col-md-3 col-md-push-9">
+                <input type="submit" class="btn btn-primary btn-success btn-lg" value="odeslat" n:name=submit>
+                {input $form['matches']['addMatch'] class => "btn btn-info ajax"}
+            </div>
+        </div>
+    {/form}
 </div>
 

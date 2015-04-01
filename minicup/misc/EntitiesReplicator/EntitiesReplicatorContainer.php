@@ -69,6 +69,14 @@ class EntitiesReplicatorContainer extends RContainer
         return $this->created[$container->name] = $container;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return !$this->createDefault || count($this->entities) === 0;
+    }
+
 
     /** @var bool  */
     private static $registered = FALSE;
