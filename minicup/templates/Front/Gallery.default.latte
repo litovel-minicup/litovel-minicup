@@ -1,2 +1,6 @@
 {block content}
-{control galleryComponent}
+    Hlavní kategorie:
+    {foreach $tags as $tag}
+        {$tag->slug} <br>
+    {/foreach}
+{/block}

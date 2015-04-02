@@ -29,8 +29,8 @@ class GalleryPresenter extends BaseFrontPresenter
     	return $this->GCF->create($this->getParameter('tags'));
     }
 
-    public function renderTags(array $tags)
+    public function renderDefault()
     {
-
+        $this->template->tags = $this->TR->findMainTags();
     }
 }
