@@ -3,12 +3,13 @@
 namespace Minicup\Components;
 
 
+use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
 
-class GalleryComponent extends BaseComponent
+class InteractiveGalleryComponent extends BaseComponent
 {
     /** @var PhotoRepository */
     private $PR;
@@ -19,28 +20,28 @@ class GalleryComponent extends BaseComponent
     /** @var Tag[] */
     private $tags;
 
+    /** @var IPhotoListComponentFactory */
+    private $PLCF;
+
     /**
-     * @param Tag[] $tags
+     * @param Photo[] $tags
+     * @param IPhotoListComponentFactory $PLCF
      * @param PhotoRepository $PR
      * @param TagRepository $TR
      */
-    public function __construct(array $tags, PhotoRepository $PR, TagRepository $TR)
+    public function __construct(array $tags, IPhotoListComponentFactory $PLCF, PhotoRepository $PR, TagRepository $TR)
     {
         $this->PR = $PR;
         $this->TR = $TR;
         $this->tags = $tags;
+        $this->PLCF = $PLCF;
     }
 
     public function render()
     {
-        if (count($this->tags) == 0) {
-            $this->view = 'mainTags';
-            $this->template->tags = $this->TR->findMainTags();
-        } else {
-            $photos = $this->PR->findByTags($this->tags);
-            $this->template->tags = $this->tags;
-            $this->template->photos = $photos;
-        }
+        $photos = $this->PR->findByTags($this->tags);
+        $this->template->tags = $this->tags;
+        $this->template->photos = $photos;
         parent::render();
     }
 
@@ -62,17 +63,31 @@ class GalleryComponent extends BaseComponent
         foreach ($tags as $tag) {
             $results[] = array('id' => $tag->id, 'text' => $tag->slug);
         }
-        $this->presenter->sendJson(array('results' => $results));
+        $this->redrawControl('photo-list');
+        $this->presenter->payload->results = $results;
+        $this->presenter->sendPayload();
     }
 
+    public function handleRefresh()
+    {
+        $ids = $this->presenter->request->parameters['ids'];
+        $tags = $ids ? $this->TR->findByIds($ids) : array();
+        // $this->presenter->redirect("Gallery:tags", array("tags" => $tags));
+        $this->tags = $tags;
+        $this->redrawControl('photo-list');
+    }
 
+    public function createComponentPhotoListComponent()
+    {
+        return $this->PLCF->create($this->PR->findByTags($this->tags));
+    }
 }
 
-interface IGalleryComponentFactory
+interface IInteractiveGalleryComponentFactory
 {
     /**
      * @param array $tags
-     * @return GalleryComponent
+     * @return InteractiveGalleryComponent
      */
     public function create(array $tags);
 }

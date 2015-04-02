@@ -1,0 +1,27 @@
+<select id="tags-select"
+		name="tags-select"
+		multiple="multiple"
+		data-tags="true"
+		data-placeholder="Které tagy Tě zajímají?"
+        data-ajax--url="{link tags!}"
+        data-ajax--cache="false"
+        data-ajax--delay="350"
+        data-ajax--method="GET">
+	<option n:foreach="$tags as $tag" selected="selected" value="{$tag->id}">{$tag->slug}</option>
+</select>
+<script>
+    jQuery(function ($) {
+        initTagsSelect2($('#tags-select')).on('change', function (e) {
+            $.nette.ajax({
+                url: {link refresh!},
+                data: {
+                    ids: $(this).val()
+                }
+            });
+        })
+        $('#tags-select, .select2').width('100%').css('margin-bottom', '20px');
+    })
+</script>
+{snippet photo-list}
+    {control photoListComponent}
+{/snippet}

@@ -89,7 +89,10 @@ services:
       arguments: [%photo%]
     - implement: Minicup\Components\IPhotoUploadComponentFactory
       arguments: [%wwwDir%]
-    - implement: Minicup\Components\IGalleryComponentFactory
+    - implement: Minicup\Components\IPhotoListComponentFactory
+      parameters: [array photos]
+      arguments: [%photos%]
+    - implement: Minicup\Components\IInteractiveGalleryComponentFactory
       parameters: [array tags]
       arguments: [%tags%]
     - implement: Minicup\Components\IAsideComponentFactory

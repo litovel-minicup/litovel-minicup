@@ -1,6 +1,0 @@
-{foreach $tags as $tag}
-	<h2>{$tag->slug}</h2>
-	{foreach $tag->photos as $photo}
-		<p>{$basePath}/{$photo->pathFull}</p>
-	{/foreach}
-{/foreach}

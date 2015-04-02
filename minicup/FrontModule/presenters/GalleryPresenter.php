@@ -9,24 +9,28 @@
 namespace Minicup\FrontModule\Presenters;
 
 
-use Minicup\Components\GalleryComponent;
-use Minicup\Components\IGalleryComponentFactory;
+use Minicup\Components\IInteractiveGalleryComponentFactory;
+use Minicup\Components\InteractiveGalleryComponent;
 use Minicup\Model\Repository\TagRepository;
 
 class GalleryPresenter extends BaseFrontPresenter
 {
-    /** @var IGalleryComponentFactory @inject */
+    /** @var IInteractiveGalleryComponentFactory @inject */
     public $GCF;
 
     /** @var TagRepository @inject */
     public $TR;
     
     /**
-     * @return GalleryComponent
+     * @return InteractiveGalleryComponent
      */
-    protected function createComponentGalleryComponent()
+    protected function createComponentInteractiveGalleryComponent()
     {
-    	return $this->GCF->create($this->TR->findBySlugs(array('vyhlaseni')));
+    	return $this->GCF->create($this->getParameter('tags'));
     }
 
+    public function renderTags(array $tags)
+    {
+
+    }
 }

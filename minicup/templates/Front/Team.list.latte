@@ -1,13 +1,13 @@
 {block content}
-<div class="Article">
-	<div class="Article__head Box__head">
-        <div class="Article__head__icon Box__head__icon icon__teams">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text" n:block="title">Týmy</div>
+        </div>
+        <div class="Box__content">
+            {control listOfTeamsComponent-$category->slug}
+        </div>
     </div>
-    <div class="Article__head__text Box__head__text" n:block="title">Týmy</div>
-</div>
-    <div class="Box__content">
-        {control listOfTeamsComponent-$category->slug}
-    </div>
-</div>
 {/block}
 

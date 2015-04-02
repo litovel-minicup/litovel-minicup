@@ -5,7 +5,7 @@ var initTagsSelect2 = function ($el) {
         minimumInputLength: 0,
         ajax: {
             dataType: 'json',
-            data: function(term, page) {
+            data: function (term, page) {
                 return {
                     term: term['term']
                 };
