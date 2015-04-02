@@ -1,0 +1,13 @@
+{block content}
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text" n:block="title">Tabulka {$category->name} kategorie</div>
+        </div>
+        <div class="Box__content">
+            {control categoryTableComponent-$category->slug}
+        </div>
+    </div>
+{/block}
+

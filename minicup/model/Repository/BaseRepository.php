@@ -62,11 +62,11 @@ abstract class BaseRepository extends Repository
         if (!$ids) {
             return array();
         }
-        $photos = array();
-        foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $photo) {
-            $photos[$photo->id] = $photo;
+        $entities = array();
+        foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $entity) {
+            $entities[$entity->id] = $entity;
         }
-        return $photos;
+        return $entities;
 
     }
 
