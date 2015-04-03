@@ -54,7 +54,7 @@ class MigrateFormComponent extends BaseComponent
      */
     public function migrateFormSucceed(Form $form, ArrayHash $values)
     {
-        if (!$this->presenter->user->isAllowed('migrations')) {
+        if (!$this->presenter->user->isAllowed('migration')) {
             $this->presenter->flashMessage('Nemáš práva na migrování databáze!', 'error');
             $this->presenter->redirect('this');
         }

@@ -64,7 +64,7 @@ class OnlineReportComponent extends BaseComponent
      */
     public function newReportFormSubmitted($form, $values)
     {
-        if (!$this->presenter->user->isAllowed('online', 'write')) {
+        if (!$this->presenter->user->isAllowed('online-report', 'write')) {
             $this->presenter->flashMessage('Pro tuto akci nejste oprávněn!', 'error');
             $this->presenter->redirect('Front:Homepage:default');
         }

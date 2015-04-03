@@ -1,5 +1,5 @@
 <div class="component">
-    {if $user->isAllowed('migrations', 'run')}
+    {if $user->isAllowed('migration', 'run')}
         {control migrateForm}
     {/if}
 </div>

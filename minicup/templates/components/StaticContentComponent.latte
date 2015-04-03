@@ -1,1 +1,8 @@
-{$content|noescape}
+{if $user->isAllowed('static-content', 'edit')}
+    <a n:href="edit!">Editovat!</a>
+{/if}
+{if $edit}
+    {control editForm}
+{else}
+    {$content|noescape}
+{/if}
