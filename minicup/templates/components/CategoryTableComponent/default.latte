@@ -2,16 +2,16 @@
     <table>
         <tr>
             <th>pořadí</th>
-            <th>URL</th>
             <th>jméno</th>
-            <th>slug</th>
+            <th>skóre</th>.
+            <th>body</th>
         </tr>
         {foreach $teams as $team}
             <tr>
                 <td>{$team->order}</td>
-                <td>{$team->category->slug}/{$team->slug}</td>
-                <td>{$team->name}</td>
-                <td>{$team->category->name}</td>
+                <td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
+                <td>{$team->scored}:{$team->received}</td>
+                <td>{$team->points}</td>
             </tr>
         {/foreach}
     </table>
