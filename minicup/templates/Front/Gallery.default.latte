@@ -1,6 +1,7 @@
 {block content}
+    <a n:href="tags">Interaktivní výběr</a><br>
     Hlavní kategorie:
     {foreach $tags as $tag}
-        {$tag->slug} <br>
+        <a href={plink Gallery:detail $tag}>{$tag->slug}</a> <br>
     {/foreach}
 {/block}

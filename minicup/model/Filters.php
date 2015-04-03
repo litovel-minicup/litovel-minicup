@@ -95,8 +95,7 @@ class Filters extends Object
      */
     public function activePhotos(Fluent $fluent)
     {
-        // TODO: fix active columns in M:N
-        //$fluent->where('[active] = 1');
+        $fluent->leftJoin('photo')->on('[photo_tag.photo_id] = [photo.id]')->where('[photo.active] = 1');
     }
 
     /**

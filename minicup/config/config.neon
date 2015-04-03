@@ -94,7 +94,7 @@ services:
       parameters: [array photos]
       arguments: [%photos%]
     - implement: Minicup\Components\IInteractiveGalleryComponentFactory
-      parameters: [array tags]
+      parameters: [array tags = NULL]
       arguments: [%tags%]
     - implement: Minicup\Components\IAsideComponentFactory
       parameters: [Minicup\Model\Entity\Category category]

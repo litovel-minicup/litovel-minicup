@@ -7,18 +7,18 @@ use LeanMapper\Entity;
 /**
  * @property    int         $id
  * @property    Photo[]     $photos m:hasMany(:photo_tag) m:filter(activePhotos)    photos for this tag
- * @property    string      $name                                                   name for tag
+ * @property    string|NULL $name                                                   name for tag
  * @property    string      $slug                                                   unique slug
  * @property    int         $isMain = 0                                             flag for gallery
- * @property    Photo|NULL  $mainPhoto m:hasOne(main_photo_id)                           main photo for tag
+ * @property    Photo|NULL  $mainPhoto m:hasOne(main_photo_id)                      main photo for tag
  */
 class Tag extends Entity
 {
     /**
-     * @param $isGallery
+     * @return string
      */
-    public function setIsGallery($isGallery)
+    public function getName()
     {
-        $this->row->is_gallery = (int) $isGallery;
+        return $this->row->name ? $this->row->name : $this->row->slug;
     }
 }

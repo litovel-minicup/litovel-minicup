@@ -149,7 +149,7 @@ class RouterFactory extends Object
             'year' => $yearFilter
         ));
 
-        $front[] = new Route('[<year>/]foto/tagy/<tags .+>', array(
+        $front[] = new Route('[<year>/]foto/tagy[/<tags .+>]', array(
             'presenter' => 'Gallery',
             'action' => 'tags',
             'year' => $yearFilter,
@@ -166,6 +166,28 @@ class RouterFactory extends Object
                     $tags = array_map(function (Tag $tag) { return $tag->slug; }, $tags);
                     sort($tags);
                     return join('/', $tags);
+                }
+            )
+        ));
+
+        $front[] = new Route('[<year>/]foto/detail/<tag>', array(
+            'presenter' => 'Gallery',
+            'action' => 'detail',
+            'year' => $yearFilter,
+            'tag' => array(
+                Route::FILTER_IN => function ($tag) use ($TagR) {
+                    /** @var Tag $tag */
+                    $tag = $TagR->getBySlug($tag);
+                    if (!$tag || !$tag->isMain) {
+                        return NULL;
+                    }
+                    return $tag;
+                },
+                Route::FILTER_OUT => function (Tag $tag) {
+                    if (!$tag->isMain) {
+                        return NULL;
+                    }
+                    return $tag->slug;
                 }
             )
         ));

@@ -13,6 +13,7 @@ use Minicup\Model\Entity\StaticContent;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\StaticContentRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
+use Nette\InvalidArgumentException;
 use Nette\Object;
 
 class StaticContentManager extends Object
@@ -25,12 +26,15 @@ class StaticContentManager extends Object
     /** @var StaticContentRepository */
     private $SCR;
 
+    /**
+     * @param TeamInfoRepository $TIR
+     * @param StaticContentRepository $SCR
+     */
     public function __construct(TeamInfoRepository $TIR, StaticContentRepository $SCR)
     {
         $this->TIR = $TIR;
         $this->SCR = $SCR;
     }
-
 
     public function getContent($arg)
     {
@@ -43,9 +47,8 @@ class StaticContentManager extends Object
                 $this->SCR->persist($staticContent);
                 $arg->i->staticContent = $staticContent;
                 $this->TIR->persist($arg->i);
-            } else {
-                $staticContent = $arg->i->staticContent;
             }
+            return $arg->i->staticContent;
         } else if (is_string($arg)) {
             $staticContent = $this->SCR->getBySlug($arg);
             if (!$staticContent) {
@@ -53,9 +56,11 @@ class StaticContentManager extends Object
                 $staticContent->slug = $arg;
                 $this->SCR->persist($staticContent);
             }
+            return $staticContent;
         } else if ($arg instanceof StaticContent) {
-            $staticContent = $arg;
+            return $arg;
         }
-        return $staticContent;
+        throw new InvalidArgumentException('Unknown type "' . gettype($arg) . '"" given.');
+
     }
 }

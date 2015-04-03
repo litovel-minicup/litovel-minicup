@@ -29,8 +29,11 @@ class InteractiveGalleryComponent extends BaseComponent
      * @param PhotoRepository $PR
      * @param TagRepository $TR
      */
-    public function __construct(array $tags, IPhotoListComponentFactory $PLCF, PhotoRepository $PR, TagRepository $TR)
+    public function __construct(array $tags = NULL, IPhotoListComponentFactory $PLCF, PhotoRepository $PR, TagRepository $TR)
     {
+        if (!$tags) {
+            $tags = array();
+        }
         $this->PR = $PR;
         $this->TR = $TR;
         $this->tags = $tags;
@@ -89,5 +92,5 @@ interface IInteractiveGalleryComponentFactory
      * @param array $tags
      * @return InteractiveGalleryComponent
      */
-    public function create(array $tags);
+    public function create(array $tags = NULL);
 }

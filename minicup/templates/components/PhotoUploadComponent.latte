@@ -1,6 +1,6 @@
 <div class="photo-upload-component">
 <div class="alert alert-info">Víc jak 10MB Ti nevezmu, optimálně rozlišení tak 1000x1000px. <small>P.S. nedoporučuji nahrávat více fotek s identickým názvem.</small></div>
-{? $dropperOptions = array(
+{php $dropperOptions = array(
     "action" => $control->link('upload!'),
     "maxSize" => 10242880,
     "maxQueue" => 2,
@@ -29,10 +29,12 @@
         <div class="panel-heading">
             <h3 class="panel-title">Nahrané fotky</h3>
         </div>
-        <div n:class="$photos?row, panel-body" n:snippet="photos-list">
-            <div n:foreach="$photos as $photo" class="col-md-4">
+        <div n:class="$photos?row, panel-body" n:snippet="photos-list" n:inner-foreach="$photos as $photo">
+            {first 3}<div class="row">{/first}
+            <div class="col-md-4">
                 {control photoEditComponent-$photo->id}
             </div>
+            {last 3}</div>{/last}
             <div class="alert alert-warning" n:if="!$photos"><i class="glyphicon glyphicon-cloud-upload"></i> Nic nenahráno, co takhle se začít činit?</div>
         </div>
         <div class="col-md-5">
@@ -109,7 +111,6 @@
             $dropper = $('#upload-dropper');
         initDropper($dropper, $dropperList, itemTemplate);
 
-
         $('#delete-all').on('click', function(e) {
             e.preventDefault();
             $('.photo-delete').click();
@@ -119,7 +120,6 @@
             e.preventDefault();
             $('.photo-save').click();
         });
-
 
         $('#delete-selected').on('click', function(e) {
             e.preventDefault();
@@ -131,14 +131,12 @@
             $('.selected .photo-save').click();
         });
 
-
         $select2all = initTagsSelect2($('#select2-all'));
         $('#tag-all').on('click', function(e) {
             $.post({link tagsAll!}, { tags: $select2all.val()}, function(data, textStatus, xhr) {
                 toastr.success('Otagovány všechny fotky!', 'Výborně!');
             });
         });
-
 
         $('.photo-list').on('minicup.photo.recount', function(event) {
             var count = $(this).find('.thumbnail.selected').length;
@@ -149,7 +147,7 @@
                 $('.btn-all').removeClass('hidden');
                 $('.btn-selected').addClass('hidden');
                 count = 0;
-            };
+            }
             $('.photo-upload-component').find('.selected-count').text(count);
         });
     });
