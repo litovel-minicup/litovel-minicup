@@ -28,9 +28,9 @@ class MatchRepository extends BaseRepository
     {
         $fluent = $this->createCategoryFluent($category);
         if ($mode == static::CONFIRMED) {
-            $fluent->applyFilter('confirmed');
+            $fluent->applyFilter($mode);
         } elseif ($mode == static::UNCONFIRMED) {
-            $fluent->applyFilter('unconfirmed');
+            $fluent->applyFilter($mode);
         }
         return $this->createEntities($fluent->fetchAll());
     }
@@ -65,7 +65,8 @@ class MatchRepository extends BaseRepository
         $dt = new \DibiDateTime();
         // TODO: repair this fucking datetimes!
         $fluent = $fluent
-            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp());
+            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
+            ->where('[confirmed] = 0');
         return $this->createEntities($fluent->fetchAll());
     }
 

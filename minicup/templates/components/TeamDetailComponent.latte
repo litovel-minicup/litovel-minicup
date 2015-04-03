@@ -3,7 +3,7 @@
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
         </div>
-        <div class="Article__head__text Box__head__text">Týmy / {$team->name}</div>
+        <div class="Article__head__text Box__head__text">Detail týmu {$team->name} z kategorie {$team->category->name}</div>
         </div>
         <div class="Box__content">
 
@@ -19,4 +19,5 @@
     obdržené: {$team->received}<br>
     body: {$team->points}<br>
     {control listOfMatchesComponent}
+    {control staticContentComponent}
 {/block}

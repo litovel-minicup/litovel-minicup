@@ -41,6 +41,7 @@ services:
     - Minicup\Model\Manager\TeamDataRefresher
     - Minicup\Model\Manager\MatchManager
     - Minicup\Model\Manager\PhotoManager(%wwwDir%)
+    - Minicup\Model\Manager\StaticContentManager
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
@@ -105,8 +106,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category, count]
       arguments: [%category%, %count%]
     - implement: Minicup\Components\IStaticContentComponentFactory
-      parameters: [Minicup\Model\Entity\StaticContent content]
-      arguments: [%content%]
+      parameters: [arg]
+      arguments: [%arg%]
     - implement: Minicup\Components\IListOfTeamsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

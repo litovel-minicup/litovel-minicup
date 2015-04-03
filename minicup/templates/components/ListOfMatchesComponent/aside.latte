@@ -1,7 +1,7 @@
 <div class="component">
     <div class="Box__content--split--left Aside__content--split--left">
         <ul n:inner-foreach="$matches as $match">
-            <li>{$match->homeTeam->name}</li>
+            <li><a href={plink Team:detail $match->category, $match->homeTeam}>{$match->homeTeam->name}</a></li>
         </ul>
     </div>
 
@@ -13,7 +13,7 @@
 
     <div class="Box__content--split--right Aside__content--split--right">
         <ul n:inner-foreach="$matches as $match">
-            <li>{$match->awayTeam->name}</li>
+            <li><a href={plink Team:detail $match->category, $match->awayTeam}>{$match->awayTeam->name}</a></li>
         </ul>
     </div>
 </div>

@@ -27,7 +27,7 @@ class Team extends Entity
      */
     public function __get($name /*, array $filterArgs*/)
     {
-        if (in_array($name, array('slug', 'name', 'matches'))) {
+        if (in_array($name, array('slug', 'name', 'matches', 'staticContent'))) {
             return $this->i->$name;
         }
         return parent::__get($name);

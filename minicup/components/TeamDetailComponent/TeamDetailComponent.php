@@ -16,17 +16,22 @@ class TeamDetailComponent extends BaseComponent
     /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
 
+    /** @var IStaticContentComponentFactory */
+    private $SCCF;
+
     /**
      * @param Team $team
      * @param TeamRepository $TR
      * @param IListOfMatchesComponentFactory $LOMCF
+     * @param IStaticContentComponentFactory $SCCF
      */
-    public function __construct(Team $team, TeamRepository $TR, IListOfMatchesComponentFactory $LOMCF)
+    public function __construct(Team $team, TeamRepository $TR, IListOfMatchesComponentFactory $LOMCF, IStaticContentComponentFactory $SCCF)
     {
         parent::__construct();
         $this->team = $team;
         $this->TR = $TR;
         $this->LOMCF = $LOMCF;
+        $this->SCCF = $SCCF;
     }
 
     public function render()
@@ -41,6 +46,14 @@ class TeamDetailComponent extends BaseComponent
     public function createComponentListOfMatchesComponent()
     {
         return $this->LOMCF->create($this->team);
+    }
+
+    /**
+     * @return StaticContentComponent
+     */
+    public function createComponentStaticContentComponent()
+    {
+        return $this->SCCF->create($this->team);
     }
 }
 
