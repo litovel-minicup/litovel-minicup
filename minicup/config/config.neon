@@ -85,6 +85,9 @@ services:
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\INewsListComponentFactory
+    - implement: Minicup\Components\ITeamHistoryComponent
+      parameters: [Minicup\Model\Entity\Team team]
+      arguments: [%team%]
     - implement: Minicup\Components\IPhotoEditComponentFactory
       parameters: [Minicup\Model\Entity\Photo photo]
       arguments: [%photo%]
