@@ -5,6 +5,19 @@ var redrawSnippets = function (snippets) {
         }
     }
 };
+var attachCover = function($el) {
+    if ($el.find('.Cover').length == 0) {
+        if (!$el.is('body')) {
+            $el.css('position', 'relative');
+        }
+        $('<div class="Cover"><div class="Cover__loader"></div></div>').hide().appendTo($el).fadeIn(200);
+    }
+};
+var detachCover = function($el) {
+    $el.find('.Cover').fadeOut(250, function() {
+        $(this).remove();
+    });
+};
 $(function ($) {
     $.nette.init();
     $.nette.ext({

@@ -1,26 +1,19 @@
 {foreach $photos as $photo}
     <a class="gallery" href={plink :Media:medium $photo->filename}><img src="{plink :Media:small $photo->filename}" alt=""></a>
 {/foreach}
+{if !$photos}
+    <p>Žádné fotky k zobrazení.</p>
+{/if}
 <img id="light-box">
 <br>
 <script>
     jQuery(function ($) {
-        var attachCover = function() {
-            if ($('body').find('#cover').length == 0) {
-                $('<div id="cover"><div class="loader"></div></div>').hide().appendTo('body').fadeIn(250);
-            }
-        };
-        var detachCover = function() {
-            $('#cover').fadeOut(250, function() {
-                $(this).remove();
-            });
-        };
         $('a.gallery').off('click').imageLightbox({
             selector: 'id="light-box"',
             allowedTypes:'png|jpg|jpeg|gif',
             animationSpeed: 100,
-            onStart: attachCover,
-            onEnd: detachCover
+            onStart: function() { attachCover($('body')) },
+            onEnd: function() { detachCover($('body')) }
         });
     });
 </script>
@@ -32,55 +25,4 @@
         -ms-touch-action: none;
         touch-action: none;
     }
-    #cover {
-        position: absolute;
-        bottom: 0;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
-    .loader {
-        margin: 6em auto;
-        font-size: 10px;
-        position: relative;
-        top: calc(50% - 200px);
-        text-indent: -9999em;
-        border-top: 1.1em solid rgba(255, 255, 255, 0.2);
-        border-right: 1.1em solid rgba(255, 255, 255, 0.2);
-        border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
-        border-left: 1.1em solid #ffffff;
-        -webkit-animation: load8 1.1s infinite linear;
-        animation: load8 1.1s infinite linear;
-    }
-    .loader,
-    .loader:after {
-        border-radius: 50%;
-        width: 10em;
-        height: 10em;
-    }
-    @-webkit-keyframes load8 {
-        0% {
-            -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-        }
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-    @keyframes load8 {
-        0% {
-            -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-        }
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-
-
 </style>

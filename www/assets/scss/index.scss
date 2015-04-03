@@ -3,7 +3,8 @@
  */
 @import "reset";
 @import "_var";
-@import "_font-face"; 
+@import "_font-face";
+
 
 /**
  * Import Bourbon and Neat
@@ -24,6 +25,7 @@
 @import "_Aside";
 @import "_Section";
 @import "_Footer";
+@import "_Cover";
 
 
 body {

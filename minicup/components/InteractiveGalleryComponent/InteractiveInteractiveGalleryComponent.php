@@ -43,7 +43,8 @@ class InteractiveGalleryComponent extends BaseComponent
     public function render()
     {
         $photos = $this->PR->findByTags($this->tags);
-        $this->template->tags = $this->tags;
+        $this->template->selectedTags = array_map(function(Tag $tag) { return $tag->id;}, $this->tags);
+        $this->template->tags = $this->TR->findAll();
         $this->template->photos = $photos;
         parent::render();
     }

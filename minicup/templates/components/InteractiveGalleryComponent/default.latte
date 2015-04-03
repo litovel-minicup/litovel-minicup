@@ -7,19 +7,31 @@
         data-ajax--cache="false"
         data-ajax--delay="350"
         data-ajax--method="GET">
-	<option n:foreach="$tags as $tag" selected="selected" value="{$tag->id}">{$tag->slug}</option>
+	<option n:foreach="$tags as $tag" {if in_array($tag->id, $selectedTags)}selected="selected" {/if}value="{$tag->id}">{$tag->slug}</option>
 </select>
 <script>
     jQuery(function ($) {
-        initTagsSelect2($('#tags-select')).on('change', function (e) {
+        var $select = initTagsSelect2($('#tags-select'));
+        $select.on('change', function (e) {
+            var val = $(this).val();
+            if (!val) {
+                val = "";
+            }
+            window.location.hash = val;
             $.nette.ajax({
                 url: {link refresh!},
                 data: {
                     ids: $(this).val()
                 }
             });
-        })
-        $('#tags-select, .select2').width('100%').css('margin-bottom', '20px');
+        });
+        if (window.location.hash) {
+            setTimeout(function () {
+                var ids = window.location.hash.replace('#', '').split(',');
+                $select.select2('val', ids).trigger('change');
+            }, 200)
+        }
+        $('#tags-select, .select2, .select2 li input').width('100%').css('margin-bottom', '20px');
     })
 </script>
 {snippet photo-list}
