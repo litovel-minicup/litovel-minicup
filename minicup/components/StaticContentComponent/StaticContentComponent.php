@@ -24,9 +24,10 @@ class StaticContentComponent extends BaseComponent
     private $content;
 
     /**
-     * @param StaticContent $content
+     * @param $arg
      * @param StaticContentRepository $SCR
      * @param Texy $texy
+     * @param StaticContentManager $SCM
      */
     public function __construct($arg, StaticContentRepository $SCR, Texy $texy, StaticContentManager $SCM)
     {

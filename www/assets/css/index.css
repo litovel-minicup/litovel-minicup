@@ -473,7 +473,7 @@ html {
       margin-right: 0; }
 
 .Cover {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   top: 0;
   left: 0;

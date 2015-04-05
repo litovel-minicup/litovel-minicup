@@ -1,23 +1,46 @@
 {block content}
     <div class="Article">
         <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-        </div>
-        <div class="Article__head__text Box__head__text">Detail týmu {$team->name} z kategorie {$team->category->name}</div>
+            <div class="Article__head__icon Box__head__icon icon__teams"></div>
+            <div class="Article__head__text Box__head__text">Detail týmu {$team->name} z
+                kategorie {$team->category->name}</div>
         </div>
         <div class="Box__content">
 
         </div>
-    </div>
 
-    jméno: {$team->name} <br>
-    slug: {$team->slug} <br>
-    pořadí: {$team->order}<br>
-    počet zápasů: {$team->matches|length}<br>
-    kategorie: {$team->category->name}<br>
-    vstřelené: {$team->scored}<br>
-    obdržené: {$team->received}<br>
-    body: {$team->points}<br>
-    {control listOfMatchesComponent}
-    {control staticContentComponent}
+
+        jméno: {$team->name} <br>
+        slug: {$team->slug} <br>
+        pořadí: {$team->order}<br>
+        počet zápasů: {$team->matches|length}<br>
+        kategorie: {$team->category->name}<br>
+        vstřelené: {$team->scored}<br>
+        obdržené: {$team->received}<br>
+        body: {$team->points}<br>
+
+        {if count($team->i->matches) > 0}
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__matches"></div>
+                <div class="Article__head__text Box__head__text">Zápasy</div>
+            </div>
+            {control listOfMatchesComponent}
+        {/if}
+
+        {if count($team->i->tag->photos) > 0 || $user->isAllowed('static-content', 'edit')}
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__news"></div>
+                <div class="Article__head__text Box__head__text">Informace</div>
+            </div>
+            {control staticContentComponent}
+        {/if}
+
+        {if count($team->i->tag->photos) > 0}
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                <div class="Article__head__text Box__head__text">Fotografie</div>
+            </div>
+            {control photoListComponent}
+        {/if}
+    </div>
 {/block}

@@ -13,6 +13,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string      $slug                   slug for URL
  * @property        Team        $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
+ * @property        Tag|NULL    $tag m:hasOne
  */
 class TeamInfo extends Entity
 {

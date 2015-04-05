@@ -36,14 +36,18 @@ class StaticContentManager extends Object
         $this->SCR = $SCR;
     }
 
+    /**
+     * @param Team|string|StaticContent $arg
+     * @return StaticContent|NULL
+     */
     public function getContent($arg)
     {
         if ($arg instanceof Team) {
-            if (!$arg->i->staticContent) {
+            if (!$arg->i->staticContent instanceof StaticContent) {
                 $staticContent = new StaticContent();
                 $staticContent->updated = new \DibiDateTime(); // TODO: trigger?
                 $staticContent->content = "";
-                $staticContent->slug = $arg->category->slug . static::PARTS_GLUE . $arg->i->slug;
+                $staticContent->slug = $arg->category->slug . $this::PARTS_GLUE . $arg->i->slug;
                 $this->SCR->persist($staticContent);
                 $arg->i->staticContent = $staticContent;
                 $this->TIR->persist($arg->i);
