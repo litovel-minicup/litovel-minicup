@@ -4,7 +4,6 @@ namespace Minicup\AdminModule\Presenters;
 
 use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\PhotoUploadComponent;
-use Minicup\Model\Manager\MigrationsManager;
 use Minicup\Model\Manager\ReorderManager;
 use Minicup\Model\Repository\TagRepository;
 
@@ -29,14 +28,4 @@ final class HomepagePresenter extends BaseAdminPresenter
     {
         return $this->PUC->create();
     }
-
-    /** @var MigrationsManager @inject */
-    public $MM;
-
-    public function actionDefault()
-    {
-        $this->MM->migrateMatches($this->CR->getBySlug('mladsi'), TRUE, FALSE);
-    }
-
-
 }
