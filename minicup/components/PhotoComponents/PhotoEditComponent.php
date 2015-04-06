@@ -9,6 +9,10 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
+/**
+ * @method onDelete
+ * @method onSave
+ */
 class PhotoEditComponent extends BaseComponent
 {
     /** @var TagRepository */

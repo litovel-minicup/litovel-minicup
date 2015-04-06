@@ -43,7 +43,8 @@ class StaticContentManager extends Object
     public function getContent($arg)
     {
         if ($arg instanceof Team) {
-            if (!$arg->i->staticContent instanceof StaticContent) {
+            $staticContent = $arg->i->staticContent;
+            if (!$staticContent instanceof StaticContent) {
                 $staticContent = new StaticContent();
                 $staticContent->updated = new \DibiDateTime(); // TODO: trigger?
                 $staticContent->content = "";
@@ -52,7 +53,7 @@ class StaticContentManager extends Object
                 $arg->i->staticContent = $staticContent;
                 $this->TIR->persist($arg->i);
             }
-            return $arg->i->staticContent;
+            return $staticContent;
         } else if (is_string($arg)) {
             $staticContent = $this->SCR->getBySlug($arg);
             if (!$staticContent) {

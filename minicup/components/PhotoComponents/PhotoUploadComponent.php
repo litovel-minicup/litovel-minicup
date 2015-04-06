@@ -9,11 +9,14 @@ use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
+use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
+use Nette\Utils\ArrayHash;
 use Nette\Utils\Random;
+use Nette\Utils\Strings;
 
 // TODO: add forms to add tags with autocompleting thru ajax
 class PhotoUploadComponent extends BaseComponent
@@ -127,7 +130,7 @@ class PhotoUploadComponent extends BaseComponent
         $results = array();
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->slug);
+            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
         }
         $this->presenter->sendJson(array('results' => $results));
     }
@@ -150,6 +153,37 @@ class PhotoUploadComponent extends BaseComponent
             $this->PR->persist($photo);
         }
         $this->redrawControl('photos-list');
+    }
+
+    /**
+     * @return Form
+     */
+    public function createComponentAddTagForm()
+    {
+        $f = $this->formFactory->create();
+        $f->addText('name')->setRequired();
+        $f->addSubmit('submit', 'Přidat');
+        $f->onSuccess[] = $this->addTagFormSuccess;
+        return $f;
+    }
+
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     */
+    public function addTagFormSuccess(Form $form, ArrayHash $values)
+    {
+        $tag = new Tag();
+        $tag->slug = Strings::webalize($values->name);
+        $tag->name = $values->name;
+        try {
+            $this->TR->persist($tag);
+        } catch (\DibiDriverException $e) {
+            $this->presenter->flashMessage('Tento tag již existuje!', 'warning');
+            return;
+        }
+        $form->setValues(array(), TRUE);
+        $this->presenter->flashMessage('Tag přidán!', 'success');
     }
 }
 

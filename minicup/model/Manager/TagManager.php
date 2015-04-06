@@ -43,6 +43,7 @@ class TagManager extends Object
             if (!$tag instanceof Tag) {
                 $tag = new Tag();
                 $tag->slug = $arg->category->slug . $this::PARTS_GLUE . $arg->i->slug;
+                $tag->name = $arg->category->name . ' - ' . $arg->i->name;
                 $this->tag->persist($tag);
                 $arg->i->tag = $tag;
                 $this->teamInfo->persist($arg->i);

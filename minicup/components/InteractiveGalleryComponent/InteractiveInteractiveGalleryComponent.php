@@ -65,7 +65,7 @@ class InteractiveGalleryComponent extends BaseComponent
         $results = array();
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->slug);
+            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
         }
         $this->redrawControl('photo-list');
         $this->presenter->payload->results = $results;
