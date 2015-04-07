@@ -41,7 +41,6 @@
                             });
                         });
                         select2.on('change', function(e) {
-                            // TODO: fix saving new tags
                             $.post({link saveTags!}, { tags: $photo.find('.select2').val()}, function(response, textStatus, xhr) {
                                 toastr.success('Tagy u fotky {$photo->id} aktualizovány!', 'Excelentně!');
                             });
