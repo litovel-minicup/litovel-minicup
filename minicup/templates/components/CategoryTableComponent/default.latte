@@ -1,11 +1,17 @@
-<div class="component">
+<div class="Box__subhead Article__subhead">
+        <table>
+            <thead>
+                <th>Domácí tým</th>
+                <th>Scóre</th>
+                <th>Hostující tým</th>
+                <th>Začátek</th>
+                <th>Datum</th>
+            </thead>
+        </table>
+</div>
+
+<div class="Box__content">
     <table>
-        <tr>
-            <th>pořadí</th>
-            <th>jméno</th>
-            <th>skóre</th>.
-            <th>body</th>
-        </tr>
         {foreach $teams as $team}
             <tr>
                 <td>{$team->order}</td>

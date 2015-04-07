@@ -1,10 +1,14 @@
 .Footer {
 	background: $light--black;
 	margin-top: $universal-dis;
+
 	color: white;
 	font-family: "Montserrat";
+
 	height: 100px;
 	@include span-columns(12);
+
+	border-bottom: 2px solid black;
 
 	&__block {
 		@include span-columns(4);

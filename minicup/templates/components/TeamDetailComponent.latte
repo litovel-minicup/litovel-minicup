@@ -2,23 +2,35 @@
     <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams"></div>
-            <div class="Article__head__text Box__head__text">Detail týmu {$team->name} z
-                kategorie {$team->category->name}</div>
+            <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
         </div>
-        <div class="Box__content">
+        <div class="Box__content Article__content">
 
+            <dl>
+                  <dt>Pořadí</dt>
+                  <dd>{$team->order}</dd>
+                  <dt>Zápasy</dt>
+                  <dd>{$team->matches|length}</dd>
+                  <dt>Skóre</dt>
+                  <dd>{$team->scored}:{$team->received}</dd>
+                  <dt>Body</dt>
+                  <dd>{$team->points}</dd>
+            </dl>
+        
         </div>
 
 
-        jméno: {$team->name} <br>
-        slug: {$team->slug} <br>
-        pořadí: {$team->order}<br>
+{*         jméno: {$team->name} <br> *}
+{*         slug: {$team->slug} <br> *}
+{*         pořadí: {$team->order}<br>
         počet zápasů: {$team->matches|length}<br>
         kategorie: {$team->category->name}<br>
         vstřelené: {$team->scored}<br>
         obdržené: {$team->received}<br>
-        body: {$team->points}<br>
+        body: {$team->points}<br> *}
+    </div>
 
+    <div class="Article">
         {if count($team->i->matches) > 0}
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__matches"></div>
@@ -26,7 +38,9 @@
             </div>
             {control listOfMatchesComponent}
         {/if}
+    </div>
 
+    <div class="Article">
         {if $team->i->staticContent || $user->isAllowed('static-content', 'edit')}
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__news"></div>
@@ -34,7 +48,9 @@
             </div>
             {control staticContentComponent}
         {/if}
+    </div>    
 
+    <div class="Article">
         {if ($team->i->tag && count($team->i->tag->photos) > 0)}
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__photo"></div>
@@ -43,4 +59,5 @@
             {control photoListComponent}
         {/if}
     </div>
+
 {/block}

@@ -115,20 +115,24 @@ a {
   color: #907800; }
 
 .icon__matches:before {
-  content: "\e601"; }
+  content: "\e601";
+  color: #626262; }
 
 .icon__news:before {
   content: "\e602";
   color: #626262; }
 
 .icon__photo:before {
-  content: "\e603"; }
+  content: "\e603";
+  color: #626262; }
 
 .icon__tables:before {
-  content: "\e604"; }
+  content: "\e604";
+  color: #626262; }
 
 .icon__teams:before {
-  content: "\e605"; }
+  content: "\e605";
+  color: #626262; }
 
 .icon__score:before {
   content: "\e606";
@@ -173,8 +177,20 @@ html {
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
-  height: 75px;
+  height: 50px;
   font-family: 'PTBoldItalic'; }
+.Box__rows {
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 32.86219%;
+  margin-bottom: 5px; }
+  .Box__rows:last-child {
+    margin-right: 0; }
+  .Box__rows:nth-child(3n) {
+    margin-right: 0; }
+  .Box__rows:nth-child(3n+1) {
+    clear: left; }
 .Box__content {
   padding: 15px 20px 5px 20px;
   line-height: 1.32; }
@@ -212,7 +228,8 @@ html {
   background: #4180ff;
   height: 120px;
   font-family: 'MontserratBold';
-  font-size: 15px; }
+  font-size: 15px;
+  border-bottom: 2px solid #0040c1; }
   .Header:last-child {
     margin-right: 0; }
   .Header__logo {
@@ -236,7 +253,8 @@ html {
     margin-right: 0.70671%;
     width: 11.88163%;
     font-size: 0;
-    border: 2px solid #0040c1;
+    border-right: 2px solid #0040c1;
+    border-top: 2px solid #0040c1;
     height: 100%;
     text-transform: uppercase;
     position: relative; }
@@ -248,7 +266,7 @@ html {
       height: 50%;
       color: #0040c1;
       padding: 22px 45px; }
-      .Header__toggle__anchor:hover {
+      .Header__toggle__anchor:hover:not(.Header__toggle__anchor--active) {
         background: white;
         color: #0040c1; }
       .Header__toggle__anchor--active {
@@ -271,6 +289,7 @@ html {
       margin-right: 1.21766%;
       width: 11.43455%;
       margin-top: 15px;
+      font-size: 13px;
       height: 70px;
       text-align: center; }
       .Header__nav li:last-child {
@@ -343,6 +362,8 @@ html {
 .Article__head__text {
   background: #c8c8c8;
   color: #626262; }
+.Article__subhead {
+  background: #929292; }
 .Article__heading {
   font-family: "Montserrat";
   font-size: 34px;
@@ -355,6 +376,12 @@ html {
   padding-top: 15px;
   padding-bottom: 30px;
   font-size: 16px; }
+  .Article__content a {
+    border-bottom: 3px solid #4180ff;
+    color: #4180ff; }
+    .Article__content a:hover {
+      background: #4180ff;
+      color: white; }
 
 .Sponsors__images {
   float: left;
@@ -378,7 +405,8 @@ html {
   display: block;
   margin-right: 0.70671%;
   width: 41.25442%;
-  margin-right: 0; }
+  margin-right: 0;
+  border-bottom: 2px solid #f6cd00; }
   .Aside:last-child {
     margin-right: 0; }
   .Aside__head {
@@ -449,6 +477,14 @@ html {
   .Section:last-child {
     margin-right: 0; }
 
+@media screen and (max-width: 768px) {
+  .Section, .Aside {
+    float: left;
+    display: block;
+    margin-right: 1.06383%;
+    width: 100%; }
+    .Section:last-child, .Aside:last-child {
+      margin-right: 0; } }
 .Footer {
   background: #4A4A4A;
   margin-top: 8px;
@@ -458,7 +494,8 @@ html {
   float: left;
   display: block;
   margin-right: 0.70671%;
-  width: 100%; }
+  width: 100%;
+  border-bottom: 2px solid black; }
   .Footer:last-child {
     margin-right: 0; }
   .Footer__block {
@@ -512,6 +549,16 @@ html {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+.Team__rows {
+  background: #c8c8c8;
+  height: 150px; }
+  .Team__rows a {
+    font-family: "Montserrat";
+    font-size: 28px;
+    letter-spacing: -1.5px;
+    margin-top: 20px;
+    color: #626262; }
+
 body {
   max-width: 1145px;
   margin-left: auto;

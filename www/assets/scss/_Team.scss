@@ -1,0 +1,19 @@
+.Team {
+	&__rows {
+		background: $medium--grey;
+		height: 150px;
+		
+
+		a {
+			font-family: "Montserrat";
+			font-size: 28px;
+			letter-spacing: -1.5px;
+			margin-top: 20px;
+			color: darken($medium--grey, 40%);
+		}	
+	}
+
+	&__content {
+	}
+
+}

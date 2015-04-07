@@ -60,6 +60,7 @@
 
 .icon__matches:before {
   content: "\e601";
+  color: darken($medium--grey, 40%);
 }
 
 .icon__news:before {
@@ -70,14 +71,17 @@
 
 .icon__photo:before {
   content: "\e603";
+  color: darken($medium--grey, 40%);
 }
 
 .icon__tables:before {
   content: "\e604";
+  color: darken($medium--grey, 40%);
 }
 
 .icon__teams:before {
   content: "\e605";
+  color: darken($medium--grey, 40%);
 }
 
 .icon__score:before {

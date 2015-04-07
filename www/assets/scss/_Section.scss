@@ -3,3 +3,9 @@
 	background: $light--grey;
 	margin-top: $universal-dis;
 }
+
+@include media($tablet) {
+	.Section, .Aside {
+		@include span-columns(8);
+	}
+}

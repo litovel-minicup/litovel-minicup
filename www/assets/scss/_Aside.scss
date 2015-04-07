@@ -4,6 +4,8 @@
 	@include span-columns(5);
 	@include omega();
 	
+	border-bottom: 2px solid $dark--yellow;
+
 	&__head {
 		letter-spacing: -1.5px;
 

@@ -1,4 +1,7 @@
 .Article {
+
+	// border-bottom: 2px solid $medium--grey;
+
 	&__head {
 
 		&__icon {
@@ -9,6 +12,10 @@
 			background: $medium--grey;
 			color: darken($medium--grey, 40%);
 		}
+	}
+
+	&__subhead {
+		background: $dark--grey;
 	}
 
 	&__heading {
@@ -23,10 +30,23 @@
 
 	}
 
+
 	&__content {
 		font-family: "PTRegular";
 		padding-top: 15px;
 		padding-bottom: 30px;
 		font-size: 16px;
+
+		a {
+			border-bottom: 3px solid $light--blue;
+			color: $light--blue;
+
+			&:hover {
+				background: $light--blue;
+				color: white;
+			}
+
+		}
+
 	}
 }
