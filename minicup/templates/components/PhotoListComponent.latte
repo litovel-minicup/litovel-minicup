@@ -1,28 +1,12 @@
 {foreach $photos as $photo}
-    <a class="gallery" href={plink :Media:medium $photo->filename}><img src="{plink :Media:small $photo->filename}" alt=""></a>
+    <a href={plink :Media:medium $photo->filename}><img src="{plink :Media:small $photo->filename}" alt=""></a>
 {/foreach}
 {if !$photos}
     <p>Žádné fotky k zobrazení.</p>
 {/if}
-<img id="light-box">
-<br>
+
 <script>
     jQuery(function ($) {
-        $('a.gallery').off('click').imageLightbox({
-            selector: 'id="light-box"',
-            allowedTypes:'png|jpg|jpeg|gif',
-            animationSpeed: 100,
-            onStart: function() { attachCover($('body')) },
-            onEnd: function() { detachCover($('body')) }
-        });
+
     });
 </script>
-<style>
-    #light-box {
-        position: fixed;
-        z-index: 9999;
-
-        -ms-touch-action: none;
-        touch-action: none;
-    }
-</style>
