@@ -1,5 +1,9 @@
 {block content}
     <h1 n:block="title">Detail tagu {$tag->id}</h1>
-    {control tagFormComponent}
-    {control photoListComponent}
+    <div class="col-md-4">
+        {control tagFormComponent}
+    </div>
+    <div class="col-md-8">
+        {control photoListComponent}
+    </div>
 {/block}
