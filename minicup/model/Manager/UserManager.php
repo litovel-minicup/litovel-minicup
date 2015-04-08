@@ -5,7 +5,6 @@ namespace Minicup\Model\Manager;
 
 use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\User;
-use Minicup\Model\Repository\EntityNotFoundException;
 use Minicup\Model\Repository\UserRepository;
 use Nette\InvalidArgumentException;
 use Nette\Object;
@@ -36,9 +35,9 @@ class UserManager extends Object implements IAuthenticator
     {
         list($username, $password) = $credentials;
 
-        try {
-            $user = $this->UR->findByUsername($username);
-        } catch (EntityNotFoundException $e) {
+        $user = $this->UR->findByUsername($username);
+
+        if (!$user) {
             throw new AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
         }
 

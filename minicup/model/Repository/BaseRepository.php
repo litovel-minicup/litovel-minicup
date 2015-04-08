@@ -26,7 +26,6 @@ abstract class BaseRepository extends Repository
         $this->events->registerCallback($event, $callback);
     }
 
-
     /**
      * @param $id
      * @return Entity
@@ -37,10 +36,7 @@ abstract class BaseRepository extends Repository
         $row = $this->createFluent()
             ->where('[' . $this->getTable() . '.id] = %i', $id)
             ->fetch();
-        if ($row === false) {
-            throw new EntityNotFoundException('Entity was not found.');
-        }
-        return $this->createEntity($row);
+        return $row ? $this->createEntity($row) : NULL;
     }
 
     /**
