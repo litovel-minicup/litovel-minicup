@@ -1,5 +1,7 @@
 {foreach $photos as $photo}
-    <a href={plink :Media:medium $photo->filename}><img src="{plink :Media:small $photo->filename}" alt=""></a>
+    <a class="swipebox" title="{$iterator->counter}. z {$photos|length}" href={plink :Media:medium $photo->filename} >
+        <img src="{plink :Media:small $photo->filename}" alt="image">
+    </a>
 {/foreach}
 {if !$photos}
     <p>Žádné fotky k zobrazení.</p>
@@ -7,6 +9,6 @@
 
 <script>
     jQuery(function ($) {
-
+        $( '.swipebox').off('click').swipebox();
     });
 </script>

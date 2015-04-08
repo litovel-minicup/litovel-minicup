@@ -49,6 +49,7 @@ class CssComponentFactory extends Object
         $files = new FileCollection($this->wwwPath);
         $control = $this;
         $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
+        $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
             $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
             $files->addFile('assets/css/reset.css');
