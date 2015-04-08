@@ -179,7 +179,7 @@ class PhotoUploadComponent extends BaseComponent
         try {
             $this->TR->persist($tag);
         } catch (\DibiDriverException $e) {
-            $this->presenter->flashMessage('Tento tag již existuje!', 'warning');
+            $this->presenter->flashMessage("Tag '{$tag->slug}' již existuje!", 'warning');
             return;
         }
         $form->setValues(array(), TRUE);

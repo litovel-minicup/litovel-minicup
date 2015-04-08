@@ -7,7 +7,7 @@ use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Http\Session;
 
-class CategoryToggleFormComponent extends BaseComponent
+class CategoryToggleComponent extends BaseComponent
 {
     /** @var  CategoryRepository */
     private $CR;
@@ -40,13 +40,13 @@ class CategoryToggleFormComponent extends BaseComponent
     {
         $category = $this->CR->getBySlug($slug);
         $this->session['category'] = $category->slug;
-        $this->presenter->redirect('this', array('category' => $category));
+        $this->presenter->redirect(':Front:Homepage:default', array('category' => $category));
     }
 
 }
 
 interface ICategoryToggleFormComponentFactory
 {
-    /** @return CategoryToggleFormComponent */
+    /** @return CategoryToggleComponent */
     public function create();
 }

@@ -3,7 +3,7 @@
 namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\AsideComponent;
-use Minicup\Components\CategoryToggleFormComponent;
+use Minicup\Components\CategoryToggleComponent;
 use Minicup\Components\IAsideComponentFactory;
 use Minicup\Components\ICategoryToggleFormComponentFactory;
 use Minicup\Model\Entity\Category;
@@ -30,7 +30,7 @@ abstract class BaseFrontPresenter extends BasePresenter
     public $ACF;
 
     /**
-     * @return CategoryToggleFormComponent
+     * @return CategoryToggleComponent
      */
     protected function createComponentCategoryToggleFormComponent()
     {

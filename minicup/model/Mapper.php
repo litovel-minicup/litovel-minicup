@@ -65,12 +65,14 @@ class Mapper extends DefaultMapper
         $entityName = $this->trimNamespace($entityClass);
         if ($entityName === "Team") {
             return new ImplicitFilters(array('info', 'actual', 'orderTeams'));
-        } elseif (in_array($entityName, array('Category', 'Day'))) {
+        } elseif (in_array($entityName, array('Category', 'Day', 'Photo'))) {
             return new ImplicitFilters(array('year'));
         } elseif ($entityName === "Match") {
             return new ImplicitFilters(array('orderMatches'));
         } elseif ($entityName === "News") {
             return new ImplicitFilters(array("orderNews"));
+        } elseif ($entityName === "Photo") {
+            return new ImplicitFilters(array("orderPhotos"));
         }
         return array();
     }

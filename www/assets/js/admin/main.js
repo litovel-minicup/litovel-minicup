@@ -1,12 +1,12 @@
 $(function () {
     toastr.options = {
-        "closeButton": false,
+        "closeButton": true,
         "newestOnTop": true,
-        "progressBar": false,
+        "progressBar": true,
         "positionClass": "toast-top-right",
-        "preventDuplicates": false,
+        "preventDuplicates": true,
         "onclick": null,
-        "showDuration": "300",
+        "showDuration": "500",
         "hideDuration": "1000",
         "timeOut": "5000",
         "extendedTimeOut": "1000",
@@ -15,7 +15,6 @@ $(function () {
         "showMethod": "slideDown",
         "hideMethod": "fadeOut"
     };
-
 
     $(document).ajaxError(function () {
         toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
