@@ -14,11 +14,5 @@ use LeanMapper\Entity;
  */
 class Tag extends Entity
 {
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->row->name ? $this->row->name : $this->row->slug;
-    }
+
 }

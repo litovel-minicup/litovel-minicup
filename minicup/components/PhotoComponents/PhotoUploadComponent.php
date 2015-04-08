@@ -9,14 +9,11 @@ use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
-use Nette\Application\UI\Form;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
-use Nette\Utils\ArrayHash;
 use Nette\Utils\Random;
-use Nette\Utils\Strings;
 
 // TODO: add forms to add tags with autocompleting thru ajax
 class PhotoUploadComponent extends BaseComponent
@@ -39,6 +36,9 @@ class PhotoUploadComponent extends BaseComponent
     /** @var IPhotoEditComponentFactory */
     private $PECF;
 
+    /** @var ITagFormComponentFactory */
+    private $TFCF;
+
     /** @var String */
     private $uploadId;
 
@@ -54,10 +54,11 @@ class PhotoUploadComponent extends BaseComponent
      * @param PhotoManager $PM
      * @param IPhotoEditComponentFactory $PECF
      */
-    public function __construct($wwwPath, Session $session, Request $request, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM, IPhotoEditComponentFactory $PECF)
+    public function __construct($wwwPath, Session $session, Request $request, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM, IPhotoEditComponentFactory $PECF, ITagFormComponentFactory $TFCF)
     {
         $this->request = $request;
         $this->session = $session->getSection('photoUpload');
+        $this->TFCF = $TFCF;
         $this->TR = $TR;
         $this->PR = $PR;
         $this->PM = $PM;
@@ -115,6 +116,14 @@ class PhotoUploadComponent extends BaseComponent
     }
 
     /**
+     * @return TagFormComponent
+     */
+    protected function createComponentTagFormComponent()
+    {
+        return $this->TFCF->create(NULL);
+    }
+
+    /**
      * Provide data about tags for select2 by optional term in post parameters
      *
      * @throws AbortException
@@ -153,37 +162,6 @@ class PhotoUploadComponent extends BaseComponent
             $this->PR->persist($photo);
         }
         $this->redrawControl('photos-list');
-    }
-
-    /**
-     * @return Form
-     */
-    public function createComponentAddTagForm()
-    {
-        $f = $this->formFactory->create();
-        $f->addText('name')->setRequired();
-        $f->addSubmit('submit', 'Přidat');
-        $f->onSuccess[] = $this->addTagFormSuccess;
-        return $f;
-    }
-
-    /**
-     * @param Form $form
-     * @param ArrayHash $values
-     */
-    public function addTagFormSuccess(Form $form, ArrayHash $values)
-    {
-        $tag = new Tag();
-        $tag->slug = Strings::webalize($values->name);
-        $tag->name = $values->name;
-        try {
-            $this->TR->persist($tag);
-        } catch (\DibiDriverException $e) {
-            $this->presenter->flashMessage("Tag '{$tag->slug}' již existuje!", 'warning');
-            return;
-        }
-        $form->setValues(array(), TRUE);
-        $this->presenter->flashMessage('Tag přidán!', 'success');
     }
 }
 
