@@ -86,6 +86,9 @@ services:
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\INewsListComponentFactory
+    - implement: Minicup\Components\ITagFormComponentFactory
+      parameters: [Minicup\Model\Entity\Tag tag = NULL]
+      arguments: [%tag%]
     - implement: Minicup\Components\ITeamHistoryComponent
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
