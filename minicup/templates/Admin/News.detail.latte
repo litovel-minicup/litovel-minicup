@@ -1,0 +1,6 @@
+{block content}
+    <h1 n:block="title">{if $news}Detail novinky {$news->id}{else}Nová novinka{/if}</h1>
+    <div class="col-md-push-3 col-md-6">
+        {control newsFormComponent}
+    </div>
+{/block}

@@ -7,6 +7,7 @@ use Minicup\Model\Entity\News;
 use Minicup\Model\Repository\NewsRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Strings;
 
 class NewsFormComponent extends BaseComponent
 {
@@ -16,10 +17,10 @@ class NewsFormComponent extends BaseComponent
     /** @var News */
     private $news;
 
-    public function __construct(News $news = NULL, NewsRepository $newsRepository)
+    public function __construct(News $news = NULL, NewsRepository $NR)
     {
         $this->news = $news;
-        $this->NR = $news;
+        $this->NR = $NR;
     }
 
     public function render()
@@ -39,9 +40,16 @@ class NewsFormComponent extends BaseComponent
     public function createComponentNewsForm()
     {
         $f = $this->formFactory->create();
-        $f->addText("title")->setRequired();
-        $f->addTextArea("content")->setRequired()->getControlPrototype()->attrs["style"] = "width: 100%; max-width: 100%;";
-        $f->addSubmit('submit', $this->tag ? 'Upravit' : 'Přidat');
+        $f->addText("title", 'Titulek')->setRequired();
+        $f->addHidden('id');
+        $content = $f->addTextArea("content", 'Obsah')->setRequired();
+        $content->getControlPrototype()->attrs["style"] = "width: 100%; max-width: 100%;";
+        $rows = 10;
+        if ($this->news) {
+            $rows = count(Strings::match($this->news->content, '#\n#')) + 5;
+        }
+        $content->getControlPrototype()->attrs['rows'] = $rows;
+        $f->addSubmit('submit', $this->news ? 'Upravit' : 'Přidat');
         $f->onSuccess[] = $this->newsFormSubmitted;
         return $f;
     }
@@ -60,8 +68,15 @@ class NewsFormComponent extends BaseComponent
         }
         $news->assign($values, array('title', 'content'));
         $news->updated = new \DibiDateTime();
-        $this->NR->persist($news);
-        $this->presenter->redirect("this");
+
+        try {
+            $this->NR->persist($news);
+        } catch (\DibiDriverException $e) {
+            $this->presenter->flashMessage("Chyba při ukládání novinky {$news->id}!", 'warning');
+            return;
+        }
+        $form->setValues(array(), TRUE);
+        $this->presenter->flashMessage($values->id ? "Novinka upravena!" : 'Novinka přidána!', 'success');
     }
 
 }
