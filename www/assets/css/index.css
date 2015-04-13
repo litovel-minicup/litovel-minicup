@@ -559,6 +559,24 @@ html {
     margin-top: 20px;
     color: #626262; }
 
+.Table {
+  width: 100%; }
+  .Table__content {
+    padding: 0; }
+  .Table thead {
+    color: white;
+    text-align: center; }
+  .Table tbody {
+    text-align: center; }
+    .Table tbody tr:nth-child(odd) {
+      background: #c8c8c8; }
+    .Table tbody tr:hover {
+      background: #4180ff;
+      color: white; }
+    .Table tbody tr td {
+      border-bottom: 2px solid #929292;
+      padding: 10px 0; }
+
 body {
   max-width: 1145px;
   margin-left: auto;

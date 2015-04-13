@@ -1,17 +1,18 @@
 <div class="Box__subhead Article__subhead">
         <table>
             <thead>
-                <th>Domácí tým</th>
-                <th>Scóre</th>
-                <th>Hostující tým</th>
-                <th>Začátek</th>
-                <th>Datum</th>
+                <th>Pořadí</th>
+                <th>Tým</th>
+                <th>Skóre</th>
+                <th>Body</th>
             </thead>
         </table>
 </div>
 
-<div class="Box__content">
-    <table>
+
+<div class="Box__content Table__content">
+    <table class="Table">   
+        <tbody>
         {foreach $teams as $team}
             <tr>
                 <td>{$team->order}</td>
@@ -20,5 +21,6 @@
                 <td>{$team->points}</td>
             </tr>
         {/foreach}
+        </tbody>
     </table>
 </div>

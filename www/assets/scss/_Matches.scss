@@ -1,0 +1,32 @@
+.Table {
+
+	&__content {
+		padding: 0;
+	}
+
+	width: 100%;
+	thead {
+		color: white;
+		text-align: center;
+	}
+	tbody {
+		text-align: center;
+		
+		tr:nth-child(odd) {
+			background: $medium--grey;
+		}
+
+		tr {
+			
+			&:hover {
+				background: $light--blue;
+				color: white;
+			}
+
+			td {
+				border-bottom: 2px solid $dark--grey;
+				padding: 10px 0 ;
+			}
+		}
+	}
+}
