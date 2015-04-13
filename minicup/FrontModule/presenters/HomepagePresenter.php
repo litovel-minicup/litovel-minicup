@@ -1,9 +1,9 @@
 <?php
 
 namespace Minicup\FrontModule\Presenters;
-use Minicup\Components\INewsListComponentFactory;
+use Minicup\Components\IListOfNewsComponentFactory;
 use Minicup\Components\IStaticContentComponentFactory;
-use Minicup\Components\NewsListComponent;
+use Minicup\Components\ListOfNewsComponent;
 use Minicup\Model\Repository\StaticContentRepository;
 
 /**
@@ -11,7 +11,7 @@ use Minicup\Model\Repository\StaticContentRepository;
  */
 final class HomepagePresenter extends BaseFrontPresenter
 {
-    /** @var INewsListComponentFactory @inject */
+    /** @var IListOfNewsComponentFactory @inject */
     public $NLCF;
 
     /** @var IStaticContentComponentFactory @inject */
@@ -21,7 +21,7 @@ final class HomepagePresenter extends BaseFrontPresenter
     public $SCR;
 
     /**
-     * @return NewsListComponent
+     * @return ListOfNewsComponent
      */
     protected function createComponentNewsListComponent()
     {
