@@ -6,18 +6,24 @@ use LeanMapper\Entity;
 use LeanMapper\Exception\InvalidStateException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\TeamInfo;
 
 class TeamRepository extends BaseRepository
 {
     /**
-     * @param $slug string
+     * @param $arg string|TeamInfo|Team
      * @param $category Category
      * @return Team|NULL
      */
-    public function getBySlug($slug, Category $category)
+    public function getBySlug($arg, Category $category)
     {
+        if ($arg instanceof Team) {
+            return $arg;
+        } elseif ($arg instanceof TeamInfo) {
+            return $arg->team;
+        }
         $row = $this->createFluent()
-            ->where('[team_info.slug] = %s', $slug, 'AND [team.category_id] = ', $category->id)
+            ->where('[team_info.slug] = %s', $arg, 'AND [team.category_id] = ', $category->id)
             ->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }

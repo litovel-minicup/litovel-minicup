@@ -43,7 +43,7 @@ class Texy extends \Texy
     public function replaceLinks($text)
     {
         $me = $this;
-        return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z, ]*)?\]#', function ($matches) use ($me) {
+        return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z-, ]*)?\]#', function ($matches) use ($me) {
             $destination = $me->destinationPrefix .$matches[1];
             $args = array();
             if (count($matches) > 2) {

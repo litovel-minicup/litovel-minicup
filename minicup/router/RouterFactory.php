@@ -72,8 +72,12 @@ class RouterFactory extends Object
                 }
                 return $category;
             },
-            Route::FILTER_OUT => function (Category $category) use ($CR) {
-                return $category->slug;
+            Route::FILTER_OUT => function ($category) use ($CR) {
+                if ($category instanceof Category) {
+                    return $category->slug;
+                } else {
+                    return $CR->getBySlug($category)->slug;
+                }
             }
         );
 
@@ -234,7 +238,12 @@ class RouterFactory extends Object
      */
     public function team2TeamSlug($team, Request $request)
     {
-        return $team->slug;
+        if ($team instanceof Team) {
+            return $team->slug;
+        } else {
+            $category = $this->CR->getBySlug($request->parameters['category']);
+            return $this->TR->getBySlug($team, $category)->slug;
+        }
     }
 
 }

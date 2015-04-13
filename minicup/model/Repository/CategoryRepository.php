@@ -35,15 +35,18 @@ class CategoryRepository extends BaseRepository
     }
 
     /**
-     * @param $slug string
+     * @param $arg string|Category
      * @return Category|NULL
      */
-    public function getBySlug($slug)
+    public function getBySlug($arg)
     {
-        if (isset($this->categories[$slug])) {
-            return $this->categories[$slug];
+        if ($arg instanceof Category) {
+            return $arg;
         }
-        $row = $this->createFluent()->where('[slug] = %s', $slug)->fetch();
+        if (isset($this->categories[$arg])) {
+            return $this->categories[$arg];
+        }
+        $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         if ($row) {
             /** @var Category $category */
             $category = $this->createEntity($row);
