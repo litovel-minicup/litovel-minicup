@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-list-alt"></i> Správa soutěže<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-list-alt"></i> Správa turnaje<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {foreach $categories as $_category}
                                 <li class="dropdown-header">kategorie {$_category->name}</li>
@@ -33,7 +33,7 @@
                             <li class="{ifCurrent Photo:tags}active{/ifCurrent}"><a n:href="Photo:tags"><i class="glyphicon glyphicon-tags"></i> Správa tagů</a></li>
                         </ul>
                     </li>
-                    <li><a class="navbar-link" n:href="Users:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
+                    <li><a class="navbar-link" n:href="User:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
                 </ul>
                 <p class="navbar-text navbar-right">
                     <a class="navbar-link" n:href="Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit se</a>

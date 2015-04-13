@@ -14,7 +14,7 @@ use Nette\Utils\ArrayHash;
 /**
  * Users administration presenter.
  */
-class UsersPresenter extends BaseAdminPresenter
+class UserPresenter extends BaseAdminPresenter
 {
 
     /** @var Connection @inject */
