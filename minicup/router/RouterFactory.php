@@ -187,7 +187,13 @@ class RouterFactory extends Object
                     }
                     return $tag;
                 },
-                Route::FILTER_OUT => function (Tag $tag) {
+                Route::FILTER_OUT => function ($tag) use ($TagR) {
+                    if (is_string($tag)) {
+                        $tag = $TagR->getBySlug($tag);
+                        if (!$tag) {
+                            return NULL;
+                        }
+                    }
                     if (!$tag->isMain) {
                         return NULL;
                     }

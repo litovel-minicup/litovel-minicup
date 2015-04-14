@@ -1,6 +1,57 @@
 {block content}
     <h1 n:block="title">{if $news}Detail novinky {$news->id}{else}Nová novinka{/if}</h1>
-    <div class="col-md-push-3 col-md-6">
+    <div class="col-md-6 news-form-component">
         {control newsFormComponent}
     </div>
+    <div class="col-md-6">
+        <p>Do textu novinky lze zadávat i dynamické odkazy, například <code>"informace":[Homepage:informations]</code>,
+            možnosti níže v tabulce.</p>
+        <button class="btn-primary btn">Vložit!</button>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>do textu novinky</th>
+                <th>směr odkazu</th>
+                <th>vložit!</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr n:foreach="$options as $option">
+                <td>{$option->link}</td>
+                {if count($option->args)}
+                    <td><a n:href=":Front:{$option->link} (expand) (array) $option->args">{$option->name}</a></td>
+                {else}
+                    <td><a n:href=":Front:{$option->link}">{$option->name}</a></td>
+                {/if}
+                <td><button class="btn btn-success btn-sm" data-link="{$option->link}">vložit</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        jQuery(function ($) {
+            function insertAtCursor(myField, myValue) {
+                //IE support
+                if (document.selection) {
+                    myField.focus();
+                    sel = document.selection.createRange();
+                    sel.text = myValue;
+                }
+                //MOZILLA and others
+                else if (myField.selectionStart || myField.selectionStart == '0') {
+                    var startPos = myField.selectionStart;
+                    var endPos = myField.selectionEnd;
+                    myField.value = myField.value.substring(0, startPos)
+                    + myValue
+                    + myField.value.substring(endPos, myField.value.length);
+                } else {
+                    myField.value += myValue;
+                }
+            }
+
+            $('button[data-link]').click(function () {
+                insertAtCursor($('.news-form-component textarea').get(0), ' "text odkazu":[' + $(this).data('link') +'] ');
+            });
+        });
+    </script>
 {/block}

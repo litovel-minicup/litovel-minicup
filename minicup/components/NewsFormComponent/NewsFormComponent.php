@@ -72,7 +72,7 @@ class NewsFormComponent extends BaseComponent
         try {
             $this->NR->persist($news);
         } catch (\DibiDriverException $e) {
-            $this->presenter->flashMessage("Chyba při ukládání novinky {$news->id}!", 'warning');
+            $this->presenter->flashMessage("Chyba při ukládání novinky!", 'warning');
             return;
         }
         $form->setValues(array(), TRUE);
