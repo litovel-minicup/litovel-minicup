@@ -89,7 +89,7 @@ services:
     - implement: Minicup\Components\ITagFormComponentFactory
       parameters: [Minicup\Model\Entity\Tag tag = NULL]
       arguments: [%tag%]
-    - implement: Minicup\Components\IListOfNewsComponentFactory
+    - implement: Minicup\Components\INewsFormComponentFactory
       parameters: [Minicup\Model\Entity\News news = NULL]
       arguments: [%news%]
     - implement: Minicup\Components\ITeamHistoryComponent
