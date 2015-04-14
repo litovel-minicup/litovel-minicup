@@ -1,22 +1,19 @@
 <div class="Article">
-    <div class="Article__head Box__head">
-        <div class="Article__head__icon Box__head__icon icon__matches">
-            </div>
-        <div class="Article__head__text Box__head__text" n:block="title">Zápasy</div>
-    </div>
     <div class="Box__subhead Article__subhead">
         <table class="Table">
             <thead>
-                <th>Domácí tým</th>
-                <th>Scóre</th>
-                <th>Hostující tým</th>
-                <th>Začátek</th>
-                <th>Datum</th>
+                <tr>
+                    <th>Domácí tým</th>
+                    <th>Scóre</th>
+                    <th>Hostující tým</th>
+                    <th>Začátek</th>
+                    <th>Datum</th>
+                </tr>
             </thead>
         </table>
     </div>
     <div class="Box__content Table__content">
-        <table class="Table">   
+        <table class="Table">
         <tbody>
             {foreach $matches as $match}
                 <tr>
