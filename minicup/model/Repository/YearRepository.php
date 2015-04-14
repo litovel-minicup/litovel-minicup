@@ -49,8 +49,5 @@ class YearRepository extends BaseRepository
             return $this->createEntity($row);
         }
         return NULL;
-
     }
-
-
 }

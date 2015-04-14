@@ -85,10 +85,13 @@ services:
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
-    - Minicup\Components\INewsListComponentFactory
+    - Minicup\Components\IListOfNewsComponentFactory
     - implement: Minicup\Components\ITagFormComponentFactory
       parameters: [Minicup\Model\Entity\Tag tag = NULL]
       arguments: [%tag%]
+    - implement: Minicup\Components\IListOfNewsComponentFactory
+      parameters: [Minicup\Model\Entity\News news = NULL]
+      arguments: [%news%]
     - implement: Minicup\Components\ITeamHistoryComponent
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]

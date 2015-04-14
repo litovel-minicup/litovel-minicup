@@ -65,8 +65,6 @@ abstract class BaseRepository extends Repository
         return $entities;
 
     }
-
-
 }
 
 class EntityNotFoundException extends Exception
