@@ -63,7 +63,6 @@ abstract class BaseRepository extends Repository
             $entities[$entity->id] = $entity;
         }
         return $entities;
-
     }
 }
 

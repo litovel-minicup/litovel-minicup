@@ -6,6 +6,7 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\MigrationsManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\EntityNotFoundException;
+use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
@@ -17,14 +18,18 @@ class MigrateFormComponent extends BaseComponent
     /** @var  CategoryRepository */
     private $CR;
 
+    /** @var YearRepository */
+    private $YR;
+
     /**
      * @param MigrationsManager $migrator
      * @param CategoryRepository $CR
      */
-    public function __construct(MigrationsManager $migrator, CategoryRepository $CR)
+    public function __construct(MigrationsManager $migrator, CategoryRepository $CR, YearRepository $YR)
     {
         $this->migrator = $migrator;
         $this->CR = $CR;
+        $this->YR = $YR;
     }
 
     /**
@@ -33,15 +38,18 @@ class MigrateFormComponent extends BaseComponent
     public function createComponentMigrateForm()
     {
         $f = $this->formFactory->create();
-        $categories = $this->CR->findAll();
+        $years = $this->YR->findAll();
         $select = array();
-        foreach ($categories as $category) {
-            $select[$category->id] = $category->name;
+        foreach ($years as $year) {
+            foreach ($year->categories as $category) {
+                $select[$category->id] = $year->year . ' - ' . $category->name;
+            }
         }
         $f->addRadioList('category_id', 'Kategorie', $select);
         $f->addCheckbox('confirm', 'Chci přepsat databázi čistými daty z roku 2014!')
             ->setRequired('Jsi si jistý?');
         $f->addCheckbox('truncate', 'Promazat teams & matches');
+        $f->addCheckbox('with_score', 'Vložit skore a vygenerovat historii');
         $f->addSubmit('migrate', 'Zmigrovat!');
         $f->onSuccess[] = $this->migrateFormSucceed;
         return $f;
@@ -61,7 +69,7 @@ class MigrateFormComponent extends BaseComponent
         /** @var Category $category */
         $category = $this->CR->get($values->category_id);
         if ($values->confirm) {
-            $this->migrator->migrateMatches($category, $values->truncate);
+            $this->migrator->migrateMatches($category, $values->truncate, $values->with_score);
         }
         $this->presenter->flashMessage("Kategorie {$category->name} byla úspěšně zmigrována!", 'success');
         $this->presenter->redirect('this');

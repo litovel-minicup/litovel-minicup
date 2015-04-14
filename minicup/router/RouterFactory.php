@@ -99,9 +99,10 @@ class RouterFactory extends Object
         $front = new RouteList('Front');
 
         /**  HOMEPAGE ROUTES */
-        $front[] = new Route('', array(
+        $front[] = new Route('[<year>/]', array(
             'presenter' => 'Homepage',
-            'action' => 'default'
+            'action' => 'default',
+            'year' => $yearFilter
         ));
 
         $front[] = new Route('informace', array(
@@ -212,7 +213,6 @@ class RouterFactory extends Object
         $front[] = $route;
 
         $router = new RouteList();
-        $router[] = $front;
         $router[] = new Route('admin/<presenter>/<action>[/<category>]', array(
             'module' => 'Admin',
             'presenter' => 'Homepage',
@@ -224,6 +224,7 @@ class RouterFactory extends Object
             'presenter' => 'Media',
         ));
 
+        $router[] = $front;
         return $router;
     }
 
