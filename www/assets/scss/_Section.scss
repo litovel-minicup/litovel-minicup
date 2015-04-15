@@ -1,11 +1,13 @@
-.Section {
+.Main__wrapper {
 	@include span-columns(7);
-	background: $light--grey;
-	margin-top: $universal-dis;
+	.Section {
+		background: $light--grey;
+		margin-top: $universal-dis;
+	}
 }
 
-@include media($tablet) {
-	.Section, .Aside {
-		@include span-columns(8);
+@media screen and (max-width: 768px) {
+	.Main__wrapper {
+		@include span-columns(12);
 	}
 }

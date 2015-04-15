@@ -6,6 +6,11 @@
 	
 	border-bottom: 2px solid $dark--yellow;
 
+	a:hover {
+		background: black;
+		color: white;
+	}
+
 	&__head {
 		letter-spacing: -1.5px;
 
@@ -64,4 +69,10 @@
 	&__list--team {@include span-columns(2.25 of 4);}
 	&__list--score {@include span-columns(0.75 of 4);}
 	&__list--points {@include span-columns(0.5 of 4);}
+}
+
+@media screen and (max-width: 768px) {
+	.Aside {
+		@include span-columns(12);
+	}
 }

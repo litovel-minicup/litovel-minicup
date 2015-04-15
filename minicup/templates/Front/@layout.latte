@@ -2,6 +2,21 @@
 {block body}
     <div class="Header">
             <!-- svg logo with fallback -->
+            <div class="Header__nav--mobile">
+                <label>
+                    <select> 
+                        <option value="/" selected="selected">novinky</option> 
+                        <option value="/">infromace</option> 
+                        <option value="/">týmy</option> 
+                        <option value="/">zápasy</option> 
+                        <option value="/">tabulky</option> 
+                        <option value="/">foto</option> 
+                        <option value="/">sponzoři</option> 
+                    </select> 
+                </label>    
+            </div>
+
+
             <a n:href=":Front:Homepage:default">
                 <div class="Header__logo">
                     <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image">
@@ -24,12 +39,14 @@
             </div>
         </div>
 
-        {block outerContent}
-            <div class="Section">
-                {block content}
-                {/block}
-            </div>
-        {/block}
+        <div class="Main__wrapper">
+            {block outerContent}
+                <div class="Section">
+                    {block content}
+                    {/block}
+                </div>
+            {/block}
+        </div>
 
         {control asideComponent}
 
