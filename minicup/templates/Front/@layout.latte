@@ -24,10 +24,12 @@
             </div>
         </div>
 
-        <div class="Section">
-            {block content}
-            {/block}
-        </div>
+        {block outerContent}
+            <div class="Section">
+                {block content}
+                {/block}
+            </div>
+        {/block}
 
         {control asideComponent}
 

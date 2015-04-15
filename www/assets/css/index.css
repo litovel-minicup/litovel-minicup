@@ -397,6 +397,10 @@ html {
     margin-right: 0; }
   .Sponsors__images:nth-child(4n+1) {
     clear: left; }
+.Sponsors__sprite {
+  width: 20px;
+  height: 20px;
+  background: url("../img/icons.png") -50px 0; }
 
 .Aside {
   margin-top: 8px;
