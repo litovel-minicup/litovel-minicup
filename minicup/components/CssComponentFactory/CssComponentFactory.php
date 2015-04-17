@@ -56,8 +56,8 @@ class CssComponentFactory extends Object
         } elseif ($module === 'admin') {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
             $files->addFile('assets/css/admin/index.css');
-            $files->addFile('assets/css/bootstrap.css');
-            $files->addFile('assets/css/toastr.css');
+            $files->addFile('assets/css/admin/bootstrap.css');
+            $files->addFile('assets/css/admin/toastr.css');
         }
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
         // TODO: add urls fixing
