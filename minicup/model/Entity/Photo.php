@@ -10,6 +10,7 @@ use LeanMapper\Entity;
  * @property string      $filename          filename
  * @property Tag[]       $tags m:hasMany    tags for photo
  * @property \DateTime   $added             added datetime
+ * @property \DateTime   $taken             phoho taken datetime
  * @property int         $active
  */
 class Photo extends Entity

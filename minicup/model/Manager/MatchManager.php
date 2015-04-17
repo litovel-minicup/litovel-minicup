@@ -42,16 +42,16 @@ class MatchManager extends Object
 
     /**
      * @param Match $match
+     * @param Category $category
      * @param $scoreHome
      * @param $scoreAway
+     * @throws \DibiException
      * @throws \Exception
-     * @return Match
      */
-    public function confirmMatch(Match $match, $scoreHome, $scoreAway)
+    public function confirmMatch(Match $match, Category $category, $scoreHome, $scoreAway)
     {
         $this->connection->begin();
         try {
-            $category = $match->category;
             $match->scoreHome = $scoreHome;
             $match->scoreAway = $scoreAway;
             $match->confirmed = 1;

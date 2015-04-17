@@ -2,6 +2,7 @@
 
 namespace Minicup\Model\Manager;
 
+use LeanMapper\Connection;
 use LeanMapper\Exception\InvalidStateException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Day;
@@ -52,13 +53,19 @@ class MigrationsManager extends Object
     private $YR;
 
     /** @var Context */
-    private $con;
+    private $context;
 
-    /** @var TeamReplicator  */
+    /** @var TeamReplicator */
     private $replicator;
 
-    /** @var  TeamDataRefresher */
+    /** @var TeamDataRefresher */
     private $TDR;
+
+    /** @var MatchManager */
+    private $MM;
+
+    /** @var Connection */
+    private $connection;
 
     /**
      * @param CategoryRepository $CR
@@ -71,6 +78,7 @@ class MigrationsManager extends Object
      * @param Context $con
      * @param TeamReplicator $replicator
      * @param TeamDataRefresher $TDR
+     * @param MatchManager $MM
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
@@ -81,7 +89,9 @@ class MigrationsManager extends Object
                                 YearRepository $YR,
                                 Context $con,
                                 TeamReplicator $replicator,
-                                TeamDataRefresher $TDR)
+                                TeamDataRefresher $TDR,
+                                MatchManager $MM,
+                                Connection $connection)
     {
         $this->CR = $CR;
         $this->TR = $TR;
@@ -90,9 +100,11 @@ class MigrationsManager extends Object
         $this->MTR = $MTR;
         $this->DR = $DR;
         $this->YR = $YR;
-        $this->con = $con;
+        $this->context = $con;
         $this->replicator = $replicator;
         $this->TDR = $TDR;
+        $this->MM = $MM;
+        $this->connection = $connection;
     }
 
 
@@ -100,7 +112,9 @@ class MigrationsManager extends Object
      * @param Category $category
      * @param bool $truncate
      * @param bool $withScore
-     * @param int $limit
+     * @param null $limit
+     * @throws \DibiException
+     * @throws \Exception
      */
     public function migrateMatches(Category $category, $truncate = FALSE, $withScore = FALSE, $limit = NULL)
     {
@@ -108,7 +122,7 @@ class MigrationsManager extends Object
             $this->truncate($category);
         }
         $year = $this->YR->getSelectedYear();
-        $data = $this->con->table($this->matchTablePrefix . $category->slug)->order('cas_odehrani ASC')->limit($limit);
+        $data = $this->context->table($this->matchTablePrefix . $category->slug)->order('cas_odehrani ASC')->limit($limit);
         if ($limit) {
             $data->limit($limit);
         }
@@ -134,11 +148,6 @@ class MigrationsManager extends Object
             $match->category = $category;
             $match->homeTeam = $homeTeam->i;
             $match->awayTeam = $awayTeam->i;
-            if ($withScore) {
-                $match->scoreHome = $row->SCR_domaci;
-                $match->scoreAway = $row->SCR_hoste;
-                $match->confirmed = 1;
-            }
             $datetime = new \DibiDateTime($play_time->getTimestamp());
 
             $matchTerm = $this->MTR->getByStart($datetime);
@@ -165,8 +174,21 @@ class MigrationsManager extends Object
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
-            $this->replicator->replicate($category, $match);
-            $this->TDR->refreshData($category);
+            $category = $this->CR->get($category->id);
+            if ($withScore) {
+                $this->MM->confirmMatch($match, $category, $row->SCR_domaci, $row->SCR_hoste);
+            } else {
+                $this->connection->begin();
+                try {
+                    $category = $match->category;
+                    $this->replicator->replicate($category, $match);
+                    $this->TDR->refreshData($category);
+                } catch (\Exception $e) {
+                    $this->connection->rollback();
+                    throw $e;
+                }
+                $this->connection->commit();
+            }
         }
 
     }

@@ -88,23 +88,16 @@ class RouterFactory extends Object
                     $session['year'] = $slug;
                     $YR->setSelectedYear($year);
                 }
-                return $year;
+                return NULL;
             },
             Route::FILTER_OUT => function (Year $year) {
                 return $year->slug;
-            },
-            Route::VALUE => $YR->getSelectedYear()
+            }
         );
 
         $front = new RouteList('Front');
 
         /**  HOMEPAGE ROUTES */
-        $front[] = new Route('[<year>/]', array(
-            'presenter' => 'Homepage',
-            'action' => 'default',
-            'year' => $yearFilter
-        ));
-
         $front[] = new Route('informace', array(
             'presenter' => 'Homepage',
             'action' => 'informations'
@@ -148,13 +141,12 @@ class RouterFactory extends Object
             'category' => $categoryFilter
         ));
 
-        $front[] = new Route('[<year>/]foto', array(
+        $front[] = new Route('foto', array(
             'presenter' => 'Gallery',
-            'action' => 'default',
-            'year' => $yearFilter
+            'action' => 'default'
         ));
 
-        $front[] = new Route('[<year>/]foto/tagy[/<tags .+>]', array(
+        $front[] = new Route('foto/tagy[/<tags .+>]', array(
             'presenter' => 'Gallery',
             'action' => 'tags',
             'year' => $yearFilter,
@@ -175,7 +167,7 @@ class RouterFactory extends Object
             )
         ));
 
-        $front[] = new Route('[<year>/]foto/detail/<tag>', array(
+        $front[] = new Route('foto/detail/<tag>', array(
             'presenter' => 'Gallery',
             'action' => 'detail',
             'year' => $yearFilter,
@@ -201,6 +193,12 @@ class RouterFactory extends Object
                     return $tag->slug;
                 }
             )
+        ));
+
+        $front[] = new Route('[<year>/]', array(
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'year' => $yearFilter
         ));
 
         $route = new FilterRoute('[<year>/]<category>/<team>', array(

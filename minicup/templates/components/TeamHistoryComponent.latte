@@ -1,0 +1,21 @@
+<script>
+    jQuery(function ($) {
+        $.ajax({link data!}).success(function (response) {
+            new Chartist.Line('.ct-chart', response, {
+                        high: {$team->category->teams|length},
+                        low: 1,
+                        showArea: false,
+                        showLine: true,
+                        lineSmooth: false,
+                        axisY: {
+                            scaleMinSpace: 15,
+                            labelInterpolationFnc: function (value) {
+                                return parseInt(value);
+                            }
+                        }
+                    }
+            );
+        });
+    });
+</script>
+<div class="ct-chart ct-golden-section"></div>

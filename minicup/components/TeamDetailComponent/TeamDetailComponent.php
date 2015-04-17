@@ -26,14 +26,25 @@ class TeamDetailComponent extends BaseComponent
     /** @var IPhotoListComponentFactory */
     private $PLCF;
 
+    /** @var ITeamHistoryComponent */
+    private $THCF;
+
     /**
      * @param Team $team
      * @param TeamRepository $TR
+     * @param TagManager $TM
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param IStaticContentComponentFactory $SCCF
      * @param IPhotoListComponentFactory $PLCF
+     * @param ITeamHistoryComponent $THCF
      */
-    public function __construct(Team $team, TeamRepository $TR, IListOfMatchesComponentFactory $LOMCF, IStaticContentComponentFactory $SCCF, IPhotoListComponentFactory $PLCF, TagManager $TM)
+    public function __construct(Team $team,
+                                TeamRepository $TR,
+                                TagManager $TM,
+                                IListOfMatchesComponentFactory $LOMCF,
+                                IStaticContentComponentFactory $SCCF,
+                                IPhotoListComponentFactory $PLCF,
+                                ITeamHistoryComponent $THCF)
     {
         parent::__construct();
         $this->team = $team;
@@ -42,6 +53,7 @@ class TeamDetailComponent extends BaseComponent
         $this->SCCF = $SCCF;
         $this->PLCF = $PLCF;
         $this->TM = $TM;
+        $this->THCF = $THCF;
     }
 
     public function render()
@@ -73,6 +85,14 @@ class TeamDetailComponent extends BaseComponent
     {
         $tag = $this->TM->getTag($this->team);
         return $this->PLCF->create($tag->photos);
+    }
+
+    /**
+     * @return TeamHistoryComponent
+     */
+    public function createComponentTeamHistoryComponent()
+    {
+        return $this->THCF->create($this->team);
     }
 }
 

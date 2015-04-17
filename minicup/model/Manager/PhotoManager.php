@@ -74,7 +74,7 @@ class PhotoManager extends Object
     {
         // TODO FIX IMAGE EXTENSIONS!
         @mkdir("$this->wwwPath/media/" . $format . "/");
-        return "$this->wwwPath/media/" . $format . "/$filename.png";
+        return "$this->wwwPath/media/" . $format . "/$filename.jpg";
     }
 
     /**
@@ -95,7 +95,17 @@ class PhotoManager extends Object
             $photo = new Photo();
             $filename = substr(md5($prefix . $file->sanitizedName . time()), 0, 10) . '.' . static::$extensions[$file->contentType];
             $photo->filename = (string)$filename;
-            $file->move($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+            $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
+            $file->move($path);
+
+            $exif = exif_read_data($path);
+            $taken = new \DibiDateTime();
+            if (isset($exif["DateTimeOriginal"])) {
+                try {
+                    $taken = new \DibiDateTime($exif["DateTimeOriginal"]);
+                } catch (\Exception $e) {}
+            }
+            $photo->taken = $taken;
             $this->PR->persist($photo);
             $photos[] = $photo;
         }
