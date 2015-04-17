@@ -51,7 +51,6 @@ class CssComponentFactory extends Object
         $files->addFile('assets/css/select2.css');
         $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
-            $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
             $files->addFile('assets/css/reset.css');
             $files->addFile('assets/css/index.css');
         } elseif ($module === 'admin') {
