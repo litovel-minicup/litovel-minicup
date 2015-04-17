@@ -6,7 +6,6 @@ namespace Minicup\Components;
 use Closure\RemoteCompiler;
 use Nette\Http\IRequest;
 use Nette\Object;
-use Nette\Utils\Finder;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
@@ -47,21 +46,21 @@ class JsComponentFactory extends Object
     public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-        $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js');
-        $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js');
-        $files->addFile($this->wwwPath.'/assets/js/nette.ajax.js');
-        $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
-        $files->addFile($this->wwwPath.'/assets/js/main.js');
+        $files->addFile('assets/js/jquery.js');
+        $files->addFile('assets/js/select2.js');
+        $files->addFile('assets/js/nette.ajax.js');
+        $files->addFile('assets/js/nette.forms.js');
+        $files->addFile('assets/js/dropper.js');
+        $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
-            $files->addRemoteFile('//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
-
+            $files->addFile('assets/js/chartist.js');
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addFile('assets/js/admin/main.js');
-            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js');
-            $files->addRemoteFile('//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js');
+            $files->addFile('assets/js/bootstrap.min.js');
+            $files->addFile('assets/js/toastr.min.js');
         }
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
