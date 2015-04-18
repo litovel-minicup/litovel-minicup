@@ -43,6 +43,7 @@ services:
     - Minicup\Model\Manager\PhotoManager(%wwwDir%)
     - Minicup\Model\Manager\StaticContentManager
     - Minicup\Model\Manager\TagManager
+    - Minicup\Model\Manager\MatchImporter
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
