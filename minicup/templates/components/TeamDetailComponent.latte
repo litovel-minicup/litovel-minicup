@@ -63,7 +63,7 @@
         </div>
     {/if}
 
-    {if ($team->i->tag && count($team->i->tag->photos) > 0)}
+    {if ($team->i->tag && count($team->i->tag->photos) > 0) || $user->isAllowed('tag', 'create')}
         <div class="Section">
             <div class="Article">
                 <div class="Article__head Box__head">

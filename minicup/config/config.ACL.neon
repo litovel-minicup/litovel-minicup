@@ -11,8 +11,10 @@ services:
             - addResource('static-content')
             - addResource('team')
             - addResource('migration')
+            - addResource('tag')
 
             - allow('moderator', 'user', 'view')
             - allow('moderator', 'online-report', 'write')
             - allow('moderator', 'team', 'edit')
+            - allow('moderator', 'tag', 'create')
             - allow('admin')
