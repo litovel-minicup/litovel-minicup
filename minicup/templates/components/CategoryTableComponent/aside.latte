@@ -1,6 +1,7 @@
 <ul n:foreach="$teams as $team">
 	<li class="Aside__list--rank">{if $team->order}{$team->order}{else}&nbsp;{/if}</li>
 	<li class="Aside__list--team"><a href={plink Team:detail $team->category, $team}>{$team->name}</a></li>
+    {* played matches <li class="Aside__list--score">{$team->playedMatches|length}</li> *}
 	<li class="Aside__list--score">{$team->scored}:{$team->received}</li>
 	<li class="Aside__list--points">{$team->points}</li>
 </ul>

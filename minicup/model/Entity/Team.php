@@ -16,6 +16,7 @@ use LeanMapper\Entity;
  * @property Match|NULL     $afterMatch m:hasOne(after_match_id)    after this match is this team inserted
  * @property \DateTime|NULL $inserted           datetime of inserted
  * @property TeamInfo       $i m:hasOne         main team info
+ * @property-read Match[]   $playedMatches      played matches
  */
 class Team extends Entity
 {
@@ -31,5 +32,15 @@ class Team extends Entity
             return $this->i->$name;
         }
         return parent::__get($name);
+    }
+
+    /**
+     * @return Match[]
+     */
+    public function getPlayedMatches()
+    {
+        return array_filter($this->matches, function (Match $match) {
+            return (bool)$match->confirmed;
+        });
     }
 }
