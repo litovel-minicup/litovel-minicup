@@ -69,6 +69,7 @@ abstract class BasePresenter extends Presenter
     {
         parent::beforeRender();
         $this->template->categories = $this->CR->findAll();
+        $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
     }
 
     /**

@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="cs">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {control css}
-        {control js}
-        <title n:snippet="title">{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015</title>
-    </head>
-    <body>
-    <!-- TODO: templates! -->
-    {block body}{/block}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {control css}
+    {control js}
+    <title n:snippet="title">{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015</title>
+
+    <meta property="og:site_name" content="MINICUP 2015">
+    <meta property="og:description" content="Informační portál pro litovelský turnaj v miniházené MINICUP 2015 konaný ve dnech 22., 23. a 24. května 2015. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek a společný zápas trenérů.">
+    <meta property="og:url" content="{$absoluteUrl|noescape}">
+    <meta property="og:title" content="{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015">
+    {block og-image}
+        <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
+    {/block}
+</head>
+<body>
+{block body}{/block}
+</body>
 </html>

@@ -2,15 +2,15 @@
     <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__photo"></div>
-            <div class="Article__head__text Box__head__text">Fotogalerie</div>
+            <div class="Article__head__text Box__head__text" n:block="title">Fotogalerie</div>
         </div>
         <div class="Article__subhead Box__subhead">
-                    <a n:href="tags">Interaktivní výběr</a>
+            <a n:href="tags">Interaktivní výběr</a>
         </div>
-         <div class="Box__content Sponzors__content">
+        <div class="Box__content Sponzors__content">
             <ul>
                 {foreach $tags as $tag}
-                <li class="Sponsors__images"><a href={plink Gallery:detail $tag}>{$tag->slug}</a></li>
+                    <li class="Sponsors__images"><a href={plink Gallery:detail $tag}>{$tag->slug}</a></li>
                 {/foreach}
             </ul>
         </div>
