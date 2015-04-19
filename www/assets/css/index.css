@@ -1207,6 +1207,9 @@ html {
       border-bottom: 2px solid #929292;
       padding: 10px 0; }
 
+@media screen and (max-width: 480px) {
+  .Table thead th:nth-child(n+4), .Table tbody tr td:nth-child(n+4) {
+    display: none; } }
 body {
   max-width: 1145px;
   margin-left: auto;
