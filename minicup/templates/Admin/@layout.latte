@@ -58,3 +58,9 @@
         {block content}{/block}
     </div>
 {/block}
+
+{block seo}
+    {include #parent}
+    <meta name="robots" content="noindex,follow">
+    <meta name="googlebot" content="nosnippet,noarchive">
+{/block}
