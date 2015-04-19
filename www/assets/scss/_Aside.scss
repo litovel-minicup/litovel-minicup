@@ -1,8 +1,13 @@
-.Aside {
-	margin-top: $universal-dis;
-	background: $light--yellow;
+.Side__wrapper {
 	@include span-columns(5);
 	@include omega();
+}
+
+
+.Aside {
+	@include span-columns(5 of 5);
+	margin-top: $universal-dis;
+	background: $light--yellow;
 	
 	border-bottom: 2px solid $dark--yellow;
 
@@ -67,8 +72,8 @@
 
 	&__list--rank {@include span-columns(0.5 of 4);}
 	&__list--team {@include span-columns(2.25 of 4);}
-	&__list--score {@include span-columns(0.75 of 4);}
-	&__list--points {@include span-columns(0.5 of 4);}
+	&__list--score {@include span-columns(0.75 of 4);text-align: center;}
+	&__list--points {@include span-columns(0.5 of 4);text-align: center;}
 }
 
 @media screen and (max-width: 768px) {

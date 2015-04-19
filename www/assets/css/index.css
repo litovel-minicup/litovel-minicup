@@ -103,7 +103,7 @@ a {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 32px;
+  font-size: 24px;
   text-align: center;
   line-height: 1;
   /* Better Font Rendering =========== */
@@ -143,7 +143,7 @@ a {
   color: #907800; }
 
 /**
- * Import Bourbon, Neat an Charti
+ * Import Bourbon, Neat an Chartist
  */
 html {
   -webkit-box-sizing: border-box;
@@ -627,13 +627,13 @@ html {
   float: left;
   display: block;
   margin-right: 0.70671%;
-  width: 32.86219%;
+  width: 24.46996%;
   margin-bottom: 5px; }
   .Box__rows:last-child {
     margin-right: 0; }
-  .Box__rows:nth-child(3n) {
+  .Box__rows:nth-child(4n) {
     margin-right: 0; }
-  .Box__rows:nth-child(3n+1) {
+  .Box__rows:nth-child(4n+1) {
     clear: left; }
 .Box__content {
   padding: 15px 20px 5px 20px;
@@ -896,33 +896,99 @@ html {
       background: #4180ff;
       color: white; }
 
-.Sponsors__images {
-  float: left;
-  display: block;
-  margin-right: 0.70671%;
-  width: 24.46996%;
-  height: 100px;
-  background: red;
-  margin-bottom: 5px; }
-  .Sponsors__images:last-child {
-    margin-right: 0; }
-  .Sponsors__images:nth-child(4n) {
-    margin-right: 0; }
-  .Sponsors__images:nth-child(4n+1) {
-    clear: left; }
 .Sponsors__sprite {
-  width: 20px;
-  height: 20px;
-  background: url("../img/icons.png") -50px 0; }
+  height: 150px;
+  background: white;
+  background: url("../img/sprites.png") no-repeat; }
+  .Sponsors__sprite:nth-of-type(1) {
+    background-position: -1199px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(2) {
+    background-position: -1048px -150px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(3) {
+    background-position: -1198px -149px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(4) {
+    background-position: -1048px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(5) {
+    background-position: -1048px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(6) {
+    background-position: -748px -150px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(7) {
+    background-position: -598px -150px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(8) {
+    background-position: -448px -151px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(9) {
+    background-position: -297px -151px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(10) {
+    background-position: -150px -151px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(11) {
+    background-position: 0 -150px;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(12) {
+    background-position: -899px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(13) {
+    background-position: -750px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(14) {
+    background-position: -600px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(15) {
+    background-position: -450px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(16) {
+    background-position: -301px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(17) {
+    background-position: -150px 0;
+    width: 150px;
+    height: 150px; }
+  .Sponsors__sprite:nth-of-type(18) {
+    background-position: 0 0;
+    width: 150px;
+    height: 150px; }
 
-.Aside {
-  margin-top: 8px;
-  background: #ffe033;
+.Side__wrapper {
   float: left;
   display: block;
   margin-right: 0.70671%;
   width: 41.25442%;
-  margin-right: 0;
+  margin-right: 0; }
+  .Side__wrapper:last-child {
+    margin-right: 0; }
+
+.Aside {
+  float: left;
+  display: block;
+  margin-right: 1.71306%;
+  width: 100%;
+  margin-top: 8px;
+  background: #ffe033;
   border-bottom: 2px solid #f6cd00; }
   .Aside:last-child {
     margin-right: 0; }
@@ -976,14 +1042,16 @@ html {
     float: left;
     display: block;
     margin-right: 2.15054%;
-    width: 17.00269%; }
+    width: 17.00269%;
+    text-align: center; }
     .Aside__list--score:last-child {
       margin-right: 0; }
   .Aside__list--points {
     float: left;
     display: block;
     margin-right: 2.15054%;
-    width: 10.61828%; }
+    width: 10.61828%;
+    text-align: center; }
     .Aside__list--points:last-child {
       margin-right: 0; }
 
@@ -1003,8 +1071,14 @@ html {
   .Main__wrapper:last-child {
     margin-right: 0; }
   .Main__wrapper .Section {
+    float: left;
+    display: block;
+    margin-right: 1.21766%;
+    width: 100%;
     background: #e1e1e1;
     margin-top: 8px; }
+    .Main__wrapper .Section:last-child {
+      margin-right: 0; }
 
 @media screen and (max-width: 768px) {
   .Main__wrapper {
@@ -1017,27 +1091,39 @@ html {
 .Footer {
   background: #4A4A4A;
   margin-top: 8px;
-  color: white;
+  color: #999999;
   font-family: "Montserrat";
-  height: 100px;
   float: left;
   display: block;
   margin-right: 0.70671%;
   width: 100%;
+  width: 100%;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
   border-bottom: 2px solid black; }
   .Footer:last-child {
     margin-right: 0; }
   .Footer__block {
-    float: left;
-    display: block;
-    margin-right: 0.70671%;
-    width: 32.86219%;
-    margin-left: 33.5689%;
-    margin-top: 45px;
-    text-align: center; }
-    .Footer__block:last-child {
-      margin-right: 0; }
+    display: table-cell;
+    width: 33.33333%; }
+  .Footer__subhead {
+    padding: 15px 20px;
+    height: 50px;
+    background: #333333; }
+  .Footer__content {
+    line-height: 1.5; }
+    .Footer__content a {
+      border-bottom: 3px solid #4180ff;
+      color: #4180ff; }
+      .Footer__content a:hover {
+        background: #4180ff;
+        color: white; }
 
+@media screen and (max-width: 768px) {
+  .Footer__block {
+    display: table-cell;
+    width: 100%; } }
 .Cover {
   position: fixed;
   bottom: 0;
@@ -1087,6 +1173,21 @@ html {
     letter-spacing: -1.5px;
     margin-top: 20px;
     color: #626262; }
+.Team__content ul li {
+  display: table-cell;
+  width: 25%; }
+  .Team__content ul li:nth-child(4n) {
+    margin-right: 0; }
+  .Team__content ul li:nth-child(4n+1) {
+    clear: left; }
+  .Team__content ul li .heading {
+    font-family: "PTBoldItalic";
+    font-size: 16px; }
+  .Team__content ul li .text {
+    font-family: "Montserrat";
+    font-size: 70px; }
+.Team__Text {
+  background: red; }
 
 .Table {
   width: 100%; }

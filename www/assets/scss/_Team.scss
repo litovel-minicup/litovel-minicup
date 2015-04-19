@@ -13,4 +13,32 @@
 		}	
 	}
 
+	&__content {
+		ul {
+
+			li {		
+				@include span-columns(3);
+	  			@include omega(4n);
+
+				.heading {
+					font-family: "PTBoldItalic";
+					font-size: 16px;
+				}
+
+				.text {
+					font-family: "Montserrat";
+					font-size: 70px;
+				}
+
+	  		}	
+		}
+	}
+
+	&__heading {
+
+	}
+
+	&__Text {
+		background: red;
+	}
 }

@@ -1,6 +1,7 @@
 .Main__wrapper {
 	@include span-columns(7);
 	.Section {
+		@include span-columns(7 of 7);
 		background: $light--grey;
 		margin-top: $universal-dis;
 	}

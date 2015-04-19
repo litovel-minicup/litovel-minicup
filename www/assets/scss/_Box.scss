@@ -29,8 +29,8 @@
 	}
 
 	&__rows {
-		@include span-columns(4 of 12);
-  		@include omega(3n);
+		@include span-columns(3 of 12);
+  		@include omega(4n);
   		margin-bottom: 5px;
 	}
 
@@ -53,6 +53,5 @@
 		@include span-columns(1 of 6);
 		@include omega();
 		text-align: center;
-
-}
+	}
 }
