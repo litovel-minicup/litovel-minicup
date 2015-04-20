@@ -15,9 +15,11 @@ class LoginFormComponent extends BaseComponent
     {
         $form = $this->formFactory->create();
         $form->addText('username', 'Uživatelské jméno')
-            ->setRequired('Prosím, zadejte vaše uživatelské jméno.');
+            ->setRequired('Prosím, zadejte vaše uživatelské jméno.')
+            ->getControlPrototype()->addAttributes(array("placeholder" => "username"));
         $form->addPassword('password', 'Heslo')
-            ->setRequired('Prosím vložte vaše heslo.');
+            ->setRequired('Prosím vložte vaše heslo.')
+            ->getControlPrototype()->addAttributes(array("placeholder" => "password"));
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('submit', 'Přihlásit');
         $form->onSuccess[] = $this->loginFormValidated;
