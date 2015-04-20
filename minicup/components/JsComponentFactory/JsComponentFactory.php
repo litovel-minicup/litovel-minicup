@@ -66,12 +66,14 @@ class JsComponentFactory extends Object
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
 
-        if ($this->productionMode) {
+        if (FALSE) {
             $compiler->addFilter(function ($code) {
                 $remoteCompiler = new RemoteCompiler();
                 $remoteCompiler->addScript($code);
-                $remoteCompiler->setMode(RemoteCompiler::MODE_SIMPLE_OPTIMIZATIONS);
-                return $remoteCompiler->compile()->getCompiledCode();
+                $remoteCompiler->setMode(RemoteCompiler::MODE_WHITESPACE_ONLY);
+                return $code;
+                // TODO on production not work
+                $code = $remoteCompiler->compile()->getCompiledCode();
             });
         }
         $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');

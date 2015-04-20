@@ -29,9 +29,10 @@ class TeamHistoryComponent extends BaseComponent
     public function handleData()
     {
         $data = array("labels" => array(), "series" => array(array()));
-        foreach (array_slice($this->TR->findHistoricalTeams($this->team), 1) as $team) {
-            $data["labels"][] = $team->afterMatch->id;
-            $data["series"][0][] = $team->order;
+        /** @var Team $team */
+        foreach ($this->TR->findHistoricalTeams($this->team) as $team) {
+            $data["labels"][] = ($team->afterMatch->homeTeam->id === $this->team->i->id) ? $team->afterMatch->awayTeam->name : $team->afterMatch->homeTeam->name;
+            $data["series"][0][] = count($team->category->teams) - $team->order;
         }
         $this->presenter->sendJson($data);
     }
