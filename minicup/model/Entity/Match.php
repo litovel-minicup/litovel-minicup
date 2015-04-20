@@ -32,4 +32,6 @@ class Match extends Entity
     {
         return $this->__get('scoreAway') ? $this->__get('scoreAway') : ' - ';
     }
+
+    /** TODO: add getter for win/draw/lose team */
 }

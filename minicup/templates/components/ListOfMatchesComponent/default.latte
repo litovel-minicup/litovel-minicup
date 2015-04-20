@@ -20,6 +20,7 @@
     <div class="Box__content Table__content">
         <table class="Table">
         <tbody>
+            {* TODO: add row color depends on win/draw/lose *}
             {foreach $matches as $match}
                 <tr>
                     <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>

@@ -43,4 +43,6 @@ class Team extends Entity
             return (bool)$match->confirmed;
         });
     }
+
+    /** TODO: add getter for wins/draws/loses */
 }
