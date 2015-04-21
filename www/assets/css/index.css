@@ -1027,35 +1027,50 @@ html {
   .Aside__list--rank {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 10.61828%; }
+    margin-right: 1.71306%;
+    width: 8.45824%; }
     .Aside__list--rank:last-child {
       margin-right: 0; }
   .Aside__list--team {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 55.30914%; }
+    margin-right: 1.71306%;
+    width: 44.05782%; }
     .Aside__list--team:last-child {
+      margin-right: 0; }
+  .Aside__list--matches {
+    float: left;
+    display: block;
+    margin-right: 1.71306%;
+    width: 13.5439%; }
+    .Aside__list--matches:last-child {
       margin-right: 0; }
   .Aside__list--score {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 17.00269%;
+    margin-right: 1.71306%;
+    width: 13.5439%;
     text-align: center; }
     .Aside__list--score:last-child {
       margin-right: 0; }
   .Aside__list--points {
     float: left;
     display: block;
-    margin-right: 2.15054%;
-    width: 10.61828%;
-    text-align: center; }
+    margin-right: 1.71306%;
+    width: 13.5439%;
+    text-align: right; }
     .Aside__list--points:last-child {
       margin-right: 0; }
 
 @media screen and (max-width: 768px) {
+  .Side__wrapper {
+    float: left;
+    display: block;
+    margin-right: 0.70671%;
+    width: 100%; }
+    .Side__wrapper:last-child {
+      margin-right: 0; }
+
   .Aside {
     float: left;
     display: block;

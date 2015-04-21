@@ -34,7 +34,7 @@ class MatchTermRepository extends BaseRepository
         $date->setTime(0, 0, 0);
         $time->setDate(0, 0, 0);
         $row = $this->createFluent()
-            ->where('%s BETWEEN [match_term.start] AND [match_term.end] AND')
+            ->where('%s BETWEEN [match_term.start] AND [match_term.end]', $time->format('H:i:s'))
             ->where('[day.day] = %s', $date->format('Y-m-d'))
             ->leftJoin('day')
             ->on('[day.id] = [match_term.day_id]')->fetch();

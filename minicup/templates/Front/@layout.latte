@@ -2,20 +2,19 @@
 {block body}
     <div class="Header">
             <!-- svg logo with fallback -->
-            <div class="Header__nav--mobile">
+            <div id="nav-mobile" class="Header__nav--mobile">
                 <label>
                     <select>
-                        <option value="/" selected="selected">novinky</option>
-                        <option value="/">infromace</option>
-                        <option value="/">týmy</option>
-                        <option value="/">zápasy</option>
-                        <option value="/">tabulky</option>
-                        <option value="/">foto</option>
-                        <option value="/">sponzoři</option>
+                        <option value={plink Homepage:default} selected="selected">novinky</option>
+                        <option value={plink Homepage:informations}>infromace</option>
+                        <option value={plink Team:list $category}>týmy</option>
+                        <option value={plink Match:list $category}>zápasy</option>
+                        <option value={plink Result:table $category}>tabulky</option>
+                        <option value={plink Gallery:default}>foto</option>
+                        <option value={plink Homepage:sponsors}>sponzoři</option>
                     </select>
                 </label>
             </div>
-
 
             <a n:href="Homepage:default">
                 <div class="Header__logo">
@@ -52,13 +51,9 @@
             {control asideComponent}
         </div>
 
-        
-
         <div class="Footer">
-
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Kontakt</div>
-
                 <div class="Box__content Footer__content">
                     TJ Tatran Litovel – oddíl házené <br>
                     Nám. Přemysla Otakara 770, Litovel 784 01 <br>
@@ -69,25 +64,27 @@
 
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
-
-                <div class="Box__content Footer__content">
-                Petr Habermann <br>
+                <div class="Box__content Footer__content">Petr Habermann <br>
                  <a href="mailto:petr.habermann@tatranlitovel.cz">petr.habermann@tatranlitovel.cz</a> <br>
                 +420 775 771 213
                 </div>
             </div>
 
             <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Zahlaví</div>
-
-
+                <div class="Box__subhead Footer__subhead">&nbsp;</div>
                 <div class="Box__content Footer__content">
-                <a n:href=":Admin:Homepage:default">administrace</a><br>
-
-                © Matěj Mitaš & Josef Kolář 2015
-
+                    <a n:href=":Admin:Homepage:default">administrace</a><br>
+                    Matěj Mitaš & Josef Kolář 2015
                 </div>
             </div>
         </div>
+<script n:syntax="off" n:if="$productionMode">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+    ga('create', 'UA-40772204-1', 'auto');
+    ga('send', 'pageview');
+</script>
 {/block}

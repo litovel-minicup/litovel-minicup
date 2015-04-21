@@ -55,6 +55,8 @@ class MatchRepository extends BaseRepository
     }
 
     /**
+     * TODO: remove actual playing matches from select
+     *
      * @param Category  $category
      * @param int       $limit
      * @return Match[]
@@ -63,7 +65,6 @@ class MatchRepository extends BaseRepository
     {
         $fluent = $this->createCategoryFluent($category, $limit);
         $dt = new \DibiDateTime();
-        // TODO: repair this fucking datetimes!
         $fluent = $fluent
             ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
             ->where('[confirmed] = 0');
