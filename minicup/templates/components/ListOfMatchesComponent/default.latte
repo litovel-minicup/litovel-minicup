@@ -26,7 +26,7 @@
                     <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                     <td>{$match->scoreHome} : {$match->scoreAway}</td>
                     <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
-                    <td>{$match->matchTerm|matchStart} - {$match->matchTerm|matchEnd}</td>
+                    <td>{$match->matchTerm|matchStart}</td>
                     <td>{$match->matchTerm|matchDate}</td>
                 </tr>
             {/foreach}

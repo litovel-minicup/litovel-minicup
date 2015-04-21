@@ -66,11 +66,27 @@ class MatchManager extends Object
         $this->connection->commit();
     }
 
-    /***/
+    /**
+     * @param Category $category
+     * @return bool
+     */
     public function isPlayingTime(Category $category)
     {
         $now = new \DibiDateTime();
         return (bool) $this->MTR->getInTime($now);
+    }
 
+    /**
+     * @param Category $category
+     * @return bool
+     */
+    public function isStarted(Category $category)
+    {
+        foreach ($category->matches as $match) {
+            if ($match->confirmed) {
+                return TRUE;
+            }
+        }
+        return FALSE;
     }
 }

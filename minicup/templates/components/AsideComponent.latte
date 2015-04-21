@@ -1,4 +1,3 @@
-
 <div class="Aside" n:if="$control->playingTime">
     <div class="Box__head Aside__head">
         <div class="Aside__head__icon Box__head__icon icon__live"></div>
@@ -12,7 +11,7 @@
 <div class="Aside">
     <div class="Box__head Aside__head">
         <div class="Aside__head__icon Box__head__icon icon__upcoming"></div>
-        <div class="Aside__head__text Box__head__text">Nadcházející zápasy</div>
+        <div class="Aside__head__text Box__head__text">Nadcházející utkání</div>
     </div>
     <div class="Box__content Aside__content">
         {control listOfMatchesAsideComponent:aside next, 4}
@@ -20,9 +19,9 @@
 </div>
 
 <div class="Aside">
-        <div class="Box__head Aside__head">
-    <div class="Aside__head__icon Box__head__icon icon__score"></div>
-    <div class="Box__head__text Aside__head__text">Pořadí</div> 
+    <div class="Box__head Aside__head">
+        <div class="Aside__head__icon Box__head__icon icon__score"></div>
+        <div class="Box__head__text Aside__head__text">Pořadí</div>
     </div>
 
     <div class="Box__subhead Aside__subhead">
@@ -35,5 +34,15 @@
     </div>
     <div class="Box__content">
         {control categoryTableComponent:aside}
+    </div>
+</div>
+
+<div class="Aside" n:if="$control->started">
+    <div class="Box__head Aside__head">
+        <div class="Aside__head__icon Box__head__icon icon__matches"></div>
+        <div class="Aside__head__text Box__head__text">Poslední odehraná utkání</div>
+    </div>
+    <div class="Box__content Aside__content">
+        {control listOfMatchesAsideComponent:aside last, 4}
     </div>
 </div>

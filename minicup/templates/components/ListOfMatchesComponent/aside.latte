@@ -7,7 +7,11 @@
 
     <div class="Box__content--split--middle Aside__content--split--middle">
         <ul n:inner-foreach="$matches as $match">
-            <li>{$match->matchTerm|matchStart}</li>
+            {if $match->confirmed}
+                <li>{$match->scoreHome}:{$match->scoreAway}</li>
+            {else}
+                <li>{$match->matchTerm|matchStart}</li>
+            {/if}
         </ul>
     </div>
 

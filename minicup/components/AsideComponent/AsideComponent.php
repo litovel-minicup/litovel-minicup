@@ -43,6 +43,14 @@ class AsideComponent extends BaseComponent
     }
 
     /**
+     * @return bool
+     */
+    public function isStarted()
+    {
+        return $this->MM->isStarted($this->category);
+    }
+
+    /**
      * @return ListOfMatchesComponent
      */
     protected function createComponentListOfMatchesAsideComponent()

@@ -49,7 +49,7 @@ class FilterLoader extends Object
         $texy = $this->texy;
 
         $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n. Y"));
+            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n."));
         });
 
         $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {

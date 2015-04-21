@@ -70,6 +70,22 @@ class MatchRepository extends BaseRepository
         return $this->createEntities($fluent->fetchAll());
     }
 
+    /**
+     * @param Category  $category
+     * @param int       $limit
+     * @return Match[]
+     */
+    public function getLastMatches(Category $category, $limit = 0)
+    {
+        $fluent = $this
+            ->createCategoryFluent($category, $limit, BaseRepository::ORDER_DESC)
+            ->where('[confirmed] = 1');
+        if ($limit) {
+            $fluent->limit($limit);
+        }
+        return $this->createEntities($fluent->fetchAll());
+    }
+
 
     /**
      * @param Team $team1

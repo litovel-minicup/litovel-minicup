@@ -7,6 +7,7 @@ use Minicup\Model\Entity\Day;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
+use Nette\InvalidArgumentException;
 
 class ListOfMatchesComponent extends BaseComponent
 {
@@ -43,10 +44,13 @@ class ListOfMatchesComponent extends BaseComponent
                 $matches = $this->MR->getCurrentMatches($this->arg, $limit);
             } elseif ($mode == 'next') {
                 $matches = $this->MR->getNextMatches($this->arg, $limit);
-            } else {
+            } elseif ($mode == 'last') {
+                $matches = $this->MR->getLastMatches($this->arg, $limit);
+            } elseif ($mode == 'all') {
                 $matches = $this->arg->matches;
+            } else {
+                throw new InvalidArgumentException("Unknown render mode: '{$mode}'.");
             }
-
         }
         $this->template->matches = $matches;
         parent::render();
