@@ -33,5 +33,42 @@ class Match extends Entity
         return $this->__get('scoreAway') ? $this->__get('scoreAway') : ' - ';
     }
 
-    /** TODO: add getter for win/draw/lose team */
+    /**
+     * @param Team $team
+     * @return bool
+     */
+    public function isWinner(Team $team)
+    {
+        if (!$this->confirmed) {
+            return FALSE;
+        }
+        return
+            ($team->i->id == $this->homeTeam->id && $this->scoreHome > $this->scoreAway) ||
+            ($team->i->id == $this->awayTeam->id && $this->scoreAway > $this->scoreHome);
+    }
+
+    /**
+     * @param Team $team
+     * @return bool
+     */
+    public function isLoser(Team $team)
+    {
+        if (!$this->confirmed) {
+            return FALSE;
+        }
+        return
+            ($team->i->id == $this->homeTeam->id && $this->scoreHome < $this->scoreAway) ||
+            ($team->i->id == $this->awayTeam->id && $this->scoreAway < $this->scoreHome);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDraw()
+    {
+        if (!$this->confirmed) {
+            return FALSE;
+        }
+        return $this->scoreHome == $this->scoreAway;
+    }
 }
