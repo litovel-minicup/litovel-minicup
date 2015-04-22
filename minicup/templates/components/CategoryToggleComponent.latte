@@ -1,0 +1,4 @@
+<a n:foreach="$categories as $category"
+   n:class="Header__toggle__anchor, $category->id == $selectedCategory->id ? 'Header__toggle__anchor--active'"
+        {if $category->id != $selectedCategory->id} href={link changeCategory! $category->slug} {/if}>{$category->name}
+</a>

@@ -57,7 +57,6 @@ class EntitiesReplicatorContainer extends RContainer
         $container = $this->createContainer($name);
         $container->currentGroup = $this->currentGroup;
         $this->addComponent($container, $name);
-
         $_entity = NULL;
         /** @var Entity $entity */
         foreach ($this->entities as $entity) {
@@ -68,6 +67,14 @@ class EntitiesReplicatorContainer extends RContainer
         Callback::invoke($this->factoryCallback, $container, $_entity);
 
         return $this->created[$container->name] = $container;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return !$this->createDefault || count($this->entities) === 0;
     }
 
 

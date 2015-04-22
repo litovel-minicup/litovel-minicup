@@ -6,7 +6,6 @@ namespace Minicup\Components;
 use Closure\RemoteCompiler;
 use Nette\Http\IRequest;
 use Nette\Object;
-use Nette\Utils\Finder;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
@@ -47,27 +46,34 @@ class JsComponentFactory extends Object
     public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-        $files->addRemoteFile('http://code.jquery.com/jquery-2.1.1.min.js');
+        $files->addFile('assets/js/jquery.js');
+        $files->addFile('assets/js/dropper.js');
+        $files->addFile('assets/js/select2.js');
+        $files->addFile('assets/js/nette.ajax.js');
+        $files->addFile('assets/js/nette.forms.js');
+        $files->addFile('assets/js/jquery.swipebox.js');
+        $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
-            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.js');
-            $files->addFiles(Finder::findFiles('*.js')->in($this->wwwPath . '/assets/js'));
-            $files->addFile('assets/js/main.js');
-
+            $files->addFile('assets/js/chartist.js');
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
-            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js');
+            $files->addFile('assets/js/admin/bootstrap.js');
+            $files->addFile('assets/js/admin/toastr.js');
+            $files->addFile('assets/js/admin/main.js');
         }
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
 
-        if ($this->productionMode) {
+        if (FALSE) {
             $compiler->addFilter(function ($code) {
                 $remoteCompiler = new RemoteCompiler();
                 $remoteCompiler->addScript($code);
-                $remoteCompiler->setMode(RemoteCompiler::MODE_SIMPLE_OPTIMIZATIONS);
-                return $remoteCompiler->compile()->getCompiledCode();
+                $remoteCompiler->setMode(RemoteCompiler::MODE_WHITESPACE_ONLY);
+                return $code;
+                // TODO on production not work
+                $code = $remoteCompiler->compile()->getCompiledCode();
             });
         }
         $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');

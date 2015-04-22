@@ -31,19 +31,22 @@ class CategoryRepository extends BaseRepository
     protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
     {
         $year = $this->YR->getSelectedYear();
-        return parent::createFluent($year->id);
+        return parent::createFluent(array_merge(array($year->id), func_get_args()));
     }
 
     /**
-     * @param $slug string
+     * @param $arg string|Category
      * @return Category|NULL
      */
-    public function getBySlug($slug)
+    public function getBySlug($arg)
     {
-        if (isset($this->categories[$slug])) {
-            return $this->categories[$slug];
+        if ($arg instanceof Category) {
+            return $arg;
         }
-        $row = $this->createFluent()->where('[slug] = %s', $slug)->fetch();
+        if (isset($this->categories[$arg])) {
+            return $this->categories[$arg];
+        }
+        $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         if ($row) {
             /** @var Category $category */
             $category = $this->createEntity($row);
@@ -63,5 +66,17 @@ class CategoryRepository extends BaseRepository
             return $this->createEntity($row);
         }
         throw new InvalidStateException('Default category not found.');
+    }
+
+    /**
+     * @param $id
+     * @return Category
+     */
+    public function get($id)
+    {
+        $row = $this->connection->select('*')->from($this->getTable())
+            ->where('[' . $this->getTable() . '.id] = %i', $id)
+            ->fetch();
+        return $row ? $this->createEntity($row) : NULL;
     }
 } 

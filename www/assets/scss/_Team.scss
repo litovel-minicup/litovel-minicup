@@ -1,0 +1,60 @@
+.Team {
+	&__rows {
+		background: $medium--grey;
+		height: 150px;
+		padding: 10px;
+		text-align: center;
+
+		display: table;
+
+		&:nth-child(n+10) {
+			margin-bottom: 20px;
+		}
+
+		a {
+
+			font-family: "Montserrat";
+			font-size: 24px;
+			letter-spacing: -1.5px;
+			color: darken($medium--grey, 40%);
+
+			display: table-cell;
+    		vertical-align: middle;
+
+			&:hover {
+				color: white;
+			}
+
+		}	
+
+		&:hover {
+			background: $light--blue;
+		}
+	}
+
+	&__content {
+		ul {
+			li {		
+
+				.heading {
+					font-family: "PTBoldItalic";
+					font-size: 16px;
+				}
+
+				.text {
+					font-family: "Montserrat";
+					font-size: 70px;
+				}
+
+	  		}	
+		}
+	}
+
+	&__heading {
+
+	}
+
+	&__Text {
+		background: red;
+	}
+}

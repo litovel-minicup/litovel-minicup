@@ -1,0 +1,16 @@
+{snippet tag-form}
+{form tagForm class=>"ajax"}
+    <h4>{if $tag}Editace tagu {$tag->slug}{else}Nový tag{/if}:</h4>
+    <div class="form-group">
+        {label name /}
+        {input name class=>"form-control"}
+    </div>
+    <div class="form-group">
+        {label slug /}
+        {input slug class=>"form-control"}
+    </div>
+    <div class="form-group">
+        {input submit class=>"form-control btn btn-primary"}
+    </div>
+{/form}
+{/snippet}

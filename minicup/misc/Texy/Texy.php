@@ -2,26 +2,26 @@
 
 namespace Minicup\Misc;
 
+use Nette\Application\LinkGenerator;
 use Nette\Utils\Strings;
-use Nextras\Application\LinkFactory;
 
 class Texy extends \Texy
 {
-    /** @var  LinkFactory */
-    private $linkFactory;
+    /** @var LinkGenerator */
+    public $linkGenerator;
 
     /** @var  string */
-    private $destinationPrefix;
+    public $destinationPrefix;
 
     /**
      * @param $destinationPrefix
-     * @param LinkFactory $linkFactory
+     * @param LinkFactory $linkGenerator
      */
-    public function __construct($destinationPrefix, LinkFactory $linkFactory)
+    public function __construct($destinationPrefix, LinkGenerator $linkGenerator)
     {
         parent::__construct();
         $this->destinationPrefix = $destinationPrefix;
-        $this->linkFactory = $linkFactory;
+        $this->linkGenerator = $linkGenerator;
     }
 
     /**
@@ -43,16 +43,16 @@ class Texy extends \Texy
     public function replaceLinks($text)
     {
         $me = $this;
-        return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z, ]*)?\]#', function ($match) use ($me) {
-            $destination = $me->destinationPrefix . $match[1];
+        return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z-, ]*)?\]#', function ($matches) use ($me) {
+            $destination = $me->destinationPrefix .$matches[1];
             $args = array();
-            if (count($match) > 2) {
-                $args = Strings::trim($match[2]);
+            if (count($matches) > 2) {
+                $args = Strings::trim($matches[2]);
                 $args = Strings::replace($args, '# *#');
                 $args = Strings::split($args, '#,#');
             }
-            $link = $me->linkFactory->link($destination, $args);
-            return '[' . $link . ']';
+            $link = $me->linkGenerator->link($destination, $args);
+            return "[{$link}]";
         });
     }
 

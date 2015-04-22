@@ -3,10 +3,11 @@
 namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\AsideComponent;
-use Minicup\Components\CategoryToggleFormComponent;
+use Minicup\Components\CategoryToggleComponent;
 use Minicup\Components\IAsideComponentFactory;
 use Minicup\Components\ICategoryToggleFormComponentFactory;
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Year;
 use Minicup\Presenters\BasePresenter;
 
 
@@ -23,6 +24,14 @@ abstract class BaseFrontPresenter extends BasePresenter
      */
     public $category;
 
+    /**
+     * actual selected year
+     *
+     * @var Year
+     * @persistent
+     */
+    public $year;
+
     /** @var ICategoryToggleFormComponentFactory @inject */
     public $CTCF;
 
@@ -30,7 +39,7 @@ abstract class BaseFrontPresenter extends BasePresenter
     public $ACF;
 
     /**
-     * @return CategoryToggleFormComponent
+     * @return CategoryToggleComponent
      */
     protected function createComponentCategoryToggleFormComponent()
     {

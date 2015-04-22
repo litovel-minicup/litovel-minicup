@@ -28,9 +28,9 @@ class MatchRepository extends BaseRepository
     {
         $fluent = $this->createCategoryFluent($category);
         if ($mode == static::CONFIRMED) {
-            $fluent->applyFilter('confirmed');
+            $fluent->applyFilter($mode);
         } elseif ($mode == static::UNCONFIRMED) {
-            $fluent->applyFilter('unconfirmed');
+            $fluent->applyFilter($mode);
         }
         return $this->createEntities($fluent->fetchAll());
     }
@@ -55,6 +55,8 @@ class MatchRepository extends BaseRepository
     }
 
     /**
+     * TODO: remove actual playing matches from select
+     *
      * @param Category  $category
      * @param int       $limit
      * @return Match[]
@@ -63,9 +65,25 @@ class MatchRepository extends BaseRepository
     {
         $fluent = $this->createCategoryFluent($category, $limit);
         $dt = new \DibiDateTime();
-        // TODO: repair this fucking datetimes!
         $fluent = $fluent
-            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp());
+            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
+            ->where('[confirmed] = 0');
+        return $this->createEntities($fluent->fetchAll());
+    }
+
+    /**
+     * @param Category  $category
+     * @param int       $limit
+     * @return Match[]
+     */
+    public function getLastMatches(Category $category, $limit = 0)
+    {
+        $fluent = $this
+            ->createCategoryFluent($category, $limit, BaseRepository::ORDER_DESC)
+            ->where('[confirmed] = 1');
+        if ($limit) {
+            $fluent->limit($limit);
+        }
         return $this->createEntities($fluent->fetchAll());
     }
 

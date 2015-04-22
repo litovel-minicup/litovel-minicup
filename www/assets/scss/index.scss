@@ -3,15 +3,17 @@
  */
 @import "reset";
 @import "_var";
-@import "_font-face"; 
+@import "_font-face";
+
 
 /**
- * Import Bourbon and Neat
+ * Import Bourbon, Neat an Chartist
  */
 
 @import "bourbon/bourbon";
 @import "grid-settings";
 @import "neat/neat";
+@import "chartist/chartist";
 
 /**
  * Import Components
@@ -20,12 +22,18 @@
 @import "_Box";
 @import "_Header";
 @import "_Article";
+@import "_Sponsors";
 @import "_Aside";
 @import "_Section";
+@import "_Footer";
+@import "_Cover";
+@import "_Team";
+@import "_Matches";
 
 
 body {
-	margin-top: $universal-dis;
 	@include outer-container();
 	height: 100%;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }

@@ -1,4 +1,13 @@
 {block content}
-    <h3>Seznam týmů pro kategorii {$category->name}</h3>
-    {control listOfTeamsComponent-$category->slug}
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text" n:block="title">Týmy {$category->name}</div>
+        </div>
+        <div class="Box__content Team__content">
+            {control listOfTeamsComponent-$category->slug}
+        </div>
+    </div>
 {/block}
+

@@ -1,4 +1,6 @@
 {block content}
-    <h3>Seznam týmů pro kategorii {$category->name}</h3>
     {control listOfMatchesComponent-$category->slug}
 {/block}
+
+{block title}Zápasy kategorie {$category->name}{/block}
+

@@ -1,17 +1,17 @@
 # IDE folders
-/nbproject/
-/.idea/
+nbproject/
+.idea/
 
 # temp folders
-/temp/*
-/log/*
-/www/webtemp/*
+temp/*
+log/*
+www/webtemp/*
 
 # composer
-/vendor/
+vendor/
 
-# compiled css file
-/assets/css/index.css
+# compiled main css file
+www/assets/css/index.css
 
 # local configuration
 config.local.neon
@@ -24,3 +24,11 @@ www/assets/.sass-cache
 
 # map files
 *.map.*
+
+# media uploads
+www/media/*
+*.map
+
+www/assets/css/grid-settings.css
+
+www/assets/css/grid-settings.css

@@ -109,11 +109,11 @@ class ReorderManager extends Object
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifference($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
-        } elseif (count($pointScale) == 1 && $recursionFrom == $this->miniTableWithScoreDifference) {
+        } elseif (count($pointScale) == 1 && $recursionFrom == '$this->miniTableWithScoreDifference') {
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
-        } elseif (count($pointScale) == 1 && $recursionFrom == $this->miniTableWithScoreDifferenceFromMiniTable) {
+        } elseif (count($pointScale) == 1 && $recursionFrom == '$this->miniTableWithScoreDifferenceFromMiniTable') {
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
             $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
@@ -265,7 +265,7 @@ class ReorderManager extends Object
             }
         }
         $pointScale = array_count_values($teamPointsFromScore);
-        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, $this->miniTableWithScoreDifferenceFromMiniTable);
+        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, '$this->miniTableWithScoreDifferenceFromMiniTable');
     }
 
     /**
@@ -288,7 +288,7 @@ class ReorderManager extends Object
             $teamPointsFromScore[$mainTeam->id] = $teamPoints;
         }
         $pointScale = array_count_values($teamPointsFromScore);
-        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, $this->miniTableWithScoreDifference);
+        $this->teamOrderByInternalPoints($pointScale, $teamPosition, $teamPointsFromScore, '$this->miniTableWithScoreDifference');
     }
 
     /**

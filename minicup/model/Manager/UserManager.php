@@ -5,7 +5,6 @@ namespace Minicup\Model\Manager;
 
 use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\User;
-use Minicup\Model\Repository\EntityNotFoundException;
 use Minicup\Model\Repository\UserRepository;
 use Nette\InvalidArgumentException;
 use Nette\Object;
@@ -36,19 +35,18 @@ class UserManager extends Object implements IAuthenticator
     {
         list($username, $password) = $credentials;
 
-        try {
-            $user = $this->UR->findByUsername($username);
-        } catch (EntityNotFoundException $e) {
+        $user = $this->UR->findByUsername($username);
+
+        if (!$user) {
             throw new AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
         }
 
-        if (!Passwords::verify($password, $user->password_hash)) {
+        if (Passwords::hash($password) !== $user->password_hash) {
             throw new AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($user->password_hash)) {
             $user->password_hash = Passwords::hash($password);
             $this->UR->persist($user);
         }
-
         return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
     }
 

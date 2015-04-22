@@ -17,18 +17,15 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @throws EntityNotFoundException
      * @param $username string
-     * @return User
+     * @return User|NULL
      */
     public function findByUsername($username)
     {
         $row = $this->createFluent()
             ->where('username = %s', $username)
             ->fetch();
-        if ($row === false) {
-            throw new EntityNotFoundException('User not found!');
-        }
-        return $this->createEntity($row);
+
+        return $row ? $this->createEntity($row) : NULL;
     }
 }

@@ -1,1 +1,18 @@
-{$content|noescape}
+{snippet component}
+{if $user->isAllowed('static-content', 'edit') && !$edit}
+    <a class="ajax" n:href="edit!"><button>{ifset $staticContent}Editovat (poslední editace {$staticContent->updated|date:"Y-m-d H:i:s"}){else}Vytvořit{/ifset}</button></a>
+{/if}
+{if $edit}
+    {form editForm class=>ajax}
+    {input content}
+    {input submit}{input cancel}
+    {/form}
+    <script>
+        jQuery(function ($) {
+            $('form textarea').width('92%');
+        })
+    </script>
+{else}
+    {$content|noescape}
+{/if}
+{/snippet}

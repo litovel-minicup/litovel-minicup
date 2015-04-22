@@ -12,6 +12,8 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string      $name                   czech name of team
  * @property        string      $slug                   slug for URL
  * @property        Team        $team m:belongsToOne    actually connected team
+ * @property        StaticContent|NULL $staticContent m:hasOne
+ * @property        Tag|NULL    $tag m:hasOne
  */
 class TeamInfo extends Entity
 {

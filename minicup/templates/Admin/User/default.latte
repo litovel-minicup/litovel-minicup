@@ -1,0 +1,14 @@
+{block content}
+<h2>Uživatelé</h2>
+{if $user->isAllowed('user', 'view')}
+    {control grid}
+{else}
+    Bohužel si nemůžete zobrazit seznam uživatelů.
+{/if}
+
+{if $user->isAllowed('user', 'add')}
+    <h2>Přidat uživatele</h2>
+    {control userForm}
+{else}
+    Přidávat uživatele bohužel nemůžete.
+{/if}

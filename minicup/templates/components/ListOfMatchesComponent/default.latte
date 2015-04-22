@@ -1,20 +1,36 @@
-<div class="component">
-    <table class="table">
-        <tr>
-            <th>Domácí tým</th>
-            <th>Scóre</th>
-            <th>Hostující tým</th>
-            <th>Začátek</th>
-            <th>Datum</th>
-        </tr>
-        {foreach $matches as $match}
-            <tr>
-                <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
-                <td>{$match->scoreHome} : {$match->scoreAway}</td>
-                <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
-                <td>{$match->matchTerm|matchStart} - {$match->matchTerm|matchEnd}</td>
-                <td>{$match->matchTerm|matchDate}</td>
-            </tr>
-        {/foreach}
-    </table>
+<div class="Article">
+    <div class="Article__head Box__head">
+        <div class="Article__head__icon Box__head__icon icon__matches">
+        </div>
+        <div class="Article__head__text Box__head__text">Zápasy</div>
+    </div>
+    <div class="Box__subhead Article__subhead">
+        <table class="Table Table__matches">
+            <thead>
+                <tr>
+                    <th>Domácí tým</th>
+                    <th>Scóre</th>
+                    <th>Hostující tým</th>
+                    <th>Začátek</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="Box__content Table__content">
+        <table class="Table Table__matches">
+        <tbody>
+            {* TODO: add row color depends on win/draw/lose *}
+            {foreach $matches as $match}
+                <tr>
+                    <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
+                    <td>{$match->scoreHome} : {$match->scoreAway}</td>
+                    <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
+                    <td>{$match->matchTerm|matchStart}</td>
+                    <td>{$match->matchTerm|matchDate}</td>
+                </tr>
+            {/foreach}
+        </tbody>
+        </table>
+    </div>
 </div>

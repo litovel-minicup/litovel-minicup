@@ -6,9 +6,9 @@ use LeanMapper\Entity;
 
 /**
  * @property int            $id
+ * @property string         $slug
  * @property string         $content
  * @property \DibiDateTime  $updated
- * @property User           $author m:hasOne
  */
 class StaticContent extends Entity
 {

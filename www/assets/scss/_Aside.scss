@@ -1,11 +1,32 @@
-.Aside {
-	margin-top: $universal-dis;
-	background: $light--yellow;
+.Side__wrapper {
 	@include span-columns(5);
 	@include omega();
-	
+}
+
+
+.Aside {
+	@include span-columns(5 of 5);
+	margin-top: $universal-dis;
+	background: $light--yellow;
+
+	border-bottom: 2px solid $dark--yellow;
+
+	a:hover {
+		background: black;
+		color: white;
+	}
+
 	&__head {
-		background: $dark--yellow;
+		letter-spacing: -1.5px;
+
+		&__icon {
+			background: $dark--yellow;
+		}
+
+		&__text {
+			background: $dark--yellow;
+			color: darken($dark--yellow, 20%);
+		}
 	}
 
 
@@ -26,15 +47,16 @@
 
 		&--split--left {
 			background: $light--yellow;
+
 		}
 
 		&--split--right {
-			background: $medium--yellow;
+			background: $light--yellow;
 			text-align: right;
 		}
 
 		&--split--middle {
-			background: $dark--yellow;
+			background: $medium--yellow;
 			color: white;
 			text-align: center;
 			font-family: "Montserrat";
@@ -48,8 +70,18 @@
 
 	}
 
-	&__list--rank {@include span-columns(0.5 of 4);}
-	&__list--team {@include span-columns(2.25 of 4);}
-	&__list--score {@include span-columns(0.75 of 4);}
-	&__list--points {@include span-columns(0.5 of 4);}
+	&__list--rank {@include span-columns(0.50 of 5);}
+	&__list--team {@include span-columns(2.25 of 5);}
+    &__list--matches {@include span-columns(0.75 of 5);}
+	&__list--score {@include span-columns(0.75 of 5);text-align: center;}
+	&__list--points {@include span-columns(0.75 of 5);text-align: right;}
+}
+
+@media screen and (max-width: 768px) {
+    .Side__wrapper {
+        @include span-columns(12);
+    }
+	.Aside {
+		@include span-columns(12);
+	}
 }

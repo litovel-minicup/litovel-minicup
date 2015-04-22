@@ -1,7 +1,0 @@
-{block content}
-<h2>Uživatelé</h2>
-{if $user->isAllowed('users', 'view')}
-    {control grid}
-{else}
-    Bohužel si nemůžete zobrazit seznam uživatelů.
-{/}

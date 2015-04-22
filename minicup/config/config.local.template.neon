@@ -4,9 +4,20 @@ leanMapper:
     password:
     database:
 
+tracy:
+    editor:
+
+di:
+    debugger: no
+
+session:
+    debugger: no
+
+application:
+    debugger: no
+
 # only for MigrationsManager!
-nette:
-    database:
-        dsn: 'mysql:host=host;dbname=name'
-        user:
-        password:
+database:
+    dsn:
+    user:
+    password:

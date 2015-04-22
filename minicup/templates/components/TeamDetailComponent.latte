@@ -1,14 +1,89 @@
-<div class="component">
-    <h2>{$control->name}</h2>
-    id: {$team->id} <br>
-    jméno: {$team->name} <br>
-    slug: {$team->slug} <br>
-    pořadí: {$team->order}<br>
-    počet zápasů: {$team->matches|length}<br>
-    kategorie: {$team->category->name}<br>
-    vstřelené: {$team->scored}<br>
-    obdržené: {$team->received}<br>
-    body: {$team->points}<br>
-    <h3>zápasy</h3>
-    {control listOfMatchesComponent}
-</div>
+{block outerContent}
+    <div class="Section">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__teams"></div>
+                <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
+            </div>
+
+            <div class="Box__subhead Article__subhead">
+                <table class="Table Table__detail">
+                    <thead>
+                        <tr>
+                            <th>Pořadí</th>
+                            <th>Odehrané zápasy</th>
+                            <th>Skóre</th>
+                            <th>Body</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="Box__content Team__content">
+                <table class="Table__detail">
+                    <tbody>
+                        <tr>
+                            <td>{$team->order}</td>
+                            <td>{$team->playedMatches|length}</td>
+                            <td>{$team->scored}:{$team->received}</td>
+                            <td>{$team->points}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            {*       jméno: {$team->name} <br>
+                     slug: {$team->slug} <br>
+                     pořadí: {$team->order}<br>
+                    počet zápasů: {$team->matches|length}<br>
+                    kategorie: {$team->category->name}<br>
+                    vstřelené: {$team->scored}<br>
+                    obdržené: {$team->received}<br>
+                    body: {$team->points}<br> *}
+        </div>
+    </div>
+    {if $team->order}
+        <div class="Section">
+            <div class="Article">
+                <div class="Article__head Box__head">
+                    <div class="Article__head__icon Box__head__icon icon__news"></div>
+                    <div class="Article__head__text Box__head__text">Historie pořadí</div>
+                </div>
+                {control teamHistoryComponent}
+            </div>
+        </div>
+    {/if}
+
+    {if count($team->i->matches) > 0}
+        <div class="Section">
+            <div class="Article">
+                {control listOfMatchesComponent}
+            </div>
+        </div>
+    {/if}
+
+    {if ($team->i->staticContent && $team->i->staticContent->content) || $user->isAllowed('static-content', 'edit')}
+        <div class="Section">
+            <div class="Article">
+                <div class="Article__head Box__head">
+                    <div class="Article__head__icon Box__head__icon icon__news"></div>
+                    <div class="Article__head__text Box__head__text">Informace</div>
+                </div>
+                {control staticContentComponent}
+            </div>
+        </div>
+    {/if}
+
+    {if ($team->i->tag && count($team->i->tag->photos) > 0) || $user->isAllowed('tag', 'create')}
+        <div class="Section">
+            <div class="Article">
+                <div class="Article__head Box__head">
+                    <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                    <div class="Article__head__text Box__head__text">Fotografie</div>
+                </div>
+                {control photoListComponent}
+            </div>
+        </div>
+    {/if}
+{/block}

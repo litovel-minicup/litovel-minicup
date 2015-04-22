@@ -89,4 +89,25 @@ class Filters extends Object
             ->on('d.[id] = mt.[day_id]')
             ->orderBy("d.[day] $order, mt.[start] $order, [match.id] $order");
     }
+
+    /**
+     * @param Fluent $fluent
+     */
+    public function activePhotos(Fluent $fluent)
+    {
+        $fluent->leftJoin('photo')->on('[photo_tag.photo_id] = [photo.id]')->where('[photo.active] = 1');
+    }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderNews(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
+    {
+        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy('[added]'.$order);
+    }
 }

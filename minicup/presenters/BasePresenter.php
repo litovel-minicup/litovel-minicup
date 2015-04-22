@@ -3,15 +3,14 @@
 namespace Minicup\Presenters;
 
 use Minicup\Components\CssComponentFactory;
-use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Components\JsComponentFactory;
+use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
-use Nette\Application\UI\Form;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 use WebLoader\Nette\CssLoader;
 use WebLoader\Nette\JavaScriptLoader;
 
@@ -20,12 +19,11 @@ use WebLoader\Nette\JavaScriptLoader;
  */
 abstract class BasePresenter extends Presenter
 {
-
-    /** @var ILoginFormComponentFactory @inject */
-    public $LFCF;
-
     /** @var IFormFactory @inject */
-    public $FF;
+    public $formFactory;
+
+    /** @var FilterLoader @inject */
+    public $filterLoader;
 
     /** @var CategoryRepository @inject */
     public $CR;
@@ -65,20 +63,14 @@ abstract class BasePresenter extends Presenter
     }
 
     /**
-     * @return Form
-     */
-    protected function createComponentLoginForm()
-    {
-        return $this->LFCF->create();
-    }
-
-    /**
      * before render
      */
     public function beforeRender()
     {
         parent::beforeRender();
         $this->template->categories = $this->CR->findAll();
+        $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
+        $this->template->productionMode = $this->context->parameters["productionMode"];
     }
 
     /**
@@ -127,12 +119,12 @@ abstract class BasePresenter extends Presenter
         return $list;
     }
 
-    protected function shutdown($response)
+    /**
+     * Loads base filters from filter loader.
+     * @return ITemplate
+     */
+    public function createTemplate()
     {
-        if ($this->getParameter('year')) {
-            Debugger::barDump($this->getParameter('year')->slug, 'Selected year');
-        }
+        return $this->filterLoader->loadFilters(parent::createTemplate());
     }
-
-
 }

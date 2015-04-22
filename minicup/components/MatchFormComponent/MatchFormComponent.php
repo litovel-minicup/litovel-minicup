@@ -38,7 +38,7 @@ class MatchFormComponent extends BaseComponent
     public function render()
     {
         $this->template->match = $this->category;
-        $this->template->render();
+        parent::render();
     }
 
     /**
@@ -48,11 +48,11 @@ class MatchFormComponent extends BaseComponent
     {
         $me = $this;
 
-        $f = $this->FF->create();
+        $f = $this->formFactory->create();
 
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
-            $container->currentGroup = $container->getForm()->addGroup('zápas', FALSE);
+            $container->currentGroup = $container->getForm()->addGroup('Zápas', FALSE);
             $container
                 ->addText('scoreHome', $match->homeTeam->name)
                 ->setType('number')
@@ -66,8 +66,8 @@ class MatchFormComponent extends BaseComponent
             $this->count);
 
         /** @var SubmitButton $addSubmit */
-        $addSubmit = $matches->addSubmit('addMatch', 'zobrazit další zápas')
-            ->setValidationScope(FALSE)
+        $matches->addSubmit('addMatch', 'zobrazit další zápas')
+            ->setValidationScope(NULL)
             ->setAttribute('class', 'ajax')
             ->onClick[] = $this->addMatchClicked;
         $f->addSubmit('submit', 'odeslat');
@@ -77,9 +77,8 @@ class MatchFormComponent extends BaseComponent
 
     public function addMatchClicked(SubmitButton $button)
     {
-        /** @var EntitiesReplicatorContainer $matches */
-        $this->redrawControl('');
         $button->parent->createOne();
+        $this->redrawControl();
     }
 
     /***/
@@ -95,13 +94,20 @@ class MatchFormComponent extends BaseComponent
                 }
                 /** @var Match $match */
                 $match = $this->MR->get((int)$matchId);
-                $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
+                $this->MM->confirmMatch($match, $match->category, $matchData['scoreHome'], $matchData['scoreAway']);
                 $this->presenter->flashMessage('Zápas '.$match->homeTeam->name.' vs. '.$match->awayTeam->name.' byl úspěšně zpracován.');
             }
-
+            $this->redirect('this');
         }
-        $this->redirect('this');
     }
+}
 
-
+interface IMatchFormComponentFactory
+{
+    /**
+     * @param Category $category
+     * @param int $count
+     * @return MatchFormComponent
+     */
+    public function create(Category $category, $count);
 }

@@ -32,7 +32,7 @@ class OnlineReportComponent extends BaseComponent
     {
         $this->template->time = time();
         $this->template->match = $this->match;
-        $this->template->render();
+        parent::render();
     }
 
     public function handleRefresh()
@@ -46,7 +46,7 @@ class OnlineReportComponent extends BaseComponent
      */
     public function createComponentNewReportForm()
     {
-        $form = $this->FF->create();
+        $form = $this->formFactory->create();
         $form->addText('message', '', 50)
             ->setRequired('Zprávu prostě musíš vyplnit!');
         $form->addSubmit('info', 'INFO');
@@ -64,7 +64,7 @@ class OnlineReportComponent extends BaseComponent
      */
     public function newReportFormSubmitted($form, $values)
     {
-        if (!$this->presenter->user->isAllowed('online', 'write')) {
+        if (!$this->presenter->user->isAllowed('online-report', 'write')) {
             $this->presenter->flashMessage('Pro tuto akci nejste oprávněn!', 'error');
             $this->presenter->redirect('Front:Homepage:default');
         }
@@ -76,5 +76,14 @@ class OnlineReportComponent extends BaseComponent
         $this->ORR->persist($ORE);
         $this->redrawControl();
     }
+}
+
+interface IOnlineReportComponentFactory
+{
+    /**
+     * @param $match Match
+     * @return OnlineReportComponent
+     */
+    public function create(Match $match);
 
 }

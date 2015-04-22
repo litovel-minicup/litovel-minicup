@@ -1,24 +1,56 @@
 .Article {
+
+	// border-bottom: 2px solid $medium--grey;
+
 	&__head {
-	color: white;
-	background: $medium--grey;
+
+		&__icon {
+			background: $medium--grey;
+		}
+
+		&__text {
+			background: $medium--grey;
+			color: darken($medium--grey, 40%);
+		}
+	}
+
+	&__subhead {
+		background: $dark--grey;
 	}
 
 	&__heading {
 		font-family: "Montserrat";
 		font-size: 34px;
-		padding-top: 5px;
+		letter-spacing: -1.5px;
 	}
 
 	&__date {
 		font-family: "PTBoldItalic";	
-		padding-top: 15px;
+		padding-top: 10px;
+
 	}
+
 
 	&__content {
 		font-family: "PTRegular";
 		padding-top: 15px;
-		padding-bottom: 40px;
+		padding-bottom: 30px;
 		font-size: 16px;
+
+		a {
+			border-bottom: 3px solid $light--blue;
+			color: $light--blue;
+
+			&:hover {
+				background: $light--blue;
+				color: white;
+			}
+
+		}
+
+		strong  {
+			font-weight: bold;
+		}
+
 	}
 }

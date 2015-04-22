@@ -1,26 +1,42 @@
 .Box {
 	&__head {
-		font-family: 'Montserrat';
-		font-size: 18px;
-		padding: 25px 20px;
-		&:before {
-			content: "\2663";
-			padding-right: 15px;
+
+		@include fill-parent();
+		@include row(table);
+
+		&__icon {
+			@include span-columns(1.5);
+			line-height: 75px;
 		}
+
+		&__text {
+			@include span-columns(10.5);
+			@include reset-display; 
+			font-family: 'Montserrat';
+			font-size: 24px;
+			line-height: 75px;
+			letter-spacing: -1.5px;
+		}
+
 	}
+
 	&__subhead {
 	font-size: 16px;
 	padding: 15px 20px;
-	height: 3em;
+	height: 50px;
 	font-family: 'PTBoldItalic';
 	
 	}
 
+	&__rows {
+		@include span-columns(3 of 12);
+  		@include omega(4n);
+  		margin-bottom: 5px;
+	}
+
 	&__content {
-		padding: 15px 20px;
+		padding: 15px 20px 5px 20px;
 		line-height: 1.32;
-
-
 	}
 
 	&__content--split--left {
@@ -37,6 +53,14 @@
 		@include span-columns(1 of 6);
 		@include omega();
 		text-align: center;
-
+	}
 }
+
+@media screen and (max-width: 960px) {
+	.Box {
+		&__rows {
+			@include span-columns(6 of 12);
+	  		@include omega(2n);
+		}
+	}
 }

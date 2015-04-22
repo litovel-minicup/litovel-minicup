@@ -32,7 +32,7 @@ final class TeamPresenter extends BaseFrontPresenter
 
     public function renderDetail(Category $category, Team $team)
     {
-
+        $this->template->team = $team;
     }
 
     public function createComponentListOfTeamsComponent()

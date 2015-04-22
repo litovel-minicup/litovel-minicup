@@ -22,3 +22,13 @@ class CategoryTableComponent extends BaseComponent
         parent::render();
     }
 }
+
+interface ICategoryTableComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryTableComponent
+     */
+    public function create(Category $category);
+
+}

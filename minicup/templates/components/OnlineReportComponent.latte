@@ -15,7 +15,7 @@
     {/foreach}
     </div>
     <div n:snippet="form">
-    {if $user->isAllowed('online', 'write')}
+    {if $user->isAllowed('online-report', 'write')}
         {form newReportForm}
             {input message}
             {input info}

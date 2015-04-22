@@ -7,11 +7,11 @@ use LeanMapper\Entity;
 
 /**
  * @property int         $id
- * @property string      $pathFull                      path for full image
- * @property string      $pathThumb                     path for thumbnail of image
- * @property Tag[]       $tags m:hasMany                tags for photo
- * @property \DateTime   $captured                      when is photo captured?
- * @property User        $author m:hasOne(author_id)    from who is this photo?
+ * @property string      $filename          filename
+ * @property Tag[]       $tags m:hasMany    tags for photo
+ * @property \DateTime   $added             added datetime
+ * @property \DateTime   $taken             phoho taken datetime
+ * @property int         $active
  */
 class Photo extends Entity
 {
@@ -19,5 +19,4 @@ class Photo extends Entity
     {
         $this->added = new \DateTime();
     }
-
 }

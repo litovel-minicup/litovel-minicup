@@ -6,7 +6,7 @@ namespace Minicup\Components;
 use Nette\Http\IRequest;
 use Nette\Http\Request;
 use Nette\Object;
-use Nette\Utils\Finder;
+use Nette\Utils\Strings;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
@@ -25,14 +25,14 @@ class CssComponentFactory extends Object
     private $productionMode;
 
     /** @var IRequest */
-    private $request;
+    public $request;
 
     /**
      * @param string $wwwPath
      * @param bool $productionMode
      * @param Request $request
      */
-    public function __construct($wwwPath, $productionMode,  IRequest $request)
+    public function __construct($wwwPath, $productionMode, IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
@@ -47,24 +47,33 @@ class CssComponentFactory extends Object
     public function create($module)
     {
         $files = new FileCollection($this->wwwPath);
-
+        $control = $this;
+        $files->addFile('assets/css/select2.css');
+        $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
+            $files->addFile('assets/css/reset.css');
             $files->addFile('assets/css/index.css');
-            $files->addFiles(Finder::findFiles('*.css')->in(($this->wwwPath . '/assets/css')));
-            $files->addRemoteFile('cdn.jsdelivr.net/chartist.js/latest/chartist.min.css');
         } elseif ($module === 'admin') {
-            $files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
+            $files->addFile('assets/css/admin/jquery.fs.dropper.css');
+            $files->addFile('assets/css/admin/index.css');
+            $files->addFile('assets/css/admin/bootstrap.css');
+            $files->addFile('assets/css/admin/toastr.css');
         }
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
         // TODO: add urls fixing
-        //$compiler->addFilter(new CssUrlsFilter());
+        // $compiler->addFileFilter(new CssUrlFilter("assets/", $this->request));
+
+        // TODO: Errrghh!!!
+        $compiler->addFileFilter(function ($code, Compiler $loader, $file = null) use ($control) {
+            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . "assets/");
+        });
 
         if ($this->productionMode) {
             $compiler->addFilter(function ($code) {
                 return \CssMin::minify($code);
             });
         }
-        $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
+        $control = new CssLoader($compiler, $this->request->url->scriptPath . 'webtemp');
         return $control;
     }
 }

@@ -1,0 +1,17 @@
+.thumbnail {
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+}
+
+.thumbnail.selected {
+    -webkit-box-shadow: 0 0 5px #5CB85C;
+    -moz-box-shadow:  0 0 5px #5CB85C;
+    box-shadow:  0 0 5px #5CB85C;
+}
+
+.navbar + .container {
+    margin-top: 50px;
+}

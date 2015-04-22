@@ -1,43 +1,66 @@
 {extends '../@layout.latte'}
 {block navbar}
-	<nav class="navbar navbar-default navbar-inverse">
-	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	        <span class="sr-only">Navigace</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="#">Minicup 2015</a>
-	    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                    <span class="sr-only">Navigace</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" n:href="Homepage:default">MINICUP 2015</a>
+            </div>
 
-	    <!-- Collect the nav links, forms, and other content for toggling -->
-	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-	        <li><a href="#">Link</a></li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Týmy<span class="caret"></span></a>
-	          <ul class="dropdown-menu" role="menu" n:inner-foreach="$categories as $_category">
-	          	<li><a n:href="">{$_category->name}</a></li>
-	          </ul>
-	        </li>
-	      </ul>
-	      <ul class="nav navbar-nav navbar-right">
-	        <form class="navbar-form navbar-left" role="search">
-			  <div class="form-group">
-			    <input type="text" class="form-control" placeholder="Search">
-			  </div>
-			  <button type="submit" class="btn btn-default">Submit</button>
-			</form>
-	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-list-alt"></i> Správa turnaje<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            {foreach $categories as $_category}
+                                <li class="dropdown-header">kategorie {$_category->name}</li>
+                                <li><a n:href="Team:list $_category"><i class="glyphicon glyphicon-list"></i> Týmy</a></li>
+                                <li><a n:href="Match:confirm $_category"><i class="glyphicon glyphicon-tasks"></i> Vkládání výsledků</a></li>
+                                <li><a n:href="Match:list $_category"><i class="glyphicon glyphicon-calendar"></i> Přehled zápasů</a></li>
+                                {sep}<li class="divider"></li>{/sep}
+                            {/foreach}
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-picture"></i> Správa médií<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="{ifCurrent Photo:upload}active{/ifCurrent}"><a n:href="Photo:upload"><i class="glyphicon glyphicon-cloud-upload"></i> Upload fotek</a></li>
+                            <li class="{ifCurrent Photo:tags}active{/ifCurrent}"><a n:href="Photo:tags"><i class="glyphicon glyphicon-tags"></i> Správa tagů</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="navbar-link" n:href="User:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
+                    <li><a class="navbar-link" n:href="News:"><i class="glyphicon glyphicon-bold"></i> Správa novinek</a></li>
+                </ul>
+                <p class="navbar-text navbar-right">
+                    <a class="navbar-link" n:href="Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit se</a>
+                    <a class="navbar-link" n:href=":Front:Homepage:"><i class="glyphicon glyphicon-home"></i> Veřejná sekce</a>
+                </p>
+            </div>
+        </div>
+    </nav>
 {/block}
 
 {block body}
-	{include #navbar}
+    {include #navbar}
+    <div class="container">
+        {snippet flashes}
+            <script>
+                {foreach $flashes as $flash}
+                toastr.{$flash->type|noescape}({$flash->message});
+                {/foreach}
+            </script>
+        {/snippet}
+        {block content}{/block}
+    </div>
+{/block}
+
+{block seo}
+    {include #parent}
+    <meta name="robots" content="noindex,follow">
+    <meta name="googlebot" content="nosnippet,noarchive">
 {/block}

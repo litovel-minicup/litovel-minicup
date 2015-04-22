@@ -28,12 +28,14 @@ class YearRepository extends BaseRepository
         return $this->selectedYear;
     }
 
+
     /**
      * @param Year $year
+     * @return Year
      */
     public function setSelectedYear(Year $year)
     {
-        $this->selectedYear = $year;
+        return $this->selectedYear = $year;
     }
 
     /**
@@ -49,8 +51,5 @@ class YearRepository extends BaseRepository
             return $this->createEntity($row);
         }
         return NULL;
-
     }
-
-
 }

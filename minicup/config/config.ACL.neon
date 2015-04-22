@@ -6,12 +6,15 @@ services:
             - addRole('moderator', 'guest')
             - addRole('admin', 'moderator')
 
-            - addResource('users') # TODO resources
-            - addResource('online-reports')
-            - addResource('teams')
-            - addResource('migrations')
+            - addResource('user') # TODO resources
+            - addResource('online-report')
+            - addResource('static-content')
+            - addResource('team')
+            - addResource('migration')
+            - addResource('tag')
 
-            - allow('moderator', 'users', 'view')
-            - allow('moderator', 'online-reports', 'write')
-            - allow('moderator', 'teams', 'edit')
+            - allow('moderator', 'user', 'view')
+            - allow('moderator', 'online-report', 'write')
+            - allow('moderator', 'team', 'edit')
+            - allow('moderator', 'tag', 'create')
             - allow('admin')

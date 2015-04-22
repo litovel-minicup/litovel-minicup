@@ -13,13 +13,16 @@ class LoginFormComponent extends BaseComponent
      */
     public function createComponentLoginForm()
     {
-        $form = $this->FF->create();
+        $form = $this->formFactory->create();
+        $form->setMethod(Form::POST);
         $form->addText('username', 'Uživatelské jméno')
-            ->setRequired('Prosím, zadejte vaše uživatelské jméno.');
+            ->setRequired('Prosím, zadejte vaše uživatelské jméno.')
+            ->getControlPrototype()->addAttributes(array("placeholder" => "username"));
         $form->addPassword('password', 'Heslo')
-            ->setRequired('Prosím vložte vaše heslo.');
+            ->setRequired('Prosím vložte vaše heslo.')
+            ->getControlPrototype()->addAttributes(array("placeholder" => "password"));
         $form->addCheckbox('remember', 'Zůstat přihlášen');
-        $form->addSubmit('send', 'Přihlásit');
+        $form->addSubmit('submit', 'Přihlásit');
         $form->onSuccess[] = $this->loginFormValidated;
         return $form;
     }
@@ -44,15 +47,15 @@ class LoginFormComponent extends BaseComponent
             $user->setExpiration('20 minutes', TRUE);
         }
         $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
-        $this->presenter->redirect('this');
+        $this->presenter->redirect(':Admin:Homepage:');
     }
+}
 
-
-    public function handleLogOut()
-    {
-        $this->getPresenter(TRUE)->getUser()->logout();
-        $this->presenter->flashMessage('Byl jste odhlášen.');
-        $this->presenter->redirect(':Front:Homepage:');
-    }
+interface ILoginFormComponentFactory
+{
+    /**
+     * @return LoginFormComponent
+     */
+    public function create();
 
 }

@@ -1,0 +1,10 @@
+{block content}
+{snippet matchList}
+<h1 n:block="title">Přehled zápasů pro {$category->name}</h1>
+{control matchesGridComponent}
+<script>
+$(function() {
+    $('.grido').grido();
+});
+</script>
+{/snippet}
