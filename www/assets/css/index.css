@@ -1310,6 +1310,54 @@ html {
       border-bottom: 2px solid #929292;
       padding: 10px 0; }
 
+.Table__matches thead th:nth-of-type(1) {
+  width: 25%; }
+.Table__matches thead th:nth-of-type(2) {
+  width: 10%; }
+.Table__matches thead th:nth-of-type(3) {
+  width: 35%; }
+.Table__matches thead th:nth-of-type(4) {
+  width: 10%; }
+.Table__matches thead th:nth-of-type(5) {
+  width: 3%; }
+
+.Table__standings thead th:nth-of-type(1) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(2) {
+  width: 45%; }
+.Table__standings thead th:nth-of-type(3) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(4) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(5) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(6) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(7) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(8) {
+  width: 5%; }
+.Table__standings thead th:nth-of-type(9) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(1) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(2) {
+  width: 45%; }
+.Table__standings tbody td:nth-of-type(3) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(4) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(5) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(6) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(7) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(8) {
+  width: 5%; }
+.Table__standings tbody td:nth-of-type(9) {
+  width: 5%; }
+
 @media screen and (max-width: 480px) {
   .Table thead th:nth-child(n+4), .Table tbody tr td:nth-child(n+4) {
     display: none; } }
