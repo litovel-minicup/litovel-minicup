@@ -2,23 +2,39 @@
 	&__rows {
 		background: $medium--grey;
 		height: 150px;
-		
+		padding: 10px;
+		text-align: center;
+
+		display: table;
+
+		&:nth-child(n+10) {
+			margin-bottom: 20px;
+		}
 
 		a {
+
 			font-family: "Montserrat";
-			font-size: 28px;
+			font-size: 24px;
 			letter-spacing: -1.5px;
-			margin-top: 20px;
 			color: darken($medium--grey, 40%);
+
+			display: table-cell;
+    		vertical-align: middle;
+
+			&:hover {
+				color: white;
+			}
+
 		}	
+
+		&:hover {
+			background: $light--blue;
+		}
 	}
 
 	&__content {
 		ul {
-
 			li {		
-				@include span-columns(3);
-	  			@include omega(4n);
 
 				.heading {
 					font-family: "PTBoldItalic";

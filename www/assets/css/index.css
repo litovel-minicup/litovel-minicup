@@ -731,6 +731,18 @@ html {
   .Box__content--split--middle:last-child {
     margin-right: 0; }
 
+@media screen and (max-width: 960px) {
+  .Box__rows {
+    float: left;
+    display: block;
+    margin-right: 0.70671%;
+    width: 49.64664%; }
+    .Box__rows:last-child {
+      margin-right: 0; }
+    .Box__rows:nth-child(2n) {
+      margin-right: 0; }
+    .Box__rows:nth-child(2n+1) {
+      clear: left; } }
 .Header {
   float: left;
   display: block;
@@ -1248,26 +1260,29 @@ html {
     transform: rotate(360deg); } }
 .Team__rows {
   background: #c8c8c8;
-  height: 150px; }
+  height: 150px;
+  padding: 10px;
+  text-align: center;
+  display: table; }
+  .Team__rows:nth-child(n+10) {
+    margin-bottom: 20px; }
   .Team__rows a {
     font-family: "Montserrat";
-    font-size: 28px;
+    font-size: 24px;
     letter-spacing: -1.5px;
-    margin-top: 20px;
-    color: #626262; }
-.Team__content ul li {
-  display: table-cell;
-  width: 25%; }
-  .Team__content ul li:nth-child(4n) {
-    margin-right: 0; }
-  .Team__content ul li:nth-child(4n+1) {
-    clear: left; }
-  .Team__content ul li .heading {
-    font-family: "PTBoldItalic";
-    font-size: 16px; }
-  .Team__content ul li .text {
-    font-family: "Montserrat";
-    font-size: 70px; }
+    color: #626262;
+    display: table-cell;
+    vertical-align: middle; }
+    .Team__rows a:hover {
+      color: white; }
+  .Team__rows:hover {
+    background: #4180ff; }
+.Team__content ul li .heading {
+  font-family: "PTBoldItalic";
+  font-size: 16px; }
+.Team__content ul li .text {
+  font-family: "Montserrat";
+  font-size: 70px; }
 .Team__Text {
   background: red; }
 

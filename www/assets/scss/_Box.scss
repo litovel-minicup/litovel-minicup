@@ -55,3 +55,12 @@
 		text-align: center;
 	}
 }
+
+@media screen and (max-width: 960px) {
+	.Box {
+		&__rows {
+			@include span-columns(6 of 12);
+	  		@include omega(2n);
+		}
+	}
+}
