@@ -14,6 +14,10 @@
 
 	&__block {
 		@include span-columns(4);
+
+		&:nth-of-type(3) {
+			@include reset-display;
+		}
 	}
 	
 	&__subhead {
@@ -45,6 +49,9 @@
 
 		&__block {
 			@include span-columns(12);
+			&:not(:nth-of-type(1)) {
+				margin-top: 20px;
+			}
 		}
 	}
 }

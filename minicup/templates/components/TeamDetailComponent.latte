@@ -5,19 +5,30 @@
                 <div class="Article__head__icon Box__head__icon icon__teams"></div>
                 <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
             </div>
-            <div class="Box__content Article__content">
 
-                <dl>
-                    <dt>Pořadí</dt>
-                    <dd>{$team->order}</dd>
-                    <dt>Odehrané zápasy</dt>
-                    <dd>{$team->playedMatches|length}</dd>
-                    <dt>Skóre</dt>
-                    <dd>{$team->scored}:{$team->received}</dd>
-                    <dt>Body</dt>
-                    <dd>{$team->points}</dd>
-                </dl>
+            <div class="Box__subhead Article__subhead">
+                <table class="Table">
+                    <thead>
+                        <tr>
+                            <th>Pořadí</th>
+                            <th>Odehrané zápasy</th>
+                            <th>Skóre</th>
+                            <th>Body</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
 
+            <div class="Box__content Team__content">
+                    <ul>
+                        <li class="text">{$team->order}</li>
+                        <li class="text">{$team->playedMatches|length}</li>
+                        <li class="text">{$team->scored}:{$team->received}</li>
+                        <li class="text">{$team->points}</li>
+                    </ul>
+                    
+                    
+                    
             </div>
 
 

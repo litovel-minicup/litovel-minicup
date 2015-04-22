@@ -1216,8 +1216,14 @@ html {
 
 @media screen and (max-width: 768px) {
   .Footer__block {
-    display: table-cell;
-    width: 100%; } }
+    float: left;
+    display: block;
+    margin-right: 0.70671%;
+    width: 100%; }
+    .Footer__block:last-child {
+      margin-right: 0; }
+    .Footer__block:not(:nth-of-type(1)) {
+      margin-top: 20px; } }
 .Cover {
   position: fixed;
   bottom: 0;
