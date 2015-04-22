@@ -743,6 +743,42 @@ html {
       margin-right: 0; }
     .Box__rows:nth-child(2n+1) {
       clear: left; } }
+#warning {
+  background: #cc0000;
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 100%;
+  height: 75px;
+  margin-bottom: 8px; }
+  #warning:last-child {
+    margin-right: 0; }
+  #warning a {
+    float: left;
+    display: block;
+    margin-right: 0.70671%;
+    width: 83.21555%;
+    margin-top: 10px;
+    color: white; }
+    #warning a:last-child {
+      margin-right: 0; }
+    #warning a .textBlock {
+      float: left;
+      display: block;
+      margin-right: 0.70671%;
+      width: 83.21555%; }
+      #warning a .textBlock:last-child {
+        margin-right: 0; }
+    #warning a .iconBlock {
+      float: left;
+      display: block;
+      margin-right: 0.70671%;
+      width: 16.07774%;
+      font-size: 50px;
+      text-align: center; }
+      #warning a .iconBlock:last-child {
+        margin-right: 0; }
+
 .Header {
   float: left;
   display: block;
@@ -974,6 +1010,8 @@ html {
     .Article__content a:hover {
       background: #4180ff;
       color: white; }
+  .Article__content strong {
+    font-weight: bold; }
 
 .Sponsors__sprite {
   height: 150px;

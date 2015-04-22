@@ -1,5 +1,18 @@
 {extends '../@layout.latte'}
 {block body}
+    <!--[if lt IE 9]>
+        <div id="warning">
+            <a href="http://www.browser-update.org/cs/update.html" target="_blank">
+                <div class="iconBlock">!</div>
+                <div class="textBlock">
+                <h2>Upozornění</h2>
+                <h3>Používáte zastaralý prohlížeč, proto nemůžeme garantovat plnou  funkčnost webu</h3>
+                <h4>Děkujeme za pochopení</h4>
+            </div>
+            </a>
+        </div>
+    <![endif]-->
+
     <div class="Header">
             <!-- svg logo with fallback -->
             <div id="nav-mobile" class="Header__nav--mobile">
