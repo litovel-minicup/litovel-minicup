@@ -7,7 +7,7 @@
             </div>
 
             <div class="Box__subhead Article__subhead">
-                <table class="Table">
+                <table class="Table Table__detail">
                     <thead>
                         <tr>
                             <th>Pořadí</th>
@@ -20,15 +20,16 @@
             </div>
 
             <div class="Box__content Team__content">
-                    <ul>
-                        <li class="text">{$team->order}</li>
-                        <li class="text">{$team->playedMatches|length}</li>
-                        <li class="text">{$team->scored}:{$team->received}</li>
-                        <li class="text">{$team->points}</li>
-                    </ul>
-                    
-                    
-                    
+                <table class="Table__detail">
+                    <tbody>
+                        <tr>
+                            <td>{$team->order}</td>
+                            <td>{$team->playedMatches|length}</td>
+                            <td>{$team->scored}:{$team->received}</td>
+                            <td>{$team->points}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
 

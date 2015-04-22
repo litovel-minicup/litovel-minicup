@@ -1358,6 +1358,17 @@ html {
 .Table__standings tbody td:nth-of-type(9) {
   width: 5%; }
 
+.Table__detail {
+  width: 100%; }
+  .Table__detail thead th {
+    width: 25%; }
+  .Table__detail tbody td {
+    font-size: 50px;
+    font-family: "Montserrat"; }
+  .Table__detail tbody td {
+    width: 25%;
+    text-align: center; }
+
 @media screen and (max-width: 480px) {
   .Table thead th:nth-child(n+4), .Table tbody tr td:nth-child(n+4) {
     display: none; } }
