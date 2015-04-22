@@ -64,6 +64,36 @@ class FilterLoader extends Object
             return Json::encode($array);
         });
 
+        $template->addFilter('relDate', function ($time) {
+            $seconds = time() - strtotime($time);
+            $minutes = floor($seconds / 60);
+            $hours = floor($minutes / 60);
+            $days = floor($hours / 24);
+            $months = floor($days / 30);
+            $years = floor($days / 365);
+            if ($years >= 2) {
+                return "před $years lety";
+            } elseif ($years == 1) {
+                return "před rokem";
+            } elseif ($months >= 2) {
+                return "před $months měsíci";
+            } elseif ($months == 1) {
+                return "před měsícem";
+            } elseif ($days >= 2) {
+                return "před $days dny";
+            } elseif ($hours >= 2) {
+                return "před $hours hodinami";
+            } elseif ($hours == 1) {
+                return "před hodinou";
+            } elseif ($minutes >= 2) {
+                return "před $minutes minutami";
+            } elseif ($minutes == 1) {
+                return "před minutou";
+            } elseif ($seconds >= 0) {
+                return "před chvílí";
+            }
+            return "v budoucnu";
+        });
         $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
             // TODO
             return $generator->link(':Media:photo');

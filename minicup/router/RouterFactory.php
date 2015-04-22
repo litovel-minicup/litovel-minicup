@@ -247,7 +247,7 @@ class RouterFactory extends Object
             return $team->slug;
         } else {
             $category = $this->CR->getBySlug($request->parameters['category']);
-            return $this->TR->getBySlug($team, $category)->slug;
+            return $this->TR->getBySlug($team, $category)->i->slug;
         }
     }
 

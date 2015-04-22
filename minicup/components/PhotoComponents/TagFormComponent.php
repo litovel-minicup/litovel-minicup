@@ -44,8 +44,9 @@ class TagFormComponent extends BaseComponent
     public function createComponentTagForm()
     {
         $f = $this->formFactory->create();
-        $name = $f->addText('name', 'Název');
-        $slug = $f->addText('slug', 'Slug');
+        $f->addText('name', 'Název');
+        $f->addText('slug', 'Slug');
+        $f->addCheckbox('isMain', 'Hlavní kategorie');
         $f->addHidden('id');
         $f->addSubmit('submit', $this->tag ? 'Upravit' : 'Přidat');
         $f->onSuccess[] = $this->tagFormSuccess;
@@ -63,10 +64,12 @@ class TagFormComponent extends BaseComponent
             $tag = $this->TR->get($values->id);
             $tag->slug = Strings::webalize($values->slug);
             $tag->name = $values->name;
+            $tag->isMain = $values->isMain;
         } else {
             $tag = new Tag();
             $tag->name = $values->name;
             $tag->slug = Strings::webalize($values->name);
+            $tag->isMain = $values->isMain;
         }
         try {
             $this->TR->persist($tag);
