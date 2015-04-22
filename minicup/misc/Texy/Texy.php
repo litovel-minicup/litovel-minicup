@@ -8,10 +8,10 @@ use Nette\Utils\Strings;
 class Texy extends \Texy
 {
     /** @var LinkGenerator */
-    private $linkGenerator;
+    public $linkGenerator;
 
     /** @var  string */
-    private $destinationPrefix;
+    public $destinationPrefix;
 
     /**
      * @param $destinationPrefix

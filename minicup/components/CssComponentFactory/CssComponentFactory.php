@@ -25,7 +25,7 @@ class CssComponentFactory extends Object
     private $productionMode;
 
     /** @var IRequest */
-    private $request;
+    public $request;
 
     /**
      * @param string $wwwPath

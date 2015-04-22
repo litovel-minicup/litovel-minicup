@@ -14,7 +14,7 @@ header('Retry-After: 300'); // 5 minutes in seconds
 	p { font: 21px/1.5 Georgia,serif; margin: 1.5em 0 }
 </style>
 
-<title>Aplikace se dočasně nedostupná</title>
+<title>Aplikace je dočasně nedostupná</title>
 
 <h1>Omlouváme se</h1>
 

@@ -14,6 +14,7 @@ class LoginFormComponent extends BaseComponent
     public function createComponentLoginForm()
     {
         $form = $this->formFactory->create();
+        $form->setMethod(Form::POST);
         $form->addText('username', 'Uživatelské jméno')
             ->setRequired('Prosím, zadejte vaše uživatelské jméno.')
             ->getControlPrototype()->addAttributes(array("placeholder" => "username"));
