@@ -1,7 +1,31 @@
-<ul n:foreach="$teams as $team">
+{* <ul n:foreach="$teams as $team">
 	<li class="Aside__list--rank">{if $team->order}{$team->order}{else}&nbsp;{/if}</li>
 	<li class="Aside__list--team"><a href={plink Team:detail $team->category, $team}>{$team->name}</a></li>
     <li class="Aside__list--matches">{$team->playedMatches|length}</li>
 	<li class="Aside__list--score">{$team->scored}:{$team->received}</li>
 	<li class="Aside__list--points">{$team->points}</li>
 </ul>
+ *}
+
+
+<table class="Aside__table Aside__table--standings">
+	<thead class="Box__subhead Aside__subhead">
+        <tr>
+        	<th>#</th>
+	        <th>Týmy</th>
+	        <th>Zápasy</th>
+	        <th>Skóre</th>
+	        <th>Body</th>
+        </tr>
+    </thead>
+
+	<tbody n:inner-foreach="$teams as $team">
+		<tr>
+			<td>{if $team->order}{$team->order}{else}&nbsp;{/if}</td>
+			<td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
+			<td>{$team->playedMatches|length}</td>
+			<td>{$team->scored}:{$team->received}</td>
+			<td>{$team->points}</td>
+		</tr>
+	</tbody>    
+</table>

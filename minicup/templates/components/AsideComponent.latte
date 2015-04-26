@@ -24,18 +24,7 @@
         <div class="Box__head__text Aside__head__text">Pořadí</div>
     </div>
 
-    <div class="Box__subhead Aside__subhead">
-        <ul>
-            <li class="Aside__list--rank">#</li>
-            <li class="Aside__list--team">Tým</li>
-            <li class="Aside__list--matches">Zápasy</li>
-            <li class="Aside__list--score">Skóre</li>
-            <li class="Aside__list--points">Body</li>
-        </ul>
-    </div>
-    <div class="Box__content">
-        {control categoryTableComponent:aside}
-    </div>
+    {control categoryTableComponent:aside}
 </div>
 
 <div class="Aside" n:if="$control->started">

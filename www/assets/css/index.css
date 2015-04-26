@@ -1180,26 +1180,50 @@ html {
       margin-right: 0; }
   .Aside__table {
     width: 100%; }
-    .Aside__table tr:nth-of-type(1) td {
+    .Aside__table--upcoming tr:nth-of-type(1) td {
       height: 40px;
       vertical-align: bottom; }
-    .Aside__table tr:nth-of-type(4) td {
+    .Aside__table--upcoming tr:nth-of-type(4) td {
       height: 40px;
       vertical-align: top; }
-    .Aside__table td {
+    .Aside__table--upcoming td {
       padding: 3px 15px !important;
       vertical-align: middle; }
-      .Aside__table td:nth-of-type(1) {
+      .Aside__table--upcoming td:nth-of-type(1) {
         width: 40%; }
-      .Aside__table td:nth-of-type(3) {
+      .Aside__table--upcoming td:nth-of-type(3) {
         width: 40%;
         text-align: right; }
-      .Aside__table td:nth-of-type(2) {
+      .Aside__table--upcoming td:nth-of-type(2) {
         width: 20%;
         background: #ffd802;
         color: white;
         text-align: center;
         font-family: "Montserrat"; }
+    .Aside__table--standings th {
+      padding: 20px 0; }
+    .Aside__table--standings td, .Aside__table--standings th {
+      text-align: center; }
+    .Aside__table--standings tr:nth-of-type(1) td {
+      height: 40px;
+      vertical-align: bottom; }
+    .Aside__table--standings tr:nth-of-type(12) td {
+      height: 40px;
+      vertical-align: top; }
+    .Aside__table--standings td {
+      padding: 3px 0 !important;
+      vertical-align: middle; }
+    .Aside__table--standings th:nth-of-type(1), .Aside__table--standings td:nth-of-type(1) {
+      width: 15%; }
+    .Aside__table--standings th:nth-of-type(2), .Aside__table--standings td:nth-of-type(2) {
+      width: 40%;
+      text-align: left; }
+    .Aside__table--standings th:nth-of-type(3), .Aside__table--standings td:nth-of-type(3) {
+      width: 10%; }
+    .Aside__table--standings th:nth-of-type(4), .Aside__table--standings td:nth-of-type(4) {
+      width: 20%; }
+    .Aside__table--standings th:nth-of-type(5), .Aside__table--standings td:nth-of-type(5) {
+      width: 15%; }
 
 @media screen and (max-width: 768px) {
   .Side__wrapper {

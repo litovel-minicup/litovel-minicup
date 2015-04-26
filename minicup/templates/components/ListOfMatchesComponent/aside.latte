@@ -1,5 +1,5 @@
 <div class="component">
-    <table class="Aside__table">
+    <table class="Aside__table Aside__table--upcoming">
         <tbody n:inner-foreach="$matches as $match">
             <tr>
                 <td><a href={plink Team:detail $match->category, $match->homeTeam}>{$match->homeTeam->name}</a></td>

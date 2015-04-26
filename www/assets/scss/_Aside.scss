@@ -78,44 +78,95 @@
 
 
 	&__table {
+		
 		width: 100%;
 
-		tr {
-			&:nth-of-type(1) td {
-			height: 40px;
-			vertical-align: bottom;
+		&--upcoming {
+			tr {
+				&:nth-of-type(1) td {
+					height: 40px;
+					vertical-align: bottom;
+				}
+
+				&:nth-of-type(4) td {
+					height: 40px;
+					vertical-align: top;
+				}
 			}
 
-			&:nth-of-type(4) td {
-				height: 40px;
-				vertical-align: top;
+			td {
+				padding: 3px 15px!important;
+				vertical-align: middle;
+
+				&:nth-of-type(1) {
+					width: 40%;
+				}
+
+				&:nth-of-type(3) {
+					width: 40%;
+					text-align: right;
+				}
+
+				&:nth-of-type(2) {
+					width: 20%;
+					background: $medium--yellow;
+					color: white;
+					text-align: center;
+					font-family: "Montserrat";
+				}
 			}
 		}
+	
+		&--standings {
 
-		td {
-			padding: 3px 15px!important;
-			vertical-align: middle;
-
-			&:nth-of-type(1) {
-				width: 40%;
+			th {
+				padding: 20px 0;
 			}
 
-			&:nth-of-type(3) {
-				width: 40%;
-				text-align: right;
-			}
-
-			&:nth-of-type(2) {
-				width: 20%;
-				background: $medium--yellow;
-				color: white;
+			td, th {
 				text-align: center;
-				font-family: "Montserrat";
 			}
+
+			tr {
+				&:nth-of-type(1) td {
+					height: 40px;
+					vertical-align: bottom;
+				}
+
+				&:nth-of-type(12) td {
+					height: 40px;
+					vertical-align: top;
+				}
+			}
+
+			td {
+				padding: 3px 0!important;
+				vertical-align: middle;
+			}
+			
+			th:nth-of-type(1),td:nth-of-type(1) {
+				width: 15%;
+			}
+
+			th:nth-of-type(2),td:nth-of-type(2) {
+				width: 40%;
+				text-align: left;
+			}
+
+			th:nth-of-type(3),td:nth-of-type(3) {
+				width: 10%;
+			}
+
+			th:nth-of-type(4),td:nth-of-type(4) {
+				width: 20%;
+			}
+
+			th:nth-of-type(5),td:nth-of-type(5) {
+				width: 15%;
+			}
+
+
 		}
-		
-
-
 	}
 
 }
