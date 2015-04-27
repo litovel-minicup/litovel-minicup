@@ -10,5 +10,5 @@ namespace Minicup\Model\Entity;
  */
 class StaticContent extends BaseEntity
 {
-    public $CACHE_TAG = 'staticContent';
+    public static $CACHE_TAG = 'staticContent';
 }

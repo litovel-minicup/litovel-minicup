@@ -13,7 +13,7 @@ namespace Minicup\Model\Entity;
  */
 class Photo extends BaseEntity
 {
-    public $CACHE_TAG = 'photo';
+    public static $CACHE_TAG = 'photo';
 
     protected function initDefaults()
     {

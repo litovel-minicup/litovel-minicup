@@ -12,5 +12,5 @@ namespace Minicup\Model\Entity;
  */
 class User extends BaseEntity
 {
-    public $CACHE_TAG = 'user';
+    public static $CACHE_TAG = 'user';
 }

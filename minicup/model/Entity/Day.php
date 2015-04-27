@@ -10,5 +10,5 @@ namespace Minicup\Model\Entity;
  */
 class Day extends BaseEntity
 {
-    public $CACHE_TAG = 'day';
+    public static $CACHE_TAG = 'day';
 }

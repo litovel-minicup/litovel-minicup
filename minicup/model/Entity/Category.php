@@ -15,5 +15,5 @@ namespace Minicup\Model\Entity;
  */
 class Category extends BaseEntity
 {
-    public $CACHE_TAG = 'category';
+    public static $CACHE_TAG = 'category';
 }

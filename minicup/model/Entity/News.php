@@ -12,6 +12,6 @@ namespace Minicup\Model\Entity;
  */
 class News extends BaseEntity
 {
-    public $CACHE_TAG = 'news';
+    public static $CACHE_TAG = 'news';
 
 }
