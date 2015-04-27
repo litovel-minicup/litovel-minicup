@@ -13,5 +13,5 @@ namespace Minicup\Model\Entity;
  */
 class Year extends BaseEntity
 {
-
+    public $CACHE_TAG = 'year';
 } 

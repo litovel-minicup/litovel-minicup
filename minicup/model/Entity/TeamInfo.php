@@ -16,6 +16,7 @@ use LeanMapper\Exception\InvalidStateException;
  */
 class TeamInfo extends BaseEntity
 {
+    public $CACHE_TAG = 'teamInfo';
 
     /**
      * @return Match[]

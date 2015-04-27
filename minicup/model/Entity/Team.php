@@ -20,6 +20,8 @@ namespace Minicup\Model\Entity;
  */
 class Team extends BaseEntity
 {
+    public $CACHE_TAG = 'team';
+
     /** @var Match[] */
     private $wins = array();
 

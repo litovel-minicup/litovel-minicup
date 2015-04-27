@@ -13,5 +13,5 @@ namespace Minicup\Model\Entity;
  */
 class OnlineReport extends BaseEntity
 {
-
+    public $CACHE_TAG = 'onlineReport';
 }

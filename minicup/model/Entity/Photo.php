@@ -13,6 +13,8 @@ namespace Minicup\Model\Entity;
  */
 class Photo extends BaseEntity
 {
+    public $CACHE_TAG = 'photo';
+
     protected function initDefaults()
     {
         $this->added = new \DateTime();

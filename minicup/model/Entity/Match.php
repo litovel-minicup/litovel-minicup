@@ -15,6 +15,8 @@ namespace Minicup\Model\Entity;
  */
 class Match extends BaseEntity
 {
+    public $CACHE_TAG = 'match';
+
     /**
      * @return int|string
      */
