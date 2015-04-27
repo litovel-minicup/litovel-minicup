@@ -2,15 +2,13 @@
 namespace Minicup\Model\Entity;
 
 
-use LeanMapper\Entity;
-
 /**
  * @property int         $id
  * @property \DateTime   $day                           datetime of this day
  * @property Year        $year m:hasOne                 year for this day
  * @property MatchTerm[] $matchTerms m:belongsToMany    match terms in this day
  */
-class Day extends Entity
+class Day extends BaseEntity
 {
 
 

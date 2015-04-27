@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int        $id
  * @property string     $username       user's nick
@@ -12,7 +10,7 @@ use LeanMapper\Entity;
  * @property string     $role           user role
  *
  */
-class User extends Entity
+class User extends BaseEntity
 {
 
 }

@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int            $id
  * @property Category       $category m:hasOne                              category
@@ -15,7 +13,7 @@ use LeanMapper\Entity;
  * @property MatchTerm      $matchTerm m:hasOne(match_term_id:match_term)   term fo this match
  * @property OnlineReport[] $onlineReports m:belongsToMany(:online_report)  reports
  */
-class Match extends Entity
+class Match extends BaseEntity
 {
     /**
      * @return int|string

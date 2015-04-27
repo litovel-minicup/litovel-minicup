@@ -3,8 +3,6 @@
 namespace Minicup\Model\Entity;
 
 
-use LeanMapper\Entity;
-
 /**
  * @property int         $id
  * @property string      $filename          filename
@@ -13,7 +11,7 @@ use LeanMapper\Entity;
  * @property \DateTime   $taken             phoho taken datetime
  * @property int         $active
  */
-class Photo extends Entity
+class Photo extends BaseEntity
 {
     protected function initDefaults()
     {

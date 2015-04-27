@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int            $id
  * @property int            $order = 0          order of team in table
@@ -20,7 +18,7 @@ use LeanMapper\Entity;
  * @property-read Match[]   $draws              draw matches
  * @property-read Match[]   $loses              lose matches
  */
-class Team extends Entity
+class Team extends BaseEntity
 {
     /** @var Match[] */
     private $wins = array();
