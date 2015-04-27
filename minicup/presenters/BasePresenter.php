@@ -6,6 +6,7 @@ use Minicup\Components\CssComponentFactory;
 use Minicup\Components\JsComponentFactory;
 use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
+use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\ITemplate;
@@ -37,6 +38,9 @@ abstract class BasePresenter extends Presenter
     /** @var JsComponentFactory @inject */
     public $JSCF;
 
+    /** @var CacheManager @inject */
+    public $CM;
+
     /** @var string */
     protected $module;
 
@@ -46,6 +50,7 @@ abstract class BasePresenter extends Presenter
     protected function startup()
     {
         parent::startup();
+        $this->CM->initEvents();
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
     }

@@ -44,6 +44,7 @@ services:
     - Minicup\Model\Manager\StaticContentManager
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\MatchImporter
+    - Minicup\Model\Manager\CacheManager
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)

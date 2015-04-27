@@ -1,5 +1,7 @@
 {block content}
-    {control listOfMatchesComponent-$category->slug}
+    {cache tags => $category->cacheTag}
+        {control listOfMatchesComponent-$category->slug}
+    {/cache}
 {/block}
 
 {block title}Zápasy kategorie {$category->name}{/block}

@@ -60,7 +60,7 @@
             {/block}
         </div>
 
-        <div class="Side__wrapper">
+        <div class="Side__wrapper" n:cache="tags => $category->cacheTag">
             {control asideComponent}
         </div>
 

@@ -1,4 +1,6 @@
 {block outerContent}
-    {control teamDetailComponent}
+    {cache $team->cacheTag}
+        {control teamDetailComponent}
+    {/cache}
 {/block}
 {block title}{$team->name} - {$team->category->name}{/block}
