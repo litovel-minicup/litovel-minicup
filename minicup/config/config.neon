@@ -43,6 +43,7 @@ services:
     - Minicup\Model\Manager\PhotoManager(%wwwDir%)
     - Minicup\Model\Manager\StaticContentManager
     - Minicup\Model\Manager\TagManager
+    - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
 
     # css & js compiling
@@ -87,6 +88,9 @@ services:
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
+    - implement: Minicup\Components\ICategoryStatsComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
     - implement: Minicup\Components\ITagFormComponentFactory
       parameters: [Minicup\Model\Entity\Tag tag = NULL]
       arguments: [%tag%]

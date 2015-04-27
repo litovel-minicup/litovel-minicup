@@ -134,9 +134,9 @@ class RouterFactory extends Object
             'category' => $categoryFilter
         ));
 
-        $front[] = new Route('[<year>/]tabulky/<category>', array(
-            'presenter' => 'Result',
-            'action' => 'table',
+        $front[] = new Route('[<year>/]statistiky/<category>', array(
+            'presenter' => 'Stats',
+            'action' => 'default',
             'year' => $yearFilter,
             'category' => $categoryFilter
         ));
