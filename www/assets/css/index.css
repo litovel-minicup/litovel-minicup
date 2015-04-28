@@ -228,7 +228,7 @@ html {
   height: 100%;
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-align: left; }
 .ct-chart .ct-label.ct-horizontal {
   display: block;
@@ -236,7 +236,7 @@ html {
   height: 100%;
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-align: left; }
 .ct-chart .ct-label.ct-vertical {
   display: block;
@@ -244,7 +244,7 @@ html {
   height: 100%;
   fill: rgba(0, 0, 0, 0.4);
   color: rgba(0, 0, 0, 0.4);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-align: right; }
 .ct-chart .ct-grid {
   stroke: rgba(0, 0, 0, 0.2);

@@ -20,12 +20,11 @@
     <div class="Box__content Table__content">
         <table class="Table Table__matches">
         <tbody>
-            {* TODO: add row color depends on win/draw/lose *}
             {foreach $matches as $match}
-                <tr>
-                    <td><a n:tag-if="$match->homeTeam->id != $actualID" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
+                <tr n:class="isset($team) && $match->isWinner($team) ? win, isset($team) && $match->isLoser($team) ? lose, $match->isDraw() ? draw">
+                    <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                     <td>{$match->scoreHome} : {$match->scoreAway}</td>
-                    <td><a n:tag-if="$match->awayTeam->id != $actualID" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
+                    <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
                     <td>{$match->matchTerm|matchStart}</td>
                     <td>{$match->matchTerm|matchDate}</td>
                 </tr>

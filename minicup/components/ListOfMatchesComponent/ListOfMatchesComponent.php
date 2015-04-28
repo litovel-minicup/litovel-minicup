@@ -35,10 +35,9 @@ class ListOfMatchesComponent extends BaseComponent
     public function render($mode = 'all', $limit = 0)
     {
         $matches = array();
-        $this->template->actualID = 0;
         if ($this->arg instanceof Team) {
             $matches = $this->arg->i->matches;
-            $this->template->actualID = $this->arg->id;
+            $this->template->team = $this->arg->i;
         } elseif ($this->arg instanceof Category) {
             if ($mode == 'current') {
                 $matches = $this->MR->getCurrentMatches($this->arg, $limit);
@@ -54,7 +53,6 @@ class ListOfMatchesComponent extends BaseComponent
         }
         $this->template->matches = $matches;
         parent::render();
-
     }
 }
 

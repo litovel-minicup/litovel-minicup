@@ -1,6 +1,7 @@
 <?php
 
 namespace Minicup\Model\Entity;
+use Nette\InvalidArgumentException;
 
 /**
  * @property int            $id
@@ -34,31 +35,41 @@ class Match extends BaseEntity
     }
 
     /**
-     * @param Team $team
+     * @param TeamInfo|Team $teamInfo
      * @return bool
      */
-    public function isWinner(Team $team)
+    public function isWinner($teamInfo)
     {
+        if ($teamInfo instanceof Team) {
+            $teamInfo = $teamInfo->i;
+        } elseif (!$teamInfo instanceof TeamInfo) {
+            throw new InvalidArgumentException('Unknown given argument');
+        }
         if (!$this->confirmed) {
             return FALSE;
         }
         return
-            ($team->i->id == $this->homeTeam->id && $this->scoreHome > $this->scoreAway) ||
-            ($team->i->id == $this->awayTeam->id && $this->scoreAway > $this->scoreHome);
+            ($teamInfo->id == $this->homeTeam->id && $this->scoreHome > $this->scoreAway) ||
+            ($teamInfo->id == $this->awayTeam->id && $this->scoreAway > $this->scoreHome);
     }
 
     /**
-     * @param Team $team
+     * @param Team|TeamInfo $teamInfo
      * @return bool
      */
-    public function isLoser(Team $team)
+    public function isLoser($teamInfo)
     {
+        if ($teamInfo instanceof Team) {
+            $teamInfo = $teamInfo->i;
+        } elseif (!$teamInfo instanceof TeamInfo) {
+            throw new InvalidArgumentException('Unknown given argument');
+        }
         if (!$this->confirmed) {
             return FALSE;
         }
         return
-            ($team->i->id == $this->homeTeam->id && $this->scoreHome < $this->scoreAway) ||
-            ($team->i->id == $this->awayTeam->id && $this->scoreAway < $this->scoreHome);
+            ($teamInfo->id == $this->homeTeam->id && $this->scoreHome < $this->scoreAway) ||
+            ($teamInfo->id == $this->awayTeam->id && $this->scoreAway < $this->scoreHome);
     }
 
     /**
@@ -69,6 +80,6 @@ class Match extends BaseEntity
         if (!$this->confirmed) {
             return FALSE;
         }
-        return $this->scoreHome == $this->scoreAway;
+        return $this->scoreHome === $this->scoreAway;
     }
 }
