@@ -2,21 +2,24 @@
 
 namespace Minicup\Presenters;
 
-use Nette,
-    Minicup\Model,
-    Tracy\Debugger;
+use Nette\Application\BadRequestException;
+use Nette\Application\UI\Presenter;
+use Tracy\Debugger;
 
 /**
+ * TODO: fix template for 404
  * Error presenter.
  */
-class ErrorPresenter extends Nette\Application\UI\Presenter {
+class ErrorPresenter extends Presenter
+{
 
     /**
      * @param  Exception
      * @return void
      */
-    public function renderDefault($exception) {
-        if ($exception instanceof Nette\Application\BadRequestException) {
+    public function renderDefault($exception)
+    {
+        if ($exception instanceof BadRequestException) {
             $code = $exception->getCode();
             $this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx');
             Debugger::dump($code);
