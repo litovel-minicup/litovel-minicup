@@ -88,6 +88,9 @@ services:
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
+    - implement: Minicup\Components\ICategoryHistoryComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
     - implement: Minicup\Components\ICategoryStatsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

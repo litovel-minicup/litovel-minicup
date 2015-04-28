@@ -3,6 +3,8 @@
 namespace Minicup\FrontModule\Presenters;
 
 
+use Minicup\Components\ICategoryHistoryComponent;
+use Minicup\Components\ICategoryHistoryComponentFactory;
 use Minicup\Components\ICategoryStatsComponentFactory;
 use Minicup\Components\ICategoryTableComponentFactory;
 use Minicup\Model\Entity\Category;
@@ -14,6 +16,9 @@ class StatsPresenter extends BaseFrontPresenter
 
     /** @var ICategoryStatsComponentFactory @inject */
     public $CSCF;
+
+    /** @var ICategoryHistoryComponentFactory @inject */
+    public $CHCF;
 
     public function renderDefault(Category $category)
     {
@@ -28,5 +33,10 @@ class StatsPresenter extends BaseFrontPresenter
     public function createComponentCategoryStatsComponent()
     {
         return $this->CSCF->create($this->getParameter('category'));
+    }
+
+    public function createComponentCategoryHistoryComponent()
+    {
+        return $this->CHCF->create($this->getParameter('category'));
     }
 }
