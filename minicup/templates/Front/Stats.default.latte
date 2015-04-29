@@ -1,4 +1,6 @@
 {block content}
-    {control categoryDetailComponent}
+    {cache tags => $category->cacheTag}
+        {control categoryDetailComponent}
+    {/cache}
 {/block}
 {block title}Statistiky {$category->name}{/block}
