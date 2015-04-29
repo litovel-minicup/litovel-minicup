@@ -6,6 +6,7 @@ use Minicup\Components\ILoginFormComponentFactory;
 use Minicup\Components\LoginFormComponent;
 use Minicup\Presenters\BasePresenter;
 
+// TODO: store & restore request
 class SignPresenter extends BasePresenter
 {
     /** @var ILoginFormComponentFactory @inject */

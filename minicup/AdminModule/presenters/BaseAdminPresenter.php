@@ -3,7 +3,7 @@
 namespace Minicup\AdminModule\Presenters;
 
 use Minicup\Presenters\BasePresenter;
-use Nette\Http\Response;
+use Nette\Application\ForbiddenRequestException;
 
 abstract class BaseAdminPresenter extends BasePresenter
 {
@@ -11,7 +11,7 @@ abstract class BaseAdminPresenter extends BasePresenter
     {
         parent::startup();
         if (!$this->user->loggedIn) {
-            $this->redirect(Response::S403_FORBIDDEN, ':Admin:Sign:in');
+            throw new ForbiddenRequestException();
         }
     }
 
