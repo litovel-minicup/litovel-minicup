@@ -46,7 +46,7 @@
 {/block}
 
 {block body}
-    {include #navbar}
+    {include navbar}
     <div class="container">
         {snippet flashes}
             <script>
@@ -60,7 +60,13 @@
 {/block}
 
 {block seo}
-    {include #parent}
+    {include parent}
     <meta name="robots" content="noindex,follow">
     <meta name="googlebot" content="nosnippet,noarchive">
+{/block}
+
+{block head}
+    {include parent}
+    {control css}
+    {control js}
 {/block}

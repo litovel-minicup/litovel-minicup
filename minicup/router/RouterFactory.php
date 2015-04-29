@@ -86,13 +86,14 @@ class RouterFactory extends Object
                 $year = $YR->getBySlug($slug);
                 if ($year) {
                     $session['year'] = $slug;
-                    $YR->setSelectedYear($year);
+                    return $YR->setSelectedYear($year);
                 }
                 return NULL;
             },
             Route::FILTER_OUT => function (Year $year) {
                 return $year->slug;
-            }
+            },
+            Route::VALUE => $YR->getSelectedYear()
         );
 
         $front = new RouteList('Front');
@@ -195,7 +196,7 @@ class RouterFactory extends Object
             )
         ));
 
-        $front[] = new Route('[<year>/]', array(
+        $front[] = new Route('[archiv/<year>/]', array(
             'presenter' => 'Homepage',
             'action' => 'default',
             'year' => $yearFilter

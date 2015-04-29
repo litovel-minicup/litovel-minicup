@@ -6,13 +6,8 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
 use Tracy\Debugger;
 
-/**
- * TODO: fix template for 404
- * Error presenter.
- */
 class ErrorPresenter extends Presenter
 {
-
     /**
      * @param  Exception
      * @return void
@@ -22,7 +17,6 @@ class ErrorPresenter extends Presenter
         if ($exception instanceof BadRequestException) {
             $code = $exception->getCode();
             $this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx');
-            Debugger::dump($code);
             Debugger::log("HTTP code $code: {$exception->getMessage()} in {$exception->getFile()}:{$exception->getLine()}", 'access');
         } else {
             $this->setView('500');
