@@ -222,6 +222,23 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit; }
 
+.ct-chart .tooltip {
+  position: absolute;
+  display: inline-block;
+  min-width: 5em;
+  padding: 0.5em;
+  background: none repeat scroll 0% 0% #F4C63D;
+  color: #453D3F;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1; }
+
+.ct-series:hover .ct-line {
+  stroke-width: 8px; }
+.ct-series:hover .ct-point {
+  stroke-width: 12.5px; }
+
 .ct-chart .ct-label {
   display: block;
   width: 100%;

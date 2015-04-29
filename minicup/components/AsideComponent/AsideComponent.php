@@ -34,6 +34,13 @@ class AsideComponent extends BaseComponent
         $this->MM = $MM;
     }
 
+    public function render()
+    {
+        $this->template->category = $this->category;
+        parent::render();
+    }
+
+
     /**
      * @return bool
      */
@@ -46,6 +53,14 @@ class AsideComponent extends BaseComponent
      * @return bool
      */
     public function isStarted()
+    {
+        return $this->MM->isStarted($this->category);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished()
     {
         return $this->MM->isStarted($this->category);
     }
