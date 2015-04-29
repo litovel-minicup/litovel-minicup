@@ -9,12 +9,12 @@
             <div class="Box__subhead Article__subhead">
                 <table class="Table Table__detail">
                     <thead>
-                        <tr>
-                            <th>Pořadí</th>
-                            <th>Odehrané zápasy</th>
-                            <th>Skóre</th>
-                            <th>Body</th>
-                        </tr>
+                    <tr>
+                        <th>Pořadí</th>
+                        <th>Odehrané zápasy</th>
+                        <th>Skóre</th>
+                        <th>Body</th>
+                    </tr>
                     </thead>
                 </table>
             </div>
@@ -22,25 +22,15 @@
             <div class="Box__content Team__content">
                 <table class="Table__detail">
                     <tbody>
-                        <tr>
-                            <td>{$team->order}</td>
-                            <td>{$team->playedMatches|length}</td>
-                            <td>{$team->scored}:{$team->received}</td>
-                            <td>{$team->points}</td>
-                        </tr>
+                    <tr>
+                        <td>{$team->order}</td>
+                        <td>{$team->playedMatches|length}</td>
+                        <td>{$team->scored}:{$team->received}</td>
+                        <td>{$team->points}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-
-
-            {*       jméno: {$team->name} <br>
-                     slug: {$team->slug} <br>
-                     pořadí: {$team->order}<br>
-                    počet zápasů: {$team->matches|length}<br>
-                    kategorie: {$team->category->name}<br>
-                    vstřelené: {$team->scored}<br>
-                    obdržené: {$team->received}<br>
-                    body: {$team->points}<br> *}
         </div>
     </div>
     {if $team->order}

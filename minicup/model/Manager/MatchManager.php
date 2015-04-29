@@ -73,7 +73,7 @@ class MatchManager extends Object
     public function isPlayingTime(Category $category)
     {
         $now = new \DibiDateTime();
-        return (bool) $this->MTR->getInTime($now);
+        return !is_null($this->MTR->getInTime($now));
     }
 
     /**
@@ -88,5 +88,19 @@ class MatchManager extends Object
             }
         }
         return FALSE;
+    }
+
+    /**
+     * @param Category $category
+     * @return bool
+     */
+    public function isFinished(Category $category)
+    {
+        foreach ($category->matches as $match) {
+            if (!$match->confirmed) {
+                return FALSE;
+            }
+        }
+        return TRUE;
     }
 }
