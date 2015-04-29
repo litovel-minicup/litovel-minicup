@@ -4,42 +4,57 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Manager\MatchManager;
 
 class CategoryDetailComponent extends BaseComponent
 {
     /** @var Category */
     private $category;
 
-    /** @var ICategoryTableComponentFactory @inject */
+    /** @var ICategoryTableComponentFactory */
     private $CTCF;
 
-    /** @var ICategoryStatsComponentFactory @inject */
+    /** @var ICategoryStatsComponentFactory */
     private $CSCF;
 
-    /** @var ICategoryHistoryComponentFactory @inject */
+    /** @var ICategoryHistoryComponentFactory */
     private $CHCF;
+
+    /** @var MatchManager */
+    private $MM;
 
     /**
      * @param Category $category
-     * @param CategoryTableComponent $CTCF
-     * @param CategoryStatsComponent $CSCF
-     * @param CategoryHistoryComponent $CHCF
+     * @param ICategoryTableComponentFactory $CTCF
+     * @param ICategoryStatsComponentFactory $CSCF
+     * @param ICategoryHistoryComponentFactory $CHCF
+     * @param MatchManager $MM
      */
     public function __construct(Category $category,
                                 ICategoryTableComponentFactory $CTCF,
                                 ICategoryStatsComponentFactory $CSCF,
-                                ICategoryHistoryComponentFactory $CHCF)
+                                ICategoryHistoryComponentFactory $CHCF,
+                                MatchManager $MM)
     {
         $this->category = $category;
         $this->CTCF = $CTCF;
         $this->CSCF = $CSCF;
         $this->CHCF = $CHCF;
+        $this->MM = $MM;
     }
 
     public function render()
     {
         $this->template->category = $this->category;
         parent::render();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStarted()
+    {
+        return $this->MM->isStarted($this->category);
     }
 
     public function createComponentCategoryTableComponent()
