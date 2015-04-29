@@ -1,27 +1,4 @@
 {block content}
-    <div class="Article">
-        <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-            </div>
-            <div class="Article__head__text Box__head__text">Tabulka</div>
-        </div>
-        {control categoryTableComponent}
-    </div>
-    <div class="Article">
-        <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-            </div>
-            <div class="Article__head__text Box__head__text">Statistiky</div>
-        </div>
-        {control categoryStatsComponent}
-    </div>
-    <div class="Article">
-        <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-            </div>
-            <div class="Article__head__text Box__head__text">Vývoj pořadí</div>
-        </div>
-        {control categoryHistoryComponent}
-    </div>
+    {control categoryDetailComponent}
 {/block}
 {block title}Statistiky {$category->name}{/block}
