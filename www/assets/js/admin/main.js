@@ -39,8 +39,12 @@ jQuery(function ($) {
         "hideMethod": "fadeOut"
     };
 
-    $(document).ajaxError(function () {
-        toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
+    $(document).ajaxError(function (e, r) {
+        if (r.status === 403) {
+            window.location.reload(true);
+        } else {
+            toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
+        }
     }).ajaxSuccess(function (event, request, settings) {
         if (request.responseJSON && request.responseJSON.snippets) {
             redrawSnippets(request.responseJSON.snippets);

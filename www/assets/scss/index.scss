@@ -4,21 +4,16 @@
 @import "reset";
 @import "_var";
 @import "_font-face";
-
-
 /**
  * Import Bourbon, Neat an Chartist
  */
-
 @import "bourbon/bourbon";
 @import "grid-settings";
 @import "neat/neat";
 @import "chartist/chartist";
-
 /**
  * Import Components
  */
-
 @import "_Box";
 @import "_Header";
 @import "_Article";
@@ -30,10 +25,29 @@
 @import "_Team";
 @import "_Matches";
 
-
 body {
-	@include outer-container();
-	height: 100%;
-	-webkit-font-smoothing:antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  @include outer-container();
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Easter egg
+ */
+body {
+  -webkit-transition-duration: 5s;
+  -moz-transition-duration: 2s;
+  -o-transition-duration: 1s;
+  transition-duration: 4s;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -o-transition-property: -o-transform;
+  transition-property: transform;
+}
+
+body.barrel-roll {
+  -webkit-transform: rotate(720deg);
+  -moz-transform: rotate(-720deg);
+  -o-transform: rotate(-360deg);
 }

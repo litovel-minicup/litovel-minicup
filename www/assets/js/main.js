@@ -44,6 +44,23 @@ var initMobileNav = function ($nav) {
     })
 };
 
+var initEasterEgg = function ($el, pattern) {
+    var doBarrelRoll = function () {
+        $el.find('body').toggleClass('barrel-roll');
+    };
+    var typed = "";
+    $el.keyup(function (e) {
+        if (e.key.length !== 1) return;
+        typed += e.key;
+        if (typed.length > pattern.length) {
+            typed = typed.slice(1);
+        }
+        if (typed.toLocaleLowerCase() === pattern) {
+            doBarrelRoll();
+        }
+    });
+};
+
 jQuery(function ($) {
     $.nette.init();
     $.nette.ext({
@@ -53,4 +70,5 @@ jQuery(function ($) {
     });
 
     initMobileNav($('#nav-mobile'));
+    initEasterEgg($(document), 'do a barrel roll');
 });
