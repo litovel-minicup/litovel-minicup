@@ -16,6 +16,11 @@
 
 	&__subhead {
 		background: $dark--grey;
+		
+		a:hover {
+			background: white;
+		}
+		
 	}
 
 	&__heading {

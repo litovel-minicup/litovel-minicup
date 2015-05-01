@@ -13,7 +13,7 @@
         </div>
     <![endif]-->
 
-    <div class="Header">
+    <div class="Header animated fadeInDown">
             <!-- svg logo with fallback -->
             <div id="nav-mobile" class="Header__nav--mobile">
                 <label>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="Main__wrapper">
+        <div class="Main__wrapper animated fadeInLeft">
             {block outerContent}
                 <div class="Section">
                     {block content}
@@ -60,11 +60,11 @@
             {/block}
         </div>
 
-        <div class="Side__wrapper" n:cache="tags => $category->cacheTag">
+        <div class="Side__wrapper animated fadeInRight" n:cache="tags => $category->cacheTag">
             {control asideComponent}
         </div>
 
-        <div class="Footer">
+        <div class="Footer animated fadeInUp">
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Kontakt</div>
                 <div class="Box__content Footer__content">
