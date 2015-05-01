@@ -3,19 +3,20 @@
 namespace Minicup\Components;
 
 
+use Minicup\FrontModule\Presenters\BaseFrontPresenter;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Http\Session;
 
 class CategoryToggleComponent extends BaseComponent
 {
-    /** @var  CategoryRepository */
+    /** @var CategoryRepository */
     private $CR;
 
-    /** @var  YearRepository */
+    /** @var YearRepository */
     private $YR;
 
-    /** @var  Session */
+    /** @var Session */
     private $session;
 
     /**
@@ -31,7 +32,7 @@ class CategoryToggleComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->selectedCategory = $this->CR->getBySlug($this->session['category']);
+        $this->template->selectedCategory = $this->presenter->category;
         $this->template->categories = $this->YR->getSelectedYear()->categories;
         parent::render();
     }
@@ -39,7 +40,10 @@ class CategoryToggleComponent extends BaseComponent
     public function handleChangeCategory($slug)
     {
         $category = $this->CR->getBySlug($slug);
-        $this->session['category'] = $category->slug;
+        # $this->session['category'] = $category->slug;
+        /** @var BaseFrontPresenter $presenter */
+        $presenter = $this->presenter;
+        $presenter->category = $category;
         $this->presenter->redirect(':Front:Homepage:default', array('category' => $category));
     }
 

@@ -60,17 +60,13 @@ class RouterFactory extends Object
         $CR = $this->CR;
         $YR = $this->YR;
         $TagR = $this->TagR;
-        $session = $this->session;
-        if (!isset($session['category'])) {
-            $session['category'] = $CR->getDefaultCategory()->slug;
-        }
         $categoryFilter = array(
-            Route::FILTER_IN => function ($slug) use ($CR, $session) {
+            Route::FILTER_IN => function ($slug) use ($CR) {
                 $category = $CR->getBySlug($slug);
                 if ($category) {
-                    $session['category'] = $slug;
+                    return $category;
                 }
-                return $category;
+                return NULL;
             },
             Route::FILTER_OUT => function ($category) use ($CR) {
                 if ($category instanceof Category) {
@@ -82,10 +78,9 @@ class RouterFactory extends Object
         );
 
         $yearFilter = array(
-            Route::FILTER_IN => function ($slug) use ($YR, $session) {
+            Route::FILTER_IN => function ($slug) use ($YR) {
                 $year = $YR->getBySlug($slug);
                 if ($year) {
-                    $session['year'] = $slug;
                     return $YR->setSelectedYear($year);
                 }
                 return NULL;
