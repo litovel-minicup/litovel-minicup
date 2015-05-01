@@ -41,6 +41,21 @@
 		th:nth-of-type(4) {width: 10%;}
 		th:nth-of-type(5) {width: 3%;}
 	}
+
+	&--win {
+		background: lighten(green, 5%)!important;
+		color: white;
+	}
+
+	&--loss {
+		background: lighten(red, 15%)!important;
+		color: white;
+	}
+
+	&--draw {
+		background: $dark--blue!important;
+		color: white;
+	}
 }
 
 .Table__standings {

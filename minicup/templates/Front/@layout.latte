@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="Main__wrapper animated fadeInLeft">
+        <div class="Main__wrapper animated fadeInUp">
             {block outerContent}
                 <div class="Section">
                     {block content}
@@ -60,7 +60,7 @@
             {/block}
         </div>
 
-        <div class="Side__wrapper animated fadeInRight" n:cache="tags => $category->cacheTag">
+        <div class="Side__wrapper animated fadeInUp" n:cache="tags => $category->cacheTag">
             {control asideComponent}
         </div>
 
