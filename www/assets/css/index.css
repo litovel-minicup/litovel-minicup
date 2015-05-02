@@ -1001,7 +1001,8 @@ html {
       .Header__nav--mobile:last-child {
         margin-right: 0; }
       .Header__nav--mobile select {
-        margin-top: 50px; } }
+        width: 100%;
+        margin-left: 0%; } }
 .Article__head__icon {
   background: #c8c8c8; }
 .Article__head__text {
@@ -1392,6 +1393,10 @@ html {
 .Team__content ul li .text {
   font-family: "Montserrat";
   font-size: 70px; }
+.Team__content .Table tbody tr {
+  background: #e1e1e1 !important; }
+.Team__content .Table tbody tr:hover {
+  color: black; }
 .Team__Text {
   background: red; }
 
@@ -1402,6 +1407,8 @@ html {
   .Table thead {
     color: white;
     text-align: center; }
+    .Table thead th {
+      padding: 15px 0; }
   .Table tbody {
     text-align: center; }
     .Table tbody tr:nth-child(odd) {
@@ -1418,11 +1425,11 @@ html {
 .Table__matches thead th:nth-of-type(2) {
   width: 10%; }
 .Table__matches thead th:nth-of-type(3) {
-  width: 35%; }
+  width: 25%; }
 .Table__matches thead th:nth-of-type(4) {
   width: 10%; }
 .Table__matches thead th:nth-of-type(5) {
-  width: 3%; }
+  width: 10%; }
 .Table__matches--win {
   background: #009a00 !important;
   color: white; }
@@ -1434,41 +1441,26 @@ html {
   color: white; }
 
 .Table__standings thead th:nth-of-type(1) {
-  width: 5%; }
+  width: 15%; }
 .Table__standings thead th:nth-of-type(2) {
-  width: 45%; }
+  width: 30%;
+  text-align: left; }
 .Table__standings thead th:nth-of-type(3) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(4) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(5) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(6) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(7) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(8) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings thead th:nth-of-type(9) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(1) {
-  width: 5%; }
+  width: 6%; }
 .Table__standings tbody td:nth-of-type(2) {
-  width: 45%; }
-.Table__standings tbody td:nth-of-type(3) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(4) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(5) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(6) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(7) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(8) {
-  width: 5%; }
-.Table__standings tbody td:nth-of-type(9) {
-  width: 5%; }
+  text-align: left; }
 
 .Table__detail {
   width: 100%; }
@@ -1482,8 +1474,15 @@ html {
     text-align: center; }
 
 @media screen and (max-width: 480px) {
-  .Table thead th:nth-child(n+4), .Table tbody tr td:nth-child(n+4) {
-    display: none; } }
+  .Table__standings thead th:nth-child(n+6), .Table__standings tbody tr td:nth-child(n+6) {
+    display: none; }
+
+  .Table__matches thead th:nth-child(n+4), .Table__matches tbody tr td:nth-child(n+4) {
+    display: none; }
+
+  .Table__detail tbody td {
+    font-size: 40px;
+    font-family: "Montserrat"; } }
 body {
   max-width: 1145px;
   margin-left: auto;

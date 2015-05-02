@@ -1,14 +1,19 @@
 .Table {
+	
+	width: 100%;
 
 	&__content {
 		padding: 0;
 	}
 
-	width: 100%;
-
 	thead {
 		color: white;
 		text-align: center;
+
+		th {
+			padding: 15px 0;
+		}
+
 	}
 
 	tbody {
@@ -27,7 +32,6 @@
 			td {
 				border-bottom: 2px solid $dark--grey;
 				padding: 10px 0;
-
 			}
 		}
 	}
@@ -37,9 +41,9 @@
 	thead {
 		th:nth-of-type(1) {width: 25%;}
 		th:nth-of-type(2) {width: 10%;}
-		th:nth-of-type(3) {width: 35%;}
+		th:nth-of-type(3) {width: 25%;}
 		th:nth-of-type(4) {width: 10%;}
-		th:nth-of-type(5) {width: 3%;}
+		th:nth-of-type(5) {width: 10%;}
 	}
 
 	&--win {
@@ -60,26 +64,26 @@
 
 .Table__standings {
 	thead {
-		th:nth-of-type(1) {width: 5%;}
-		th:nth-of-type(2) {width: 45%;}
-		th:nth-of-type(3) {width: 5%;}
-		th:nth-of-type(4) {width: 5%;}
-		th:nth-of-type(5) {width: 5%;}
-		th:nth-of-type(6) {width: 5%;}
-		th:nth-of-type(7) {width: 5%;}
-		th:nth-of-type(8) {width: 5%;}
-		th:nth-of-type(9) {width: 5%;}
+		th:nth-of-type(1) {width: 15%;}
+		th:nth-of-type(2) {width: 30%; text-align: left;}
+		th:nth-of-type(3) {width: 6%;}
+		th:nth-of-type(4) {width: 6%;}
+		th:nth-of-type(5) {width: 6%;}
+		th:nth-of-type(6) {width: 6%;}
+		th:nth-of-type(7) {width: 6%;}
+		th:nth-of-type(8) {width: 6%;}
+		th:nth-of-type(9) {width: 6%;}
 	}
 	tbody {
-		td:nth-of-type(1) {width: 5%;}
-		td:nth-of-type(2) {width: 45%;}
-		td:nth-of-type(3) {width: 5%;}
-		td:nth-of-type(4) {width: 5%;}
-		td:nth-of-type(5) {width: 5%;}
-		td:nth-of-type(6) {width: 5%;}
-		td:nth-of-type(7) {width: 5%;}
-		td:nth-of-type(8) {width: 5%;}
-		td:nth-of-type(9) {width: 5%;}
+		// td:nth-of-type(1) {width: 5%;}
+		td:nth-of-type(2) {text-align: left;}
+		// td:nth-of-type(3) {width: 5%;}
+		// td:nth-of-type(4) {width: 5%;}
+		// td:nth-of-type(5) {width: 5%;}
+		// td:nth-of-type(6) {width: 5%;}
+		// td:nth-of-type(7) {width: 5%;}
+		// td:nth-of-type(8) {width: 5%;}
+		// td:nth-of-type(9) {width: 5%;}
 	}
 }
 
@@ -107,7 +111,22 @@
 }
 
 @media screen and (max-width: 480px) {
-	.Table thead th:nth-child(n+4), .Table tbody tr td:nth-child(n+4) {
+	.Table__standings thead th:nth-child(n+6), .Table__standings tbody tr td:nth-child(n+6) {
 		display: none;
 	}
+
+	.Table__matches thead th:nth-child(n+4), .Table__matches tbody tr td:nth-child(n+4) {
+		display: none;
+	}
+
+	.Table__detail {
+		tbody {
+
+			td {
+				font-size: 40px;
+				font-family: "Montserrat";
+			}
+		}
+	}
+
 }

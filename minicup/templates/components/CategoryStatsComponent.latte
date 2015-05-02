@@ -1,4 +1,20 @@
-{foreach $stats as $key => $value}
-    {$key}: {$value}
-    <br/>
-{/foreach}
+<div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+                    <thead class="Box__subhead Article__subhead">
+                    <tr>
+                    	{foreach $stats as $key => $value}
+    						<th>{$key}</th>
+						{/foreach}
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+                    <tr>
+                    	{foreach $stats as $key => $value}
+    						<td>{$value}</td>
+						{/foreach}
+                    </tr>
+                    </tbody>
+                </table>
+</div>

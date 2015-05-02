@@ -75,7 +75,7 @@
 
 			&:hover:not(.Header__toggle__anchor--active) {
 			   background: white;
-            color: $dark--blue;
+               color: $dark--blue;
 			}
 
 			&--active {
@@ -245,7 +245,8 @@
                 display: block;
 
                 select {
-                    margin-top: 50px;
+                    width: 100%;
+                    @include shift(0);
                 }
             }
         }

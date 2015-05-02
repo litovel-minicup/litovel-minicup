@@ -48,9 +48,14 @@
 
 	  		}	
 		}
-	}
 
-	&__heading {
+		.Table tbody tr {
+			background: $light--grey!important;
+		}
+
+		.Table tbody tr:hover {
+			color: black;
+		}
 
 	}
 

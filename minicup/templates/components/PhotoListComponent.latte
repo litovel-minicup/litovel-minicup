@@ -1,7 +1,9 @@
 {foreach $photos as $photo}
-    <a class="swipebox" title="{$iterator->counter}. z {$photos|length}" href={plink :Media:medium $photo->filename} >
-        <img src="{plink :Media:small $photo->filename}" alt="image">
-    </a>
+    <div class="Box__rows">
+   		<a class="swipebox" title="{$iterator->counter}. z {$photos|length}" href={plink :Media:medium $photo->filename} >
+        	<img src="{plink :Media:small $photo->filename}" alt="image">
+    	</a>
+    </div>
 {/foreach}
 {if !$photos}
     <p>Žádné fotky k zobrazení.</p>

@@ -1,14 +1,14 @@
 {block outerContent}
-    <div class="Section">
+    <div class="Section animated">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__teams"></div>
                 <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
             </div>
 
-            <div class="Box__subhead Article__subhead">
+            <div class="Box__content Table__content Team__content">
                 <table class="Table Table__detail">
-                    <thead>
+                    <thead class="Box__subhead Article__subhead">
                     <tr>
                         <th>Pořadí</th>
                         <th>Odehrané zápasy</th>
@@ -16,11 +16,8 @@
                         <th>Body</th>
                     </tr>
                     </thead>
-                </table>
-            </div>
 
-            <div class="Box__content Team__content">
-                <table class="Table__detail">
+
                     <tbody>
                     <tr>
                         <td>{$team->order}</td>
