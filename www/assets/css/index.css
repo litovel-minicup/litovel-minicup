@@ -708,17 +708,33 @@ html {
   height: 50px;
   font-family: 'PTBoldItalic'; }
 .Box__rows {
+  background: #c8c8c8;
   float: left;
   display: block;
   margin-right: 0.70671%;
   width: 24.46996%;
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  height: 150px;
+  padding: 10px;
+  text-align: center;
+  display: table; }
   .Box__rows:last-child {
     margin-right: 0; }
   .Box__rows:nth-child(4n) {
     margin-right: 0; }
   .Box__rows:nth-child(4n+1) {
     clear: left; }
+  .Box__rows a {
+    font-family: "Montserrat";
+    font-size: 24px;
+    letter-spacing: -1.5px;
+    display: table-cell;
+    vertical-align: middle;
+    color: #626262; }
+    .Box__rows a:hover {
+      color: white; }
+  .Box__rows:hover {
+    background: #4180ff; }
 .Box__content {
   padding: 15px 20px 5px 20px;
   line-height: 1.32; }
@@ -1368,25 +1384,6 @@ html {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
-.Team__rows {
-  background: #c8c8c8;
-  height: 150px;
-  padding: 10px;
-  text-align: center;
-  display: table; }
-  .Team__rows:nth-child(n+10) {
-    margin-bottom: 20px; }
-  .Team__rows a {
-    font-family: "Montserrat";
-    font-size: 24px;
-    letter-spacing: -1.5px;
-    color: #626262;
-    display: table-cell;
-    vertical-align: middle; }
-    .Team__rows a:hover {
-      color: white; }
-  .Team__rows:hover {
-    background: #4180ff; }
 .Team__content ul li .heading {
   font-family: "PTBoldItalic";
   font-size: 16px; }

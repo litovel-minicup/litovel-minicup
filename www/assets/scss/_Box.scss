@@ -29,9 +29,37 @@
 	}
 
 	&__rows {
+
+		background: $medium--grey;
+
 		@include span-columns(3 of 12);
   		@include omega(4n);
   		margin-bottom: 5px;
+  		height: 150px;
+		padding: 10px;
+		text-align: center;
+
+		display: table;
+
+		a {
+			font-family: "Montserrat";
+			font-size: 24px;
+			letter-spacing: -1.5px;
+
+			display: table-cell;
+    		vertical-align: middle;
+
+    		color: darken($medium--grey, 40%);
+
+			&:hover {
+				color: white;
+			}
+		}
+
+		&:hover {
+			background: $light--blue;
+		}
+
 	}
 
 	&__content {
