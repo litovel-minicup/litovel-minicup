@@ -1,20 +1,22 @@
 <div class="Box__content Table__content Team__content">
                 <table class="Table Table__detail">
-                    <thead class="Box__subhead Article__subhead">
-                    <tr>
                     	{foreach $stats as $key => $value}
-    						<th>{$key}</th>
-						{/foreach}
-                    </tr>
-                    </thead>
+                            {first}<thead class="Box__subhead Article__subhead">{/first}
+                                {first 4}<tr>{/first}
+                                    <th>{$key}</th>
+                                {last 4}</tr>{/last}
+                            {last}</thead>{/last}
 
+                             {first}<tbody>{/first}
+                                {first 4}<tr>{/first}
+                                    <td>{$value}</td>
+                                {last 4}</tr>{/last}
+                            {last}</tbody>{/last}
 
-                    <tbody>
-                    <tr>
-                    	{foreach $stats as $key => $value}
-    						<td>{$value}</td>
 						{/foreach}
-                    </tr>
-                    </tbody>
+
+                        {foreach $stats as $key => $value}
+                           
+                        {/foreach}
                 </table>
 </div>
