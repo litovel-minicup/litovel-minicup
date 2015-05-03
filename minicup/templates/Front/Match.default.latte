@@ -1,7 +1,14 @@
 {block content}
-    {cache $category->cacheTag, tags => $category->cacheTag}
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__matches">
+            </div>
+            <div class="Article__head__text Box__head__text">Zápasy</div>
+        </div>
+        {cache $category->cacheTag, tags => $category->cacheTag}
         {control listOfMatchesComponent:full}
-    {/cache}
+        {/cache}
+    </div>
 {/block}
 
 {block title}Zápasy kategorie {$category->name}{/block}

@@ -42,6 +42,11 @@
     {if count($team->i->matches) > 0}
         <div class="Section">
             <div class="Article">
+                <div class="Article__head Box__head">
+                    <div class="Article__head__icon Box__head__icon icon__matches">
+                    </div>
+                    <div class="Article__head__text Box__head__text">Zápasy</div>
+                </div>
                 {control listOfMatchesComponent}
             </div>
         </div>
