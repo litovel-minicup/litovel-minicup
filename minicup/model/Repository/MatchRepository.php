@@ -110,6 +110,19 @@ class MatchRepository extends BaseRepository
     }
 
     /**
+     * @param Category $category
+     * @return array
+     */
+    public function groupMatchesByDay(Category $category)
+    {
+        $days = array();
+        foreach ($category->matches as $match) {
+            $days[$match->matchTerm->day->day->getTimestamp()][] = $match;
+        }
+        return $days;
+    }
+
+    /**
      * provide to fluent aliases 'mt'(match_term) and 'd'(day) joined to match
      * @param Category $category
      * @param string $order

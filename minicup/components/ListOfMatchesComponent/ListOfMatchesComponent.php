@@ -45,6 +45,8 @@ class ListOfMatchesComponent extends BaseComponent
                 $matches = $this->MR->getNextMatches($this->arg, $limit);
             } elseif ($mode == 'last') {
                 $matches = $this->MR->getLastMatches($this->arg, $limit);
+            } elseif ($this->view === 'full' && $mode === 'all') {
+                $this->template->days = $this->MR->groupMatchesByDay($this->arg);
             } elseif ($mode == 'all') {
                 $matches = $this->arg->matches;
             } else {

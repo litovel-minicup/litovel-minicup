@@ -17,7 +17,7 @@
             </thead> 
         <tbody>
             {foreach $matches as $match}
-                <tr n:class="$match->isDraw() ? 'Table__matches--draw',
+                <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
                                 isset($team) && $match->isWinner($team) ? 'Table__matches--win',
                                 isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
                     <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>

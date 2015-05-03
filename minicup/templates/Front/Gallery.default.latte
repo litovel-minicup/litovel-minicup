@@ -10,11 +10,9 @@
         <div class="Box__content Team__content">
             <ul>
                 {foreach $tags as $tag}
-                    <li class="Box__rows"><a href={plink Gallery:detail $tag}>{$tag->slug}</a></li>
+                    <li class="Box__rows"><a href={plink Gallery:detail $tag}>{$tag->name}</a></li>
                 {/foreach}
             </ul>
         </div>
-
-
     </div>
 {/block}

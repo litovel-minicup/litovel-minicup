@@ -2,8 +2,8 @@
  * Import Variables
  */
 @import "reset";
-@import "_var";
-@import "_font-face";
+@import "var";
+@import "font-face";
 /**
  * Import Bourbon, Neat an Chartist
  */
@@ -11,26 +11,38 @@
 @import "grid-settings";
 @import "neat/neat";
 @import "chartist/chartist";
-// @import "animate";
+@import "animate";
 /**
  * Import Components
  */
-@import "_Box";
-@import "_Header";
-@import "_Article";
-@import "_Sponsors";
-@import "_Aside";
-@import "_Section";
-@import "_Footer";
-@import "_Cover";
-@import "_Team";
-@import "_Matches";
+@import "Box";
+@import "Header";
+@import "Article";
+@import "Sponsors";
+@import "Aside";
+@import "Section";
+@import "Footer";
+@import "Cover";
+@import "Team";
+@import "Matches";
 
 body {
   @include outer-container();
   height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+// TODO: move to right partials file
+// required by tabs in full list of matches
+.tab-content > .tab-pane {
+  display: none;
+  visibility: hidden;
+}
+
+.tab-content > .active {
+  display: block;
+  visibility: visible;
 }
 
 /**
