@@ -1,5 +1,5 @@
 {block content}
-    {cache tags => $category->cacheTag}
+    {cache $category->cacheTag, tags => $category->cacheTag}
         {control listOfMatchesComponent-$category->slug}
     {/cache}
 {/block}

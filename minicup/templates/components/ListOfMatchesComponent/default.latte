@@ -16,33 +16,10 @@
                     </tr>
             </thead> 
         <tbody>
-            <tr class="Table__matches--win">
-                <td>Praha Chodov</td>
-                <td>20:28</td>
-                <td>Zora Olomouc</td>
-                <td>13:30</td>
-                <td>22.5</td>
-            </tr>
-
-            <tr class="Table__matches--loss">
-                <td>Praha Chodov</td>
-                <td>20:28</td>
-                <td>Zora Olomouc</td>
-                <td>13:30</td>
-                <td>22.5</td>
-            </tr>
-
-            <tr class="Table__matches--draw">
-                <td>Praha Chodov</td>
-                <td>20:28</td>
-                <td>Zora Olomouc</td>
-                <td>13:30</td>
-                <td>22.5</td>
-            </tr>
-
-
             {foreach $matches as $match}
-                <tr n:class="isset($team) && $match->isWinner($team) ? win, isset($team) && $match->isLoser($team) ? lose, $match->isDraw() ? draw">
+                <tr n:class="$match->isDraw() ? 'Table__matches--draw',
+                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
+                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
                     <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id" href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                     <td>{$match->scoreHome} : {$match->scoreAway}</td>
                     <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id" href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>

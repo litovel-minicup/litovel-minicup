@@ -1,5 +1,5 @@
 {block outerContent}
-    {cache tags => $category->cacheTag}
+    {cache $category->cacheTag, tags => $category->cacheTag}
         {control categoryDetailComponent}
     {/cache}
 {/block}
