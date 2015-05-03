@@ -48,13 +48,13 @@
 {block body}
     {include navbar}
     <div class="container">
-        {snippet flashes}
+        {snippet flashes}{if $flashes|length}
             <script>
                 {foreach $flashes as $flash}
                 toastr.{$flash->type|noescape}({$flash->message});
                 {/foreach}
             </script>
-        {/snippet}
+        {/if}{/snippet}
         {block content}{/block}
     </div>
 {/block}
