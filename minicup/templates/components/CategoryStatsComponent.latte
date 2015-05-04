@@ -1,22 +1,98 @@
 <div class="Box__content Table__content Team__content">
-                <table class="Table Table__detail">
-                    	{foreach $stats as $key => $value}
-                            {first}<thead class="Box__subhead Article__subhead">{/first}
-                                {first 4}<tr>{/first}
-                                    <th>{$key}</th>
-                                {last 4}</tr>{/last}
-                            {last}</thead>{/last}
+    <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Vstřelené branky na turnaji</th>
+            <th>Počet remíz</th>
+            <th>Nejvyšší brankový rozdíl</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$stats->scored_goals}</td>
+            <td>{$stats->count_of_draws}</td>
+            <td>{$stats->max_diff}</td>
+        </tr>
+        </tbody>
+    </table>
 
-                             {first}<tbody>{/first}
-                                {first 4}<tr>{/first}
-                                    <td>{$value}</td>
-                                {last 4}</tr>{/last}
-                            {last}</tbody>{/last}
+    <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejvyšší skóre domácích</th>
+            <th>Nejvyšší skóre v zápase</th>
+            <th>Nejvyšší skóre hostů</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$stats->max_home_score}</td>
+            <td>{$stats->max_match_score}</td>
+            <td>{$stats->max_away_score}</td>
+        </tr>
+        </tbody>
+    </table>
 
-						{/foreach}
+    <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejnižší skóre domácích</th>
+            <th>Nejnižší skóre v zápase</th>
+            <th>Nejnižší skóre hostů</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$stats->min_home_score}</td>
+            <td>{$stats->min_match_score}</td>
+            <td>{$stats->min_away_score}</td>
+        </tr>
+        </tbody>
+    </table>
 
-                        {foreach $stats as $key => $value}
-                           
-                        {/foreach}
-                </table>
+    <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejlépe útočící tým</th>
+            <th>Nejlepší brankový rozdíl</th>
+            <th>Nejlépe bránící tým</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->most_scored->category, $stats->most_scored}">{$stats->most_scored->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->best_diff->category, $stats->best_diff}">{$stats->best_diff->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->least_received->category, $stats->least_received}">{$stats->least_received->name}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejhůře útočící tým</th>
+            <th>Nejhorší brankový rozdíl</th>
+            <th>Nejhůře bránící tým</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->least_scored->category, $stats->least_scored}">{$stats->least_scored->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->worst_diff->category, $stats->worst_diff}">{$stats->worst_diff->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->most_received->category, $stats->most_received}">{$stats->most_received->name}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
