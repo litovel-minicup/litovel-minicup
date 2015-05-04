@@ -20,9 +20,9 @@
                     <select>
                         <option value={plink Homepage:default} selected="selected">novinky</option>
                         <option value={plink Homepage:informations}>infromace</option>
-                        <option value={plink Team:list $category}>týmy</option>
-                        <option value={plink Match:list $category}>zápasy</option>
-                        <option value={plink Stats:default $category}>statistiky</option>
+                        <option value={plink Team:list}>týmy</option>
+                        <option value={plink Match:list}>zápasy</option>
+                        <option value={plink Stats:default}>statistiky</option>
                         <option value={plink Gallery:default}>foto</option>
                         <option value={plink Homepage:sponsors}>sponzoři</option>
                     </select>
@@ -42,9 +42,9 @@
                 <ul>
                     <a n:href="Homepage:default"><li>novinky</li></a>
                     <a n:href="Homepage:informations"><li>informace</li></a>
-                    <a n:href="Team:list $category"><li>Týmy</li></a>
-                    <a n:href="Match:list $category"><li>Zápasy</li></a>
-                    <a n:href="Stats:default $category"><li>Statistiky</li></a>
+                    <a n:href="Team:list"><li>Týmy</li></a>
+                    <a n:href="Match:list"><li>Zápasy</li></a>
+                    <a n:href="Stats:default"><li>Statistiky</li></a>
                     <a n:href="Gallery:default"><li>foto</li></a>
                     <a n:href="Homepage:sponsors"><li>sponzoři</li></a>
                 </ul>
@@ -60,7 +60,7 @@
             {/block}
         </div>
 
-        <div class="Side__wrapper animated fadeInUp" n:cache="tags => $category->cacheTag">
+        <div class="Side__wrapper animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
             {control asideComponent}
         </div>
 
