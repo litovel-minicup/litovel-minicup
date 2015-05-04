@@ -63,21 +63,21 @@ $ct-include-alternative-responsive-containers: $ct-include-classes !default;
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
 $ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) !default;
 $ct-series-colors: (
-        #d70206,
+        #0040C1,
         #f05b4f,
         #f4c63d,
         #d17905,
         #453d3f,
         #59922b,
-        #0544d3,
+        #b2c326,
         #6b0392,
+        #d70206,
         #f05b4f,
         #dda458,
         #eacf7d,
         #86797d,
-        #b2c326,
-        #6188e2,
-        #a748ca
+        #a748ca,
+        #0544d3
 ) !default;
 
 .#{$ct-class-chart} .tooltip {
@@ -93,10 +93,12 @@ $ct-series-colors: (
   z-index: 1;
 }
 
-.#{$ct-class-series}:hover {
+.#{$ct-class-series}:hover,
+.#{$ct-class-point}:hover {
   .#{$ct-class-line} {
     stroke-width: 8px;
   }
+  &,
   .#{$ct-class-point} {
     stroke-width: 12.5px;
   }

@@ -38,7 +38,7 @@ class CategoryHistoryComponent extends BaseComponent
             $series = array();
             /** @var Team $historyTeam */
             $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach ($historicalTeams as $historyTeam) {
+            foreach (array_merge($historicalTeams, array($team)) as $historyTeam) {
                 $series[] = count($this->category->teams) - $historyTeam->order;
             }
             if (count($series) < $maxMatches) {

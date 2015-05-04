@@ -3,17 +3,18 @@
         $.ajax({link data!}).success(function (response) {
             var chart = new Chartist.Line('.ct-chart', response, {
                         high: {$team->category->teams|length},
-                        low: 0,
+                        low: -1,
                         showArea: true,
                         showLine: true,
                         showPoint: false,
-                        lineSmooth: Chartist.Interpolation.none({
-                            divisor: 2
+                        areaBase: -2,
+                        lineSmooth: Chartist.Interpolation.simple({
+                            divisor: 5
                         }),
                         axisY: {
                             scaleMinSpace: 15,
                             labelInterpolationFnc: function (value) {
-                                return ({$team->category->teams|length} - parseInt(value) + 1) + ". ";
+                                return ({$team->category->teams|length} -parseInt(value) + 1) + ". ";
                             },
                             labelOffset: {
                                 x: 0,
@@ -27,8 +28,8 @@
                         }
                     }
             );
-            chart.on('draw', function(data) {
-                if(data.type === 'line' || data.type === 'area') {
+            chart.on('draw', function (data) {
+                if (data.type === 'line' || data.type === 'area') {
                     data.element.animate({
                         d: {
                             begin: 2000 * data.index,

@@ -2,8 +2,9 @@
     jQuery(function ($) {
         $.ajax({link data!}).success(function (response) {
             var chart = new Chartist.Line('.ct-chart', response, {
-                        high: {$category->teams|length} +1,
-                        low: 1,
+                        high: {$category->teams|length} - 1,
+                        chartPadding: { top: 5, right: 25, bottom: 5, left: 5},
+                        low: -1,
                         showArea: false,
                         showLine: true,
                         showPoint: true,
@@ -13,7 +14,7 @@
                         axisY: {
                             scaleMinSpace: 15,
                             labelInterpolationFnc: function (value) {
-                                return ({$category->teams|length} -parseInt(value) + 1) + ". ";
+                                return ({$category->teams|length} - parseInt(value) + 1) + ". ";
                             },
                             labelOffset: {
                                 x: 0,
@@ -39,7 +40,7 @@
                 var $point = $(this),
                         value = $point.attr('ct:value'),
                         seriesName = $point.parent().attr('ct:series-name');
-                $toolTip.html(seriesName + '<br>' + value + '. ').show();
+                $toolTip.html(seriesName + '<br>' + ({$category->teams|length} - parseInt(value)) + ". ").show();
             });
 
             $chart.on('mouseenter', '.ct-series', function () {
