@@ -22,7 +22,7 @@ use Nette\Utils\Strings;
 
 class RouterFactory extends Object
 {
-    /** @var  CategoryRepository */
+    /** @var CategoryRepository */
     private $CR;
 
     /** @var TeamRepository */
@@ -31,17 +31,18 @@ class RouterFactory extends Object
     /** @var YearRepository */
     private $YR;
 
-    /** @var  SessionSection */
+    /** @var SessionSection */
     private $session;
 
     /** @var TagRepository */
     private $TagR;
 
     /**
-     * @param CategoryRepository    $CR
-     * @param TeamRepository        $TR
-     * @param YearRepository        $YR
-     * @param Session               $session
+     * @param CategoryRepository $CR
+     * @param TeamRepository $TR
+     * @param YearRepository $YR
+     * @param TagRepository $TagR
+     * @param Session $session
      */
     public function __construct(CategoryRepository $CR, TeamRepository $TR, YearRepository $YR, TagRepository $TagR, Session $session)
     {
@@ -60,10 +61,17 @@ class RouterFactory extends Object
         $CR = $this->CR;
         $YR = $this->YR;
         $TagR = $this->TagR;
+        $session = $this->session;
+        if (isset($this->session['category'])) {
+            $category = $CR->getBySlug($this->session['category']);
+        } else {
+            $category = $CR->getDefaultCategory();
+        }
         $categoryFilter = array(
-            Route::FILTER_IN => function ($slug) use ($CR) {
+            Route::FILTER_IN => function ($slug) use ($CR, $session) {
                 $category = $CR->getBySlug($slug);
                 if ($category) {
+                    $session['category'] = $category->slug;
                     return $category;
                 }
                 return NULL;
@@ -77,6 +85,9 @@ class RouterFactory extends Object
             }
         );
 
+        $categoryAdvFilter = array_merge($categoryFilter, array(Route::VALUE => $category));
+
+        // TODO: think about custom year selecting
         $yearFilter = array(
             Route::FILTER_IN => function ($slug) use ($YR) {
                 $year = $YR->getBySlug($slug);
@@ -94,58 +105,46 @@ class RouterFactory extends Object
         $front = new RouteList('Front');
 
         /**  HOMEPAGE ROUTES */
-        $front[] = new Route('informace', array(
+        $front[] = new Route('informace/<category>', array(
             'presenter' => 'Homepage',
-            'action' => 'informations'
+            'action' => 'informations',
+            'category' => $categoryAdvFilter
         ));
 
-        $front[] = new Route('sponzori', array(
+        $front[] = new Route('sponzori/<category>', array(
             'presenter' => 'Homepage',
-            'action' => 'sponsors'
+            'action' => 'sponsors',
+            'category' => $categoryAdvFilter,
         ));
 
-        $front[] = new Route('[<year>/]tymy', array(
-            'presenter' => 'Team',
-            'action' => 'default',
-            'year' => $yearFilter
-        ));
-
-        $front[] = new Route('[<year>/]zapasy', array(
+        $front[] = new Route('zapasy/<category>', array(
             'presenter' => 'Match',
             'action' => 'default',
-            'year' => $yearFilter
-        ));
-
-        $front[] = new Route('[<year>/]tymy/<category>', array(
-            'presenter' => 'Team',
-            'action' => 'list',
-            'year' => $yearFilter,
             'category' => $categoryFilter
         ));
 
-        $front[] = new Route('[<year>/]zapasy/<category>', array(
-            'presenter' => 'Match',
+        $front[] = new Route('tymy/<category>', array(
+            'presenter' => 'Team',
             'action' => 'list',
-            'year' => $yearFilter,
-            'category' => $categoryFilter
+            'category' => $categoryFilter,
         ));
 
-        $front[] = new Route('[<year>/]statistiky/<category>', array(
+        $front[] = new Route('zapasy/<category>', array(
+            'presenter' => 'Match',
+            'action' => 'list',
+            'category' => $categoryFilter,
+        ));
+
+        $front[] = new Route('statistiky/<category>', array(
             'presenter' => 'Stats',
             'action' => 'default',
-            'year' => $yearFilter,
-            'category' => $categoryFilter
+            'category' => $categoryFilter,
         ));
 
-        $front[] = new Route('foto', array(
-            'presenter' => 'Gallery',
-            'action' => 'default'
-        ));
-
-        $front[] = new Route('foto/tagy[/<tags .+>]', array(
+        $front[] = new Route('foto/tagy/[<category>/][/<tags .+>]', array(
             'presenter' => 'Gallery',
             'action' => 'tags',
-            'year' => $yearFilter,
+            'category' => $categoryAdvFilter,
             'tags' => array(
                 Route::FILTER_IN => function ($tags) use ($TagR) {
                     $tags = Strings::split($tags, '#/#');
@@ -163,10 +162,10 @@ class RouterFactory extends Object
             )
         ));
 
-        $front[] = new Route('foto/detail/<tag>', array(
+        $front[] = new Route('foto/[<category>/]detail/<tag>', array(
             'presenter' => 'Gallery',
             'action' => 'detail',
-            'year' => $yearFilter,
+            'category' => $categoryAdvFilter,
             'tag' => array(
                 Route::FILTER_IN => function ($tag) use ($TagR) {
                     /** @var Tag $tag */
@@ -191,16 +190,21 @@ class RouterFactory extends Object
             )
         ));
 
-        $front[] = new Route('[archiv/<year>/]', array(
-            'presenter' => 'Homepage',
+        $front[] = new Route('foto/<category>', array(
+            'presenter' => 'Gallery',
             'action' => 'default',
-            'year' => $yearFilter
+            'category' => $categoryAdvFilter,
         ));
 
-        $route = new FilterRoute('[<year>/]<category>/<team>', array(
+        $front[] = new Route('<category>/', array(
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'category' => $categoryAdvFilter,
+        ));
+
+        $route = new FilterRoute('<category>/<team>', array(
             'presenter' => 'Team',
             'action' => 'detail',
-            'year' => $yearFilter,
             'category' => $categoryFilter
         ));
         $route->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
