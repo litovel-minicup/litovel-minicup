@@ -20,6 +20,9 @@ class UserManager extends Object implements IAuthenticator
     /** @var UserRepository */
     private $UR;
 
+    /**
+     * @param UserRepository $UR
+     */
     public function __construct(UserRepository $UR)
     {
         $this->UR = $UR;
@@ -41,7 +44,7 @@ class UserManager extends Object implements IAuthenticator
             throw new AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
         }
 
-        if (Passwords::hash($password) !== $user->password_hash) {
+        if (!Passwords::verify($password, $user->password_hash)) {
             throw new AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($user->password_hash)) {
             $user->password_hash = Passwords::hash($password);

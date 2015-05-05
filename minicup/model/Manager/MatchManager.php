@@ -30,6 +30,14 @@ class MatchManager extends Object
     /** @var MatchTermRepository */
     private $MTR;
 
+    /**
+     * @param MatchRepository $MR
+     * @param TeamDataRefresher $TDR
+     * @param TeamReplicator $replicator
+     * @param ReorderManager $RM
+     * @param Connection $connection
+     * @param MatchTermRepository $MTR
+     */
     public function __construct(MatchRepository $MR, TeamDataRefresher $TDR, TeamReplicator $replicator, ReorderManager $RM, Connection $connection, MatchTermRepository $MTR)
     {
         $this->MR = $MR;

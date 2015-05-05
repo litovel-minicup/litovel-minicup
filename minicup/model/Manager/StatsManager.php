@@ -18,6 +18,10 @@ class StatsManager extends Object
     /** @var TeamInfoRepository */
     private $TIR;
 
+    /**
+     * @param Connection $connection
+     * @param TeamInfoRepository $TIR
+     */
     public function __construct(Connection $connection, TeamInfoRepository $TIR)
     {
         $this->connection = $connection;
