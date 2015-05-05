@@ -23,6 +23,8 @@ includes:
 decorator:
 	Minicup\Components\BaseComponent:
 		inject: yes
+		setup:
+			- injectProductionMode(%productionMode%)
 
 services:
     router: @Minicup\Router\RouterFactory::create

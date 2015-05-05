@@ -32,6 +32,13 @@ class CacheManager extends Object
     /** @var MatchRepository */
     private $MR;
 
+    /**
+     * @param IStorage $cache
+     * @param TeamInfoRepository $TIR
+     * @param CategoryRepository $CR
+     * @param StaticContentRepository $SCR
+     * @param MatchRepository $MR
+     */
     public function __construct(IStorage $cache, TeamInfoRepository $TIR, CategoryRepository $CR, StaticContentRepository $SCR, MatchRepository $MR)
     {
         $this->cache = $cache;
@@ -50,9 +57,11 @@ class CacheManager extends Object
             }
             $repository->registerCallback(Events::EVENT_AFTER_PERSIST, function (BaseEntity $entity) use ($cache) {
                 $cache->clean(array(Cache::TAGS => array($entity->getCacheTag())));
+                $cache->remove($entity->getCacheTag());
 
-                if ($entity->getReflection()->hasProperty('category') && $entity->category instanceof Category) {
+                if (isset($entity->category) && $entity->category instanceof Category) {
                     $cache->clean(array(Cache::TAGS => array($entity->category->getCacheTag())));
+                    $cache->remove($entity->category->getCacheTag());
                 }
             });
         }

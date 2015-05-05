@@ -9,8 +9,8 @@
     </div>
 </div>
 
-<div class="Section">
-    <div class="Article">  <!-- n:if="$control->started" -->
+<div class="Section" n:if="$control->started || !$productionMode">
+    <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
             </div>
@@ -20,8 +20,8 @@
     </div>
 </div>
 
-<div class="Section">
-    <div class="Article"> <!-- n:if="$control->started" -->
+<div class="Section" n:if="$control->started || !$productionMode">
+    <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
             </div>

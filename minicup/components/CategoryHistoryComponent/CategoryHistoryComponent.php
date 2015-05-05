@@ -31,27 +31,35 @@ class CategoryHistoryComponent extends BaseComponent
     {
         $maxMatches = max(array_map(function (Team $team) {
             return count($team->getPlayedMatches());
-        }, $this->category->teams));
+        }, $this->category->teams)) + 1;
 
-        $data = array("labels" => range(1, $maxMatches), "series" => array());
+        $data = array("labels" => range(1, $maxMatches+1), "series" => array());
+        $countOfTeams = count($this->category->teams);
+        $n = 1;
         foreach ($this->category->teams as $team) {
             $series = array();
             /** @var Team $historyTeam */
             $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach (array_merge($historicalTeams, array($team)) as $historyTeam) {
-                $series[] = count($this->category->teams) - $historyTeam->order;
+            foreach (array_slice(array_merge($historicalTeams, array($team)), 1) as $historyTeam) {
+                $series[] = $countOfTeams - $historyTeam->order;
             }
             if (count($series) < $maxMatches) {
-                $lastOrder = array_slice($series, -1);
-                for ($i=0; $i <= $maxMatches - count($series); $i++) {
-                    $series[] = $lastOrder[0];
+                if (isset($lastOrder[0])) { // team has some order
+                    $lastOrder = $lastOrder[0];
+                } else {
+                    $lastOrder = $countOfTeams - $n;
                 }
+                foreach (range(0, $maxMatches - count($series)) as $_) {
+                    array_unshift($series, $lastOrder);
+                }
+
             }
             $data['series'][] = array('data' => $series, 'name' => $team->i->name);
-
+            $n++;
         }
-        //dump($data);
-        $this->presenter->sendJson($data);
+        if ($this->presenter->isAjax()) {
+            $this->presenter->sendJson($data);
+        }
     }
 }
 

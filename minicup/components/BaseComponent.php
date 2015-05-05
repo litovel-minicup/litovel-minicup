@@ -10,13 +10,14 @@ use Nette\Utils\Strings;
 
 abstract class BaseComponent extends Control
 {
-    /** @var  IFormFactory */
+    /** @var IFormFactory */
     protected $formFactory;
 
-    /**
-     * @var FilterLoader
-     */
+    /** @var FilterLoader */
     protected $filterLoader;
+
+    /** @var bool */
+    protected $productionMode;
 
     /** @var String|NULL */
     protected $view = NULL;
@@ -35,6 +36,14 @@ abstract class BaseComponent extends Control
     public function injectFilterLoader(FilterLoader $filterLoader)
     {
         $this->filterLoader = $filterLoader;
+    }
+
+    /**
+     * @param bool $productionMode
+     */
+    public function injectProductionMode($productionMode)
+    {
+        $this->productionMode = $productionMode;
     }
 
     /**
@@ -70,6 +79,7 @@ abstract class BaseComponent extends Control
      */
     public function render()
     {
+        $this->template->productionMode = $this->productionMode;
         $this->template->render();
     }
 

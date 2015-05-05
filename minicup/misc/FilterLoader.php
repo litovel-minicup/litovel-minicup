@@ -65,7 +65,7 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('relDate', function ($time) {
-            $seconds = time() - strtotime($time);
+            $seconds = time() - strtotime((string) $time);
             $minutes = floor($seconds / 60);
             $hours = floor($minutes / 60);
             $days = floor($hours / 24);
