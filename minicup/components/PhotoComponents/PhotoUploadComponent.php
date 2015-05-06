@@ -15,7 +15,6 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Random;
 
-// TODO: add forms to add tags with autocompleting thru ajax
 class PhotoUploadComponent extends BaseComponent
 {
     /** @var Request */

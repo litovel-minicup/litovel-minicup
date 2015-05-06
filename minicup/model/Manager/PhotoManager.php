@@ -72,9 +72,8 @@ class PhotoManager extends Object
      */
     public function formatPhotoPath($format, $filename)
     {
-        // TODO FIX IMAGE EXTENSIONS!
         @mkdir("$this->wwwPath/media/" . $format . "/");
-        return "$this->wwwPath/media/" . $format . "/$filename.jpg";
+        return "$this->wwwPath/media/" . $format . "/$filename";
     }
 
     /**

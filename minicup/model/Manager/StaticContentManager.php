@@ -46,7 +46,6 @@ class StaticContentManager extends Object
             $staticContent = $arg->i->staticContent;
             if (!$staticContent instanceof StaticContent) {
                 $staticContent = new StaticContent();
-                $staticContent->updated = new \DibiDateTime(); // TODO: trigger?
                 $staticContent->content = "";
                 $staticContent->slug = $arg->category->slug . $this::PARTS_GLUE . $arg->i->slug;
                 $this->SCR->persist($staticContent);
