@@ -1,39 +1,68 @@
-<div class="Box__content Table__content Team__content">
-    <table class="Table Table__detail">
-        <thead class="Box__subhead Article__subhead">
-        <tr>
-            <th>Vstřelené branky na turnaji</th>
-            <th>Počet remíz</th>
-            <th>Nejvyšší brankový rozdíl</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{$stats->scored_goals}</td>
-            <td>{$stats->count_of_draws}</td>
-            <td>{$stats->max_diff}</td>
-        </tr>
-        </tbody>
-    </table>
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Branky</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+                    <thead class="Box__subhead Article__subhead">
+                    <tr>
+                        <th>Vstřelené branky na turnaji</th>
+                        <th>Počet remíz</th>
+                        <th>Nejvyšší brankový rozdíl</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{$stats->scored_goals}</td>
+                        <td>{$stats->count_of_draws}</td>
+                        <td>{$stats->max_diff}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
 
-    <table class="Table Table__detail">
-        <thead class="Box__subhead Article__subhead">
-        <tr>
-            <th>Nejvyšší skóre domácích</th>
-            <th>Nejvyšší skóre v zápase</th>
-            <th>Nejvyšší skóre hostů</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{$stats->max_home_score}</td>
-            <td>{$stats->max_match_score}</td>
-            <td>{$stats->max_away_score}</td>
-        </tr>
-        </tbody>
-    </table>
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejvyšší skóre </div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+                    <thead class="Box__subhead Article__subhead">
+                    <tr>
+                        <th>Nejvyšší skóre domácích</th>
+                        <th>Nejvyšší skóre v zápase</th>
+                        <th>Nejvyšší skóre hostů</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{$stats->max_home_score}</td>
+                        <td>{$stats->max_match_score}</td>
+                        <td>{$stats->max_away_score}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+    </div>
+</div>
 
-    <table class="Table Table__detail">
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejnižší skóre </div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
         <thead class="Box__subhead Article__subhead">
         <tr>
             <th>Nejnižší skóre domácích</th>
@@ -49,8 +78,19 @@
         </tr>
         </tbody>
     </table>
+            </div>
+    </div>
+</div>
 
-    <table class="Table Table__detail">
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejlepší týmy</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
         <thead class="Box__subhead Article__subhead">
         <tr>
             <th>Nejlépe útočící tým</th>
@@ -72,8 +112,19 @@
         </tr>
         </tbody>
     </table>
+            </div>
+    </div>
+</div>
 
-    <table class="Table Table__detail">
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejhorší týmy</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
         <thead class="Box__subhead Article__subhead">
         <tr>
             <th>Nejhůře útočící tým</th>
@@ -95,4 +146,6 @@
         </tr>
         </tbody>
     </table>
+            </div>
+    </div>
 </div>
