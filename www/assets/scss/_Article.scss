@@ -4,14 +4,12 @@
 
 	&__head {
 
-		&__icon {
-			background: $medium--grey;
-		}
+		background: $medium--grey;
 
 		&__text {
-			background: $medium--grey;
 			color: darken($medium--grey, 40%);
 		}
+	
 	}
 
 	&__subhead {

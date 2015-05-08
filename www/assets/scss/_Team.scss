@@ -18,6 +18,14 @@
 
 		.Table tbody tr {
 			background: $light--grey!important;
+
+			td {
+				a {
+					padding-top: 0px;
+					font-size: 22px;
+				}
+			}
+
 		}
 
 		.Table tbody tr:hover {

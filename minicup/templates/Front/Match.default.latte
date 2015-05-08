@@ -1,9 +1,18 @@
 {block content}
     <div class="Article">
-        <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__matches">
+        <div class="Article__head Box__head--toggle">
+            <div class="Article__head__icon Box__head--toggle__icon icon__matches">
             </div>
-            <div class="Article__head__text Box__head__text">Zápasy</div>
+            <div class="Article__head__text Box__head--toggle__text">Zápasy</div>
+            <div class="Article__head__select Box__head--toggle__select">
+                <select>
+                        <option>neco si </option>
+                        <option>sem</option>
+                        <option>nahaž</option>
+                </select>
+            </div>
+
+
         </div>
         {cache $category->cacheTag, tags => $category->cacheTag}
         {control listOfMatchesComponent:full}
