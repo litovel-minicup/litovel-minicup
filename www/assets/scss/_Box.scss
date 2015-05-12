@@ -30,28 +30,29 @@
 		}
 
 		&__text {
-			@include span-columns(6.5);
+			@include span-columns(4.5);
 			font-family: 'Montserrat';
 			font-size: 24px;
 			line-height: 75px;
 			letter-spacing: -1.5px;
-
-
-		}
-
-		&--selected {
-			color: white;
-			background: $dark--blue;
 		}
 
 		&__select {
-			@include span-columns(4);
+			@include span-columns(6);
 			@include reset-display;
 			text-align: right;
-			
-			a:last-of-type {
+
+			li:last-of-type {
 				margin-right: 20px;
 			}
+
+            li {
+              display: inline-block;
+              &.active, &.active a {
+                color: white;
+                background: $dark--blue;
+              }
+            }
 
 			a {
 				font-family: 'Montserrat';
@@ -60,9 +61,12 @@
 				line-height: 75px;
 				padding: 10px;
 				letter-spacing: -1.5px;
+                display: inline-block;
+                height: 100%;
+                width: 100%;
 			}
 			
-			a:hover {
+			li:hover {
 				color: white;
 				background: $medium--blue;
 			}

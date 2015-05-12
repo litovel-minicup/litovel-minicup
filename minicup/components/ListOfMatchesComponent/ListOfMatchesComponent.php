@@ -8,6 +8,7 @@ use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\InvalidArgumentException;
+use Nette\Utils\DateTime;
 
 class ListOfMatchesComponent extends BaseComponent
 {
@@ -55,6 +56,17 @@ class ListOfMatchesComponent extends BaseComponent
         }
         $this->template->matches = $matches;
         parent::render();
+    }
+
+    /**
+     * @param int $time
+     * @return bool
+     */
+    public function isToday($time)
+    {
+        $time = DateTime::from($time);
+        $now = new DateTime();
+        return $time->format('Y-m-d') === $now->format('Y-m-d');
     }
 }
 

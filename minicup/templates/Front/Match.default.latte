@@ -1,17 +1,5 @@
 {block content}
     <div class="Article">
-        <div class="Article__head Box__head--toggle">
-            <div class="Article__head__icon Box__head--toggle__icon icon__matches">
-            </div>
-            <div class="Article__head__text Box__head--toggle__text">Zápasy</div>
-            <div class="Article__head__select Box__head--toggle__select">
-                <a href="Box__head--toggle--selected">pá</a>
-                <a href="">so</a>
-                <a href="">ne</a>
-            </div>
-
-
-        </div>
         {cache $category->cacheTag, tags => $category->cacheTag}
         {control listOfMatchesComponent:full}
         {/cache}

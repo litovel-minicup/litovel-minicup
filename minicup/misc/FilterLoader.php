@@ -12,6 +12,7 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
 use Nette\Object;
 use Nette\Utils\Json;
+use Nette\Utils\Strings;
 
 class FilterLoader extends Object
 {
@@ -94,6 +95,13 @@ class FilterLoader extends Object
             }
             return "v budoucnu";
         });
+
+        $template->addFilter('dayName', function ($time, $len = 2) use ($latte){
+            $name = $latte->invokeFilter('date', array($time, "w"));
+            $names = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
+            return Strings::substring($names[$name], 0, $len);
+        });
+
         $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
             // TODO
             return $generator->link(':Media:photo');

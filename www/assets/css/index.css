@@ -2833,28 +2833,33 @@ Copyright (c) 2015 Daniel Eden
     line-height: 75px; }
   .Box__head--toggle__text {
     display: table-cell;
-    width: 54.16667%;
+    width: 37.5%;
     font-family: 'Montserrat';
     font-size: 24px;
     line-height: 75px;
     letter-spacing: -1.5px; }
-  .Box__head--toggle--selected {
-    color: white;
-    background: #0040c1; }
   .Box__head--toggle__select {
     display: table-cell;
-    width: 33.33333%;
+    width: 50%;
     text-align: right; }
-    .Box__head--toggle__select a:last-of-type {
+    .Box__head--toggle__select li:last-of-type {
       margin-right: 20px; }
+    .Box__head--toggle__select li {
+      display: inline-block; }
+      .Box__head--toggle__select li.active, .Box__head--toggle__select li.active a {
+        color: white;
+        background: #0040c1; }
     .Box__head--toggle__select a {
       font-family: 'Montserrat';
       color: #626262;
       font-size: 24px;
       line-height: 75px;
       padding: 10px;
-      letter-spacing: -1.5px; }
-    .Box__head--toggle__select a:hover {
+      letter-spacing: -1.5px;
+      display: inline-block;
+      height: 100%;
+      width: 100%; }
+    .Box__head--toggle__select li:hover {
       color: white;
       background: #0e5eff; }
 .Box__subhead {
