@@ -2833,31 +2833,30 @@ Copyright (c) 2015 Daniel Eden
     line-height: 75px; }
   .Box__head--toggle__text {
     display: table-cell;
-    width: 62.5%;
+    width: 54.16667%;
     font-family: 'Montserrat';
     font-size: 24px;
     line-height: 75px;
     letter-spacing: -1.5px; }
+  .Box__head--toggle--selected {
+    color: white;
+    background: #0040c1; }
   .Box__head--toggle__select {
     display: table-cell;
-    width: 25%;
-    width: 120px;
-    overflow: hidden;
-    background: #4180ff url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 55%; }
-    .Box__head--toggle__select select {
-      width: 75%;
-      margin-left: 12.5%;
+    width: 33.33333%;
+    text-align: right; }
+    .Box__head--toggle__select a:last-of-type {
+      margin-right: 20px; }
+    .Box__head--toggle__select a {
+      font-family: 'Montserrat';
+      color: #626262;
+      font-size: 24px;
+      line-height: 75px;
+      padding: 10px;
+      letter-spacing: -1.5px; }
+    .Box__head--toggle__select a:hover {
       color: white;
-      font-size: 18px;
-      padding: 5px 8px;
-      width: 130%;
-      border: none;
-      box-shadow: none;
-      background: transparent;
-      background-image: none;
-      -webkit-appearance: none; }
-      .Box__head--toggle__select select:focus {
-        outline: none; }
+      background: #0e5eff; }
 .Box__subhead {
   font-size: 16px;
   padding: 15px 20px;
@@ -2932,6 +2931,21 @@ Copyright (c) 2015 Daniel Eden
       margin-right: 0; }
     .Box__rows:nth-child(2n+1) {
       clear: left; } }
+@media screen and (max-width: 480px) {
+  .Box__head--toggle {
+    width: 100%;
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+    .Box__head--toggle__icon {
+      display: table-cell;
+      width: 12.5%; }
+    .Box__head--toggle__text {
+      display: table-cell;
+      width: 37.5%; }
+    .Box__head--toggle__select {
+      display: table-cell;
+      width: 50%; } }
 #warning {
   background: #cc0000;
   float: left;

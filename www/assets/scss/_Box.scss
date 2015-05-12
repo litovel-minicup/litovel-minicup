@@ -30,7 +30,7 @@
 		}
 
 		&__text {
-			@include span-columns(7.5);
+			@include span-columns(6.5);
 			font-family: 'Montserrat';
 			font-size: 24px;
 			line-height: 75px;
@@ -39,37 +39,34 @@
 
 		}
 
+		&--selected {
+			color: white;
+			background: $dark--blue;
+		}
+
 		&__select {
-			@include span-columns(3);
+			@include span-columns(4);
 			@include reset-display;
+			text-align: right;
 			
-		    width: 120px;
-
-		    overflow: hidden;
-		    background: $light--blue url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 55%;
-
-			select {
-				width: 75%;
-				margin-left: 12.5%;
-
-				color: white;
-				font-size: 18px;
-
-				padding: 5px 8px;
-			    width: 130%;
-			    border: none;
-			    box-shadow: none;
-			    background: transparent;
-			    background-image: none;
-			    -webkit-appearance: none;
-
-			    &:focus {
-					outline: none;
-				}
-
+			a:last-of-type {
+				margin-right: 20px;
 			}
 
-
+			a {
+				font-family: 'Montserrat';
+				color: darken($medium--grey, 40%);
+				font-size: 24px;
+				line-height: 75px;
+				padding: 10px;
+				letter-spacing: -1.5px;
+			}
+			
+			a:hover {
+				color: white;
+				background: $medium--blue;
+			}
+		
 		}
 	}
 
@@ -146,3 +143,31 @@
 		}
 	}
 }
+
+@media screen and (max-width: 480px) {
+	.Box {
+		&__head--toggle {
+
+		@include fill-parent();
+		@include row(table);
+
+		&__icon {
+			@include span-columns(1.5);
+		}
+
+		&__text {
+			@include span-columns(4.5);
+
+
+		}
+
+		&__select {
+			@include span-columns(6);
+
+			@include reset-display;
+		}
+	}
+	}
+}
+
+
