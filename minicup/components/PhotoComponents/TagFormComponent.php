@@ -9,6 +9,15 @@ use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 
+interface ITagFormComponentFactory
+{
+    /**
+     * @param Tag $tag
+     * @return TagFormComponent
+     */
+    public function create(Tag $tag = NULL);
+}
+
 class TagFormComponent extends BaseComponent
 {
     /** @var TagRepository */
@@ -46,7 +55,7 @@ class TagFormComponent extends BaseComponent
         $f = $this->formFactory->create();
         $f->addText('name', 'Název');
         $f->addText('slug', 'Slug');
-        $f->addCheckbox('isMain', 'Hlavní kategorie');
+        $f->addCheckbox('isMain', 'Hlavní kategorie')->setDefaultValue((isset($this->tag)) ? (bool)$this->tag->isMain : FALSE);
         $f->addHidden('id');
         $f->addSubmit('submit', $this->tag ? 'Upravit' : 'Přidat');
         $f->onSuccess[] = $this->tagFormSuccess;
@@ -79,17 +88,10 @@ class TagFormComponent extends BaseComponent
         }
         $form->setValues(array(), TRUE);
         $this->presenter->flashMessage($values->id ? "Tag upraven!" : 'Tag přidán!', 'success');
-        if ($this->presenter->isAjax()) {
+        if ($this->presenter->action == "tagDetail") {
+            $this->presenter->redirect(':Admin:Photo:tags');
+        }elseif($this->presenter->isAjax()){
             $this->redrawControl('tag-form');
         }
     }
-}
-
-interface ITagFormComponentFactory
-{
-    /**
-     * @param Tag $tag
-     * @return TagFormComponent
-     */
-    public function create(Tag $tag = NULL);
 }
