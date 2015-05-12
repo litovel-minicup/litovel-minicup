@@ -3,6 +3,7 @@
 namespace Minicup\AdminModule\Presenters;
 
 
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\INewsFormComponentFactory;
@@ -53,6 +54,7 @@ class NewsPresenter extends BaseAdminPresenter
     protected function createComponentNewsGrid($name)
     {
         $g = new Grid($this, $name);
+        $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
         $g->addColumnText('title', 'Titulek');
         $g->addColumnText('content', 'Obsah');

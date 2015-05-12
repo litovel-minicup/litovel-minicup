@@ -4,6 +4,7 @@ namespace Minicup\AdminModule\Presenters;
 
 
 use Grido\Components\Columns\Column;
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
@@ -54,7 +55,7 @@ final class MatchPresenter extends BaseAdminPresenter
         $MR = $this->MR;
         $TIR = $this->TIR;
         $g = new Grid();
-
+        $g->setFilterRenderType(Filter::RENDER_INNER);
         $f = $connection->select('[m].*')->from('[match]')->as('m')->where('m.[category_id] = ', $this->getParameter('category')->id);
         $f->leftJoin('[team_info]')->as('hti')->on('m.[home_team_info_id] = hti.[id]')->select('hti.[name] htiname');
         $f->leftJoin('[team_info]')->as('ati')->on('m.[away_team_info_id] = ati.[id]')->select('ati.[name] atiname');

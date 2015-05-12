@@ -24,12 +24,33 @@ class UserPresenter extends BaseAdminPresenter
     public $UM;
 
     /**
+     * @param Form      $form
+     * @param ArrayHash $values
+     */
+    public function userFormSuccess(Form $form, ArrayHash $values)
+    {
+        try {
+            $this->UM->add(
+                $values->username,
+                $values->password,
+                $values->fullname,
+                $values->role);
+        } catch (InvalidArgumentException $ex) {
+            $form->addError($ex->getMessage());
+            return;
+        }
+        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
+        $this->redirect('Homepage:default');
+    }
+
+    /**
      * @param $name
      * @return Grid
      */
     protected function createComponentGrid($name)
     {
         $grid = new Grid($this, $name);
+        $g->setFilterRenderType(Filter::RENDER_INNER);
         $fluent = $this->DC->select('*')->from('[user]');
         $grid->model = $fluent;
         $grid->setFilterRenderType(Filter::RENDER_INNER);
@@ -66,25 +87,5 @@ class UserPresenter extends BaseAdminPresenter
         $f->addSubmit('submit', 'vytvořit');
         $f->onSuccess[] = $this->userFormSuccess;
         return $f;
-    }
-
-    /**
-     * @param Form $form
-     * @param ArrayHash $values
-     */
-    public function userFormSuccess(Form $form, ArrayHash $values)
-    {
-        try {
-            $this->UM->add(
-                $values->username,
-                $values->password,
-                $values->fullname,
-                $values->role);
-        } catch (InvalidArgumentException $ex) {
-            $form->addError($ex->getMessage());
-            return;
-        }
-        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
-        $this->redirect('Homepage:default');
     }
 }

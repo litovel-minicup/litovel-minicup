@@ -4,6 +4,7 @@ namespace Minicup\AdminModule\Presenters;
 
 
 use Grido\Components\Columns\Column;
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
@@ -51,6 +52,7 @@ class TeamPresenter extends BaseAdminPresenter
         $g = new Grid();
 
         $f = $connection->select('[ti].*')->orderBy('[id] ASC')->from('[team_info]')->as('ti')->where('ti.[category_id] = ', $this->getParameter('category')->id);
+        $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->setModel($f);
         $g->addColumnNumber('id', '#');
         $g->addActionHref('slug', 'detail')->setCustomHref(function ($row) use ($CR, $that) {
