@@ -9,32 +9,35 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
+}
+
 /**
  * @method onDelete
  * @method onSave
  */
 class PhotoEditComponent extends BaseComponent
 {
-    /** @var TagRepository */
-    private $TR;
-
-    /** @var PhotoRepository */
-    private $PR;
-
-    /** @var PhotoManager */
-    private $PM;
-
-    /** @var Photo */
-    private $photo;
-
-    /** @var Request */
-    private $request;
-
     /** @var callable[] */
     public $onDelete;
-
     /** @var callable[] */
     public $onSave;
+    /** @var TagRepository */
+    private $TR;
+    /** @var PhotoRepository */
+    private $PR;
+    /** @var PhotoManager */
+    private $PM;
+    /** @var Photo */
+    private $photo;
+    /** @var Request */
+    private $request;
 
     /**
      * @param Photo $photo
@@ -54,14 +57,22 @@ class PhotoEditComponent extends BaseComponent
 
     public function render()
     {
+        $parent = $this->getParent()->getParent();
+        if ($parent instanceof AdminPhotoListComponent) {
+            $this->view = "edit";
+        } else if ($parent instanceof PhotoUploadComponent) {
+            $this->view = "upload";
+        } else {
+            $this->view = "upload";
+        }
         $this->template->photo = $this->photo;
         parent::render();
     }
 
-    public function handleDelete()
+    public function handleDelete($lazy = TRUE)
     {
         $this->onDelete($this->photo);
-        $this->PR->delete($this->photo);
+        $this->PM->delete($this->photo, $lazy);
     }
 
     public function handleSave()
@@ -84,13 +95,4 @@ class PhotoEditComponent extends BaseComponent
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
-}
-
-interface IPhotoEditComponentFactory
-{
-    /**
-     * @param Photo $photo
-     * @return PhotoEditComponent
-     */
-    public function create(Photo $photo);
 }

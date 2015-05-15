@@ -50,4 +50,5 @@ jQuery(function ($) {
             redrawSnippets(request.responseJSON.snippets);
         }
     });
+    $('.grido').grido();
 });

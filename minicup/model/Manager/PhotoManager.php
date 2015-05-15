@@ -2,7 +2,6 @@
 namespace Minicup\Model\Manager;
 
 
-use LeanMapper\Events;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
 use Nette\FileNotFoundException;
@@ -15,22 +14,13 @@ use Nette\Utils\Random;
 
 class PhotoManager extends Object
 {
-    /** @var PhotoRepository */
-    private $PR;
-
-    /** @var string */
-    private $wwwPath;
-
     /** @internal */
     const PHOTO_ORIGINAL = "original";
-
     const PHOTO_SMALL = "small";
     const PHOTO_THUMB = "thumb";
     const PHOTO_MEDIUM = "medium";
     const PHOTO_FULL = "full";
-
     const DEFAULT_FLAG = Image::FILL;
-
     /**
      * type => (width, height, flags)
      * @var array
@@ -41,7 +31,6 @@ class PhotoManager extends Object
         PhotoManager::PHOTO_MEDIUM => array(1200, 1200),
         PhotoManager::PHOTO_FULL => array(2000, 2000),
     );
-
     /**
      * mime type => file extension
      * @var array
@@ -50,6 +39,10 @@ class PhotoManager extends Object
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
     );
+    /** @var PhotoRepository */
+    private $PR;
+    /** @var string */
+    private $wwwPath;
 
     /**
      * @param string $wwwPath
@@ -60,20 +53,6 @@ class PhotoManager extends Object
         $this->PR = $PR;
         $this->wwwPath = $wwwPath;
         $PM = $this;
-        $this->PR->registerCallback(Events::EVENT_BEFORE_DELETE, function (Photo $photo) use ($PM) {
-            $PM->delete($photo);
-        });
-    }
-
-    /**
-     * @param string $format
-     * @param string $filename
-     * @return string
-     */
-    public function formatPhotoPath($format, $filename)
-    {
-        @mkdir("$this->wwwPath/media/" . $format . "/");
-        return "$this->wwwPath/media/" . $format . "/$filename";
     }
 
     /**
@@ -113,12 +92,29 @@ class PhotoManager extends Object
     }
 
     /**
+     * @param string $format
+     * @param string $filename
+     * @return string
+     */
+    public function formatPhotoPath($format, $filename)
+    {
+        @mkdir("$this->wwwPath/media/" . $format . "/");
+        return "$this->wwwPath/media/" . $format . "/$filename";
+    }
+
+    /**
      * @param Photo $photo
      * @return bool
      */
-    public function delete(Photo $photo)
+    public function delete(Photo $photo, $lazy = FALSE)
     {
-        return unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+        if ($lazy) {
+            $photo->active = 0;
+            $this->PR->persist($photo);
+        } else {
+            unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+            $this->PR->delete($photo);
+        }
     }
 
     /**

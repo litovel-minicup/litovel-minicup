@@ -5,13 +5,19 @@ namespace Minicup\AdminModule\Presenters;
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
+use Minicup\Components\AdminPhotoListComponent;
+use Minicup\Components\IAdminPhotoListComponentFactory;
+use Minicup\Components\IPhotoEditComponentFactory;
 use Minicup\Components\IPhotoListComponentFactory;
 use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\ITagFormComponentFactory;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoUploadComponent;
+use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
+use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
+use Nette\Application\AbortException;
 use Nette\Utils\Html;
 
 final class PhotoPresenter extends BaseAdminPresenter
@@ -25,6 +31,9 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var TagRepository @inject */
     public $TR;
 
+    /** @var  PhotoRepository @inject */
+    public $PR;
+
     /** @var Connection @inject */
     public $connection;
 
@@ -34,13 +43,57 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoListComponentFactory @inject */
     public $PLCF;
 
+    /** @var  IAdminPhotoListComponentFactory @inject */
+    public $APLCF;
+
+    /** @var  IPhotoEditComponentFactory @inject */
+    public $PECF;
+
     public function renderTagDetail($id)
     {
         $this->template->tag = $this->TR->get($id);
     }
 
+    /**
+     * @return PhotoUploadComponent
+     */
+    public function createComponentPhotoUploadComponent()
+    {
+        return $this->PUC->create();
+    }
+
+    /**
+     * @return AdminPhotoListComponent
+     */
+    public function createComponentAdminPhotoListComponent()
+    {
+        return $this->APLCF->create();
+    }
+
+    /**
+     * Provide data about tags for select2 by optional term in post parameters
+     *
+     * @throws AbortException
+     */
+    public function handleTags()
+    {
+        $term = $this->request->getPost('term');
+        if ($term) {
+            $tags = $this->TR->findLikeTerm($term);
+        } else {
+            $tags = $this->TR->findAll();
+        }
+        $results = array();
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
+        }
+        $this->presenter->sendJson(array('results' => $results));
+    }
+
     protected function createComponentTagsGrid($name)
     {
+        $TR = $this->TR;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
@@ -52,6 +105,14 @@ final class PhotoPresenter extends BaseAdminPresenter
             1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
         ));
         $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
+        $g->addActionEvent('is_main', 'changeMain', function ($id) use ($TR) {
+            /** @var Tag $tag */
+            $tag = $TR->get($id);
+            $tag->isMain = $tag->isMain ? 0 : 1;
+            $TR->persist($tag);
+        })->setCustomRender(function (\DibiRow $row, Html $element) {
+            return $element->setText(!$row->is_main ? 'Nastavit jako HLAVNÍ' : 'Nastavit jako VEDLEJŠÍ');
+        });
         $g->setModel($this->connection->select('*')->from('[tag]')->orderBy('[is_main] DESC, [name] ASC'));
         return $g;
     }
@@ -73,18 +134,15 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     /**
      * @return PhotoListComponent
-     * @throws EntityNotFoundException
      */
     protected function createComponentPhotoListComponent()
     {
         return $this->PLCF->create($this->TR->get($this->getParameter('id'))->photos);
     }
 
-    /**
-     * @return PhotoUploadComponent
-     */
-    public function createComponentPhotoUploadComponent()
+    protected function createComponentPhotoEditComponent()
     {
-        return $this->PUC->create();
+        return $this->PECF->create($this->PR->get($this->getParameter('id')));
     }
+
 }

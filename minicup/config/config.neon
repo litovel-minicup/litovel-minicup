@@ -144,6 +144,7 @@ services:
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
+    - implement: Minicup\Components\IAdminPhotoListComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

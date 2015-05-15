@@ -1,0 +1,46 @@
+<div class="btn-toolbar">
+    <a class="btn btn-primary" n:href="activePhotos!">Výpis aktivních fotek</a>
+    <a class="btn btn-primary" n:href="allPhotos">Zobrazit všechny fotky</a>
+</div>
+
+<select id="tags-select"
+        name="tags-select"
+        multiple="multiple"
+        data-tags="true"
+        data-placeholder="Které tagy Tě zajímají?"
+        data-ajax--url="{plink tags!}"
+        data-ajax--cache="false"
+        data-ajax--delay="350"
+        data-ajax--method="GET">
+    <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected"
+            value="{$tag->id}">{$tag->slug}</option>
+</select>
+<script>
+    jQuery(function ($) {
+        var $select = initTagsSelect2($('#tags-select'));
+        $select.on('change', function (e) {
+            var val = $(this).val();
+            if (!val) {
+                val = "";
+            }
+            window.location.hash = val;
+            $.nette.ajax({
+                url: {link refresh!},
+                data: {
+                    ids: $(this).val()
+                }
+            });
+        });
+        if (window.location.hash) {
+            setTimeout(function () {
+                var ids = window.location.hash.replace('#', '').split(',');
+                $select.select2('val', ids).trigger('change');
+            }, 200)
+        }
+        $('#tags-select, .select2, .select2 li input').width('100%');
+    })
+</script>
+
+{snippet photo-list}
+{control photosGrid}
+{/snippet}

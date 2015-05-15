@@ -1,0 +1,86 @@
+<div class="thumbnail photo-{$photo->id}" data-id="{$photo->id}" n:snippet>
+    <img class="img-thumbnail" src={plink :Media:thumb $photo->filename} alt="">
+
+    <div class="caption">
+        <h4>{$photo->id}</h4>
+
+        <form>
+            <div class="form-group">
+                {*}XSS? parent->parent because Multiplier{/*}
+                <select multiple="multiple"
+                        name="tags-{$photo->id}"
+                        class="form-control select2"
+                        data-tags="true"
+                        data-placeholder="Otaguj to ..."
+                        data-ajax--cache="true"
+                        data-ajax--delay="350"
+                        data-ajax--method="POST"
+                        data-minimum-input-length="0"
+                        data-ajax--url="{plink tags!}">
+                    <option selected="selected" n:foreach="$photo->tags as $tag"
+                            value="{$tag->id}">{$tag->slug}</option>
+                </select>
+                <script>
+                    $(function () {
+                        var $photo = $('.photo-{$photo->id}');
+                        var select2 = initTagsSelect2($photo.find('.select2'));
+                        $photo.find('img').on('click', function (e) {
+                            $(this).parent('.photo-{$photo->id}').toggleClass('selected')
+                                    .trigger('minicup.photo.recount');
+                        });
+                        $photo.find('.photo-delete').on('click', function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $.post({link delete!}, function (response, textStatus, xhr) {
+                                $photo.find('.modal').modal('hide');
+                                toastr.warning('Fotka {$photo->id} byla úspěšně smazána!');
+                            });
+                        });
+                        $photo.find('.photo-save').on('click', function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $.post({link save!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                                toastr.success('Fotka {$photo->id} úspěšně vložena do aplikace!', 'Výborně!');
+                            });
+                        });
+                        select2.on('change', function (e) {
+                            $.post({link saveTags!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                                toastr.success('Tagy u fotky {$photo->id} aktualizovány!', 'Excelentně!');
+                            });
+                        });
+                    });
+                </script>
+            </div>
+            <div class="form-group text-right">
+                <div class="btn btn-danger pull-left" data-toggle="modal" data-target=".photo-{$photo->id} .modal"><i
+                            class="glyphicon glyphicon-trash"></i></div>
+                <div class="btn btn-success photo-save"><i class="glyphicon glyphicon-ok"></i> Vložit do aplikace</div>
+            </div>
+        </form>
+    </div>
+    <!-- Delete confirm modal for {$photo->id}-->
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">Opravdu?</h4>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-4 thumbnail">
+                        <img src="{$basePath}/media/thumb/{$photo->filename}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>
+                        <small>Už je nahraná v aplikaci a víš, jak je to s rychlostí internetu...</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn btn-default" data-dismiss="modal">Nechci!</div>
+                    <div class="btn btn-danger photo-delete"><i class="glyphicon glyphicon-trash"></i> Rychle smazat
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
