@@ -1,9 +1,7 @@
 <div class="thumbnail photo-{$photo->id}" data-id="{$photo->id}" n:snippet>
     <img class="img-thumbnail" src={plink :Media:thumb $photo->filename} alt="">
-
     <div class="caption">
         <h4>{$photo->id}</h4>
-
         <form>
             <div class="form-group">
                 {*}XSS? parent->parent because Multiplier{/*}
@@ -16,7 +14,7 @@
                         data-ajax--delay="350"
                         data-ajax--method="POST"
                         data-minimum-input-length="0"
-                        data-ajax--url="{plink tags!}">
+                        data-ajax--url="{? echo($control->parent->parent->link('tags!'));}">
                     <option selected="selected" n:foreach="$photo->tags as $tag"
                             value="{$tag->id}">{$tag->slug}</option>
                 </select>
@@ -73,7 +71,7 @@
                     <div class="col-md-8">
                         <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>
                         <small>Už je nahraná v aplikaci a víš, jak je to s rychlostí internetu...</small>
-                    </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn btn-default" data-dismiss="modal">Nechci!</div>
