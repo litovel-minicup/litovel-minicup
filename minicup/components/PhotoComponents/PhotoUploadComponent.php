@@ -4,11 +4,9 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Photo;
-use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
@@ -120,27 +118,6 @@ class PhotoUploadComponent extends BaseComponent
     protected function createComponentTagFormComponent()
     {
         return $this->TFCF->create(NULL);
-    }
-
-    /**
-     * Provide data about tags for select2 by optional term in post parameters
-     *
-     * @throws AbortException
-     */
-    public function handleTags()
-    {
-        $term = $this->request->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
-        }
-        $this->presenter->sendJson(array('results' => $results));
     }
 
     /** Signal for tagging all actually uploaded photos */

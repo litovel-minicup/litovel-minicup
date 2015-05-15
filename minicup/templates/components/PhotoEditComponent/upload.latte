@@ -39,12 +39,12 @@
                         $photo.find('.photo-save').on('click', function (e) {
                             e.preventDefault();
                             e.stopPropagation();
-                            $.post({link save!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                            $.post({link save!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Fotka {$photo->id} úspěšně vložena do aplikace!', 'Výborně!');
                             });
                         });
                         select2.on('change', function (e) {
-                            $.post({link saveTags!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                            $.post({link saveTags!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Tagy u fotky {$photo->id} aktualizovány!', 'Excelentně!');
                             });
                         });
@@ -68,7 +68,7 @@
                 </div>
                 <div class="modal-body row">
                     <div class="col-md-4 thumbnail">
-                        <img src="{$basePath}/media/thumb/{$photo->filename}" alt="">
+                        <img src="{plink :Media:thumb $photo->filename}" alt="">
                     </div>
                     <div class="col-md-8">
                         <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>

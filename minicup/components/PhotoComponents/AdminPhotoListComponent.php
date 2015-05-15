@@ -15,15 +15,6 @@ use Nette\Http\SessionSection;
 use Nette\Utils\Html;
 use Nette\Utils\Random;
 
-interface IAdminPhotoListComponentFactory
-{
-    /**
-     * @return AdminPhotoListComponent
-     */
-    public function create();
-
-}
-
 class AdminPhotoListComponent extends BaseComponent
 {
     /** @var SessionSection */
@@ -87,24 +78,6 @@ class AdminPhotoListComponent extends BaseComponent
         $this->template->selectedTags = (array)$this->session[$this->id];
         $this->template->photos = $this->photos;
         parent::render();
-    }
-
-    public function handleTags()
-    {
-        $params = $this->presenter->request->parameters;
-        if (isset($params['term'])) {
-            $tags = $this->TR->findLikeTerm($params['term']);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
-        }
-
-        return $results;
-        $this->presenter->sendJson(array('results' => $results));
     }
 
     public function handleRefresh()
@@ -187,5 +160,14 @@ class AdminPhotoListComponent extends BaseComponent
             return $photoEdit;
         });
     }
+}
+
+
+interface IAdminPhotoListComponentFactory
+{
+    /**
+     * @return AdminPhotoListComponent
+     */
+    public function create();
 
 }

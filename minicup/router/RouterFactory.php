@@ -211,7 +211,7 @@ class RouterFactory extends Object
         $front[] = $route;
 
         $router = new RouteList();
-        $router[] = new Route('admin/<presenter>/<action>[/<category>]', array(
+        $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',

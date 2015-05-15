@@ -4,6 +4,7 @@ namespace Minicup\Model\Repository;
 
 use LeanMapper\Entity;
 use LeanMapper\Repository;
+use Minicup\Model\Entity\BaseEntity;
 
 abstract class BaseRepository extends Repository
 {
@@ -27,11 +28,17 @@ abstract class BaseRepository extends Repository
 
     /**
      * @param $id
-     * @return Entity|NULL
+     * @param bool $useFilters
+     * @return BaseEntity|NULL
      */
-    public function get($id)
+    public function get($id, $useFilters = TRUE)
     {
-        $row = $this->createFluent()
+        if ($useFilters) {
+            $f = $this->createFluent();
+        } else {
+            $f = $this->connection->select('[' . $this->getTable() .'.*]')->from($this->getTable());
+        }
+        $row = $f
             ->where('[' . $this->getTable() . '.id] = %i', $id)
             ->fetch();
         return $row ? $this->createEntity($row) : NULL;

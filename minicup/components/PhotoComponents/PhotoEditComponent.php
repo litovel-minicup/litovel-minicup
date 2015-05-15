@@ -3,20 +3,12 @@
 namespace Minicup\Components;
 
 
+use Minicup\AdminModule\Presenters\PhotoPresenter;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
-
-interface IPhotoEditComponentFactory
-{
-    /**
-     * @param Photo $photo
-     * @return PhotoEditComponent
-     */
-    public function create(Photo $photo);
-}
 
 /**
  * @method onDelete
@@ -26,16 +18,22 @@ class PhotoEditComponent extends BaseComponent
 {
     /** @var callable[] */
     public $onDelete;
+
     /** @var callable[] */
     public $onSave;
+
     /** @var TagRepository */
     private $TR;
+
     /** @var PhotoRepository */
     private $PR;
+
     /** @var PhotoManager */
     private $PM;
+
     /** @var Photo */
     private $photo;
+
     /** @var Request */
     private $request;
 
@@ -48,6 +46,7 @@ class PhotoEditComponent extends BaseComponent
      */
     public function __construct(Photo $photo, TagRepository $TR, PhotoRepository $PR, PhotoManager $PM, Request $request)
     {
+        parent::__construct();
         $this->TR = $TR;
         $this->PR = $PR;
         $this->PM = $PM;
@@ -62,8 +61,8 @@ class PhotoEditComponent extends BaseComponent
             $this->view = "edit";
         } else if ($parent instanceof PhotoUploadComponent) {
             $this->view = "upload";
-        } else {
-            $this->view = "upload";
+        } else if ($this->getParent() instanceof PhotoPresenter) {
+            $this->view = "edit";
         }
         $this->template->photo = $this->photo;
         parent::render();
@@ -80,6 +79,14 @@ class PhotoEditComponent extends BaseComponent
         $this->photo->active = 1;
         $this->PR->persist($this->photo);
         $this->onSave($this->photo);
+        $this->redrawControl();
+    }
+
+    public function handleToggle()
+    {
+        $this->photo->active  = $this->photo->active ? 0 : 1;
+        $this->PR->persist($this->photo);
+        $this->redrawControl();
     }
 
     public function handleSaveTags()
@@ -95,4 +102,14 @@ class PhotoEditComponent extends BaseComponent
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
+}
+
+
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
 }

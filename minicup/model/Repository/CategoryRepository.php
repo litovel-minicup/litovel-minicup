@@ -67,16 +67,4 @@ class CategoryRepository extends BaseRepository
         }
         throw new InvalidStateException('Default category not found.');
     }
-
-    /**
-     * @param $id
-     * @return Category
-     */
-    public function get($id)
-    {
-        $row = $this->connection->select('*')->from($this->getTable())
-            ->where('[' . $this->getTable() . '.id] = %i', $id)
-            ->fetch();
-        return $row ? $this->createEntity($row) : NULL;
-    }
 } 

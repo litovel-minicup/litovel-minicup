@@ -31,7 +31,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var TagRepository @inject */
     public $TR;
 
-    /** @var  PhotoRepository @inject */
+    /** @var PhotoRepository @inject */
     public $PR;
 
     /** @var Connection @inject */
@@ -43,15 +43,21 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoListComponentFactory @inject */
     public $PLCF;
 
-    /** @var  IAdminPhotoListComponentFactory @inject */
+    /** @var IAdminPhotoListComponentFactory @inject */
     public $APLCF;
 
-    /** @var  IPhotoEditComponentFactory @inject */
+    /** @var IPhotoEditComponentFactory @inject */
     public $PECF;
 
     public function renderTagDetail($id)
     {
         $this->template->tag = $this->TR->get($id);
+    }
+
+    /***/
+    public function actionPhotoDetail($id)
+    {
+
     }
 
     /**
@@ -142,7 +148,7 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     protected function createComponentPhotoEditComponent()
     {
-        return $this->PECF->create($this->PR->get($this->getParameter('id')));
+        return $this->PECF->create($this->PR->get($this->getParameter('id'), FALSE));
     }
 
 }

@@ -174,7 +174,7 @@ class MigrationsManager extends Object
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
-            $category = $this->CR->get($category->id);
+            $category = $this->CR->get($category->id, FALSE);
             if ($withScore) {
                 $this->MM->confirmMatch($match, $category, $row->SCR_domaci, $row->SCR_hoste);
             } else {
