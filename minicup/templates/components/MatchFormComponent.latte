@@ -3,19 +3,22 @@
     {foreach $form['matches']->containers as $id => $match}
         {formContainer $match}
             <div class="row">
-                <div class="col-md-5 col-md-push-1 col-md-pull-1">
-                    {input $match['scoreHome'] class=>"form-control"}
+                <div class="col-md-3 col-md-push-2 col-md-pull-1 text-right">
+                    D: {label $match['scoreHome'] class=>"input-label"/}
                 </div>
-                <div class="col-md-5 col-md-push-1 col-md-pull-1">
+                <div class="col-md-3 col-md-push-4">
+                    H: {label $match['scoreAway'] class=>"input-label"/}
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 25px;">
+                <div class="col-md-3 col-md-push-2">
+                    {input $match['scoreHome'] class=>"form-control text-right"}
+                </div>
+                <div class="col-md-2 col-md-push-2">
+                    {input $match['time'] class=>"form-control text-center"}
+                </div>
+                <div class="col-md-3 col-md-push-2">
                     {input $match['scoreAway'] class=>"form-control"}
-                </div>
-                <div class="row">
-                </div>
-                <div class="col-md-5 col-md-push-1 col-md-pull-1 text-right">
-                    {label $match['scoreHome'] class=>"input-label"/}
-                </div>
-                <div class="col-md-5 col-md-push-1 col-md-pull-1">
-                    {label $match['scoreAway'] class=>"input-label"/}
                 </div>
             </div>
         {/formContainer}

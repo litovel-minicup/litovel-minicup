@@ -47,7 +47,7 @@ final class MatchPresenter extends BaseAdminPresenter
      */
     public function createComponentMatchFormComponent()
     {
-        return $this->MFCF->create($this->params['category'], 16);
+        return $this->MFCF->create($this->params['category'], 8);
     }
 
     /**
