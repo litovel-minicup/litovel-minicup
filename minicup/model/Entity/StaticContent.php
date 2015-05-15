@@ -11,4 +11,12 @@ namespace Minicup\Model\Entity;
 class StaticContent extends BaseEntity
 {
     public static $CACHE_TAG = 'staticContent';
+
+    protected function initDefaults()
+    {
+        parent::initDefaults();
+        $this->updated = new \DibiDateTime();
+    }
+
+
 }

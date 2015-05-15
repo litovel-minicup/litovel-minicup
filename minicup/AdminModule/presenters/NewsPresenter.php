@@ -31,10 +31,10 @@ class NewsPresenter extends BaseAdminPresenter
             array('link' => 'Team:list', 'name' => 'seznam týmů dané kategorie', 'args' => array('category' => 'mladsi')),
             array('link' => 'Team:detail', 'name' => 'detail týmu dané kategorie', 'args' => array('category' => 'mladsi', 'team' => 'tatran-litovel')),
             array('link' => 'Match:list', 'name' => 'seznam zápasů dané kategorie', 'args' => array('category' => 'mladsi')),
-            array('link' => 'Result:table', 'name' => 'tabulka turnaje dané kategorie', 'args' => array('category' => 'mladsi')),
+            array('link' => 'Stats:default', 'name' => 'tabulka turnaje dané kategorie', 'args' => array('category' => 'mladsi')),
             array('link' => 'Gallery:default', 'name' => 'výchozí stránka fotogalerie', 'args' => array()),
             array('link' => 'Gallery:tags', 'name' => 'interaktivní výběr fotogalerie', 'args' => array()),
-            array('link' => 'Gallery:detail', 'name' => 'detail tagu fotogalerie (pouze hlavní tagy)', 'args' => array('tag' => 'vyhlaseni-turnaje')),
+            //array('link' => 'Gallery:detail', 'name' => 'detail tagu fotogalerie (pouze hlavní tagy)', 'args' => array('tag' => 'vyhlaseni-turnaje')),
             array('link' => 'Homepage:sponsors', 'name' => 'sponzoři turnaje', 'args' => array())
         ));
     }

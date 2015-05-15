@@ -2,15 +2,15 @@
     <img class="img-thumbnail" src={plink :Media:thumb $photo->filename} alt="">
     <div class="caption">
         <div class="row">
-            <h4 class="col-md-2">{$photo->id}</h4>
-            <div class="form-group text-center col-md-8">
+            <h4 class="col-md-1">{$photo->id}</h4>
+            <div class="form-group text-center col-md-10">
                 <p>
                     Fotka je {array("neaktivní", "aktivní")[$photo->active]}.
                     <a n:class="ajax,btn,btn-sm,$photo->active?btn-warning:btn-success" n:href="toggle!">Nastav jako {array("neaktivní", "aktivní")[!$photo->active]}!</a>
                 </p>
             </div>
-            <div class="form-group text-right col-md-2">
-                <div class="btn btn-danger" data-toggle="modal" data-target=".photo-{$photo->id} .modal" ><i class="glyphicon glyphicon-trash"></i></div>
+            <div class="form-group text-right col-md-1">
+                <div class="btn btn-sm btn-danger" data-toggle="modal" data-target=".photo-{$photo->id} .modal" ><i class="glyphicon glyphicon-trash"></i></div>
             </div>
         </div>
         <form class="row">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="modal-body row">
                     <div class="col-md-4 thumbnail">
-                        <img src="{$basePath}/media/thumb/{$photo->filename}" alt="">
+                        <img src={plink :Media:thumb $photo->filename} alt="">
                     </div>
                     <div class="col-md-8">
                         <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>

@@ -61,7 +61,7 @@ class Filters extends Object
      */
     public function confirmedMatch(Fluent $fluent)
     {
-        $fluent->where('[match.confirmed] = 1');
+        $fluent->where('[match.confirmed] IS NOT NULL');
     }
 
     /**
@@ -69,7 +69,7 @@ class Filters extends Object
      */
     public function unconfirmedMatch(Fluent $fluent)
     {
-        $fluent->where('[match.confirmed] = 0');
+        $fluent->where('[match.confirmed] IS NULL');
     }
 
     /**

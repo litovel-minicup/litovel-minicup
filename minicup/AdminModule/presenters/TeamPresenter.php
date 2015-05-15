@@ -55,7 +55,7 @@ class TeamPresenter extends BaseAdminPresenter
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->setModel($f);
         $g->addColumnNumber('id', '#');
-        $g->addActionHref('slug', 'detail')->setCustomHref(function ($row) use ($CR, $that) {
+        $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
             $category = $CR->get($row->category_id, FALSE);
             return $that->link(':Front:Team:detail', array('team' => $row->slug, 'category' => $category));
         });

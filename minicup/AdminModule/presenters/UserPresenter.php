@@ -49,21 +49,21 @@ class UserPresenter extends BaseAdminPresenter
      */
     protected function createComponentGrid($name)
     {
-        $grid = new Grid($this, $name);
+        $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $fluent = $this->DC->select('*')->from('[user]');
-        $grid->model = $fluent;
-        $grid->setFilterRenderType(Filter::RENDER_INNER);
-        $grid->perPage = 100;
-        $grid->addColumnNumber('id', 'id');
-        $grid->addColumnText('username', 'Username')
+        $g->model = $fluent;
+        $g->setFilterRenderType(Filter::RENDER_INNER);
+        $g->perPage = 100;
+        $g->addColumnNumber('id', 'id');
+        $g->addColumnText('username', 'Username')
             ->setFilterText()
             ->setSuggestion();
-        $grid->addColumnText('role', 'Role')
+        $g->addColumnText('role', 'Role')
             ->setSortable()
             ->setFilterText()
             ->setSuggestion();
-        return $grid;
+        return $g;
     }
 
     /**

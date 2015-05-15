@@ -49,6 +49,7 @@ jQuery(function ($) {
         if (request.responseJSON && request.responseJSON.snippets) {
             redrawSnippets(request.responseJSON.snippets);
         }
+        $('.grido').grido();
     });
     $('.grido').grido();
 });

@@ -6,6 +6,7 @@ use LeanMapper\Caller;
 use LeanMapper\DefaultMapper;
 use LeanMapper\Exception\InvalidStateException;
 use LeanMapper\ImplicitFilters;
+use LeanMapper\Reflection\Property;
 use LeanMapper\Row;
 
 class Mapper extends DefaultMapper
@@ -64,6 +65,9 @@ class Mapper extends DefaultMapper
     {
         $entityName = $this->trimNamespace($entityClass);
         if ($entityName === "Team") {
+            if ($caller->getComplement() instanceof Property && $caller->getComplement()->getName() == "historyTeams") {
+                return new ImplicitFilters(array('info', 'orderTeams'));
+            }
             return new ImplicitFilters(array('info', 'actual', 'orderTeams'));
         } elseif (in_array($entityName, array('Category', 'Day', 'Photo'))) {
             return new ImplicitFilters(array('year'));
