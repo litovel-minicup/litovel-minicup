@@ -16,6 +16,7 @@ class PhotoManager extends Object
 {
     /** @internal */
     const PHOTO_ORIGINAL = "original";
+    const PHOTO_MINI = "mini";
     const PHOTO_SMALL = "small";
     const PHOTO_THUMB = "thumb";
     const PHOTO_MEDIUM = "medium";
@@ -26,6 +27,7 @@ class PhotoManager extends Object
      * @var array
      */
     public static $resolutions = array(
+        PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
         PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
         PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
         PhotoManager::PHOTO_MEDIUM => array(1200, 1200),

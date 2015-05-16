@@ -9,6 +9,7 @@ use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
+use Nette\Application\LinkGenerator;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
@@ -44,13 +45,22 @@ class AdminPhotoListComponent extends BaseComponent
     /** @var bool */
     private $allPhotos;
 
-    public function __construct(Session $session, IPhotoEditComponentFactory $PECF, PhotoRepository $PR, TagRepository $TR, Connection $connection)
+    /** @var LinkGenerator */
+    private $linkGenerator;
+
+    public function __construct(Session $session,
+                                IPhotoEditComponentFactory $PECF,
+                                PhotoRepository $PR,
+                                TagRepository $TR,
+                                Connection $connection,
+                                LinkGenerator $linkGenerator)
     {
         $this->session = $session->getSection('minicup');
         $this->PECF = $PECF;
         $this->PR = $PR;
         $this->TR = $TR;
         $this->connection = $connection;
+        $this->linkGenerator = $linkGenerator;
         if (isset($this->session->adminPhotoList)) {
             $this->id = $this->session->adminPhotoList;
         } else {
@@ -109,6 +119,7 @@ class AdminPhotoListComponent extends BaseComponent
     public function createComponentPhotosGrid($name)
     {
         $PR = $this->PR;
+        $linkGenerator = $this->linkGenerator;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
@@ -127,6 +138,9 @@ class AdminPhotoListComponent extends BaseComponent
         });
         $showButton->setCustomRender(function (\DibiRow $row, Html $element) {
             return $element->setText($row['active'] ? 'Skrýt' : 'Zobrazit');
+        });
+        $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (\DibiRow $row) use ($linkGenerator) {
+            return Html::el('img', array("src" => $linkGenerator->link("Media:mini", array($row->filename))));
         });
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
