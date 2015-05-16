@@ -10,6 +10,9 @@ namespace Minicup\Model\Entity;
  * @property \DateTime   $added             added datetime
  * @property \DateTime   $taken             phoho taken datetime
  * @property int         $active
+ *
+ * @method removeAllTags
+ * @method addToTags
  */
 class Photo extends BaseEntity
 {

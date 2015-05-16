@@ -4,6 +4,8 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Photo;
+use Minicup\Model\Entity\Tag;
+use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
@@ -42,6 +44,9 @@ class PhotoUploadComponent extends BaseComponent
     /** @var int[] */
     private $photos = array();
 
+    /** @var CacheManager */
+    private $CM;
+
     /**
      * @param string $wwwPath
      * @param Session $session
@@ -50,8 +55,18 @@ class PhotoUploadComponent extends BaseComponent
      * @param TagRepository $TR
      * @param PhotoManager $PM
      * @param IPhotoEditComponentFactory $PECF
+     * @param ITagFormComponentFactory $TFCF
+     * @param CacheManager $CM
      */
-    public function __construct($wwwPath, Session $session, Request $request, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM, IPhotoEditComponentFactory $PECF, ITagFormComponentFactory $TFCF)
+    public function __construct($wwwPath,
+                                Session $session,
+                                Request $request,
+                                PhotoRepository $PR,
+                                TagRepository $TR,
+                                PhotoManager $PM,
+                                IPhotoEditComponentFactory $PECF,
+                                ITagFormComponentFactory $TFCF,
+                                CacheManager $CM)
     {
         $this->request = $request;
         $this->session = $session->getSection('photoUpload');
@@ -60,6 +75,7 @@ class PhotoUploadComponent extends BaseComponent
         $this->PR = $PR;
         $this->PM = $PM;
         $this->PECF = $PECF;
+        $this->CM = $CM;
         $uploadId = $this->session['uploadId'];
         if ($uploadId) {
             $this->uploadId = $uploadId;
@@ -129,12 +145,17 @@ class PhotoUploadComponent extends BaseComponent
         if (!$tags) {
             return;
         }
+        /** @var Tag[] $tags */
         $tags = $this->TR->findByIds($tags);
+        /** @var Photo[] $photos */
         $photos = $this->PR->findByIds($this->photos);
         foreach ($photos as $photo) {
             foreach ($tags as $tag) {
                 if (!in_array($tag, $photo->tags)) {
                     $photo->addToTags($tag);
+                }
+                if ($tag->teamInfo) {
+                    $this->CM->cleanByEntity($tag->teamInfo->team);
                 }
             }
             $this->PR->persist($photo);

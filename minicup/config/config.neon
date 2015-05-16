@@ -1,6 +1,13 @@
 parameters:
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
+    cachedRepositories: [
+    	Minicup\Model\Repository\CategoryRepository,
+    	Minicup\Model\Repository\TeamInfoRepository,
+    	Minicup\Model\Repository\TeamRepository,
+    	Minicup\Model\Repository\PhotoRepository,
+    	Minicup\Model\Repository\MatchRepository,
+    	Minicup\Model\Repository\StaticContentRepository]
 
 php:
     date.timezone: Europe/Prague
@@ -47,7 +54,7 @@ services:
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
-    - Minicup\Model\Manager\CacheManager
+    - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)

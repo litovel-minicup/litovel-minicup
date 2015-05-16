@@ -9,6 +9,7 @@ namespace Minicup\Model\Entity;
  * @property    string      $slug                                                   unique slug
  * @property    int         $isMain = 0                                             flag for gallery
  * @property    Photo|NULL  $mainPhoto m:hasOne(main_photo_id)                      main photo for tag
+ * @property    TeamInfo|NULL   $teamInfo m:belongsToOne
  */
 class Tag extends BaseEntity
 {

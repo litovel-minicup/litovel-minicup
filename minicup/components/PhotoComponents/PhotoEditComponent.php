@@ -5,6 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\AdminModule\Presenters\PhotoPresenter;
 use Minicup\Model\Entity\Photo;
+use Minicup\Model\Entity\Tag;
+use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
@@ -31,6 +33,9 @@ class PhotoEditComponent extends BaseComponent
     /** @var PhotoManager */
     private $PM;
 
+    /** @var CacheManager */
+    private $CM;
+
     /** @var Photo */
     private $photo;
 
@@ -43,8 +48,14 @@ class PhotoEditComponent extends BaseComponent
      * @param PhotoRepository $PR
      * @param PhotoManager $PM
      * @param Request $request
+     * @param CacheManager $CM
      */
-    public function __construct(Photo $photo, TagRepository $TR, PhotoRepository $PR, PhotoManager $PM, Request $request)
+    public function __construct(Photo $photo,
+                                TagRepository $TR,
+                                PhotoRepository $PR,
+                                PhotoManager $PM,
+                                Request $request,
+                                CacheManager $CM)
     {
         parent::__construct();
         $this->TR = $TR;
@@ -52,6 +63,7 @@ class PhotoEditComponent extends BaseComponent
         $this->PM = $PM;
         $this->photo = $photo;
         $this->request = $request;
+        $this->CM = $CM;
     }
 
     public function render()
@@ -91,13 +103,18 @@ class PhotoEditComponent extends BaseComponent
 
     public function handleSaveTags()
     {
-        $this->photo->removeAllTags();
         if (!$this->request->post['tags']) {
             $this->PR->persist($this->photo);
             return;
         }
+        $this->photo->removeAllTags();
         foreach ($this->request->post['tags'] as $id) {
-            $this->photo->addToTags((int)$id);
+            /** @var Tag $tag */
+            $tag = $this->TR->get($id);
+            if ($tag->teamInfo) {
+                $this->CM->cleanByEntity($tag->teamInfo->team);
+            }
+            $this->photo->addToTags($tag);
         }
         $this->PR->persist($this->photo);
         $this->redrawControl();
