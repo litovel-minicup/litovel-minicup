@@ -4,6 +4,7 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Manager\StatsManager;
 use Nette\Utils\ArrayHash;
 
@@ -15,16 +16,33 @@ class CategoryStatsComponent extends BaseComponent
     /** @var StatsManager */
     private $SM;
 
-    public function __construct(Category $category, StatsManager $SM)
+    /** @var MatchManager */
+    private $MM;
+
+    /**
+     * @param Category $category
+     * @param StatsManager $SM
+     * @param MatchManager $MM
+     */
+    public function __construct(Category $category, StatsManager $SM, MatchManager $MM)
     {
         $this->category = $category;
         $this->SM = $SM;
+        $this->MM = $MM;
     }
 
     public function render()
     {
         $this->template->stats = ArrayHash::from($this->SM->getStats($this->category));
         parent::render();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStarted()
+    {
+        return $this->MM->isStarted($this->category);
     }
 }
 
