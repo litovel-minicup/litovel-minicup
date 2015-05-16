@@ -117,7 +117,9 @@ class PhotoUploadComponent extends BaseComponent
      */
     protected function createComponentTagFormComponent()
     {
-        return $this->TFCF->create(NULL);
+        $tagForm = $this->TFCF->create(NULL);
+        $tagForm->view = "small";
+        return $tagForm;
     }
 
     /** Signal for tagging all actually uploaded photos */

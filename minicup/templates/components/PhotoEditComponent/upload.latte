@@ -14,7 +14,7 @@
                         data-ajax--delay="350"
                         data-ajax--method="POST"
                         data-minimum-input-length="0"
-                        data-ajax--url="{? echo($control->parent->parent->link('tags!'));}">
+                        data-ajax--url="{plink 'tags!'}">
                     <option selected="selected" n:foreach="$photo->tags as $tag"
                             value="{$tag->id}">{$tag->slug}</option>
                 </select>
