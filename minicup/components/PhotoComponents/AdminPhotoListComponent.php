@@ -2,11 +2,13 @@
 
 namespace Minicup\Components;
 
+use Grido\Components\Columns\Date;
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\LinkGenerator;
@@ -48,12 +50,16 @@ class AdminPhotoListComponent extends BaseComponent
     /** @var LinkGenerator */
     private $linkGenerator;
 
+    /** @var PhotoManager */
+    private $PM;
+
     public function __construct(Session $session,
                                 IPhotoEditComponentFactory $PECF,
                                 PhotoRepository $PR,
                                 TagRepository $TR,
                                 Connection $connection,
-                                LinkGenerator $linkGenerator)
+                                LinkGenerator $linkGenerator,
+                                PhotoManager $PM)
     {
         $this->session = $session->getSection('minicup');
         $this->PECF = $PECF;
@@ -61,6 +67,7 @@ class AdminPhotoListComponent extends BaseComponent
         $this->TR = $TR;
         $this->connection = $connection;
         $this->linkGenerator = $linkGenerator;
+        $this->PM = $PM;
         if (isset($this->session->adminPhotoList)) {
             $this->id = $this->session->adminPhotoList;
         } else {
@@ -119,36 +126,37 @@ class AdminPhotoListComponent extends BaseComponent
     public function createComponentPhotosGrid($name)
     {
         $PR = $this->PR;
+        $PM = $this->PM;
         $linkGenerator = $this->linkGenerator;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
         $g->addColumnText('filename', 'Jméno');
         $g->addActionHref('detail', 'Detail', 'Photo:photoDetail', array('id' => 'id'));
-        $g->addActionEvent('delete', 'Smazat', function ($id) use ($PR) {
-            $PR->delete($id);
-        })->setConfirm('Smazat?');
-        $showButton = $g->addActionEvent('changeView', 'Zobrazit/Skrýt', function ($id) use ($PR) {
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($PM, $PR, $g) {
+            $PM->delete($PR->get($id, FALSE), FALSE);
+            $g->reload();
+        })->setConfirm('Smazat?')->getElementPrototype()->addAttributes(array("class" => "ajax"));
+        $g->addActionEvent('changeView', 'Zobrazit/Skrýt', function ($id) use ($PR, $g) {
             /** @var Photo $photo */
             $photo = $PR->get($id);
             $photo->active = $photo->active ? 0 : 1;
             $PR->persist($photo);
-        })->setConfirm(function (\DibiRow $row) {
-            return !$row->active ? "Zobrazit?" : "Skrýt?";
-        });
-        $showButton->setCustomRender(function (\DibiRow $row, Html $element) {
+            $g->reload();
+        })->setCustomRender(function (\DibiRow $row, Html $element) {
             return $element->setText($row['active'] ? 'Skrýt' : 'Zobrazit');
-        });
+        })->getElementPrototype()->addAttributes(array("class" => "ajax"));
         $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (\DibiRow $row) use ($linkGenerator) {
             return Html::el('img', array("src" => $linkGenerator->link("Media:mini", array($row->filename))));
         });
+        $g->addColumnDate('taken', "Pořízena", Date::FORMAT_DATETIME)->setSortable();
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
             $active->setReplacement(array(
                 0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
                 1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
             ));
-            $g->setModel($this->connection->select('*')->from('[photo]')->orderBy('[added] DESC'));
+            $g->setModel($this->connection->select('*')->from('[photo]')); /**  ->orderBy('[added] DESC')); */
         } else {
             $g->setModel($this->connection->select('*')->from('[photo]')->where('[active] = 1')->orderBy('[added] DESC'));
         }

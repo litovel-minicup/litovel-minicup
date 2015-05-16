@@ -103,6 +103,19 @@ class Filters extends Object
      * @param string $order
      * @throws InvalidArgumentException
      */
+    public function orderPhotos(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
+    {
+        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy("[taken] $order");
+    }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
     public function orderNews(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
     {
         if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
