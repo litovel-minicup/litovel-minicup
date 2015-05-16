@@ -143,7 +143,7 @@ final class PhotoPresenter extends BaseAdminPresenter
      */
     protected function createComponentPhotoListComponent()
     {
-        return $this->PLCF->create($this->TR->get($this->getParameter('id'))->photos);
+        return $this->PLCF->create($this->TR->get($this->getParameter('id'))->photos, NULL);
     }
 
     protected function createComponentPhotoEditComponent()

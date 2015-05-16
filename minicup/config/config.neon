@@ -122,8 +122,8 @@ services:
     - implement: Minicup\Components\IPhotoUploadComponentFactory
       arguments: [%wwwDir%]
     - implement: Minicup\Components\IPhotoListComponentFactory
-      parameters: [array photos]
-      arguments: [%photos%]
+      parameters: [array photos, initial = 16, step = 12]
+      arguments: [%photos%, %initial%, %step%]
     - implement: Minicup\Components\IInteractiveGalleryComponentFactory
       parameters: [array tags = NULL]
       arguments: [%tags%]

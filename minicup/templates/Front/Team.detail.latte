@@ -1,7 +1,4 @@
 {block outerContent}
-    {* TODO: fix cache of photos *}
-    {cache $team->cacheTag, tags => $team->cacheTag}
-        {control teamDetailComponent}
-    {/cache}
+    {control teamDetailComponent}
 {/block}
 {block title}{$team->name} - {$team->category->name}{/block}

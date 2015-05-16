@@ -1,19 +1,26 @@
-{foreach $photos as $photo}
-    <span class="Box__rows">
+<div n:snippet="photos">
+    {foreach $photos as $photo}
+        <span class="Box__rows">
         <a class="swipebox" title="{$iterator->counter}. z {$photos|length}"
            href={plink :Media:medium $photo->filename}>
             <img src="{plink :Media:small $photo->filename}" alt="image">
         </a>
     </span>
-{/foreach}
-{if !$photos}
-    <div class="Article__content">
-        <p>Žádné fotky k zobrazení.</p>
-    </div>
-{/if}
+    {/foreach}
 
-<script>
-    jQuery(function ($) {
-        $('.swipebox').off('click').swipebox();
-    });
-</script>
+    {if !$photos}
+        <div class="Article__content">
+            <p>Žádné fotky k zobrazení.</p>
+        </div>
+    {elseif $actual && $actual < $max}
+        <div class="Article__content">
+            <a n:href="show! $step+$actual" class="ajax">Zobrazit více!</a>
+        </div>
+    {/if}
+
+    <script>
+        jQuery(function ($) {
+            $('.swipebox').off('click').swipebox();
+        });
+    </script>
+</div>
