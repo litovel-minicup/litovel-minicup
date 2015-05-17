@@ -13,6 +13,8 @@ use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\ITagFormComponentFactory;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoUploadComponent;
+use Minicup\Components\TagFormComponent;
+use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
 use Minicup\Model\Repository\PhotoRepository;
@@ -100,16 +102,26 @@ final class PhotoPresenter extends BaseAdminPresenter
     protected function createComponentTagsGrid($name)
     {
         $TR = $this->TR;
+        $PR = $this->PR;
+        $presenter = $this;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
         $g->addColumnText('name', 'Název');
         $g->addColumnText('slug', 'Slug');
-        $main = $g->addColumnText('is_main', 'Hlavní');
-        $main->setReplacement(array(
+        $g->addColumnText('is_main', 'Hlavní')->setReplacement(array(
             0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
             1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
         ));
+        $g->addColumnText('main_photo', 'Hlavní fotka')->setCustomRender(function (\DibiRow $row) use ($presenter, $PR) {
+            /** @var Photo $photo */
+            $photo = $PR->get($row->main_photo_id, FALSE);
+            if ($photo) {
+                $src = $presenter->link(":Media:mini", array($photo->filename));
+                return Html::el('img', array('src' => $src));
+            }
+            return " - ";
+        });
         $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
         $g->addActionEvent('is_main', 'changeMain', function ($id) use ($TR) {
             /** @var Tag $tag */
@@ -129,12 +141,16 @@ final class PhotoPresenter extends BaseAdminPresenter
     protected function createComponentTagFormComponent()
     {
         $presenter = $this;
+        /** @var TagFormComponent $tagFormComponent */
         $tagFormComponent = $this->TFCF->create($this->TR->get($this->getParameter('id')));
         $tagFormComponent['tagForm']->onSuccess[] = function () use ($presenter) {
             /** @var Grid $grid */
             $grid = $presenter['tagsGrid'];
             $grid->reload();
         };
+        if ($this->action === "tagDetail") {
+            $tagFormComponent->view = "full";
+        }
         return $tagFormComponent;
     }
 

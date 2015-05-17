@@ -20,7 +20,7 @@ abstract class BaseComponent extends Control
     protected $productionMode;
 
     /** @var String|NULL */
-    protected $view = NULL;
+    public $view = NULL;
 
     /**
      * @param IFormFactory $formFactory

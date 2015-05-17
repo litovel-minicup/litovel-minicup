@@ -3,9 +3,12 @@
 namespace Minicup\Components;
 
 
+use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\HiddenField;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 
@@ -23,17 +26,22 @@ class TagFormComponent extends BaseComponent
     /** @var TagRepository */
     private $TR;
 
+    /** @var PhotoRepository */
+    private $PR;
+
     /** @var Tag|NULL */
     private $tag;
 
     /**
      * @param Tag $tag
      * @param TagRepository $TR
+     * @param PhotoRepository $PR
      */
-    public function __construct(Tag $tag = NULL, TagRepository$TR)
+    public function __construct(Tag $tag = NULL, TagRepository $TR, PhotoRepository $PR)
     {
         $this->TR = $TR;
         $this->tag = $tag;
+        $this->PR = $PR;
     }
 
     public function render()
@@ -42,7 +50,12 @@ class TagFormComponent extends BaseComponent
         if ($this->tag) {
             /** @var Form $form */
             $form = $this['tagForm'];
-            $form->setDefaults($this->tag->getData(array('name', 'slug', 'id')));
+            $form->setDefaults($this->tag->getData(array('name', 'slug', 'id', 'is_main')));
+            if ($this->tag->mainPhoto) {
+                /** @var HiddenField $mainPhoto */
+                $mainPhoto = $form['main_photo_id'];
+                $mainPhoto->setValue($this->tag->mainPhoto->id);
+            }
         }
         parent::render();
     }
@@ -55,8 +68,8 @@ class TagFormComponent extends BaseComponent
         $f = $this->formFactory->create();
         $f->addText('name', 'Název');
         $f->addText('slug', 'Slug');
-        $f->addCheckbox('isMain', 'Hlavní kategorie')->setDefaultValue((isset($this->tag)) ? (bool)$this->tag->isMain : FALSE);
-        $f->addHidden('id');
+        $f->addCheckbox('is_main', 'Hlavní kategorie');
+        $f->addHidden('main_photo_id');
         $f->addSubmit('submit', $this->tag ? 'Upravit' : 'Přidat');
         $f->onSuccess[] = $this->tagFormSuccess;
         return $f;
@@ -68,17 +81,22 @@ class TagFormComponent extends BaseComponent
      */
     public function tagFormSuccess(Form $form, ArrayHash $values)
     {
-        if ($values->id) {
-            /** @var Tag $tag */
-            $tag = $this->TR->get($values->id);
+        if ($this->tag) {
+            $tag = $this->tag;
             $tag->slug = Strings::webalize($values->slug);
             $tag->name = $values->name;
-            $tag->isMain = $values->isMain;
+            $tag->isMain = $values->is_main;
         } else {
             $tag = new Tag();
             $tag->name = $values->name;
             $tag->slug = Strings::webalize($values->name);
-            $tag->isMain = $values->isMain;
+            $tag->isMain = $values->is_main;
+        }
+
+        if ($values->main_photo_id) {
+            /** @var Photo $photo */
+            $photo = $this->PR->get($values->main_photo_id);
+            $tag->mainPhoto = $photo;
         }
         try {
             $this->TR->persist($tag);
@@ -87,10 +105,10 @@ class TagFormComponent extends BaseComponent
             return;
         }
         $form->setValues(array(), TRUE);
-        $this->presenter->flashMessage($values->id ? "Tag upraven!" : 'Tag přidán!', 'success');
+        $this->presenter->flashMessage($this->tag ? "Tag upraven!" : 'Tag přidán!', 'success');
         if ($this->presenter->action == "tagDetail") {
             $this->presenter->redirect(':Admin:Photo:tags');
-        }elseif($this->presenter->isAjax()){
+        } elseif ($this->presenter->isAjax()) {
             $this->redrawControl('tag-form');
         }
     }

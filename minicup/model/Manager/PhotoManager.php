@@ -16,10 +16,12 @@ class PhotoManager extends Object
 {
     /** @internal */
     const PHOTO_ORIGINAL = "original";
+
     const PHOTO_MINI = "mini";
     const PHOTO_SMALL = "small";
     const PHOTO_THUMB = "thumb";
     const PHOTO_MEDIUM = "medium";
+    const PHOTO_LARGE = "large";
     const PHOTO_FULL = "full";
     const DEFAULT_FLAG = Image::FILL;
     /**
@@ -30,7 +32,8 @@ class PhotoManager extends Object
         PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
         PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
         PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(1200, 1200),
+        PhotoManager::PHOTO_MEDIUM => array(750, 750, Image::FILL),
+        PhotoManager::PHOTO_LARGE => array(1200, 1200),
         PhotoManager::PHOTO_FULL => array(2000, 2000),
     );
     /**
@@ -54,7 +57,6 @@ class PhotoManager extends Object
     {
         $this->PR = $PR;
         $this->wwwPath = $wwwPath;
-        $PM = $this;
     }
 
     /**
@@ -83,7 +85,8 @@ class PhotoManager extends Object
             if (isset($exif["DateTimeOriginal"])) {
                 try {
                     $taken = new \DibiDateTime($exif["DateTimeOriginal"]);
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
             $photo->taken = $taken;
             $this->PR->persist($photo);
@@ -106,7 +109,8 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @return bool
+     * @param bool $lazy
+     * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
     {
@@ -114,6 +118,12 @@ class PhotoManager extends Object
             $photo->active = 0;
             $this->PR->persist($photo);
         } else {
+            foreach ($this::$resolutions as $type) {
+                $path = $this->formatPhotoPath($type, $photo->filename);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
             unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
             $this->PR->delete($photo);
         }

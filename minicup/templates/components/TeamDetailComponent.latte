@@ -64,6 +64,18 @@
         </div>
     {/if}
 
+    {if $team->i->tag && $team->i->tag->mainPhoto}
+        <div class="Section">
+            <div class="Article">
+                <div class="Article__head Box__head">
+                    <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                    <div class="Article__head__text Box__head__text">Foto týmu</div>
+                </div>
+                <img style="width: 100%;" src="{plink :Media:medium $team->i->tag->mainPhoto->filename}" title="Foto týmu {$team->i->name}" alt="Foto týmu {$team->i->name}"/>
+            </div>
+        </div>
+    {/if}
+
     {if ($team->i->tag && count($team->i->tag->photos) > 0) || $user->isAllowed('tag', 'create')}
         <div class="Section">
             <div class="Article">
