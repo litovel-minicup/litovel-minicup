@@ -28,12 +28,12 @@ var attachCover = function ($el) {
         if (!$el.is('body')) {
             $el.css('position', 'relative');
         }
-        $('<div class="Cover"><div class="Cover__loader"></div></div>').hide().appendTo($el).fadeIn(200);
+        $('<div class="Cover"><div class="Cover__loader"></div></div>').hide().appendTo($el).fadeIn(50);
     }
 };
 
 var detachCover = function ($el) {
-    $el.find('.Cover').fadeOut(250, function () {
+    $el.find('.Cover').fadeOut(100, function () {
         $(this).remove();
     });
 };

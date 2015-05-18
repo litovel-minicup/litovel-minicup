@@ -53,17 +53,20 @@ class MatchFormComponent extends BaseComponent
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
             $container->currentGroup = $container->getForm()->addGroup('Zápas', FALSE);
-            $container
+            $home = $container
                 ->addText('scoreHome', $match->homeTeam->name)
-                ->setType('number')
-                ->addCondition(Form::INTEGER);
+                ->setType('number');
+            $home->addCondition(Form::INTEGER);
             $container->addText('time')
                 ->setDisabled()
                 ->setDefaultValue($match->matchTerm->start->format('j. n.') . " " . $match->matchTerm->start->format('G:i'));
-            $container
+            $away = $container
                 ->addText('scoreAway', $match->awayTeam->name)
-                ->setType('number')
-                ->addCondition(Form::INTEGER);
+                ->setType('number');
+            $away->addCondition(Form::INTEGER);
+
+            $home->addConditionOn($away, Form::FILLED)->setRequired();
+            $away->addConditionOn($home, Form::FILLED)->setRequired();
         },
             $this->MR->findMatchesByCategory($this->category, MatchRepository::UNCONFIRMED),
             $this->count);
@@ -98,7 +101,7 @@ class MatchFormComponent extends BaseComponent
                 /** @var Match $match */
                 $match = $this->MR->get((int)$matchId);
                 $this->MM->confirmMatch($match, $match->category, $matchData['scoreHome'], $matchData['scoreAway']);
-                $this->presenter->flashMessage('Zápas '.$match->homeTeam->name.' vs. '.$match->awayTeam->name.' byl úspěšně zpracován.');
+                $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
             }
             $this->redirect('this');
         }

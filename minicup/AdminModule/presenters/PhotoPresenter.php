@@ -164,7 +164,13 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     protected function createComponentPhotoEditComponent()
     {
-        return $this->PECF->create($this->PR->get($this->getParameter('id'), FALSE));
+        $photoEdit = $this->PECF->create($this->PR->get($this->getParameter('id'), FALSE));
+        if ($this->action === "photoDetail") {
+            $that = $this;
+            $photoEdit->onDelete[] = function (Photo $photo) use ($that) {
+                $that->redirect('photos');
+            };
+        }
     }
 
 }

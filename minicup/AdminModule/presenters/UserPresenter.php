@@ -47,7 +47,7 @@ class UserPresenter extends BaseAdminPresenter
      * @param $name
      * @return Grid
      */
-    protected function createComponentGrid($name)
+    protected function createComponentUserGrid($name)
     {
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);

@@ -123,7 +123,7 @@ class AdminPhotoListComponent extends BaseComponent
         $this->redirect('this');
     }
 
-    public function createComponentPhotosGrid($name)
+    public function createComponentPhotoGrid($name)
     {
         $PR = $this->PR;
         $PM = $this->PM;
@@ -131,9 +131,9 @@ class AdminPhotoListComponent extends BaseComponent
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
-        $g->addColumnText('filename', 'Jméno');
-        $g->addActionHref('detail', 'Detail', 'Photo:photoDetail', array('id' => 'id'));
-        $g->addActionEvent('delete', 'Smazat', function ($id) use ($PM, $PR, $g) {
+        $g->addColumnText('filename', 'Jméno souboru');
+        $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', array('id' => 'id'));
+        $g->addActionEvent('delete', 'Smazat z disku', function ($id) use ($PM, $PR, $g) {
             $PM->delete($PR->get($id, FALSE), FALSE);
             $g->reload();
         })->setConfirm('Smazat?')->getElementPrototype()->addAttributes(array("class" => "ajax"));
@@ -156,7 +156,7 @@ class AdminPhotoListComponent extends BaseComponent
                 0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
                 1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
             ));
-            $g->setModel($this->connection->select('*')->from('[photo]')); /**  ->orderBy('[added] DESC')); */
+            $g->setModel($this->connection->select('*')->from('[photo]')->orderBy('[added] DESC'));
         } else {
             $g->setModel($this->connection->select('*')->from('[photo]')->where('[active] = 1')->orderBy('[added] DESC'));
         }

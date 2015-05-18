@@ -119,7 +119,7 @@ class PhotoManager extends Object
             $this->PR->persist($photo);
         } else {
             foreach ($this::$resolutions as $type) {
-                $path = $this->formatPhotoPath($type, $photo->filename);
+                $path = $this->formatPhotoPath($type[0], $photo->filename);
                 if (file_exists($path)) {
                     unlink($path);
                 }

@@ -46,7 +46,6 @@ class LoginFormComponent extends BaseComponent
             $user->setExpiration('20 minutes', TRUE);
         }
         $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
-        $this->presenter->redirect(':Admin:Homepage:');
     }
 }
 

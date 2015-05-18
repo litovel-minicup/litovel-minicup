@@ -44,7 +44,11 @@ class RouterFactory extends Object
      * @param TagRepository $TagR
      * @param Session $session
      */
-    public function __construct(CategoryRepository $CR, TeamRepository $TR, YearRepository $YR, TagRepository $TagR, Session $session)
+    public function __construct(CategoryRepository $CR,
+                                TeamRepository $TR,
+                                YearRepository $YR,
+                                TagRepository $TagR,
+                                Session $session)
     {
         $this->CR = $CR;
         $this->TR = $TR;
@@ -211,7 +215,7 @@ class RouterFactory extends Object
         $front[] = $route;
 
         $router = new RouteList();
-        $router[] = new Route('admin/<presenter>/<action>[/<id>]', array(
+        $router[] = new Route('admin/<presenter>/<action>[/<id [0-9]*>][/<category>]', array(
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
@@ -221,6 +225,9 @@ class RouterFactory extends Object
         $router[] = new Route('media/<action>/<slug>', array(
             'presenter' => 'Media',
         ));
+
+        $router[] = new Route('login/', "Sign:in");
+        $router[] = new Route('logout/', "Sign:out");
 
         $router[] = $front;
         return $router;

@@ -1,20 +1,22 @@
-<div class="btn-toolbar">
+<div class="form-group">
     <a class="btn btn-primary" n:href="activePhotos!">Výpis aktivních fotek</a>
     <a class="btn btn-primary" n:href="allPhotos">Zobrazit všechny fotky</a>
 </div>
 
-<select id="tags-select"
-        name="tags-select"
-        multiple="multiple"
-        data-tags="true"
-        data-placeholder="Které tagy Tě zajímají?"
-        data-ajax--url="{plink tags!}"
-        data-ajax--cache="false"
-        data-ajax--delay="350"
-        data-ajax--method="GET">
-    <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected"
-            value="{$tag->id}">{$tag->slug}</option>
-</select>
+<div class="form-group">
+    <select id="tags-select"
+            name="tags-select"
+            multiple="multiple"
+            data-tags="true"
+            data-placeholder="Které tagy Tě zajímají?"
+            data-ajax--url="{plink tags!}"
+            data-ajax--cache="false"
+            data-ajax--delay="350"
+            data-ajax--method="GET">
+        <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected"
+                value="{$tag->id}">{$tag->slug}</option>
+    </select>
+</div>
 <script>
     jQuery(function ($) {
         var $select = initTagsSelect2($('#tags-select'));
@@ -24,11 +26,14 @@
                 val = "";
             }
             window.location.hash = val;
+            attachCover($('.main'));
             $.nette.ajax({
                 url: {link refresh!},
                 data: {
                     ids: $(this).val()
                 }
+            }).always(function () {
+                detachCover($('.main'));
             });
         });
         if (window.location.hash) {
@@ -37,10 +42,12 @@
                 $select.select2('val', ids).trigger('change');
             }, 200)
         }
-        $('#tags-select, .select2, .select2 li input').width('100%');
     })
 </script>
-
-{snippet photo-list}
-{control photosGrid}
-{/snippet}
+<div class="main">
+    {block main}
+        {snippet photo-list}
+        {control photoGrid}
+        {/snippet}
+    {/block}
+</div>
