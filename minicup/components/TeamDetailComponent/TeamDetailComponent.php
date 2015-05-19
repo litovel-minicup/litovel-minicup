@@ -58,6 +58,7 @@ class TeamDetailComponent extends BaseComponent
 
     public function render()
     {
+        $this->team->i->tag = $this->TM->getTag($this->team);
         $this->template->team = $this->team;
         parent::render();
     }
@@ -83,8 +84,7 @@ class TeamDetailComponent extends BaseComponent
      */
     public function createComponentPhotoListComponent()
     {
-        $tag = $this->TM->getTag($this->team);
-        return $this->PLCF->create($tag->photos);
+        return $this->PLCF->create($this->TM->getTag($this->team)->photos);
     }
 
     /**
