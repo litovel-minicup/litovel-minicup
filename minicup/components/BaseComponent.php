@@ -3,9 +3,12 @@
 namespace Minicup\Components;
 
 
+use Grido\Grid;
+use Minicup\AdminModule\Presenters\BaseAdminPresenter;
 use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
 use Nette\Application\UI\Control;
+use Nette\ComponentModel\IComponent;
 use Nette\Utils\Strings;
 
 abstract class BaseComponent extends Control
@@ -107,4 +110,19 @@ abstract class BaseComponent extends Control
     {
         $this->redrawControl();
     }
+
+    /**
+     * @param string $name
+     * @return IComponent
+     */
+    protected function createComponent($name)
+    {
+        $comp = parent::createComponent($name);
+        if ($this->getPresenter(FALSE) && $this->getPresenter() instanceof BaseAdminPresenter && $comp instanceof Grid) {
+            return $this->getPresenter()->improveGrid($comp);
+        }
+        return $comp;
+    }
+
+
 }

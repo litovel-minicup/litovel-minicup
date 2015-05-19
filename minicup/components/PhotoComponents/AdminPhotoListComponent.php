@@ -9,6 +9,7 @@ use LeanMapper\Connection;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\PhotoManager;
+use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\LinkGenerator;
@@ -130,36 +131,46 @@ class AdminPhotoListComponent extends BaseComponent
         $linkGenerator = $this->linkGenerator;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
+
         $g->addColumnNumber('id', '#');
+
         $g->addColumnText('filename', 'Jméno souboru');
+
         $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', array('id' => 'id'));
-        $g->addActionEvent('delete', 'Smazat z disku', function ($id) use ($PM, $PR, $g) {
+
+        $g->addActionEvent('delete', 'Smazat z disku', function ($id) use ($PM, $PR) {
             $PM->delete($PR->get($id, FALSE), FALSE);
-            $g->reload();
-        })->setConfirm('Smazat?')->getElementPrototype()->addAttributes(array("class" => "ajax"));
-        $g->addActionEvent('changeView', 'Zobrazit/Skrýt', function ($id) use ($PR, $g) {
+        })->setConfirm('Opravdu chcete smazat fotku i z disku?');
+
+        $g->addActionEvent('changeView', 'Zobrazit/Skrýt', function ($id) use ($PR) {
             /** @var Photo $photo */
             $photo = $PR->get($id);
             $photo->active = $photo->active ? 0 : 1;
             $PR->persist($photo);
-            $g->reload();
         })->setCustomRender(function (\DibiRow $row, Html $element) {
             return $element->setText($row['active'] ? 'Skrýt' : 'Zobrazit');
-        })->getElementPrototype()->addAttributes(array("class" => "ajax"));
+        });
+
         $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (\DibiRow $row) use ($linkGenerator) {
             return Html::el('img', array("src" => $linkGenerator->link("Media:mini", array($row->filename))));
         });
-        $g->addColumnDate('taken', "Pořízena", Date::FORMAT_DATETIME)->setSortable();
+
+        $g->addColumnDate('taken', "Pořízena", Date::FORMAT_DATETIME);
+
+        $g->addColumnDate('added', "Přidána", Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
+
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
             $active->setReplacement(array(
                 0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
                 1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
             ));
-            $g->setModel($this->connection->select('*')->from('[photo]')->orderBy('[added] DESC'));
+            $g->setModel($this->connection->select('*')->from('[photo]'));
         } else {
-            $g->setModel($this->connection->select('*')->from('[photo]')->where('[active] = 1')->orderBy('[added] DESC'));
+            $g->setModel($this->connection->select('*')->from('[photo]')->where('[active] = 1'));
         }
+
+        return $g;
     }
 
     /**

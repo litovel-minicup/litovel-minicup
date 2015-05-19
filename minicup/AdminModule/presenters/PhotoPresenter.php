@@ -11,12 +11,14 @@ use Minicup\Components\IPhotoEditComponentFactory;
 use Minicup\Components\IPhotoListComponentFactory;
 use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\ITagFormComponentFactory;
+use Minicup\Components\PhotoEditComponent;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoUploadComponent;
 use Minicup\Components\TagFormComponent;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
+use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
@@ -56,12 +58,6 @@ final class PhotoPresenter extends BaseAdminPresenter
         $this->template->tag = $this->TR->get($id);
     }
 
-    /***/
-    public function actionPhotoDetail($id)
-    {
-
-    }
-
     /**
      * @return PhotoUploadComponent
      */
@@ -99,6 +95,10 @@ final class PhotoPresenter extends BaseAdminPresenter
         $this->presenter->sendJson(array('results' => $results));
     }
 
+    /**
+     * @param string $name
+     * @return Grid
+     */
     protected function createComponentTagsGrid($name)
     {
         $TR = $this->TR;
@@ -106,13 +106,18 @@ final class PhotoPresenter extends BaseAdminPresenter
         $presenter = $this;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
+
         $g->addColumnNumber('id', '#');
-        $g->addColumnText('name', 'Název');
-        $g->addColumnText('slug', 'Slug');
+
+        $g->addColumnText('name', 'Název')->setFilterText();
+
+        $g->addColumnText('slug', 'Slug')->setFilterText();
+
         $g->addColumnText('is_main', 'Hlavní')->setReplacement(array(
             0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
             1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
-        ));
+        ))->setDefaultSort(BaseRepository::ORDER_DESC);
+
         $g->addColumnText('main_photo', 'Hlavní fotka')->setCustomRender(function (\DibiRow $row) use ($presenter, $PR) {
             /** @var Photo $photo */
             $photo = $PR->get($row->main_photo_id, FALSE);
@@ -122,7 +127,16 @@ final class PhotoPresenter extends BaseAdminPresenter
             }
             return " - ";
         });
+
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR) {
+            /** @var Tag $tag */
+            $tag = $TR->get($id);
+            $tag->removeAllPhotos();
+            $TR->delete($tag);
+        })->setConfirm('Opravdu smazat tag a všechny jeho vazby?');
+
         $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
+
         $g->addActionEvent('is_main', 'changeMain', function ($id) use ($TR) {
             /** @var Tag $tag */
             $tag = $TR->get($id);
@@ -131,12 +145,13 @@ final class PhotoPresenter extends BaseAdminPresenter
         })->setCustomRender(function (\DibiRow $row, Html $element) {
             return $element->setText(!$row->is_main ? 'Nastavit jako HLAVNÍ' : 'Nastavit jako VEDLEJŠÍ');
         });
-        $g->setModel($this->connection->select('*')->from('[tag]')->orderBy('[is_main] DESC, [name] ASC'));
+
+        $g->setModel($this->connection->select('*')->from('[tag]'));
         return $g;
     }
 
     /**
-     * @return \Minicup\Components\TagFormComponent
+     * @return TagFormComponent
      */
     protected function createComponentTagFormComponent()
     {
@@ -162,6 +177,9 @@ final class PhotoPresenter extends BaseAdminPresenter
         return $this->PLCF->create($this->TR->get($this->getParameter('id'))->photos, NULL);
     }
 
+    /**
+     * @return PhotoEditComponent
+     */
     protected function createComponentPhotoEditComponent()
     {
         $photoEdit = $this->PECF->create($this->PR->get($this->getParameter('id'), FALSE));
@@ -171,6 +189,7 @@ final class PhotoPresenter extends BaseAdminPresenter
                 $that->redirect('photos');
             };
         }
+        return $photoEdit;
     }
 
 }

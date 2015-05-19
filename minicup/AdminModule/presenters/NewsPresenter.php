@@ -3,11 +3,12 @@
 namespace Minicup\AdminModule\Presenters;
 
 
-use Grido\Components\Filters\Filter;
+use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\INewsFormComponentFactory;
 use Minicup\Components\NewsFormComponent;
+use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\NewsRepository;
 use Nette\Utils\ArrayHash;
 
@@ -44,7 +45,13 @@ class NewsPresenter extends BaseAdminPresenter
      */
     public function createComponentNewsFormComponent()
     {
-        return $this->NFCF->create($this->NR->get($this->getParameter('id')));
+        $newsFormComponent = $this->NFCF->create($this->NR->get($this->getParameter('id')));
+        $presenter = $this;
+        $form = $newsFormComponent['newsForm'];
+        $form->onSuccess[] = function () use ($presenter) {
+            $presenter->redirect('News:');
+        };
+        return $newsFormComponent;
     }
 
     /**
@@ -54,12 +61,12 @@ class NewsPresenter extends BaseAdminPresenter
     protected function createComponentNewsGrid($name)
     {
         $g = new Grid($this, $name);
-        $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->addColumnNumber('id', '#');
         $g->addColumnText('title', 'Titulek');
         $g->addColumnText('content', 'Obsah');
+        $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
         $g->addActionHref('detail', 'Detail', 'News:detail', array('id' => 'id'));
-        $g->setModel($this->connection->select('[id], [title], [content]')->from('[news]')->orderBy('[added] DESC'));
+        $g->setModel($this->connection->select('*')->from('[news]'));
         return $g;
     }
 }

@@ -47,7 +47,7 @@ jQuery(function ($) {
         }
     }).ajaxSuccess(function (event, request, settings) {
         if (request.responseJSON && request.responseJSON.snippets) {
-            redrawSnippets(request.responseJSON.snippets);
+            // redrawSnippets(request.responseJSON.snippets);
         }
         $('.grido').grido();
     });
