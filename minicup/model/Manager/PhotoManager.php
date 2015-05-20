@@ -118,8 +118,8 @@ class PhotoManager extends Object
             $photo->active = 0;
             $this->PR->persist($photo);
         } else {
-            foreach ($this::$resolutions as $type) {
-                $path = $this->formatPhotoPath($type[0], $photo->filename);
+            foreach (array_keys($this::$resolutions) as $type) {
+                $path = $this->formatPhotoPath($type, $photo->filename);
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -165,9 +165,9 @@ class PhotoManager extends Object
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
         $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-            ->resize($this::$resolutions[$format][0] / 10, $this::$resolutions[$format][1] / 10, Image::FIT | Image::SHRINK_ONLY);
-        $placeTop = $image->getHeight() - $watermark->getHeight() - 15;
-        $placeLeft = $image->getWidth() - $watermark->getWidth() - 15;
+            ->resize($this::$resolutions[$format][0] / 6, $this::$resolutions[$format][1] / 6, Image::FIT | Image::SHRINK_ONLY);
+        $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
+        $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);
         $image->save($requested);
         return $requested;
