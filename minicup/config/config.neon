@@ -2,12 +2,12 @@ parameters:
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
     cachedRepositories: [
-    	Minicup\Model\Repository\CategoryRepository,
-    	Minicup\Model\Repository\TeamInfoRepository,
-    	Minicup\Model\Repository\TeamRepository,
-    	Minicup\Model\Repository\PhotoRepository,
-    	Minicup\Model\Repository\MatchRepository,
-    	Minicup\Model\Repository\StaticContentRepository]
+    	@Minicup\Model\Repository\CategoryRepository,
+    	@Minicup\Model\Repository\TeamInfoRepository,
+    	@Minicup\Model\Repository\TeamRepository,
+    	@Minicup\Model\Repository\PhotoRepository,
+    	@Minicup\Model\Repository\MatchRepository,
+    	@Minicup\Model\Repository\StaticContentRepository]
 
 php:
     date.timezone: Europe/Prague
