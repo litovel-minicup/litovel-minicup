@@ -61,7 +61,7 @@ class PhotoManager extends Object
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL $prefix
+     * @param string|NULL  $prefix
      * @return Photo[]
      */
     public function save($files, $prefix = NULL)
@@ -109,7 +109,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool $lazy
+     * @param bool  $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -131,7 +131,7 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo $photo
-     * @param string $format
+     * @param string       $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -162,8 +162,14 @@ class PhotoManager extends Object
         if (isset($this::$resolutions[$format][2])) {
             $flag = $this::$resolutions[$format][2];
         }
-        $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][0], $flag);
-        $image->sharpen()->save($requested);
+        $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
+        $image->sharpen();
+        $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
+            ->resize($this::$resolutions[$format][0] / 10, $this::$resolutions[$format][1] / 10, Image::FIT | Image::SHRINK_ONLY);
+        $placeTop = $image->getHeight() - $watermark->getHeight() - 15;
+        $placeLeft = $image->getWidth() - $watermark->getWidth() - 15;
+        $image->place($watermark, $placeLeft, $placeTop);
+        $image->save($requested);
         return $requested;
     }
 }
