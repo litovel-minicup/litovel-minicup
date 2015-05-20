@@ -15,7 +15,8 @@
         data-ajax--cache="false"
         data-ajax--delay="350"
         data-ajax--method="GET">
-    <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected" value="{$tag->id}">{$tag->slug}</option>
+    <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected"
+            value="{$tag->id}">{$tag->slug}</option>
 </select>
 <script>
     jQuery(function ($) {
@@ -24,6 +25,16 @@
             var val = $(this).val();
             if (!val) {
                 val = "";
+            }
+            console.log(val);
+            if (val.length > 0) {
+                try {
+                    $.each(val, function (i, v) {
+                        ga("send", "event", "tag", "show", v);
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
             }
             window.location.hash = val;
             $.nette.ajax({
