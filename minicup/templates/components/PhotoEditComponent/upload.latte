@@ -32,6 +32,7 @@
                             $.post({link delete!}, function (response, textStatus, xhr) {
                                 $photo.find('.modal').modal('hide');
                                 toastr.warning('Fotka {$photo->id} byla úspěšně smazána!');
+                                redrawSnippets(response);
                             });
                         });
                         $photo.find('.photo-save').on('click', function (e) {
@@ -39,11 +40,13 @@
                             e.stopPropagation();
                             $.post({link save!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Fotka {$photo->id} úspěšně vložena do aplikace!', 'Výborně!');
+                                redrawSnippets(response);
                             });
                         });
                         select2.on('change', function (e) {
                             $.post({link saveTags!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Tagy u fotky {$photo->id} aktualizovány!', 'Excelentně!');
+                                redrawSnippets(response);
                             });
                         });
                     });

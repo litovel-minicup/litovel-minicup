@@ -15,10 +15,13 @@ var initTagsSelect2 = function ($el) {
     return $el;
 };
 
-var redrawSnippets = function (snippets) {
-    for (var key in snippets) {
-        if (snippets.hasOwnProperty(key)) {
-            $('#' + key).html(snippets[key]);
+var redrawSnippets = function (response) {
+    if (response.snippets == undefined) {
+        return;
+    }
+    for (var key in response.snippets) {
+        if (response.snippets.hasOwnProperty(key)) {
+            $('#' + key).html(response.snippets[key]);
         }
     }
 };

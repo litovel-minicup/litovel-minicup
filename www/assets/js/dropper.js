@@ -323,7 +323,7 @@
 			_checkQueue(data);
 		} else {
 			file.started = true;
-			file.transfer = $.ajax({
+			file.transfer = $.nette.ajax({
 				url: data.action,
 				data: formData,
 				type: "POST",
