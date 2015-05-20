@@ -50,6 +50,7 @@ class CacheManager extends Object
                         if ($tag->teamInfo) {
                             $that->cleanByEntity($tag->teamInfo);
                         }
+                        $that->cleanByEntity($tag);
                     }
                 }
             });
@@ -66,5 +67,14 @@ class CacheManager extends Object
         }
         $this->cache->clean(array(Cache::TAGS => array($entity->getCacheTag())));
         $this->cache->remove($entity->getCacheTag());
+    }
+
+    public function cleanAllEntityCaches()
+    {
+        foreach ($this->repositories as $repository) {
+            foreach ($repository->findAll() as $entity) {
+                $this->cleanByEntity($entity);
+            }
+        }
     }
 }

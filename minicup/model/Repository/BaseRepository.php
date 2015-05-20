@@ -2,7 +2,6 @@
 
 namespace Minicup\Model\Repository;
 
-use LeanMapper\Entity;
 use LeanMapper\Repository;
 use Minicup\Model\Entity\BaseEntity;
 
@@ -45,7 +44,7 @@ abstract class BaseRepository extends Repository
     }
 
     /**
-     * @return Entity[]
+     * @return BaseEntity[]
      */
     public function findAll()
     {
@@ -56,7 +55,7 @@ abstract class BaseRepository extends Repository
 
     /**
      * @param int[] $ids
-     * @return Entity[]
+     * @return BaseEntity[]
      */
     public function findByIds(array $ids)
     {
