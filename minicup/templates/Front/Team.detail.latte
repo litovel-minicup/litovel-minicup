@@ -2,3 +2,10 @@
     {control teamDetailComponent}
 {/block}
 {block title}{$team->name} - {$team->category->name}{/block}
+{block og-image}
+{if $team->i->tag && $team->i->tag->mainPhoto}
+    <meta property="og:image" content="{plink //:Media:medium $team->i->tag->mainPhoto->filename}">
+{else}
+    {include parent}
+{/if}
+{/block}
