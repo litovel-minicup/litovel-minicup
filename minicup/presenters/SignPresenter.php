@@ -10,8 +10,15 @@ class SignPresenter extends BasePresenter
 {
     /** @var string @persistent */
     public $backlink;
+
     /** @var ILoginFormComponentFactory @inject */
     public $LFCF;
+
+    protected function startup()
+    {
+        parent::startup();
+        $this->module = 'admin';
+    }
 
     /**
      * @return LoginFormComponent
