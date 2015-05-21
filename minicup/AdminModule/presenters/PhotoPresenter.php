@@ -53,6 +53,9 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoEditComponentFactory @inject */
     public $PECF;
 
+    /** @var int @persistent */
+    public $id = 0;
+
     public function renderTagDetail($id)
     {
         $this->template->tag = $this->TR->get($id);
