@@ -2,7 +2,7 @@
     <script>
         jQuery(function ($) {
             try {
-                ga("send", "event", "tag", "show", {$tag->id});
+                ga("send", "event", "tag", "detail", {$tag->id});
             } catch (e) {
                 console.log(e);
             }
