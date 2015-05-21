@@ -51,8 +51,8 @@
     </div>
 {/if}
 
-{if ($team->i->staticContent && $team->i->staticContent->content) || $user->isAllowed('static-content', 'edit')}
-    <div class="Section" n:cache="$team->i->staticContent->cacheTag, tags => $team->i->staticContent->cacheTag">
+{if $team->i->staticContent || $user->isAllowed('static-content', 'edit')}
+    <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__news"></div>
