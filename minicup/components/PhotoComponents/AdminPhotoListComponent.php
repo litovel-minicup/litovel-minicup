@@ -3,7 +3,6 @@
 namespace Minicup\Components;
 
 use Grido\Components\Columns\Date;
-use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Model\Entity\Photo;
@@ -105,7 +104,11 @@ class AdminPhotoListComponent extends BaseComponent
         $this->tags = $this->TR->findByIds((array)$this->session[$this->id]);
         $this->photos = $this->PR->findByTags($this->tags);
         $this->session->allPhotos = FALSE;
-        $this->redrawControl('photo-list');
+        if ($this->presenter->isAjax()) {
+            $this->redrawControl('photo-list');
+        } else {
+            $this->redirect('this');
+        }
     }
 
     public function handleActivePhotos()
@@ -113,7 +116,11 @@ class AdminPhotoListComponent extends BaseComponent
         unset($this->session->adminPhotoList);
         unset($this->session[$this->id]);
         $this->session->allPhotos = FALSE;
-        $this->redirect('this');
+        if ($this->presenter->isAjax()) {
+            $this->redrawControl('photo-list');
+        } else {
+            $this->redirect('this');
+        }
     }
 
     public function handleAllPhotos()
@@ -121,7 +128,22 @@ class AdminPhotoListComponent extends BaseComponent
         unset($this->session->adminPhotoList);
         unset($this->session[$this->id]);
         $this->session->allPhotos = TRUE;
-        $this->redirect('this');
+        if ($this->presenter->isAjax()) {
+            $this->redrawControl('photo-list');
+        } else {
+            $this->redirect('this');
+        }
+    }
+
+    public function handleUntaggedPhotos()
+    {
+        // TODO sessions?
+        $this->photos = $this->PR->findUntaggedPhotos();
+        if ($this->presenter->isAjax()) {
+            $this->redrawControl('photo-list');
+        } else {
+            $this->redirect('this');
+        }
     }
 
     public function createComponentPhotoGrid($name)
@@ -129,8 +151,9 @@ class AdminPhotoListComponent extends BaseComponent
         $PR = $this->PR;
         $PM = $this->PM;
         $linkGenerator = $this->linkGenerator;
+        $model = $this->connection->select('*')->from('[photo]')->select(
+            $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [id]'), 'count_of_tags');
         $g = new Grid($this, $name);
-        $g->setFilterRenderType(Filter::RENDER_INNER);
 
         $g->addColumnNumber('id', '#');
 
@@ -159,17 +182,18 @@ class AdminPhotoListComponent extends BaseComponent
 
         $g->addColumnDate('added', "Přidána", Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
 
+        $g->addColumnText('count_of_tags', 'Počet tagů')->setSortable();
+
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
             $active->setReplacement(array(
                 0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
                 1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
             ));
-            $g->setModel($this->connection->select('*')->from('[photo]'));
         } else {
-            $g->setModel($this->connection->select('*')->from('[photo]')->where('[active] = 1'));
+            $model->where('[active] = 1');
         }
-
+        $g->setModel($model);
         return $g;
     }
 

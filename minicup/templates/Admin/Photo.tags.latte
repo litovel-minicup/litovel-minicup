@@ -1,7 +1,11 @@
 {block content}
-    <div class="col-md-10">
-        <h1 n:block="title">Přehled tagů</h1>
-        {control tagsGrid}
+    <div class="row">
+        <div class="col-md-12"><a class="btn btn-block btn-lg btn-primary" n:href="tagDetail id => NULL">Nový tag</a></div>
     </div>
-    <div class="col-md-2">{control tagFormComponent}</div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 n:block="title">Přehled tagů</h1>
+            {control tagsGrid}
+        </div>
+    </div>
 {/block}

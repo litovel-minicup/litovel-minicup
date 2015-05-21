@@ -116,6 +116,8 @@ final class PhotoPresenter extends BaseAdminPresenter
 
         $g->addColumnText('slug', 'Slug')->setFilterText();
 
+        $g->addColumnText('count_of_photos', 'Počet fotek');
+
         $g->addColumnText('is_main', 'Hlavní')->setReplacement(array(
             0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
             1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
@@ -131,14 +133,14 @@ final class PhotoPresenter extends BaseAdminPresenter
             return " - ";
         });
 
+        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
+
         $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR) {
             /** @var Tag $tag */
             $tag = $TR->get($id);
             $tag->removeAllPhotos();
             $TR->delete($tag);
         })->setConfirm('Opravdu smazat tag a všechny jeho vazby?');
-
-        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
 
         $g->addActionEvent('is_main', 'changeMain', function ($id) use ($TR) {
             /** @var Tag $tag */
@@ -149,7 +151,10 @@ final class PhotoPresenter extends BaseAdminPresenter
             return $element->setText(!$row->is_main ? 'Nastavit jako HLAVNÍ' : 'Nastavit jako VEDLEJŠÍ');
         });
 
-        $g->setModel($this->connection->select('*')->from('[tag]'));
+        $g->setModel(
+            $model = $this->connection->select('*')->from('[tag]')->select(
+                $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[tag_id] = [id]'), 'count_of_photos')
+        );
         return $g;
     }
 

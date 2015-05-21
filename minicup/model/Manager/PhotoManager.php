@@ -15,7 +15,7 @@ use Nette\Utils\Random;
 class PhotoManager extends Object
 {
     /** @internal */
-    const PHOTO_ORIGINAL = "original";
+    const PHOTO_ORIGINAL = "_original";
 
     const PHOTO_MINI = "mini";
     const PHOTO_SMALL = "small";
@@ -24,6 +24,7 @@ class PhotoManager extends Object
     const PHOTO_LARGE = "large";
     const PHOTO_FULL = "full";
     const DEFAULT_FLAG = Image::FILL;
+
     /**
      * type => (width, height, flags)
      * @var array
@@ -36,6 +37,7 @@ class PhotoManager extends Object
         PhotoManager::PHOTO_LARGE => array(1200, 1200),
         PhotoManager::PHOTO_FULL => array(2000, 2000),
     );
+
     /**
      * mime type => file extension
      * @var array
@@ -44,8 +46,10 @@ class PhotoManager extends Object
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
     );
+
     /** @var PhotoRepository */
     private $PR;
+
     /** @var string */
     private $wwwPath;
 
@@ -61,7 +65,7 @@ class PhotoManager extends Object
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL  $prefix
+     * @param string|NULL $prefix
      * @return Photo[]
      */
     public function save($files, $prefix = NULL)
@@ -109,7 +113,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool  $lazy
+     * @param bool $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -118,8 +122,8 @@ class PhotoManager extends Object
             $photo->active = 0;
             $this->PR->persist($photo);
         } else {
-            foreach (array_keys($this::$resolutions) as $type) {
-                $path = $this->formatPhotoPath($type, $photo->filename);
+            foreach (array_keys($this::$resolutions) as $format) {
+                $path = $this->formatPhotoPath($format, $photo->filename);
                 if (file_exists($path)) {
                     unlink($path);
                 }
@@ -131,7 +135,7 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo $photo
-     * @param string       $format
+     * @param string $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -154,7 +158,7 @@ class PhotoManager extends Object
 
         $requested = $this->formatPhotoPath($format, $photo->filename);
         if (file_exists($requested)) {
-            throw new InvalidStateException('Apache fails with ' . $requested);
+            throw new FileNotFoundException('Apache fails with ' . $requested);
         }
 
         $original = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $filename);
@@ -162,14 +166,41 @@ class PhotoManager extends Object
         if (isset($this::$resolutions[$format][2])) {
             $flag = $this::$resolutions[$format][2];
         }
+
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
         $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-            ->resize($this::$resolutions[$format][0] / 6, $this::$resolutions[$format][1] / 6, Image::FIT | Image::SHRINK_ONLY);
+                    ->resize($this::$resolutions[$format][0] / 6,$this::$resolutions[$format][1] / 6,
+                            Image::FIT | Image::SHRINK_ONLY);
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);
         $image->save($requested);
         return $requested;
+    }
+
+    /**
+     * @param array $formats
+     * @return array
+     */
+    public function cleanCachedPhotos($formats = array())
+    {
+        if (!$formats) {
+            $formats = array_keys($this::$resolutions);
+        }
+        $failed = array();
+        /** @var Photo $photo */
+        foreach ($this->PR->findAll() as $photo) {
+            /** @var string $format */
+            foreach ($formats as $format) {
+                $filename = $this->formatPhotoPath($format, $photo->filename);
+                if (file_exists($filename)) {
+                    if (!unlink($filename)) {
+                        $failed[] = $photo->filename;
+                    }
+                }
+            }
+        }
+        return $failed;
     }
 }

@@ -1,4 +1,5 @@
 {block content}
+    <a class="btn btn-primary btn-block btn-lg" n:href="tags">Zpět na přehled tagů</a>
     {control tagFormComponent}
 {/block}
-{block title}Detail tagu {$tag->name}{/block}s
+{block title}{if $tag}Detail tagu {$tag->name}{else}Nový tag{/if}{/block}
