@@ -3,7 +3,7 @@
     <span class="Photo__rows">
         <a class="swipebox" title="{$iterator->counter}. z {$photos|length}"
            href={plink :Media:medium $photo->filename}>
-            <img src="{plink :Media:small $photo->filename}" alt="image">
+            <img src="{plink :Media:thumb $photo->filename}" alt="image">
         </a>
     </span>
     {/foreach}

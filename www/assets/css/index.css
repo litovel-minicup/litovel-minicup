@@ -3657,6 +3657,46 @@ Copyright (c) 2015 Daniel Eden
   .Table__detail tbody td {
     font-size: 40px;
     font-family: "Montserrat"; } }
+.Photo__select {
+  margin-bottom: 20px; }
+.Photo__rows {
+  float: left;
+  display: block;
+  margin-right: 0.70671%;
+  width: 32.86219%;
+  margin-bottom: 5px;
+  height: 150px;
+  text-align: center;
+  display: table; }
+  .Photo__rows:last-child {
+    margin-right: 0; }
+  .Photo__rows:nth-child(3n) {
+    margin-right: 0; }
+  .Photo__rows:nth-child(3n+1) {
+    clear: left; }
+  .Photo__rows a {
+    border-bottom: 0 !important;
+    display: table-cell;
+    vertical-align: middle;
+    color: #626262; }
+    .Photo__rows a:hover {
+      color: white; }
+  .Photo__rows img {
+    width: 100%; }
+  .Photo__rows:hover {
+    background: #4180ff; }
+
+@media screen and (max-width: 500px) {
+  .Photo__rows {
+    float: left;
+    display: block;
+    margin-right: 0.70671%;
+    width: 100%;
+    margin-top: 20px; }
+    .Photo__rows:last-child {
+      margin-right: 0; }
+    .Photo__rows img {
+      width: 90vw; } }
 body {
   max-width: 1145px;
   margin-left: auto;

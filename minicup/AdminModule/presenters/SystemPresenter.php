@@ -29,4 +29,35 @@ class SystemPresenter extends BaseAdminPresenter
         }
     }
 
+    public function handleDeleteLatteCaches()
+    {
+        $latte = $this->context->parameters['tempDir'] . '/cache/latte';
+        if (file_exists($latte)) {
+            if ($this->rmDir($latte)) {
+                $this->flashMessage('Latte cache promazány', 'success');
+            } else {
+                $this->flashMessage('Selhalo promazání latte cache.', 'danger');
+            }
+        }
+    }
+
+    public function handleDeleteTemp()
+    {
+        $cache = $this->context->parameters['tempDir'] . '/cache';
+        if ($this->rmDir($cache)) {
+            mkdir($cache);
+            $this->flashMessage('Obsah temp smazán!', 'success');
+        } else {
+            $this->flashMessage('Něco se pokazilo při mazání tempu.', 'danger');
+        }
+    }
+
+    private static function rmDir($dir)
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? static::rmDir("$dir/$file") : unlink("$dir/$file");
+        }
+        return rmdir($dir);
+    }
 }

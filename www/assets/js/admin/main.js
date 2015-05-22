@@ -27,7 +27,7 @@ jQuery(function ($) {
         "newestOnTop": true,
         "progressBar": true,
         "positionClass": "toast-top-right",
-        "preventDuplicates": true,
+        "preventDuplicates": false,
         "onclick": null,
         "showDuration": "500",
         "hideDuration": "1000",

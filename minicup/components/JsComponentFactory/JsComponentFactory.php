@@ -50,6 +50,7 @@ class JsComponentFactory extends Object
         $files->addFile('assets/js/dropper.js');
         $files->addFile('assets/js/select2.js');
         $files->addFile('assets/js/nette.ajax.js');
+        $files->addFile('assets/js/nette.ajax.confirm.js');
         $files->addFile('assets/js/nette.forms.js');
         $files->addFile('assets/js/jquery.swipebox.js');
         $files->addFile('assets/js/bootstrap.js');
