@@ -14,7 +14,11 @@
             <div class="Article__head__text Box__head__text">Fotogalerie /<a href={plink Gallery:default}> Zpět na
                     přehled</a></div>
         </div>
+
+        <div class="Article__content Box__content Photo__content">
+            {control photoListComponent}
+        </div>
     </div>
-    {control photoListComponent}
+    
 {/block}
 {block title}Fotogalerie - {$tag->name}{/block}
