@@ -36,7 +36,7 @@ class TeamDataRefresher extends Object
         /** @var Team[] $teams */
         $teams = array();
         /** @var Team $team */
-        foreach ($category->teams as $team) {
+        foreach ($this->TR->getByCategory($category) as $team) {
             $team->points = 0;
             $team->scored = 0;
             $team->received = 0;

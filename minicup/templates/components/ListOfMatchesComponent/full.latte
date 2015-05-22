@@ -3,8 +3,15 @@
     </div>
     <div class="Article__head__text Box__head--toggle__text">Zápasy</div>
     <ul class="Article__head__select Box__head--toggle__select" n:inner-foreach="array_keys($days) as $timestamp">
-        <li n:class="$iterator->first || $control->isToday($timestamp) ?active"><a data-toggle="tab" href="#{$timestamp}">{$timestamp|dayName}</a></li>
+        <li n:class="$control->isToday($timestamp) ?active"><a data-toggle="tab" href="#{$timestamp}">{$timestamp|dayName}</a></li>
     </ul>
+    <script>
+        $(function () {
+            if ($('ul.Article__head__select').find('.active').length === 0) {
+                $('ul.Article__head__select li:first-child').addClass('active');
+            }
+        });
+    </script>
 </div>
 <div class="tab-content">
     <div n:foreach="$days as $timestamp => $matches"

@@ -21,7 +21,7 @@ class PhotoListComponent extends BaseComponent
      * @param int $initial
      * @param int $step
      */
-    public function __construct(array $photos, $initial = 12, $step = 16)
+    public function __construct(array $photos, $initial = 12, $step = 12)
     {
         $this->photos = $photos;
         $this->actual = $initial;
@@ -54,5 +54,5 @@ interface IPhotoListComponentFactory
      * @param int $step
      * @return PhotoListComponent
      */
-    public function create(array $photos, $initial = 12, $step = 16);
+    public function create(array $photos, $initial = 12, $step = 12);
 }
