@@ -15,35 +15,32 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Random;
 
+interface IPhotoUploadComponentFactory
+{
+    /** @return PhotoUploadComponent */
+    public function create();
+}
+
 class PhotoUploadComponent extends BaseComponent
 {
+    /** @var int[] */
+    public $photos = array();
     /** @var Request */
     private $request;
-
     /** @var SessionSection */
     private $session;
-
     /** @var PhotoRepository */
     private $PR;
-
     /** @var TagRepository */
     private $TR;
-
     /** @var PhotoManager */
     private $PM;
-
     /** @var IPhotoEditComponentFactory */
     private $PECF;
-
     /** @var ITagFormComponentFactory */
     private $TFCF;
-
     /** @var String */
     private $uploadId;
-
-    /** @var int[] */
-    private $photos = array();
-
     /** @var CacheManager */
     private $CM;
 
@@ -105,6 +102,31 @@ class PhotoUploadComponent extends BaseComponent
         $this->redrawControl('photos-list');
     }
 
+    /** Signal for tagging all actually uploaded photos */
+    public function handleTagsAll()
+    {
+        $tags = $this->request->post['tags'];
+        if (!$tags) {
+            return;
+        }
+        /** @var Tag[] $tags */
+        $tags = $this->TR->findByIds($tags);
+        /** @var Photo[] $photos */
+        $photos = $this->PR->findByIds($this->photos);
+        foreach ($photos as $photo) {
+            foreach ($tags as $tag) {
+                if (!in_array($tag, $photo->tags)) {
+                    $photo->addToTags($tag);
+                }
+                if ($tag->teamInfo) {
+                    $this->CM->cleanByEntity($tag->teamInfo->team);
+                }
+            }
+            $this->PR->persist($photo);
+        }
+        $this->redrawControl('photos-list');
+    }
+
     /**
      * @return PhotoEditComponent
      */
@@ -137,35 +159,4 @@ class PhotoUploadComponent extends BaseComponent
         $tagForm->view = "small";
         return $tagForm;
     }
-
-    /** Signal for tagging all actually uploaded photos */
-    public function handleTagsAll()
-    {
-        $tags = $this->request->post['tags'];
-        if (!$tags) {
-            return;
-        }
-        /** @var Tag[] $tags */
-        $tags = $this->TR->findByIds($tags);
-        /** @var Photo[] $photos */
-        $photos = $this->PR->findByIds($this->photos);
-        foreach ($photos as $photo) {
-            foreach ($tags as $tag) {
-                if (!in_array($tag, $photo->tags)) {
-                    $photo->addToTags($tag);
-                }
-                if ($tag->teamInfo) {
-                    $this->CM->cleanByEntity($tag->teamInfo->team);
-                }
-            }
-            $this->PR->persist($photo);
-        }
-        $this->redrawControl('photos-list');
-    }
-}
-
-interface IPhotoUploadComponentFactory
-{
-    /** @return PhotoUploadComponent */
-    public function create();
 }
