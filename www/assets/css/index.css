@@ -3214,6 +3214,8 @@ Copyright (c) 2015 Daniel Eden
   padding-top: 15px;
   padding-bottom: 30px;
   font-size: 16px; }
+  .Article__content p {
+    line-height: 1.5; }
   .Article__content a {
     border-bottom: 3px solid #4180ff;
     color: #4180ff; }
@@ -3221,7 +3223,7 @@ Copyright (c) 2015 Daniel Eden
       background: #4180ff;
       color: white; }
   .Article__content strong {
-    font-weight: bold; }
+    font-family: 'MontserratBold'; }
 
 .Sponsors__sprite {
   height: 150px;
@@ -3659,13 +3661,14 @@ Copyright (c) 2015 Daniel Eden
     font-family: "Montserrat"; } }
 .Photo__select {
   margin-bottom: 20px; }
+.Photo--clip {
+  -webkit-clip-path: circle(60px at center); }
 .Photo__rows {
   float: left;
   display: block;
   margin-right: 0.70671%;
   width: 32.86219%;
   margin-bottom: 5px;
-  height: 150px;
   text-align: center;
   display: table; }
   .Photo__rows:last-child {
@@ -3682,7 +3685,9 @@ Copyright (c) 2015 Daniel Eden
     .Photo__rows a:hover {
       color: white; }
   .Photo__rows img {
-    width: 100%; }
+    width: 100%;
+    overflow: scroll;
+    height: 150px; }
   .Photo__rows:hover {
     background: #4180ff; }
 
@@ -3696,7 +3701,8 @@ Copyright (c) 2015 Daniel Eden
     .Photo__rows:last-child {
       margin-right: 0; }
     .Photo__rows img {
-      width: 90vw; } }
+      width: 90vw;
+      height: 250px; } }
 body {
   max-width: 1145px;
   margin-left: auto;
