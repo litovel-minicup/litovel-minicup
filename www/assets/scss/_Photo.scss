@@ -4,18 +4,23 @@
 		margin-bottom: 20px;
 	}
 
+	&--clip {
+		 -webkit-clip-path: circle(60px at center);
+	}
+
 	&__rows {
 			
 			@include span-columns(4 of 12);
 	  		@include omega(3n);
 	  		margin-bottom: 5px;
-	  		height: 150px;
-			text-align: center;
+	  		text-align: center;
 
 			display: table;
 
 			a {
 				border-bottom: 0!important;
+
+
 
 				display: table-cell;
 	    		vertical-align: middle;
@@ -30,6 +35,8 @@
 
 			img {
 				width: 100%;
+				overflow: scroll;
+				height: 150px;
 			}
 
 			&:hover {
@@ -48,6 +55,7 @@
 
 			img {
 				width: 90vw;
+				height: 250px;
 			}
 
 	  	}
