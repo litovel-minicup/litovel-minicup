@@ -12,8 +12,10 @@
 			
 			@include span-columns(4 of 12);
 	  		@include omega(3n);
-	  		margin-bottom: 5px;
+	  		margin-bottom: 1px;
 	  		text-align: center;
+	  		overflow: hidden;
+	  		height: 150px;
 
 			display: table;
 
@@ -35,8 +37,11 @@
 
 			img {
 				width: 100%;
-				overflow: scroll;
-				height: 150px;
+			}
+
+			&--portrait {
+				height: 300px!important;
+				margin: -80px 0 -80px 0px;  
 			}
 
 			&:hover {

@@ -21,6 +21,20 @@
     <script>
         jQuery(function ($) {
             $('.swipebox').off('click').swipebox();
+
+            $(".Photo__rows img").each(function() {
+              var width = $(this).width();
+              var height = $(this).height();
+              
+              if (width / height < 1) {
+                    $(this).addClass("Photo__rows--portrait");
+              } else {
+                    $(this).css("height", 150 + "px");
+              }
+            });
+
         });
+
+
     </script>
 </div>
