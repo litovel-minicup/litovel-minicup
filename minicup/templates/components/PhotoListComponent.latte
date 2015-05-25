@@ -1,11 +1,11 @@
-<div n:snippet="photos">
+<div class="photo-list" n:snippet="photos" data-more-link="{link show! $step+$actual}">
     {foreach $photos as $photo}
-    <div class="Photo__rows">
-        <a class="swipebox" title="{$iterator->counter}. z {$photos|length}"
-           href={plink :Media:medium $photo->filename}>
-            <img src="{plink :Media:thumb $photo->filename}" alt="image">
-        </a>
-    </div>
+        <div class="Photo__rows">
+            <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
+               href={plink :Media:medium $photo->filename}>
+                <img src="{plink :Media:thumb $photo->filename}" alt="image">
+            </a>
+        </div>
     {/foreach}
 
     {if !$photos}
@@ -14,27 +14,30 @@
         </div>
     {elseif $actual && $actual < $max}
         <div class="Article__content">
-            <a n:href="show! $step+$actual" class="ajax">Zobrazit více!</a>
+            <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
         </div>
     {/if}
 
     <script>
         jQuery(function ($) {
-            $('.swipebox').off('click').swipebox();
-
-            $(".Photo__rows img").each(function() {
-              var width = $(this).width();
-              var height = $(this).height();
-              
-              if (width / height < 1) {
-                    $(this).addClass("Photo__rows--portrait");
-              } else {
-                    $(this).css("height", 150 + "px");
-              }
+            $('a.swipebox').click(function (e) {
+                var i = $('.Photo__rows').children().index(this);
+                $.ajax({link all!}).then(function (data) {
+                    $.swipebox(data, { initialIndexOnArray: i});
+                });
+                e.preventDefault();
             });
 
+            $(".Photo__rows img").each(function () {
+                var width = $(this).width();
+                var height = $(this).height();
+
+                if (width / height < 1) {
+                    $(this).addClass("Photo__rows--portrait");
+                } else {
+                    $(this).css("height", 150 + "px");
+                }
+            });
         });
-
-
     </script>
 </div>

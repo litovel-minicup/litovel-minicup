@@ -32,7 +32,7 @@
         <p>Fotky (pouze aktivní):</p>
         {foreach $tag->photos as $photo}
             <img data-id="{$photo->id}" data-thumb="{plink :Media:thumb $photo->filename}"
-                 src="{plink :Media:mini $photo->filename}" alt=""/>
+                 src="{plink :Media:small $photo->filename}" alt=""/>
         {/foreach}
         <p n:if="!$tag->photos">Žádné fotky</p>
     </div>

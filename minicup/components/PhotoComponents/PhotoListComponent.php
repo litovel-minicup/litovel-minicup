@@ -34,6 +34,7 @@ class PhotoListComponent extends BaseComponent
         $this->template->actual = $this->actual;
         $this->template->photos = $this->actual ? array_slice($this->photos, 0, $this->actual) : $this->photos;
         $this->template->max = count($this->photos);
+        $this->template->allPhotos = $this->photos;
         parent::render();
     }
 
@@ -41,6 +42,18 @@ class PhotoListComponent extends BaseComponent
     {
         $this->actual = $count;
         $this->redrawControl('photos');
+    }
+
+    public function handleAll()
+    {
+        $data = array();
+        foreach ($this->photos as $photo) {
+            $data[] = array(
+                "href" => $this->presenter->link(':Media:medium', $photo->filename),
+                "title" => NULL
+            );
+        }
+        $this->presenter->sendJson($data);
     }
 
 

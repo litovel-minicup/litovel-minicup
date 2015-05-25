@@ -3668,8 +3668,10 @@ Copyright (c) 2015 Daniel Eden
   display: block;
   margin-right: 0.70671%;
   width: 32.86219%;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   text-align: center;
+  overflow: hidden;
+  height: 150px;
   display: table; }
   .Photo__rows:last-child {
     margin-right: 0; }
@@ -3685,9 +3687,10 @@ Copyright (c) 2015 Daniel Eden
     .Photo__rows a:hover {
       color: white; }
   .Photo__rows img {
-    width: 100%;
-    overflow: scroll;
-    height: 150px; }
+    width: 100%; }
+  .Photo__rows--portrait {
+    height: 300px !important;
+    margin: -80px 0 -80px 0px; }
   .Photo__rows:hover {
     background: #4180ff; }
 

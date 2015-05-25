@@ -157,7 +157,7 @@ class AdminPhotoListComponent extends BaseComponent
 
         $g->addColumnNumber('id', '#');
 
-        $g->addColumnText('filename', 'Jméno souboru');
+        $g->addColumnText('filename', 'Jméno souboru')->setFilterText();
 
         $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', array('id' => 'id'));
 
