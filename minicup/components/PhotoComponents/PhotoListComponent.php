@@ -47,10 +47,12 @@ class PhotoListComponent extends BaseComponent
     public function handleAll()
     {
         $data = array();
-        foreach ($this->photos as $photo) {
+        $count = count($this->photos);
+        foreach ($this->photos as $i => $photo) {
+            $i++;
             $data[] = array(
                 "href" => $this->presenter->link(':Media:medium', $photo->filename),
-                "title" => NULL
+                "title" => "Fotka {$i}. z {$count}"
             );
         }
         $this->presenter->sendJson($data);

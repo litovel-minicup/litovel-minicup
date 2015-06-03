@@ -32,7 +32,7 @@
                 var width = $(this).width();
                 var height = $(this).height();
 
-                if (width / height < 1) {
+                if (height > width) {
                     $(this).addClass("Photo__rows--portrait");
                 } else {
                     $(this).css("height", 150 + "px");
