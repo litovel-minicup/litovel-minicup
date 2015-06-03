@@ -1,0 +1,56 @@
+<h1 n:block="title">{if $tag}Editace tagu {$tag->slug}{else}Nový tag{/if}:</h1>
+{snippet tag-form}
+    <div class="col-md-4">
+        {form tagForm class=>"ajax tag-form"}
+            <h4>{if $tag}Editace tagu {$tag->slug}{else}Nový tag{/if}:</h4>
+            <div class="form-group">
+                {label name /}
+                {input name class=>"form-control"}
+            </div>
+            <div class="form-group">
+                {label slug /}
+                {input slug class=>"form-control"}
+            </div>
+            <div class="form-group">
+                {label is_main /}
+                {input is_main class=>"form-control"}
+            </div>
+            <div class="form-group main-photo">
+                <label>Hlavní fotka tagu</label><br/>
+                <img style="width: 100%;" {if $tag && $tag->mainPhoto}src="{plink :Media:thumb $tag->mainPhoto->filename}"{/if}
+                     alt="Bez hlavní fotky."/>
+                {input main_photo_id class=>"form-control"}
+                <button n:class="btn,btn-danger,btn-remove-main-photo,!($tag && $tag->mainPhoto)?hidden">Odebrat fotku</button>
+            </div>
+            <div class="form-group">
+                {input submit class=>"form-control btn btn-primary"}
+            </div>
+        {/form}
+
+    </div>
+    <div class="col-md-8" n:if="$tag">
+        <p>Fotky (pouze aktivní):</p>
+        {foreach $tag->photos as $photo}
+            <img data-id="{$photo->id}" data-thumb="{plink :Media:thumb $photo->filename}"
+                 src="{plink :Media:small $photo->filename}" alt=""/>
+        {/foreach}
+        <p n:if="!$tag->photos">Žádné fotky</p>
+    </div>
+    <script>
+        jQuery(function ($) {
+            $('img[data-id]').click(function () {
+                var $this = $(this);
+                var $mainPhoto = $('.tag-form .main-photo');
+                $mainPhoto.find('img').prop('src', $this.data('thumb'));
+                $mainPhoto.find('input[type=hidden]').val($this.data('id'));
+                $mainPhoto.find('.btn-remove-main-photo').show();
+            });
+            $('.btn-remove-main-photo').click(function () {
+                $this = $(this);
+                $this.parent().find('input[name=main_photo_id]').val(0);
+                $this.parent().find('img').prop("src", "");
+                $this.hide();
+            })
+        });
+    </script>
+{/snippet}

@@ -1,6 +1,13 @@
 parameters:
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
+    cachedRepositories: [
+    	@Minicup\Model\Repository\CategoryRepository,
+    	@Minicup\Model\Repository\TeamInfoRepository,
+    	@Minicup\Model\Repository\TeamRepository,
+    	@Minicup\Model\Repository\PhotoRepository,
+    	@Minicup\Model\Repository\MatchRepository,
+    	@Minicup\Model\Repository\StaticContentRepository]
 
 php:
     date.timezone: Europe/Prague
@@ -23,6 +30,8 @@ includes:
 decorator:
 	Minicup\Components\BaseComponent:
 		inject: yes
+		setup:
+			- injectProductionMode(%productionMode%)
 
 services:
     router: @Minicup\Router\RouterFactory::create
@@ -43,7 +52,9 @@ services:
     - Minicup\Model\Manager\PhotoManager(%wwwDir%)
     - Minicup\Model\Manager\StaticContentManager
     - Minicup\Model\Manager\TagManager
+    - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
+    - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
@@ -87,6 +98,15 @@ services:
     - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
+    - implement: Minicup\Components\ICategoryDetailComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\ICategoryHistoryComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\ICategoryStatsComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
     - implement: Minicup\Components\ITagFormComponentFactory
       parameters: [Minicup\Model\Entity\Tag tag = NULL]
       arguments: [%tag%]
@@ -102,8 +122,8 @@ services:
     - implement: Minicup\Components\IPhotoUploadComponentFactory
       arguments: [%wwwDir%]
     - implement: Minicup\Components\IPhotoListComponentFactory
-      parameters: [array photos]
-      arguments: [%photos%]
+      parameters: [array photos, initial = 12, step = 18]
+      arguments: [%photos%, %initial%, %step%]
     - implement: Minicup\Components\IInteractiveGalleryComponentFactory
       parameters: [array tags = NULL]
       arguments: [%tags%]
@@ -131,6 +151,7 @@ services:
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
+    - implement: Minicup\Components\IAdminPhotoListComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

@@ -1,0 +1,153 @@
+{if $control->isStarted() || !$productionMode}
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Branky</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+                    <thead class="Box__subhead Article__subhead">
+                    <tr>
+                        <th>Vstřelené branky na turnaji</th>
+                        <th>Počet remíz</th>
+                        <th>Nejvyšší brankový rozdíl</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{$stats->scored_goals}</td>
+                        <td>{$stats->count_of_draws}</td>
+                        <td>{$stats->max_diff}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejvyšší skóre </div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+                    <thead class="Box__subhead Article__subhead">
+                    <tr>
+                        <th>Nejvyšší skóre domácích</th>
+                        <th>Nejvyšší skóre v zápase</th>
+                        <th>Nejvyšší skóre hostů</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{$stats->max_home_score}</td>
+                        <td>{$stats->max_match_score}</td>
+                        <td>{$stats->max_away_score}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejnižší skóre </div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejnižší skóre domácích</th>
+            <th>Nejnižší skóre v zápase</th>
+            <th>Nejnižší skóre hostů</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$stats->min_home_score}</td>
+            <td>{$stats->min_match_score}</td>
+            <td>{$stats->min_away_score}</td>
+        </tr>
+        </tbody>
+    </table>
+            </div>
+    </div>
+</div>
+
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejlepší týmy</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejlépe útočící tým</th>
+            <th>Nejlepší brankový rozdíl</th>
+            <th>Nejlépe bránící tým</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->most_scored->category, $stats->most_scored}">{$stats->most_scored->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->best_diff->category, $stats->best_diff}">{$stats->best_diff->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->least_received->category, $stats->least_received}">{$stats->least_received->name}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+            </div>
+    </div>
+</div>
+
+<div class="Section">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams">
+            </div>
+            <div class="Article__head__text Box__head__text">Nejhorší týmy</div>
+        </div>
+            <div class="Box__content Table__content Team__content">
+                <table class="Table Table__detail">
+        <thead class="Box__subhead Article__subhead">
+        <tr>
+            <th>Nejhůře útočící tým</th>
+            <th>Nejhorší brankový rozdíl</th>
+            <th>Nejhůře bránící tým</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->least_scored->category, $stats->least_scored}">{$stats->least_scored->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->worst_diff->category, $stats->worst_diff}">{$stats->worst_diff->name}</a>
+            </td>
+            <td>
+                <a href="{plink :Front:Team:detail $stats->most_received->category, $stats->most_received}">{$stats->most_received->name}</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+            </div>
+    </div>
+</div>
+{/if}

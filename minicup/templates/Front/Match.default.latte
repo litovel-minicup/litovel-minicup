@@ -1,3 +1,9 @@
 {block content}
-    {control listOfMatchesComponent-$category->slug}
+    <div class="Article">
+        {cache $category->cacheTag, tags => $category->cacheTag}
+        {control listOfMatchesComponent:full}
+        {/cache}
+    </div>
 {/block}
+
+{block title}Zápasy kategorie {$category->name}{/block}

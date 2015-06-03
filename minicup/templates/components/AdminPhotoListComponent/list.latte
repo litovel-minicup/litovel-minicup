@@ -1,0 +1,18 @@
+{extends "default.latte"}
+{block main}
+    <div class="photo-list">
+        {snippet photo-list}
+        {foreach $photos as $photo}
+            {first 4}
+                <div class="row">
+            {/first}
+            <div class="col-md-6 col-lg-3">
+                {control photoEditComponent-$photo->id}
+            </div>
+            {last 4}
+                </div>
+            {/last}
+        {/foreach}
+        {/snippet}
+    </div>
+{/block}

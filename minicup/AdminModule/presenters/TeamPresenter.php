@@ -46,23 +46,26 @@ class TeamPresenter extends BaseAdminPresenter
     {
         $connection = $this->connection;
         $TIR = $this->TIR;
+        $CR = $this->CR;
+        $that = $this;
         $g = new Grid($this, $name);
-
-        $f = $connection->select('[ti].*')->orderBy('[id] ASC')->from('[team_info]')->as('ti')->where('ti.[category_id] = ', $this->getParameter('category')->id);
+        $f = $connection->select('[ti].*')->from('[team_info]')->as('ti')->where('ti.[category_id] = ', $this->getParameter('category')->id);
         $g->setModel($f);
         $g->addColumnNumber('id', '#');
+        $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
+            $category = $CR->get($row->category_id, FALSE);
+            return $that->link(':Front:Team:detail', array('team' => $row->slug, 'category' => $category));
+        });
         $g->addColumnText('name', 'Název')->setEditableCallback(function ($id, $newValue, $oldValue, Column $column) use ($TIR, $g) {
             $homeTeam = $TIR->get($id);
             $homeTeam->name = $newValue;
             $TIR->persist($homeTeam);
-            $g->reload();
             return TRUE;
         });
         $g->addColumnText('slug', 'Slug')->setEditableCallback(function ($id, $newValue, $oldValue, Column $column) use ($TIR, $g) {
             $homeTeam = $TIR->get($id);
             $homeTeam->slug = $newValue;
             $TIR->persist($homeTeam);
-            $g->reload();
             return TRUE;
         });
         return $g;

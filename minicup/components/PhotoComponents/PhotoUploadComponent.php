@@ -5,45 +5,44 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Random;
 
-// TODO: add forms to add tags with autocompleting thru ajax
+interface IPhotoUploadComponentFactory
+{
+    /** @return PhotoUploadComponent */
+    public function create();
+}
+
 class PhotoUploadComponent extends BaseComponent
 {
+    /** @var int[] */
+    public $photos = array();
     /** @var Request */
     private $request;
-
     /** @var SessionSection */
     private $session;
-
     /** @var PhotoRepository */
     private $PR;
-
     /** @var TagRepository */
     private $TR;
-
     /** @var PhotoManager */
     private $PM;
-
     /** @var IPhotoEditComponentFactory */
     private $PECF;
-
     /** @var ITagFormComponentFactory */
     private $TFCF;
-
     /** @var String */
     private $uploadId;
-
-    /** @var int[] */
-    private $photos = array();
+    /** @var CacheManager */
+    private $CM;
 
     /**
      * @param string $wwwPath
@@ -53,8 +52,18 @@ class PhotoUploadComponent extends BaseComponent
      * @param TagRepository $TR
      * @param PhotoManager $PM
      * @param IPhotoEditComponentFactory $PECF
+     * @param ITagFormComponentFactory $TFCF
+     * @param CacheManager $CM
      */
-    public function __construct($wwwPath, Session $session, Request $request, PhotoRepository $PR, TagRepository $TR, PhotoManager $PM, IPhotoEditComponentFactory $PECF, ITagFormComponentFactory $TFCF)
+    public function __construct($wwwPath,
+                                Session $session,
+                                Request $request,
+                                PhotoRepository $PR,
+                                TagRepository $TR,
+                                PhotoManager $PM,
+                                IPhotoEditComponentFactory $PECF,
+                                ITagFormComponentFactory $TFCF,
+                                CacheManager $CM)
     {
         $this->request = $request;
         $this->session = $session->getSection('photoUpload');
@@ -63,6 +72,7 @@ class PhotoUploadComponent extends BaseComponent
         $this->PR = $PR;
         $this->PM = $PM;
         $this->PECF = $PECF;
+        $this->CM = $CM;
         $uploadId = $this->session['uploadId'];
         if ($uploadId) {
             $this->uploadId = $uploadId;
@@ -88,6 +98,31 @@ class PhotoUploadComponent extends BaseComponent
         $photos = $this->PM->save($this->request->files, $this->uploadId);
         foreach ($photos as $photo) {
             $this->photos[] = $photo->id;
+        }
+        $this->redrawControl('photos-list');
+    }
+
+    /** Signal for tagging all actually uploaded photos */
+    public function handleTagsAll()
+    {
+        $tags = $this->request->post['tags'];
+        if (!$tags) {
+            return;
+        }
+        /** @var Tag[] $tags */
+        $tags = $this->TR->findByIds($tags);
+        /** @var Photo[] $photos */
+        $photos = $this->PR->findByIds($this->photos);
+        foreach ($photos as $photo) {
+            foreach ($tags as $tag) {
+                if (!in_array($tag, $photo->tags)) {
+                    $photo->addToTags($tag);
+                }
+                if ($tag->teamInfo) {
+                    $this->CM->cleanByEntity($tag->teamInfo->team);
+                }
+            }
+            $this->PR->persist($photo);
         }
         $this->redrawControl('photos-list');
     }
@@ -120,53 +155,8 @@ class PhotoUploadComponent extends BaseComponent
      */
     protected function createComponentTagFormComponent()
     {
-        return $this->TFCF->create(NULL);
+        $tagForm = $this->TFCF->create(NULL);
+        $tagForm->view = "small";
+        return $tagForm;
     }
-
-    /**
-     * Provide data about tags for select2 by optional term in post parameters
-     *
-     * @throws AbortException
-     */
-    public function handleTags()
-    {
-        $term = $this->request->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
-        }
-        $this->presenter->sendJson(array('results' => $results));
-    }
-
-    /** Signal for tagging all actually uploaded photos */
-    public function handleTagsAll()
-    {
-        $tags = $this->request->post['tags'];
-        if (!$tags) {
-            return;
-        }
-        $tags = $this->TR->findByIds($tags);
-        $photos = $this->PR->findByIds($this->photos);
-        foreach ($photos as $photo) {
-            foreach ($tags as $tag) {
-                if (!in_array($tag, $photo->tags)) {
-                    $photo->addToTags($tag);
-                }
-            }
-            $this->PR->persist($photo);
-        }
-        $this->redrawControl('photos-list');
-    }
-}
-
-interface IPhotoUploadComponentFactory
-{
-    /** @return PhotoUploadComponent */
-    public function create();
 }

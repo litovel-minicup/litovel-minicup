@@ -2,38 +2,66 @@
  * Import Variables
  */
 @import "reset";
-@import "_var";
-@import "_font-face";
-
-
+@import "var";
+@import "font-face";
 /**
  * Import Bourbon, Neat an Chartist
  */
-
 @import "bourbon/bourbon";
 @import "grid-settings";
 @import "neat/neat";
 @import "chartist/chartist";
-
+@import "animate";
 /**
  * Import Components
  */
-
-@import "_Box";
-@import "_Header";
-@import "_Article";
-@import "_Sponsors";
-@import "_Aside";
-@import "_Section";
-@import "_Footer";
-@import "_Cover";
-@import "_Team";
-@import "_Matches";
-
+@import "Box";
+@import "Header";
+@import "Article";
+@import "Sponsors";
+@import "Aside";
+@import "Section";
+@import "Footer";
+@import "Cover";
+@import "Team";
+@import "Matches";
+@import "Photo";
 
 body {
-	@include outer-container();
-	height: 100%;
-	-webkit-font-smoothing:antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  @include outer-container();
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// TODO: move to right partials file
+// required by tabs in full list of matches
+.tab-content > .tab-pane {
+  display: none;
+  visibility: hidden;
+}
+
+.tab-content > .active {
+  display: block;
+  visibility: visible;
+}
+
+/**
+ * Easter egg
+ */
+body {
+  -webkit-transition-duration: 5s;
+  -moz-transition-duration: 2s;
+  -o-transition-duration: 1s;
+  transition-duration: 4s;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -o-transition-property: -o-transform;
+  transition-property: transform;
+}
+
+body.barrel-roll {
+  -webkit-transform: rotate(720deg);
+  -moz-transform: rotate(-720deg);
+  -o-transform: rotate(-360deg);
 }

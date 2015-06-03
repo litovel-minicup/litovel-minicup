@@ -32,4 +32,19 @@ class PhotoRepository extends BaseRepository
         $row = $this->createFluent()->where('filename = ?', $filename)->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
+
+    /**
+     * @return Photo[]
+     */
+    public function findUntaggedPhotos()
+    {
+        return $this->createEntities($this->connection
+            ->select('*')
+            ->from($this->getTable())
+            ->where('[id] NOT IN',
+                $this->connection->select('[photo_id]')
+                    ->from('[photo_tag]')
+                    ->groupBy('[photo_id]')
+            )->fetchAll());
+    }
 }

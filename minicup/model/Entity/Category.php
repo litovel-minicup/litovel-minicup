@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int        $id
  * @property string     $name                                       czech name of category
@@ -15,7 +13,7 @@ use LeanMapper\Entity;
  * @property int        $default                                    flag if it's default category
  * @property Match[]    $confirmedMatches m:belongsToMany m:filter(confirmed) only confirmed matches
  */
-class Category extends Entity
+class Category extends BaseEntity
 {
-
+    public static $CACHE_TAG = 'category';
 }

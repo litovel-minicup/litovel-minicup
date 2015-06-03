@@ -1,20 +1,37 @@
+# default database connection
 leanMapper:
     host:
     username:
     password:
     database:
 
+
 tracy:
+	# link to editor
     editor:
 
+
 di:
+	# DI panel in Tracy Debug Bar
     debugger: no
+
 
 session:
+	# session overview in Tracy Debug Bar
     debugger: no
 
+
 application:
+	# aplication panel in Tracy Debug Bar
     debugger: no
+    # catch exception like 404, 403
+    catchExceptions: false
+
+
+services:
+	cacheStorage:
+		# uncomment for disable {cache} and n:cache in templates
+		class: Nette\Caching\Storages\DevNullStorage
 
 # only for MigrationsManager!
 database:

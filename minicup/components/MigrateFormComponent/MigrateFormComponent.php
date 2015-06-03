@@ -67,7 +67,7 @@ class MigrateFormComponent extends BaseComponent
             $this->presenter->redirect('this');
         }
         /** @var Category $category */
-        $category = $this->CR->get($values->category_id);
+        $category = $this->CR->get($values->category_id, FALSE);
         if ($values->confirm) {
             $this->migrator->migrateMatches($category, $values->truncate, $values->with_score);
         }

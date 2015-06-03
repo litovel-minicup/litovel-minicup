@@ -1,5 +1,8 @@
 <form n:name="loginForm" class="form-signin">
     <h2 class="form-signin-heading">MINICUP 2015</h2>
+    <div n:if="$form->errors">
+        <div n:foreach="$form->errors as $error" class="alert alert-danger">{$error}</div>
+    </div>
     {input username class=>form-control}
     {input password class=>form-control}
     {label remember class=>checkbox}

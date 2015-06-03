@@ -2,7 +2,6 @@
 namespace Minicup\Model\Entity;
 
 
-use LeanMapper\Entity;
 use LeanMapper\Exception\InvalidStateException;
 
 /**
@@ -15,8 +14,9 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL    $tag m:hasOne
  */
-class TeamInfo extends Entity
+class TeamInfo extends BaseEntity
 {
+    public static $CACHE_TAG = 'teamInfo';
 
     /**
      * @return Match[]

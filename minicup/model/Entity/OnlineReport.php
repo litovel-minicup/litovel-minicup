@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int       $id
  * @property Match     $match m:hasOne  for which match is this online report
@@ -13,7 +11,7 @@ use LeanMapper\Entity;
  * @property int       $updated         datetime when is last updated
  *
  */
-class OnlineReport extends Entity
+class OnlineReport extends BaseEntity
 {
-
+    public static $CACHE_TAG = 'onlineReport';
 }

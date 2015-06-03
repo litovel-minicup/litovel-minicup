@@ -1,9 +1,5 @@
 {block content}
-    <h1 n:block="title">Detail tagu {$tag->id}</h1>
-    <div class="col-md-4">
-        {control tagFormComponent}
-    </div>
-    <div class="col-md-8">
-        {control photoListComponent}
-    </div>
+    <a class="btn btn-primary btn-block btn-lg" n:href="tags">Zpět na přehled tagů</a>
+    {control tagFormComponent}
 {/block}
+{block title}{if $tag}Detail tagu {$tag->name}{else}Nový tag{/if}{/block}

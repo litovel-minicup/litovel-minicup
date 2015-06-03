@@ -27,7 +27,7 @@ jQuery(function ($) {
         "newestOnTop": true,
         "progressBar": true,
         "positionClass": "toast-top-right",
-        "preventDuplicates": true,
+        "preventDuplicates": false,
         "onclick": null,
         "showDuration": "500",
         "hideDuration": "1000",
@@ -39,11 +39,17 @@ jQuery(function ($) {
         "hideMethod": "fadeOut"
     };
 
-    $(document).ajaxError(function () {
-        toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
+    $(document).ajaxError(function (e, r) {
+        if (r.status === 403) {
+            window.location.reload(true);
+        } else {
+            toastr.error('Něco se podělalo... snad to někdo opraví', 'Je to blbý');
+        }
     }).ajaxSuccess(function (event, request, settings) {
         if (request.responseJSON && request.responseJSON.snippets) {
-            redrawSnippets(request.responseJSON.snippets);
+            // redrawSnippets(request.responseJSON.snippets);
         }
+        $('.grido').grido();
     });
+    $('.grido').grido();
 });

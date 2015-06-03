@@ -2,7 +2,6 @@
 namespace Minicup\Model\Manager;
 
 
-use LeanMapper\Events;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
 use Nette\FileNotFoundException;
@@ -15,20 +14,15 @@ use Nette\Utils\Random;
 
 class PhotoManager extends Object
 {
-    /** @var PhotoRepository */
-    private $PR;
-
-    /** @var string */
-    private $wwwPath;
-
     /** @internal */
-    const PHOTO_ORIGINAL = "original";
+    const PHOTO_ORIGINAL = "_original";
 
+    const PHOTO_MINI = "mini";
     const PHOTO_SMALL = "small";
     const PHOTO_THUMB = "thumb";
     const PHOTO_MEDIUM = "medium";
+    const PHOTO_LARGE = "large";
     const PHOTO_FULL = "full";
-
     const DEFAULT_FLAG = Image::FILL;
 
     /**
@@ -36,9 +30,11 @@ class PhotoManager extends Object
      * @var array
      */
     public static $resolutions = array(
+        PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
         PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
         PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(1200, 1200),
+        PhotoManager::PHOTO_MEDIUM => array(750, 750, Image::FILL),
+        PhotoManager::PHOTO_LARGE => array(1200, 1200),
         PhotoManager::PHOTO_FULL => array(2000, 2000),
     );
 
@@ -51,6 +47,12 @@ class PhotoManager extends Object
         'image/jpeg' => 'jpg'
     );
 
+    /** @var PhotoRepository */
+    private $PR;
+
+    /** @var string */
+    private $wwwPath;
+
     /**
      * @param string $wwwPath
      * @param PhotoRepository $PR
@@ -59,22 +61,6 @@ class PhotoManager extends Object
     {
         $this->PR = $PR;
         $this->wwwPath = $wwwPath;
-        $PM = $this;
-        $this->PR->registerCallback(Events::EVENT_BEFORE_DELETE, function (Photo $photo) use ($PM) {
-            $PM->delete($photo);
-        });
-    }
-
-    /**
-     * @param string $format
-     * @param string $filename
-     * @return string
-     */
-    public function formatPhotoPath($format, $filename)
-    {
-        // TODO FIX IMAGE EXTENSIONS!
-        @mkdir("$this->wwwPath/media/" . $format . "/");
-        return "$this->wwwPath/media/" . $format . "/$filename.jpg";
     }
 
     /**
@@ -103,7 +89,8 @@ class PhotoManager extends Object
             if (isset($exif["DateTimeOriginal"])) {
                 try {
                     $taken = new \DibiDateTime($exif["DateTimeOriginal"]);
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
             $photo->taken = $taken;
             $this->PR->persist($photo);
@@ -114,12 +101,36 @@ class PhotoManager extends Object
     }
 
     /**
-     * @param Photo $photo
-     * @return bool
+     * @param string $format
+     * @param string $filename
+     * @return string
      */
-    public function delete(Photo $photo)
+    public function formatPhotoPath($format, $filename)
     {
-        return unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+        @mkdir("$this->wwwPath/media/" . $format . "/");
+        return "$this->wwwPath/media/" . $format . "/$filename";
+    }
+
+    /**
+     * @param Photo $photo
+     * @param bool $lazy
+     * @throws \LeanMapper\Exception\InvalidStateException
+     */
+    public function delete(Photo $photo, $lazy = FALSE)
+    {
+        if ($lazy) {
+            $photo->active = 0;
+            $this->PR->persist($photo);
+        } else {
+            foreach (array_keys($this::$resolutions) as $format) {
+                $path = $this->formatPhotoPath($format, $photo->filename);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+            unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+            $this->PR->delete($photo);
+        }
     }
 
     /**
@@ -147,7 +158,7 @@ class PhotoManager extends Object
 
         $requested = $this->formatPhotoPath($format, $photo->filename);
         if (file_exists($requested)) {
-            throw new InvalidStateException('Apache fails with ' . $requested);
+            throw new FileNotFoundException('Apache fails with ' . $requested);
         }
 
         $original = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $filename);
@@ -155,8 +166,41 @@ class PhotoManager extends Object
         if (isset($this::$resolutions[$format][2])) {
             $flag = $this::$resolutions[$format][2];
         }
-        $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][0], $flag);
-        $image->sharpen()->save($requested);
+
+        $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
+        $image->sharpen();
+        $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
+                    ->resize($this::$resolutions[$format][0] / 6,$this::$resolutions[$format][1] / 6,
+                            Image::FIT | Image::SHRINK_ONLY);
+        $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
+        $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
+        $image->place($watermark, $placeLeft, $placeTop);
+        $image->save($requested);
         return $requested;
+    }
+
+    /**
+     * @param array $formats
+     * @return array
+     */
+    public function cleanCachedPhotos($formats = array())
+    {
+        if (!$formats) {
+            $formats = array_keys($this::$resolutions);
+        }
+        $failed = array();
+        /** @var Photo $photo */
+        foreach ($this->PR->findAll() as $photo) {
+            /** @var string $format */
+            foreach ($formats as $format) {
+                $filename = $this->formatPhotoPath($format, $photo->filename);
+                if (file_exists($filename)) {
+                    if (!unlink($filename)) {
+                        $failed[] = $photo->filename;
+                    }
+                }
+            }
+        }
+        return $failed;
     }
 }

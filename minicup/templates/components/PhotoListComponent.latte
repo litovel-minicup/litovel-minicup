@@ -1,14 +1,43 @@
-{foreach $photos as $photo}
-    <a class="swipebox" title="{$iterator->counter}. z {$photos|length}" href={plink :Media:medium $photo->filename} >
-        <img src="{plink :Media:small $photo->filename}" alt="image">
-    </a>
-{/foreach}
-{if !$photos}
-    <p>Žádné fotky k zobrazení.</p>
-{/if}
+<div class="photo-list" n:snippet="photos" data-more-link="{link show! $step+$actual}">
+    {foreach $photos as $photo}
+        <div class="Photo__rows">
+            <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
+               href={plink :Media:medium $photo->filename}>
+                <img src="{plink :Media:thumb $photo->filename}" alt="image">
+            </a>
+        </div>
+    {/foreach}
 
-<script>
-    jQuery(function ($) {
-        $( '.swipebox').off('click').swipebox();
-    });
-</script>
+    {if !$photos}
+        <div class="Article__content">
+            <p>Žádné fotky k zobrazení.</p>
+        </div>
+    {elseif $actual && $actual < $max}
+        <div class="Article__content">
+            <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
+        </div>
+    {/if}
+
+    <script>
+        jQuery(function ($) {
+            $('a.swipebox').click(function (e) {
+                var i = $('.Photo__rows').children().index(this);
+                $.ajax({link all!}).then(function (data) {
+                    $.swipebox(data, { initialIndexOnArray: i});
+                });
+                e.preventDefault();
+            });
+
+            $(".Photo__rows img").each(function () {
+                var width = $(this).width();
+                var height = $(this).height();
+
+                if (height > width) {
+                    $(this).addClass("Photo__rows--portrait");
+                } else {
+                    $(this).css("height", 150 + "px");
+                }
+            });
+        });
+    </script>
+</div>

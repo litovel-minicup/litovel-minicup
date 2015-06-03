@@ -3,8 +3,6 @@
 namespace Minicup\Model\Entity;
 
 
-use LeanMapper\Entity;
-
 /**
  * @property int         $id
  * @property string      $filename          filename
@@ -12,9 +10,14 @@ use LeanMapper\Entity;
  * @property \DateTime   $added             added datetime
  * @property \DateTime   $taken             phoho taken datetime
  * @property int         $active
+ *
+ * @method removeAllTags
+ * @method addToTags
  */
-class Photo extends Entity
+class Photo extends BaseEntity
 {
+    public static $CACHE_TAG = 'photo';
+
     protected function initDefaults()
     {
         $this->added = new \DateTime();

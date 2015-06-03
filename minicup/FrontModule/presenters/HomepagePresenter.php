@@ -1,6 +1,7 @@
 <?php
 
 namespace Minicup\FrontModule\Presenters;
+
 use Minicup\Components\IListOfNewsComponentFactory;
 use Minicup\Components\IStaticContentComponentFactory;
 use Minicup\Components\ListOfNewsComponent;
@@ -25,13 +26,12 @@ final class HomepagePresenter extends BaseFrontPresenter
      */
     protected function createComponentNewsListComponent()
     {
-    	return $this->NLCF->create();
+        return $this->NLCF->create();
     }
 
     protected function createComponentStaticContentComponent()
     {
         return $this->SCCF->create($this->SCR->getBySlug($this->action));
     }
-
 
 }

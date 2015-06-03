@@ -24,25 +24,46 @@ class UserPresenter extends BaseAdminPresenter
     public $UM;
 
     /**
+     * @param Form      $form
+     * @param ArrayHash $values
+     */
+    public function userFormSuccess(Form $form, ArrayHash $values)
+    {
+        try {
+            $this->UM->add(
+                $values->username,
+                $values->password,
+                $values->fullname,
+                $values->role);
+        } catch (InvalidArgumentException $ex) {
+            $form->addError($ex->getMessage());
+            return;
+        }
+        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
+        $this->redirect('Homepage:default');
+    }
+
+    /**
      * @param $name
      * @return Grid
      */
-    protected function createComponentGrid($name)
+    protected function createComponentUserGrid($name)
     {
-        $grid = new Grid($this, $name);
+        $g = new Grid($this, $name);
+        $g->setFilterRenderType(Filter::RENDER_INNER);
         $fluent = $this->DC->select('*')->from('[user]');
-        $grid->model = $fluent;
-        $grid->setFilterRenderType(Filter::RENDER_INNER);
-        $grid->perPage = 100;
-        $grid->addColumnNumber('id', 'id');
-        $grid->addColumnText('username', 'Username')
+        $g->model = $fluent;
+        $g->setFilterRenderType(Filter::RENDER_INNER);
+        $g->perPage = 100;
+        $g->addColumnNumber('id', 'id');
+        $g->addColumnText('username', 'Username')
             ->setFilterText()
             ->setSuggestion();
-        $grid->addColumnText('role', 'Role')
+        $g->addColumnText('role', 'Role')
             ->setSortable()
             ->setFilterText()
             ->setSuggestion();
-        return $grid;
+        return $g;
     }
 
     /**
@@ -66,25 +87,5 @@ class UserPresenter extends BaseAdminPresenter
         $f->addSubmit('submit', 'vytvořit');
         $f->onSuccess[] = $this->userFormSuccess;
         return $f;
-    }
-
-    /**
-     * @param Form $form
-     * @param ArrayHash $values
-     */
-    public function userFormSuccess(Form $form, ArrayHash $values)
-    {
-        try {
-            $this->UM->add(
-                $values->username,
-                $values->password,
-                $values->fullname,
-                $values->role);
-        } catch (InvalidArgumentException $ex) {
-            $form->addError($ex->getMessage());
-            return;
-        }
-        $this->flashMessage('Uživatel úspěšně přidán!', 'success');
-        $this->redirect('Homepage:default');
     }
 }

@@ -1,10 +1,7 @@
 {block content}
-{snippet matchList}
-<h1 n:block="title">Přehled týmů pro {$category->name}</h1>
-{control matchesGridComponent}
-<script>
-$(function() {
-    $('.grido').grido();
-});
-</script>
-{/snippet}
+    <h1 n:block="title">Přehled týmů pro {$category->name}</h1>
+    <div class="alert alert-info">Použij <strong>Ctrl + dvojklik</strong> pro editaci. <strong>Enter</strong> poté pro
+        potvrzení.
+    </div>
+    {control matchesGridComponent}
+{/block}

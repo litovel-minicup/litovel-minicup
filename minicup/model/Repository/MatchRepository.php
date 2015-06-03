@@ -67,7 +67,7 @@ class MatchRepository extends BaseRepository
         $dt = new \DibiDateTime();
         $fluent = $fluent
             ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
-            ->where('[confirmed] = 0');
+            ->where('[confirmed] IS NULL');
         return $this->createEntities($fluent->fetchAll());
     }
 
@@ -80,7 +80,7 @@ class MatchRepository extends BaseRepository
     {
         $fluent = $this
             ->createCategoryFluent($category, $limit, BaseRepository::ORDER_DESC)
-            ->where('[confirmed] = 1');
+            ->where('[confirmed] IS NOT NULL');
         if ($limit) {
             $fluent->limit($limit);
         }
@@ -101,12 +101,25 @@ class MatchRepository extends BaseRepository
             ->where('(
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i)
-            ) AND [confirmed] = 1',
+            ) AND [confirmed] IS NOT NULL',
                 $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId)->fetch();
         if ($row) {
             return $this->createEntity($row);
         }
         return NULL;
+    }
+
+    /**
+     * @param Category $category
+     * @return array
+     */
+    public function groupMatchesByDay(Category $category)
+    {
+        $days = array();
+        foreach ($category->matches as $match) {
+            $days[$match->matchTerm->day->day->getTimestamp()][] = $match;
+        }
+        return $days;
     }
 
     /**
@@ -124,5 +137,20 @@ class MatchRepository extends BaseRepository
         }
 
         return $fluent;
+    }
+
+    /**
+     * @param Match $match
+     * @return Match[]
+     */
+    public function findMatchesConfirmedAfterMatch(Match $match)
+    {
+        $f = $this->connection->select('*')->from($this->getTable())
+            ->where('[category_id] = ', $match->category->id)
+            ->where('[confirmed] IS NOT NULL')
+            ->where('[confirmed_as] >= ', $match->confirmedAs)
+            ->orderBy('[confirmed_as] ', BaseRepository::ORDER_ASC);
+
+        return $this->createEntities($f->fetchAll());
     }
 }

@@ -12,6 +12,7 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
 use Nette\Object;
 use Nette\Utils\Json;
+use Nette\Utils\Strings;
 
 class FilterLoader extends Object
 {
@@ -65,7 +66,7 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('relDate', function ($time) {
-            $seconds = time() - strtotime($time);
+            $seconds = time() - strtotime((string)$time);
             $minutes = floor($seconds / 60);
             $hours = floor($minutes / 60);
             $days = floor($hours / 24);
@@ -94,13 +95,18 @@ class FilterLoader extends Object
             }
             return "v budoucnu";
         });
+
+        $template->addFilter('dayName', function ($time, $len = 2) use ($latte) {
+            $name = $latte->invokeFilter('date', array($time, "w"));
+            $names = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
+            return Strings::substring($names[$name], 0, $len);
+        });
+
         $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
-            // TODO
-            return $generator->link(':Media:photo');
+            return $generator->link(":Media:$type", array($photo->filename));
         });
 
         $template->addFilter('texy', function ($string) use ($texy) {
-            // TODO: cache processed content
             return $texy->process($string);
         });
 

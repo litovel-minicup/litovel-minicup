@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int         $id
  * @property int         $year                       int for year
@@ -13,7 +11,7 @@ use LeanMapper\Entity;
  * @property Day[]       $days m:belongsToMany       game days
  * @property Category[]  $categories m:belongsToMany year categories
  */
-class Year extends Entity
+class Year extends BaseEntity
 {
-
+    public static $CACHE_TAG = 'year';
 } 

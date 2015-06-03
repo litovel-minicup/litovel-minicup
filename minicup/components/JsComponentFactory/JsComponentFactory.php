@@ -50,8 +50,10 @@ class JsComponentFactory extends Object
         $files->addFile('assets/js/dropper.js');
         $files->addFile('assets/js/select2.js');
         $files->addFile('assets/js/nette.ajax.js');
+        $files->addFile('assets/js/nette.ajax.confirm.js');
         $files->addFile('assets/js/nette.forms.js');
         $files->addFile('assets/js/jquery.swipebox.js');
+        $files->addFile('assets/js/bootstrap.js');
         $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
@@ -59,7 +61,6 @@ class JsComponentFactory extends Object
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
-            $files->addFile('assets/js/admin/bootstrap.js');
             $files->addFile('assets/js/admin/toastr.js');
             $files->addFile('assets/js/admin/main.js');
         }

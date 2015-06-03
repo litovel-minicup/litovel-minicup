@@ -10,7 +10,7 @@
 }
 <div id="upload-dropper" data-dropper-options={$dropperOptions|toJson}></div>
 
-<script type="text/template" id="uploadTemplate" n:syntax="off">
+    <script type="text/template" id="uploadTemplate" n:syntax="off">
 <div class="col-md-2 upload">
 	<div class="thumbnail">
 		<div class="caption">
@@ -44,7 +44,7 @@
                     class="form-control select2"
                     data-tags="true"
                     data-placeholder="Otaguj je všechny!"
-                    data-ajax--url="{link tags!}"
+                    data-ajax--url="{plink tags!}"
                     data-ajax--cache="false"
                     data-ajax--delay="350"
                     data-ajax--method="POST"></select>
@@ -135,10 +135,11 @@
             $('.selected .photo-save').click();
         });
 
-        $select2all = initTagsSelect2($('#select2-all'));
+        var $select2all = initTagsSelect2($('#select2-all'));
         $('#tag-all').on('click', function(e) {
-            $.post({link tagsAll!}, { tags: $select2all.val()}, function(data, textStatus, xhr) {
+            $.post({link tagsAll!}, { tags: $select2all.val()}, function(response, textStatus, xhr) {
                 toastr.success('Otagovány všechny fotky!', 'Výborně!');
+                redrawSnippets(response);
             });
         });
 

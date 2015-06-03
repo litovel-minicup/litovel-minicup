@@ -39,7 +39,6 @@ class LoginFormComponent extends BaseComponent
         } catch (AuthenticationException $e) {
             $form->addError($e->getMessage());
             $this->redrawControl();
-            return;
         }
         if ($values->remember || in_array('admin', $user->roles)) {
             $user->setExpiration('14 days', FALSE);
@@ -47,7 +46,6 @@ class LoginFormComponent extends BaseComponent
             $user->setExpiration('20 minutes', TRUE);
         }
         $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
-        $this->presenter->redirect(':Admin:Homepage:');
     }
 }
 

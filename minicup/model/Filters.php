@@ -61,7 +61,7 @@ class Filters extends Object
      */
     public function confirmedMatch(Fluent $fluent)
     {
-        $fluent->where('[match.confirmed] = 1');
+        $fluent->where('[match.confirmed] IS NOT NULL');
     }
 
     /**
@@ -69,7 +69,7 @@ class Filters extends Object
      */
     public function unconfirmedMatch(Fluent $fluent)
     {
-        $fluent->where('[match.confirmed] = 0');
+        $fluent->where('[match.confirmed] IS NULL');
     }
 
     /**
@@ -96,6 +96,19 @@ class Filters extends Object
     public function activePhotos(Fluent $fluent)
     {
         $fluent->leftJoin('photo')->on('[photo_tag.photo_id] = [photo.id]')->where('[photo.active] = 1');
+    }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderPhotos(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
+    {
+        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC))) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy("[taken] $order");
     }
 
     /**

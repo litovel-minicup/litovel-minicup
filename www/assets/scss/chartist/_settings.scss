@@ -24,7 +24,7 @@ $ct-container-ratio: (1/1.618) !default;
 
 // Text styles for labels
 $ct-text-color: rgba(0, 0, 0, 0.4) !default;
-$ct-text-size: 0.75rem !default;
+$ct-text-size: 0.70rem !default;
 $ct-text-align: left !default;
 $ct-horizontal-text-align: left !default;
 $ct-vertical-text-align: right !default;
@@ -63,19 +63,43 @@ $ct-include-alternative-responsive-containers: $ct-include-classes !default;
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
 $ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) !default;
 $ct-series-colors: (
-  #d70206,
-  #f05b4f,
-  #f4c63d,
-  #d17905,
-  #453d3f,
-  #59922b,
-  #0544d3,
-  #6b0392,
-  #f05b4f,
-  #dda458,
-  #eacf7d,
-  #86797d,
-  #b2c326,
-  #6188e2,
-  #a748ca
+        #0040C1,
+        #f05b4f,
+        #f4c63d,
+        #d17905,
+        #453d3f,
+        #59922b,
+        #b2c326,
+        #6b0392,
+        #d70206,
+        #f05b4f,
+        #dda458,
+        #eacf7d,
+        #86797d,
+        #a748ca,
+        #0544d3
 ) !default;
+
+.#{$ct-class-chart} .tooltip {
+  position: absolute;
+  display: inline-block;
+  min-width: 5em;
+  padding: 0.5em;
+  background: none repeat scroll 0% 0% #F4C63D;
+  color: #453D3F;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.#{$ct-class-series}:hover,
+.#{$ct-class-point}:hover {
+  .#{$ct-class-line} {
+    stroke-width: 8px;
+  }
+  &,
+  .#{$ct-class-point} {
+    stroke-width: 12.5px;
+  }
+}

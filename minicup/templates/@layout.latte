@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
+<head n:inner-block="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {control css}
-    {control js}
     <title n:snippet="title">{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015</title>
 
     {block seo}
@@ -12,7 +10,7 @@
     <meta property="description" content="Informační portál pro litovelský turnaj v miniházené MINICUP 2015 konaný ve dnech 22. - 24. května 2015. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek, zápas trenérů, rozhodčích a všech s turnajem spojených a spousta dalších zajímavých aktivit.">
     <meta property="keywords" content="litovel,hanacke,benatky,minihazena,hazena,tatran,extraliga,minicup">
     <meta property="author" content="Josef Kolář, Matěj Mitaš">
-
+    {block og}
     <!-- OG -->
     <meta property="og:site_name" content="MINICUP 2015">
     <meta property="og:description" content="Informační portál pro litovelský turnaj v miniházené MINICUP 2015 konaný ve dnech 22. - 24. května 2015. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek, zápas trenérů, rozhodčích a všech s turnajem spojených a spousta dalších zajímavých aktivit.">
@@ -22,6 +20,8 @@
         <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
     {/block}
     {/block}
+    {/block}
+
 </head>
 <body>
 {block body}{/block}

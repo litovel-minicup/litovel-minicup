@@ -1,0 +1,59 @@
+<div class="Article">
+    <div class="Article__head Box__head">
+        <div class="Article__head__icon Box__head__icon icon__photo"></div>
+        <div class="Article__head__text Box__head__text">Fotogalerie /
+            <a href={plink Gallery:default}> Zpět na přehled</a></div>
+    </div>
+</div>
+
+<div class="Article__content Box__content Photo__content">
+<select class="Photo__select" id="tags-select"
+        name="tags-select"
+        multiple="multiple"
+        data-tags="true"
+        data-placeholder="Které tagy Tě zajímají?"
+        data-ajax--url="{link tags!}"
+        data-ajax--cache="false"
+        data-ajax--delay="350"
+        data-ajax--method="GET">
+    <option n:foreach="$tags as $tag" n:attr="in_array($tag->id, $selectedTags)?selected"
+            value="{$tag->id}">{$tag->slug}</option>
+</select>
+<script>
+    jQuery(function ($) {
+        var $select = initTagsSelect2($('#tags-select'));
+        $select.on('change', function (e) {
+            var val = $(this).val();
+            if (!val) {
+                val = "";
+            }
+            console.log(val);
+            if (val.length > 0) {
+                try {
+                    $.each(val, function (i, v) {
+                        ga("send", "event", "tag", "show", v);
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            window.location.hash = val;
+            $.nette.ajax({
+                url: {link refresh!},
+                data: {
+                    ids: $(this).val()
+                }
+            });
+        });
+        if (window.location.hash) {
+            setTimeout(function () {
+                var ids = window.location.hash.replace('#', '').split(',');
+                $select.select2('val', ids).trigger('change');
+            }, 200)
+        }
+        $('#tags-select, .select2, .select2 li input').width('100%');
+    })
+</script>
+{snippet photo-list}
+{control photoListComponent}
+{/snippet}

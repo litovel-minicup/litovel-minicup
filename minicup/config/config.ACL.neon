@@ -6,7 +6,7 @@ services:
             - addRole('moderator', 'guest')
             - addRole('admin', 'moderator')
 
-            - addResource('user') # TODO resources
+            - addResource('user')
             - addResource('online-report')
             - addResource('static-content')
             - addResource('team')

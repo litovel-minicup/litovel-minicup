@@ -2,8 +2,6 @@
 
 namespace Minicup\Model\Entity;
 
-use LeanMapper\Entity;
-
 /**
  * @property int        $id
  * @property \DateTime  $start                      datetime of start this MT
@@ -12,7 +10,7 @@ use LeanMapper\Entity;
  * @property Day        $day m:hasOne(day_id:day)   in which day is?
  * @property Match[]    $matches m:belongsToMany    what matches are played in this term?
  */
-class MatchTerm extends Entity
+class MatchTerm extends BaseEntity
 {
-
+    public static $CACHE_TAG = 'matchTerm';
 }

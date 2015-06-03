@@ -31,13 +31,17 @@
                         <ul class="dropdown-menu" role="menu">
                             <li class="{ifCurrent Photo:upload}active{/ifCurrent}"><a n:href="Photo:upload"><i class="glyphicon glyphicon-cloud-upload"></i> Upload fotek</a></li>
                             <li class="{ifCurrent Photo:tags}active{/ifCurrent}"><a n:href="Photo:tags"><i class="glyphicon glyphicon-tags"></i> Správa tagů</a></li>
+                            <li class="{ifCurrent Photo:photos}active{/ifCurrent}"><a n:href="Photo:photos"><i
+                                            class="glyphicon glyphicon-camera"></i> Správa fotek</a></li>
                         </ul>
                     </li>
-                    <li><a class="navbar-link" n:href="User:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
-                    <li><a class="navbar-link" n:href="News:"><i class="glyphicon glyphicon-bold"></i> Správa novinek</a></li>
+                    <li><a class="navbar-link{ifCurrent User:} active{/ifCurrent}" n:href="User:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
+                    <li><a class="navbar-link{ifCurrent News:} active{/ifCurrent}" n:href="News:"><i class="glyphicon glyphicon-bold"></i> Správa novinek</a></li>
+                    <li><a class="navbar-link{ifCurrent System:} active{/ifCurrent}" n:href="System:"><i
+                                    class="glyphicon glyphicon-lock"></i> Systémové akce</a></li>
                 </ul>
                 <p class="navbar-text navbar-right">
-                    <a class="navbar-link" n:href="Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit se</a>
+                    <a class="navbar-link" n:href=":Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit se</a>
                     <a class="navbar-link" n:href=":Front:Homepage:"><i class="glyphicon glyphicon-home"></i> Veřejná sekce</a>
                 </p>
             </div>
@@ -46,21 +50,27 @@
 {/block}
 
 {block body}
-    {include #navbar}
+    {include navbar}
     <div class="container">
-        {snippet flashes}
+        {snippet flashes}{if $flashes|length}
             <script>
                 {foreach $flashes as $flash}
                 toastr.{$flash->type|noescape}({$flash->message});
                 {/foreach}
             </script>
-        {/snippet}
+        {/if}{/snippet}
         {block content}{/block}
     </div>
 {/block}
 
 {block seo}
-    {include #parent}
+    {include parent}
     <meta name="robots" content="noindex,follow">
     <meta name="googlebot" content="nosnippet,noarchive">
+{/block}
+
+{block head}
+    {include parent}
+    {control css}
+    {control js}
 {/block}

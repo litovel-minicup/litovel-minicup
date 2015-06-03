@@ -1,24 +1,20 @@
-<div class="Box__subhead Article__subhead">
-    <table class="Table Table__standings">
-        <thead>
-        <tr>
-            <th>Pořadí</th>
-            <th>Tým</th>
-            <th>Z</th>
-            <th>VY</th>
-            <th>R</th>
-            <th>P</th>
-            <th>VS</th>
-            <th>O</th>
-            <th>B</th>
-        </tr>
-        </thead>
-    </table>
-</div>
-
-
 <div class="Box__content Table__content">
     <table class="Table Table__standings">
+
+        <thead class="Box__subhead Article__subhead">
+            <tr>
+                <th>Pořadí</th>
+                <th>Tým</th>
+                <th>Z</th>
+                <th>VY</th>
+                <th>R</th>
+                <th>P</th>
+                <th>VS</th>
+                <th>O</th>
+                <th>B</th>
+            </tr>
+        </thead>
+
         <tbody>
         {foreach $teams as $team}
             <tr>

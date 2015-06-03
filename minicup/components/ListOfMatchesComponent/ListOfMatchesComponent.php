@@ -8,6 +8,7 @@ use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\MatchRepository;
 use Nette\InvalidArgumentException;
+use Nette\Utils\DateTime;
 
 class ListOfMatchesComponent extends BaseComponent
 {
@@ -35,10 +36,9 @@ class ListOfMatchesComponent extends BaseComponent
     public function render($mode = 'all', $limit = 0)
     {
         $matches = array();
-        $this->template->actualID = 0;
         if ($this->arg instanceof Team) {
             $matches = $this->arg->i->matches;
-            $this->template->actualID = $this->arg->id;
+            $this->template->team = $this->arg->i;
         } elseif ($this->arg instanceof Category) {
             if ($mode == 'current') {
                 $matches = $this->MR->getCurrentMatches($this->arg, $limit);
@@ -46,6 +46,8 @@ class ListOfMatchesComponent extends BaseComponent
                 $matches = $this->MR->getNextMatches($this->arg, $limit);
             } elseif ($mode == 'last') {
                 $matches = $this->MR->getLastMatches($this->arg, $limit);
+            } elseif ($this->view === 'full' && $mode === 'all') {
+                $this->template->days = $this->MR->groupMatchesByDay($this->arg);
             } elseif ($mode == 'all') {
                 $matches = $this->arg->matches;
             } else {
@@ -54,7 +56,17 @@ class ListOfMatchesComponent extends BaseComponent
         }
         $this->template->matches = $matches;
         parent::render();
+    }
 
+    /**
+     * @param int $time
+     * @return bool
+     */
+    public function isToday($time)
+    {
+        $time = DateTime::from($time);
+        $now = new DateTime();
+        return $time->format('Y-m-d') === $now->format('Y-m-d');
     }
 }
 

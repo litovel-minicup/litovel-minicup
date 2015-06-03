@@ -25,6 +25,12 @@ class MatchImporter
     /** @var TeamInfoRepository */
     private $TIR;
 
+    /**
+     * @param MatchRepository $MR
+     * @param MatchTermRepository $MTR
+     * @param DayRepository $DR
+     * @param TeamInfoRepository $TIR
+     */
     public function __construct(MatchRepository $MR, MatchTermRepository $MTR, DayRepository $DR, TeamInfoRepository $TIR)
     {
         $this->MR = $MR;

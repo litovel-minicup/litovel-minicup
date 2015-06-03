@@ -1,10 +1,24 @@
 {block content}
-	<div class="Article">
-		<div class="Article__head Box__head">
-			<div class="Article__head__icon Box__head__icon icon__photo"></div>
-            <div class="Article__head__text Box__head__text">Fotogalerie  /<a href={plink Gallery:default}> Zpět na přehled</a></div>
-		</div>		
-	</div>
-    {control photoListComponent}
+    <script>
+        jQuery(function ($) {
+            try {
+                ga("send", "event", "tag", "detail", {$tag->id});
+            } catch (e) {
+                console.log(e);
+            }
+        });
+    </script>
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__photo"></div>
+            <div class="Article__head__text Box__head__text">Fotogalerie /<a href={plink Gallery:default}> Zpět na
+                    přehled</a></div>
+        </div>
+
+        <div class="Article__content Box__content Photo__content">
+            {control photoListComponent}
+        </div>
+    </div>
+    
 {/block}
 {block title}Fotogalerie - {$tag->name}{/block}

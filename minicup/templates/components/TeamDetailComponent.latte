@@ -1,89 +1,89 @@
-{block outerContent}
+<div class="Section animated">
+    <div class="Article">
+        <div class="Article__head Box__head">
+            <div class="Article__head__icon Box__head__icon icon__teams"></div>
+            <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
+        </div>
+        <div class="Box__content Table__content Team__content">
+            <table class="Table Table__detail">
+                <thead class="Box__subhead Article__subhead">
+                <tr>
+                    <th>Pořadí</th>
+                    <th>Odehrané zápasy</th>
+                    <th>Skóre</th>
+                    <th>Body</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$team->order}</td>
+                    <td>{$team->playedMatches|length}</td>
+                    <td>{$team->scored}:{$team->received}</td>
+                    <td>{$team->points}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{if $team->order}
+    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__news"></div>
+                <div class="Article__head__text Box__head__text">Historie pořadí</div>
+            </div>
+            {control teamHistoryComponent}
+        </div>
+    </div>
+{/if}
+
+{if count($team->i->matches)}
+    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__matches">
+                </div>
+                <div class="Article__head__text Box__head__text">Zápasy</div>
+            </div>
+            {control listOfMatchesComponent}
+        </div>
+    </div>
+{/if}
+
+{if $team->i->staticContent || $user->isAllowed('static-content', 'edit')}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__teams"></div>
-                <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
+                <div class="Article__head__icon Box__head__icon icon__news"></div>
+                <div class="Article__head__text Box__head__text">Informace</div>
             </div>
-
-            <div class="Box__subhead Article__subhead">
-                <table class="Table Table__detail">
-                    <thead>
-                        <tr>
-                            <th>Pořadí</th>
-                            <th>Odehrané zápasy</th>
-                            <th>Skóre</th>
-                            <th>Body</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-
-            <div class="Box__content Team__content">
-                <table class="Table__detail">
-                    <tbody>
-                        <tr>
-                            <td>{$team->order}</td>
-                            <td>{$team->playedMatches|length}</td>
-                            <td>{$team->scored}:{$team->received}</td>
-                            <td>{$team->points}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-            {*       jméno: {$team->name} <br>
-                     slug: {$team->slug} <br>
-                     pořadí: {$team->order}<br>
-                    počet zápasů: {$team->matches|length}<br>
-                    kategorie: {$team->category->name}<br>
-                    vstřelené: {$team->scored}<br>
-                    obdržené: {$team->received}<br>
-                    body: {$team->points}<br> *}
+            {control staticContentComponent}
         </div>
     </div>
-    {if $team->order}
-        <div class="Section">
-            <div class="Article">
-                <div class="Article__head Box__head">
-                    <div class="Article__head__icon Box__head__icon icon__news"></div>
-                    <div class="Article__head__text Box__head__text">Historie pořadí</div>
-                </div>
-                {control teamHistoryComponent}
-            </div>
-        </div>
-    {/if}
+{/if}
 
-    {if count($team->i->matches) > 0}
-        <div class="Section">
-            <div class="Article">
-                {control listOfMatchesComponent}
+{if $team->i->tag && $team->i->tag->mainPhoto}
+    <div class="Section">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                <div class="Article__head__text Box__head__text">Foto týmu</div>
             </div>
+            <img style="width: 100%;" src="{plink :Media:medium $team->i->tag->mainPhoto->filename}"
+                 title="Foto týmu {$team->i->name}" alt="Foto týmu {$team->i->name}"/>
         </div>
-    {/if}
+    </div>
+{/if}
 
-    {if ($team->i->staticContent && $team->i->staticContent->content) || $user->isAllowed('static-content', 'edit')}
-        <div class="Section">
-            <div class="Article">
-                <div class="Article__head Box__head">
-                    <div class="Article__head__icon Box__head__icon icon__news"></div>
-                    <div class="Article__head__text Box__head__text">Informace</div>
-                </div>
-                {control staticContentComponent}
+{if $team->i->tag && $team->i->tag->photos}
+    <div class="Section">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                <div class="Article__head__text Box__head__text">Fotografie</div>
             </div>
+            {control photoListComponent}
         </div>
-    {/if}
-
-    {if ($team->i->tag && count($team->i->tag->photos) > 0) || $user->isAllowed('tag', 'create')}
-        <div class="Section">
-            <div class="Article">
-                <div class="Article__head Box__head">
-                    <div class="Article__head__icon Box__head__icon icon__photo"></div>
-                    <div class="Article__head__text Box__head__text">Fotografie</div>
-                </div>
-                {control photoListComponent}
-            </div>
-        </div>
-    {/if}
-{/block}
+    </div>
+{/if}

@@ -116,7 +116,7 @@ class ReorderManager extends Object
         } elseif (count($pointScale) == 1 && $recursionFrom == '$this->miniTableWithScoreDifferenceFromMiniTable') {
             $teamsToCompare = $this->teamsToCompare($teamPoints);
             $countOfTeamsWithSamePoints = count($teamsToCompare);
-            $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+            $this->orderByScored($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         } else {
             foreach ($pointScale as $points => $countOfTeamsWithSamePoints) {
                 if ($countOfTeamsWithSamePoints == 1) {
@@ -164,7 +164,7 @@ class ReorderManager extends Object
         if ($countOfTeamsWithSamePoints == 2) {
             if ($teamsToCompare[0]->scored - $teamsToCompare[0]->received == $teamsToCompare[1]->scored - $teamsToCompare[1]->received) {
                 if ($mutualMatch == FALSE) {
-                    $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+                    $this->orderByScored($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
                 } else {
                     $this->orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
                 }
@@ -181,46 +181,27 @@ class ReorderManager extends Object
     }
 
     /**
-     * Set same order for all teams
+     * Reorder by difference scored goals in fullTable
      *
      * @param array     $teamsToCompare
      * @param int       $countOfTeamsWithSamePoints
      * @param int       $teamPosition
      */
-    private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    private function orderByScored($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
-        $teamPosition = $teamPosition - ($countOfTeamsWithSamePoints - 1);
-        foreach ($teamsToCompare as $team) {
-            $team->order = $teamPosition;
+        $teamsScored = array();
+        foreach ($teamsToCompare as $key => $team) {
+            $teamsScored[$key] = $team->scored;
         }
 
-    }
-
-
-    /**
-     * Compare team score difference in mini table from mini table
-     *
-     * @param array     $teamsToCompare
-     * @param int       $countOfTeamsWithSamePoints
-     * @param int       $teamPosition
-     */
-    private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
-    {
-        if ($countOfTeamsWithSamePoints == 2) {
-            $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);
-            if ($commonMatch == NULL or $commonMatch->scoreHome - $commonMatch->scoreAway == 0) {
-                $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
-            } else {
-                if ($teamsToCompare[0]->i->id == $commonMatch->homeTeam->id XOR $commonMatch->scoreHome - $commonMatch->scoreAway > 0) {
-                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
-                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
-                } else {
-                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition - 1;
-                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
-                }
+        asort($teamsScored);
+        if (count(array_unique($teamsScored)) != 1) {
+            foreach ($teamsScored as $key => $teamScored) {
+                $this->getEntityOfTeam($teamsToCompare[$key]->id)->order = $teamPosition;
+                $teamPosition -= 1;
             }
         } else {
-            $this->miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+            $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
         }
     }
 
@@ -234,6 +215,48 @@ class ReorderManager extends Object
     private function getEntityOfTeam($teamID)
     {
         return $this->teamsEntities[$teamID];
+    }
+
+    /**
+     * Set same order for all teams
+     *
+     * @param array     $teamsToCompare
+     * @param int       $countOfTeamsWithSamePoints
+     * @param int       $teamPosition
+     */
+    private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    {
+        $teamPosition = $teamPosition - ($countOfTeamsWithSamePoints - 1);
+        foreach ($teamsToCompare as $team) {
+            $team->order = $teamPosition;
+        }
+    }
+
+    /**
+     * Compare team score difference in mini table from mini table
+     *
+     * @param array $teamsToCompare
+     * @param int   $countOfTeamsWithSamePoints
+     * @param int   $teamPosition
+     */
+    private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    {
+        if ($countOfTeamsWithSamePoints == 2) {
+            $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);
+            if ($commonMatch == NULL or $commonMatch->scoreHome - $commonMatch->scoreAway == 0) {
+                $this->orderByScored($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+            } else {
+                if ($teamsToCompare[0]->i->id == $commonMatch->homeTeam->id XOR $commonMatch->scoreHome - $commonMatch->scoreAway > 0) {
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition;
+                } else {
+                    $this->getEntityOfTeam($teamsToCompare[1]->id)->order = $teamPosition - 1;
+                    $this->getEntityOfTeam($teamsToCompare[0]->id)->order = $teamPosition;
+                }
+            }
+        } else {
+            $this->miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
+        }
     }
 
     /**

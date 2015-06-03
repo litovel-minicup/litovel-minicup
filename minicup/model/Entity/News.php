@@ -3,8 +3,6 @@
 namespace Minicup\Model\Entity;
 
 
-use LeanMapper\Entity;
-
 /**
  * @property int $id
  * @property string $title
@@ -12,7 +10,8 @@ use LeanMapper\Entity;
  * @property \DateTime $updated
  * @property \Datetime $added
  */
-class News extends Entity
+class News extends BaseEntity
 {
+    public static $CACHE_TAG = 'news';
 
 }

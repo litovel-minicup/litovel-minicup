@@ -1,0 +1,72 @@
+{extends '../@layout.latte'}
+{block og}{/block}
+{block head}
+    {include parent}
+    <style>
+        body, html {
+            background-color: #0040C1;
+            font-family: "Trebuchet MS", "Geneva CE", lucida, sans-serif;
+            height: 100%;
+            overflow-y: hidden;
+        }
+
+        body {
+            height: 100%;
+            margin: 0 auto;
+            display: table;
+        }
+
+        .container {
+            width: 600px;
+            margin-top: -100px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .content {
+            margin-top: -30%;
+        }
+
+        .content a {
+            color: black;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .content a:hover,
+        .content a:focus,
+        .content a:active {
+            text-decoration: underline;
+        }
+
+        .info {
+            padding: 30px;
+            background-color: #ffd800;
+        }
+
+        .logo {
+            margin: 0 auto 15%;
+            width: 126px;
+            display: block;
+        }
+
+        small {
+            display: block;
+            text-align: right;
+            margin: 20px 0;
+        }
+    </style>
+{/block}
+{block body}
+    <div class="container">
+        <div class="content">
+            <a n:href="Front:Homepage:default">
+                <img src="{$basePath}/assets/img/logo.png" class="logo" alt="Logo turnaje MINICUP">
+            </a>
+
+            <div class="info">
+                {block content}{/block}
+            </div>
+        </div>
+    </div>
+{/block}

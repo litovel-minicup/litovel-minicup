@@ -13,16 +13,16 @@
         </div>
     <![endif]-->
 
-    <div class="Header">
+    <div class="Header animated">
             <!-- svg logo with fallback -->
             <div id="nav-mobile" class="Header__nav--mobile">
                 <label>
                     <select>
                         <option value={plink Homepage:default} selected="selected">novinky</option>
                         <option value={plink Homepage:informations}>infromace</option>
-                        <option value={plink Team:list $category}>týmy</option>
-                        <option value={plink Match:list $category}>zápasy</option>
-                        <option value={plink Result:table $category}>tabulky</option>
+                        <option value={plink Team:list}>týmy</option>
+                        <option value={plink Match:list}>zápasy</option>
+                        <option value={plink Stats:default}>statistiky</option>
                         <option value={plink Gallery:default}>foto</option>
                         <option value={plink Homepage:sponsors}>sponzoři</option>
                     </select>
@@ -42,16 +42,16 @@
                 <ul>
                     <a n:href="Homepage:default"><li>novinky</li></a>
                     <a n:href="Homepage:informations"><li>informace</li></a>
-                    <a n:href="Team:list $category"><li>Týmy</li></a>
-                    <a n:href="Match:list $category"><li>Zápasy</li></a>
-                    <a n:href="Result:table $category"><li>tabulky</li></a>
+                    <a n:href="Team:list"><li>Týmy</li></a>
+                    <a n:href="Match:list"><li>Zápasy</li></a>
+                    <a n:href="Stats:default"><li>Statistiky</li></a>
                     <a n:href="Gallery:default"><li>foto</li></a>
                     <a n:href="Homepage:sponsors"><li>sponzoři</li></a>
                 </ul>
             </div>
         </div>
 
-        <div class="Main__wrapper">
+        <div class="Main__wrapper animated fadeInUp">
             {block outerContent}
                 <div class="Section">
                     {block content}
@@ -60,11 +60,11 @@
             {/block}
         </div>
 
-        <div class="Side__wrapper">
+        <div class="Side__wrapper animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
             {control asideComponent}
         </div>
 
-        <div class="Footer">
+        <div class="Footer animated fadeInUp">
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Kontakt</div>
                 <div class="Box__content Footer__content">
@@ -86,7 +86,8 @@
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">&nbsp;</div>
                 <div class="Box__content Footer__content">
-                    <a n:href=":Admin:Homepage:default">administrace</a><br>
+                    <a n:href=":Admin:Homepage:default">administrace</a>
+                    <br>
                     Matěj Mitaš & Josef Kolář 2015
                 </div>
             </div>
@@ -100,4 +101,18 @@
     ga('create', 'UA-40772204-1', 'auto');
     ga('send', 'pageview');
 </script>
+<a href="http://www.toplist.cz/stat/1561645" n:syntax="off" n:if="$productionMode">
+    <script> document.write('<img src="https://toplist.cz/dot.asp?id=1561645&http='+encodeURIComponent(document.referrer)+'&t='+encodeURIComponent(document.title)+
+        '&wi='+encodeURIComponent(window.screen.width)+'&he='+encodeURIComponent(window.screen.height)+'&cd='+encodeURIComponent(window.screen.colorDepth)+'" width="1" height="1" border=0 alt="TOPlist" />');
+    </script>
+    <noscript>
+        <img src="https://toplist.cz/dot.asp?id=1561645" border="0" alt="TOPlist" width="1" height="1" />
+    </noscript>
+</a>
+{/block}
+
+{block head}
+    {include parent}
+    {control css}
+    {control js}
 {/block}

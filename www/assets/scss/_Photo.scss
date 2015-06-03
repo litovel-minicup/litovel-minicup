@@ -1,0 +1,68 @@
+.Photo {
+
+	&__select {
+		margin-bottom: 20px;
+	}
+
+	&--clip {
+		 -webkit-clip-path: circle(60px at center);
+	}
+
+	&__rows {
+			
+			@include span-columns(4 of 12);
+	  		@include omega(3n);
+	  		margin-bottom: 1px;
+	  		text-align: center;
+	  		overflow: hidden;
+	  		height: 150px;
+
+			display: table;
+
+			a {
+				border-bottom: 0!important;
+
+
+
+				display: table-cell;
+	    		vertical-align: middle;
+
+	    		color: darken($medium--grey, 40%);
+
+				&:hover {
+					color: white;
+				}
+
+			}
+
+			img {
+				width: 100%;
+			}
+
+			&--portrait {
+				height: 300px!important;
+				margin: -80px 0 -80px 0px;  
+			}
+
+			&:hover {
+				background: $light--blue;
+			}
+	}
+}	
+
+@media screen and (max-width: 500px) {
+	.Photo {
+		&__rows {
+			
+			@include span-columns(12);
+
+			margin-top: 20px;
+
+			img {
+				width: 90vw;
+				height: 250px;
+			}
+
+	  	}
+	 } 		
+}
