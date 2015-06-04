@@ -94,7 +94,6 @@ class MatchFormComponent extends BaseComponent
         $submitButton = $form['submit'];
         if ($submitButton->isSubmittedBy()) {
             foreach ($values['matches'] as $matchId => $matchData) {
-                // TODO: add Nette validation
                 if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
                     continue;
                 }

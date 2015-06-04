@@ -64,6 +64,19 @@ var initEasterEgg = function ($el, pattern) {
     });
 };
 
+var initLinkLogging = function () {
+    $(document).on('click', 'a.log', function (e) {
+        var $link = $(this);
+        var category = 'link',
+            action = 'click',
+            value = $(this).attr('data-value') || $(this).attr('href');
+        try {
+            ga("send", "event", category, action, value);
+        } catch (e) {
+        }
+    });
+};
+
 jQuery(function ($) {
     $.nette.init();
     $.nette.ext({
@@ -74,4 +87,5 @@ jQuery(function ($) {
 
     initMobileNav($('#nav-mobile'));
     initEasterEgg($(document), 'do a barrel roll');
+    initLinkLogging();
 });
