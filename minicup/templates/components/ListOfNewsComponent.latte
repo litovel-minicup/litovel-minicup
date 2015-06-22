@@ -2,6 +2,7 @@
     <div n:inner-foreach="$news as $new" class="Box__content">
         <div class="Article__heading">{$new->title}</div>
         <div class="Article__date">{$new->added|relDate}</div>
-        <div class="Article__content">{$new->content|texy|noescape}</div>
+        <div n:if="$new->texy" class="Article__content">{$new->content|texy|noescape}</div>
+        <div n:if="!$new->texy" class="Article__content">{$new->content|noescape}</div>
     </div>
 </div>

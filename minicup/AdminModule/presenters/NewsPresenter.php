@@ -11,6 +11,7 @@ use Minicup\Components\NewsFormComponent;
 use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\NewsRepository;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Html;
 
 class NewsPresenter extends BaseAdminPresenter
 {
@@ -64,6 +65,10 @@ class NewsPresenter extends BaseAdminPresenter
         $g->addColumnNumber('id', '#');
         $g->addColumnText('title', 'Titulek');
         $g->addColumnText('content', 'Obsah');
+        $g->addColumnNumber('texy', 'Texy?')->setReplacement(array(
+            0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
+            1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
+        ));
         $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
         $g->addActionHref('detail', 'Detail', 'News:detail', array('id' => 'id'));
         $g->setModel($this->connection->select('*')->from('[news]'));

@@ -9,6 +9,7 @@ namespace Minicup\Model\Entity;
  * @property string $content
  * @property \DateTime $updated
  * @property \Datetime $added
+ * @property int $texy
  */
 class News extends BaseEntity
 {

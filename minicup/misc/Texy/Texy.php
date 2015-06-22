@@ -15,7 +15,7 @@ class Texy extends \Texy
 
     /**
      * @param $destinationPrefix
-     * @param LinkFactory $linkGenerator
+     * @param LinkGenerator $linkGenerator
      */
     public function __construct($destinationPrefix, LinkGenerator $linkGenerator)
     {
@@ -44,7 +44,7 @@ class Texy extends \Texy
     {
         $me = $this;
         return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z-, ]*)?\]#', function ($matches) use ($me) {
-            $destination = $me->destinationPrefix .$matches[1];
+            $destination = $me->destinationPrefix . $matches[1];
             $args = array();
             if (count($matches) > 2) {
                 $args = Strings::trim($matches[2]);

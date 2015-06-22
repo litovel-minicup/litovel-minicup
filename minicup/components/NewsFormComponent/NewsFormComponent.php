@@ -29,7 +29,7 @@ class NewsFormComponent extends BaseComponent
         if ($this->news) {
             /** @var Form $form */
             $form = $this['newsForm'];
-            $form->setDefaults($this->news->getData(array('title', 'content', 'id')));
+            $form->setDefaults($this->news->getData(array('title', 'content', 'id', 'texy')));
         }
         parent::render();
     }
@@ -41,6 +41,7 @@ class NewsFormComponent extends BaseComponent
     {
         $f = $this->formFactory->create();
         $f->addText("title", 'Titulek')->setRequired();
+        $f->addCheckbox('texy', 'Užít Texy')->setDefaultValue(TRUE);
         $f->addHidden('id');
         $content = $f->addTextArea("content", 'Obsah')->setRequired();
         $content->getControlPrototype()->attrs["style"] = "width: 100%; max-width: 100%;";
@@ -66,7 +67,7 @@ class NewsFormComponent extends BaseComponent
             $news = new News();
             $news->added = new \DibiDateTime();
         }
-        $news->assign($values, array('title', 'content'));
+        $news->assign($values, array('title', 'content', 'texy'));
         $news->updated = new \DibiDateTime();
 
         try {
@@ -85,7 +86,6 @@ interface INewsFormComponentFactory
 {
     /**
      * @param News $news
-     * @param NewsRepository $NR
      * @return NewsFormComponent
      */
     public function create(News $news = NULL);
