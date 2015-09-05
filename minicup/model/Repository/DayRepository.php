@@ -44,10 +44,8 @@ class DayRepository extends BaseRepository
     /**
      * @return Day[]
      */
-    public function findAll()
+    public function findAll($withFilters = TRUE)
     {
         return $this->YR->getSelectedYear()->days;
     }
-
-
 }

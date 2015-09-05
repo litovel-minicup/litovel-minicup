@@ -5,8 +5,7 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\Year;
 use Nette\InvalidStateException;
 
-class YearRepository extends BaseRepository
-{
+class YearRepository extends BaseRepository {
     /**
      * @var Year
      */
@@ -16,8 +15,7 @@ class YearRepository extends BaseRepository
      * @return Year
      * @throws InvalidStateException
      */
-    public function getSelectedYear()
-    {
+    public function getSelectedYear() {
         if (!$this->selectedYear) {
             $row = $this->createFluent()->where('actual = 1')->fetch();
             if (!$row) {
@@ -28,22 +26,27 @@ class YearRepository extends BaseRepository
         return $this->selectedYear;
     }
 
-
     /**
      * @param Year $year
      * @return Year
      */
-    public function setSelectedYear(Year $year)
-    {
+    public function setSelectedYear(Year $year = NULL) {
         return $this->selectedYear = $year;
+    }
+
+    public function getActualYear() {
+        $row = $this->createFluent()->where('actual = 1')->fetch();
+        if (!$row) {
+            throw new InvalidStateException('Table year has not actual year.');
+        }
+        return $this->createEntity($row);
     }
 
     /**
      * @param string $slug
      * @return Year|NULL
      */
-    public function getBySlug($slug)
-    {
+    public function getBySlug($slug) {
         $row = $this->createFluent()
             ->where('slug = %s', $slug)
             ->fetch();

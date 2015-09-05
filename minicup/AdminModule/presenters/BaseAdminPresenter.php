@@ -8,10 +8,8 @@ use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use Minicup\Presenters\BasePresenter;
 
-abstract class BaseAdminPresenter extends BasePresenter
-{
-    public function startup()
-    {
+abstract class BaseAdminPresenter extends BasePresenter {
+    public function startup() {
         parent::startup();
         if (!$this->user->loggedIn) {
             $this->flashMessage('Pro vstup do administrace je nutné se přihlásit.', 'error');
@@ -19,13 +17,20 @@ abstract class BaseAdminPresenter extends BasePresenter
         }
     }
 
-    protected function afterRender()
-    {
+    /**
+     * before render
+     */
+    public function beforeRender() {
+        parent::beforeRender();
+        $this->template->categories = $this->CR->findAll(FALSE);
+    }
+
+
+    protected function afterRender() {
         $this->redrawControl('flashes');
     }
 
-    protected function createComponent($name)
-    {
+    protected function createComponent($name) {
         $component = parent::createComponent($name);
         if ($component instanceof Grid) {
             return $this->improveGrid($component);
@@ -40,8 +45,7 @@ abstract class BaseAdminPresenter extends BasePresenter
      * @return Grid
      * @throws \Exception
      */
-    public function improveGrid(Grid $grid)
-    {
+    public function improveGrid(Grid $grid) {
         $grid->defaultPerPage = 100;
         $grid->setFilterRenderType(Filter::RENDER_INNER);
         $presenter = $this;
@@ -52,7 +56,7 @@ abstract class BaseAdminPresenter extends BasePresenter
                     $presenter->flashMessage("Akce '{$child->getLabel()}' s prvkem {$id} byl úspěšně provedena!", 'success');
                     $grid->reload();
                 };
-            } elseif ($child instanceof Column){
+            } elseif ($child instanceof Column) {
                 if (!$child->customRender instanceof \Closure) {
                     $child->setSortable();
                 }

@@ -44,6 +44,7 @@ class TagManager extends Object
                 $tag = new Tag();
                 $tag->slug = $arg->category->slug . $this::PARTS_GLUE . $arg->i->slug;
                 $tag->name = $arg->category->name . ' - ' . $arg->i->name;
+                $tag->year = $arg->category->year;
                 $this->tag->persist($tag);
                 $arg->i->tag = $tag;
                 $this->teamInfo->persist($arg->i);

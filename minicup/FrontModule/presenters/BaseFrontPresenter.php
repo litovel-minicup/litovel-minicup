@@ -6,20 +6,14 @@ use Minicup\Components\AsideComponent;
 use Minicup\Components\CategoryToggleComponent;
 use Minicup\Components\IAsideComponentFactory;
 use Minicup\Components\ICategoryToggleFormComponentFactory;
-use Minicup\Model\Entity\Category;
 use Minicup\Presenters\BasePresenter;
 
 
 /**
  * Base presenter for all application presenters.
  */
-abstract class BaseFrontPresenter extends BasePresenter
-{
-    /**
-     * @var Category
-     * @persistent
-     */
-    public $category;
+abstract class BaseFrontPresenter extends BasePresenter {
+
 
     /** @var ICategoryToggleFormComponentFactory @inject */
     public $CTCF;
@@ -27,25 +21,30 @@ abstract class BaseFrontPresenter extends BasePresenter
     /** @var IAsideComponentFactory @inject */
     public $ACF;
 
+    public function beforeRender() {
+        parent::beforeRender();
+        $this->template->category = $this->category;
+        $this->template->categories = $this->YR->getSelectedYear()->categories;
+    }
+
     /**
      * @return CategoryToggleComponent
      */
-    protected function createComponentCategoryToggleFormComponent()
-    {
+    protected function createComponentCategoryToggleFormComponent() {
         return $this->CTCF->create();
     }
 
     /**
      * @return AsideComponent
      */
-    protected function createComponentAsideComponent()
-    {
+    protected function createComponentAsideComponent() {
         return $this->ACF->create($this->category);
     }
 
-    public function beforeRender()
-    {
-        parent::beforeRender();
-        $this->template->category = $this->category;
+    protected function startup() {
+        parent::startup();
+        if (!$this->category) {
+            $this->category = $this->CR->getDefaultCategory();
+        }
     }
 }

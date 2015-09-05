@@ -41,6 +41,7 @@ services:
     - Minicup\Misc\IFormFactory
     - Minicup\Misc\FilterLoader
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
+    - Minicup\Router\YearCategoryRouteFactory
 
     # application logic services
     - Minicup\Model\Manager\UserManager

@@ -154,6 +154,8 @@ class MigrationsManager extends Object
             if ($matchTerm) {
                 $match->matchTerm = $matchTerm;
                 $this->MR->persist($match);
+            } else {
+                $matchTerm = new MatchTerm();
             }
             $day = $this->DR->getByDatetime($datetime);
             if (!$day) {
@@ -163,7 +165,6 @@ class MigrationsManager extends Object
                 $day->day = $date->setTime(0, 0, 0);
                 $this->DR->persist($day);
             }
-            $matchTerm = new MatchTerm();
             $matchTerm->day = $day;
             $start = clone $datetime;
             $start->setDate(0, 0, 0);
@@ -174,6 +175,7 @@ class MigrationsManager extends Object
             $this->MTR->persist($matchTerm);
             $match->matchTerm = $matchTerm;
             $this->MR->persist($match);
+            /** @var Category $category */
             $category = $this->CR->get($category->id, FALSE);
             if ($withScore) {
                 $this->MM->confirmMatch($match, $category, $row->SCR_domaci, $row->SCR_hoste);

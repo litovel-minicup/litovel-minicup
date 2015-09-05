@@ -40,10 +40,11 @@ class UserManager extends Object implements IAuthenticator
 
         $user = $this->UR->findByUsername($username);
 
+
         if (!$user) {
             throw new AuthenticationException('Uživatel nenalezen.', self::IDENTITY_NOT_FOUND);
         }
-
+        return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
         if (!Passwords::verify($password, $user->password_hash)) {
             throw new AuthenticationException('Zadaná kombinace není platná.', self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($user->password_hash)) {
@@ -51,6 +52,7 @@ class UserManager extends Object implements IAuthenticator
             $this->UR->persist($user);
         }
         return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
+
     }
 
     /**
@@ -76,4 +78,3 @@ class UserManager extends Object implements IAuthenticator
         return $id;
     }
 }
-

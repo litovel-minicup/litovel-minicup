@@ -58,7 +58,6 @@ class MigrateFormComponent extends BaseComponent
     /**
      * @param Form $form
      * @param ArrayHash $values
-     * @throws EntityNotFoundException
      */
     public function migrateFormSucceed(Form $form, ArrayHash $values)
     {

@@ -6,61 +6,55 @@ use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Year;
 use Nette\InvalidStateException;
 
-class CategoryRepository extends BaseRepository
-{
+class CategoryRepository extends BaseRepository {
     /** @var  YearRepository */
     private $YR;
 
-    /** @var  Category[] categories indexed by slug */
-    private $categories;
-
     /**
-     * @param Connection $connection
-     * @param IMapper $mapper
+     * @param Connection     $connection
+     * @param IMapper        $mapper
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR)
-    {
+    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR) {
         $this->YR = $YR;
         parent::__construct($connection, $mapper, $entityFactory);
     }
 
-    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
-    {
-        $year = $this->YR->getSelectedYear();
-        return parent::createFluent(array_merge(array($year->id), func_get_args()));
-    }
-
     /**
-     * @param $arg string|Category
-     * @return Category|NULL
+     * @param           $arg
+     * @param Year|NULL $year
+     * @return Category|null
      */
-    public function getBySlug($arg)
-    {
+    public function getBySlug($arg, Year $year = NULL) {
         if ($arg instanceof Category) {
             return $arg;
         }
-        if (isset($this->categories[$arg])) {
-            return $this->categories[$arg];
+        if ($year) {
+            $row = $this->connection->select('*')->from($this->getTable())->where('[slug] = %s', $arg)->where('[year_id] = %i', $year->id)->fetch();
+        } else {
+            $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         }
-        $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         if ($row) {
             /** @var Category $category */
             $category = $this->createEntity($row);
-            $this->categories[$category->slug] = $category;
             return $category;
         }
         return NULL;
     }
 
+    protected function createFluent(/*$filterArg1, $filterArg2, ...*/) {
+        $year = $this->YR->getSelectedYear();
+        return parent::createFluent(array_merge(array($year->id), func_get_args()));
+    }
+
     /**
      * @return Category|NULL
      */
-    public function getDefaultCategory()
-    {
+    public function getDefaultCategory() {
         $row = $this->createFluent()->where('[default] = 1')->fetch();
         if ($row) {
             return $this->createEntity($row);

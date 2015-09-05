@@ -5,6 +5,7 @@ namespace Minicup\FrontModule\Presenters;
 use Minicup\Components\IListOfNewsComponentFactory;
 use Minicup\Components\IStaticContentComponentFactory;
 use Minicup\Components\ListOfNewsComponent;
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\StaticContentRepository;
 
 /**
@@ -33,5 +34,4 @@ final class HomepagePresenter extends BaseFrontPresenter
     {
         return $this->SCCF->create($this->SCR->getBySlug($this->action));
     }
-
 }

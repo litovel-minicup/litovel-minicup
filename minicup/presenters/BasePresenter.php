@@ -6,20 +6,22 @@ use Minicup\Components\CssComponentFactory;
 use Minicup\Components\JsComponentFactory;
 use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
+use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
+use Tracy\Debugger;
 use WebLoader\Nette\CssLoader;
 use WebLoader\Nette\JavaScriptLoader;
 
 /**
  * Base presenter.
  */
-abstract class BasePresenter extends Presenter
-{
+abstract class BasePresenter extends Presenter {
     /** @var IFormFactory @inject */
     public $formFactory;
 
@@ -41,49 +43,27 @@ abstract class BasePresenter extends Presenter
     /** @var CacheManager @inject */
     public $CM;
 
+    /** @var Category @persistent */
+    public $category;
+
     /** @var string */
     protected $module;
 
     /**
-     * set module property
-     */
-    protected function startup()
-    {
-        parent::startup();
-        $this->CM->initEvents();
-        $splitName = Strings::split($this->getName(), '(:)');
-        $this->module = Strings::lower($splitName[0]);
-    }
-
-    /** @return CssLoader */
-    protected function createComponentCss()
-    {
-        return $this->CSSCF->create($this->module);
-    }
-
-    /** @return JavaScriptLoader */
-    protected function createComponentJs()
-    {
-        return $this->JSCF->create($this->module);
-    }
-
-    /**
      * before render
      */
-    public function beforeRender()
-    {
+    public function beforeRender() {
         parent::beforeRender();
-        $this->template->categories = $this->CR->findAll();
         $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
         $this->template->productionMode = $this->context->parameters["productionMode"];
     }
 
     /**
      * Formats layout template file names.
+     *
      * @return array
      */
-    public function formatLayoutTemplateFiles()
-    {
+    public function formatLayoutTemplateFiles() {
         $layout = $this->layout ? $this->layout : 'layout';
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
@@ -104,13 +84,12 @@ abstract class BasePresenter extends Presenter
         return $list;
     }
 
-
     /**
      * Formats view template file names.
+     *
      * @return array
      */
-    public function formatTemplateFiles()
-    {
+    public function formatTemplateFiles() {
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
@@ -126,10 +105,30 @@ abstract class BasePresenter extends Presenter
 
     /**
      * Loads base filters from filter loader.
+     *
      * @return ITemplate
      */
-    public function createTemplate()
-    {
+    public function createTemplate() {
         return $this->filterLoader->loadFilters(parent::createTemplate());
+    }
+
+    /**
+     * set module property
+     */
+    protected function startup() {
+        parent::startup();
+        // $this->CM->initEvents();
+        $splitName = Strings::split($this->getName(), '(:)');
+        $this->module = Strings::lower($splitName[0]);
+    }
+
+    /** @return CssLoader */
+    protected function createComponentCss() {
+        return $this->CSSCF->create($this->module);
+    }
+
+    /** @return JavaScriptLoader */
+    protected function createComponentJs() {
+        return $this->JSCF->create($this->module);
     }
 }

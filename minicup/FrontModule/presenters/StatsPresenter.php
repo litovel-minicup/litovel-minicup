@@ -22,6 +22,6 @@ class StatsPresenter extends BaseFrontPresenter
 
     public function renderDefault(Category $category)
     {
-        $this->template->category = $category;
+
     }
 }

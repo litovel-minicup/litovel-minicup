@@ -5,8 +5,7 @@ namespace Minicup\Model\Repository;
 use LeanMapper\Repository;
 use Minicup\Model\Entity\BaseEntity;
 
-abstract class BaseRepository extends Repository
-{
+abstract class BaseRepository extends Repository {
 
     /** constants for ordering options  */
     const ORDER_ASC = 'ASC';
@@ -17,25 +16,23 @@ abstract class BaseRepository extends Repository
     const METHOD_AND = 'AND';
 
     /**
-     * @param string $event
+     * @param string   $event
      * @param callable $callback
      */
-    public function registerCallback($event, $callback)
-    {
+    public function registerCallback($event, $callback) {
         $this->events->registerCallback($event, $callback);
     }
 
     /**
-     * @param $id
+     * @param      $id
      * @param bool $useFilters
      * @return BaseEntity|NULL
      */
-    public function get($id, $useFilters = TRUE)
-    {
+    public function get($id, $useFilters = TRUE) {
         if ($useFilters) {
             $f = $this->createFluent();
         } else {
-            $f = $this->connection->select('[' . $this->getTable() .'.*]')->from($this->getTable());
+            $f = $this->connection->select('[' . $this->getTable() . '.*]')->from($this->getTable());
         }
         $row = $f
             ->where('[' . $this->getTable() . '.id] = %i', $id)
@@ -46,19 +43,23 @@ abstract class BaseRepository extends Repository
     /**
      * @return BaseEntity[]
      */
-    public function findAll()
-    {
-        return $this->createEntities(
-            $this->createFluent()->fetchAll()
-        );
+    public function findAll($withFilters = TRUE) {
+        if ($withFilters) {
+            return $this->createEntities(
+                $this->createFluent()->fetchAll()
+            );
+        } else {
+            return $this->createEntities(
+                $this->connection->select('*')->from($this->getTable())->fetchAll()
+            );
+        }
     }
 
     /**
      * @param int[] $ids
      * @return BaseEntity[]
      */
-    public function findByIds(array $ids)
-    {
+    public function findByIds(array $ids) {
         if (!$ids) {
             return array();
         }
