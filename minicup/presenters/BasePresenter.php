@@ -7,14 +7,12 @@ use Minicup\Components\JsComponentFactory;
 use Minicup\Misc\FilterLoader;
 use Minicup\Misc\IFormFactory;
 use Minicup\Model\Entity\Category;
-use Minicup\Model\Entity\Year;
 use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 use WebLoader\Nette\CssLoader;
 use WebLoader\Nette\JavaScriptLoader;
 
@@ -118,6 +116,7 @@ abstract class BasePresenter extends Presenter {
     protected function startup() {
         parent::startup();
         // $this->CM->initEvents();
+        $this->category ? $this->YR->setSelectedYear($this->category->year) : NULL;
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
     }

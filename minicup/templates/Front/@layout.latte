@@ -51,6 +51,10 @@
             </div>
         </div>
 
+        <div n:if="!$category->year->actual" class="alert alert-info">Prohlížíš si zastaralou verzi MC, co takhle
+            <a n:href=":Front:Homepage:default category => $actualYear->categories[0]">aktuální ročník?</a>
+        </div>
+
         <div class="Main__wrapper animated fadeInUp">
             {block outerContent}
                 <div class="Section">
@@ -89,6 +93,13 @@
                     <a n:href=":Admin:Homepage:default">administrace</a>
                     <br>
                     Matěj Mitaš & Josef Kolář 2015
+                </div>
+            </div>
+
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
+                <div class="Box__content Footer__content">
+                    <a n:foreach="$years as $year" n:href=":Front:Homepage:default category => $year->categories[0]">Litovel MINICUP {$year->year}<br></a>
                 </div>
             </div>
         </div>

@@ -24,6 +24,8 @@ abstract class BaseFrontPresenter extends BasePresenter {
     public function beforeRender() {
         parent::beforeRender();
         $this->template->category = $this->category;
+        $this->template->years = $this->YR->findAll(FALSE);
+        $this->template->actualYear = $this->YR->getActualYear();
         $this->template->categories = $this->YR->getSelectedYear()->categories;
     }
 
@@ -43,8 +45,6 @@ abstract class BaseFrontPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if (!$this->category) {
-            $this->category = $this->CR->getDefaultCategory();
-        }
+        $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
     }
 }

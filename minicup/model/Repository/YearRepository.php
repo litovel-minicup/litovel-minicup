@@ -55,4 +55,13 @@ class YearRepository extends BaseRepository {
         }
         return NULL;
     }
+
+    /**
+     * @return Year[]
+     */
+    public function findArchiveYears() {
+        return $this->createEntities(
+            $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
+        );
+    }
 }

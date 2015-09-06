@@ -91,7 +91,7 @@ class StatsManager extends Object
         $teamStats = $f->fetch()->toArray();
         $teams = $this->TIR->findByIds(array_values($teamStats));
         $teamStats = array_map(function ($id) use ($teams) {
-            return $teams[$id];
+            return isset($teams[$id]) ? $teams[$id] : NULL;
         }, $teamStats);
 
         return array_merge($numberStats->toArray(), $teamStats);
