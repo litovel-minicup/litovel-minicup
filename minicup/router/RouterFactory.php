@@ -72,12 +72,7 @@ class RouterFactory extends Object {
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
 
-        $front[] = $route('', array(
-            'presenter' => 'Homepage',
-            'action' => 'default'
-        ), 0, FALSE);
-
-        $front[] = $route('foto/tagy/[/<tags .+>]', array(
+        $front[] = $route('foto/tagy[/<tags .+>]/', array(
             'presenter' => 'Gallery',
             'action' => 'tags',
             'tags' => array(
@@ -97,9 +92,9 @@ class RouterFactory extends Object {
                     return join('/', $tags);
                 }
             )
-        ), 0, FALSE);
+        ));
 
-        $front[] = $route('foto/detail/<tag>', array(
+        $front[] = $route('foto/detail/<tag>/', array(
             'presenter' => 'Gallery',
             'action' => 'detail',
             'tag' => array(
@@ -124,44 +119,44 @@ class RouterFactory extends Object {
                     return $tag->slug;
                 }
             )
-        ), 0, FALSE);
+        ));
 
-        $front[] = $route('foto', array(
+        $front[] = $route('foto/', array(
             'presenter' => 'Gallery',
             'action' => 'default'
         ), 0, FALSE);
 
-        $front[] = $route('foto/tagy', array(
+        $front[] = $route('foto/tagy/', array(
             'presenter' => 'Gallery',
             'action' => 'tags'
-        ), 0, FALSE);
+        ));
 
-        $front[] = $route('zapasy', array(
+        $front[] = $route('zapasy/', array(
             'presenter' => 'Match',
             'action' => 'default'
         ));
 
-        $front[] = $route('tymy', array(
+        $front[] = $route('tymy/', array(
             'presenter' => 'Team',
             'action' => 'list'
         ));
 
-        $front[] = $route('statistiky', array(
+        $front[] = $route('statistiky/', array(
             'presenter' => 'Stats',
             'action' => 'default'
         ));
 
-        $front[] = $route('informace', array(
+        $front[] = $route('informace/', array(
             'presenter' => 'Homepage',
             'action' => 'informations'
-        ), 0, FALSE);
+        ));
 
-        $front[] = $route('sponzori', array(
+        $front[] = $route('sponzori/', array(
             'presenter' => 'Homepage',
             'action' => 'sponsors'
         ));
 
-        $front[] = $route('<team>', array(
+        $front[] = $route('<team>/', array(
             'presenter' => 'Team',
             'action' => 'detail',
             NULL => array(
@@ -175,9 +170,12 @@ class RouterFactory extends Object {
                     }
                     return $params;
                 },
-                Route::FILTER_OUT => function ($params) {
+                Route::FILTER_OUT => function ($params) use ($CR) {
                     if (!isset($params['team']) || !isset($params['team'])) {
                         return NULL;
+                    }
+                    if (is_string($params['category'])) {
+                        $params['category'] = $CR->getBySlug($params['category']);
                     }
                     if (!($params['team'] instanceof TeamInfo || $params['team'] instanceof Team)) {
                         /** @var Team $team */
@@ -195,7 +193,11 @@ class RouterFactory extends Object {
         $router = new RouteList();
 
         $router[] = $front;
-        $router[] = $route('admin/<presenter>/<action>[/<id [0-9]*>]', array(
+
+        $router[] = new Route('login/', "Sign:in");
+        $router[] = new Route('logout/', "Sign:out");
+
+        $router[] = $route('admin/<presenter>/<action>[/<id [0-9]*>]/', array(
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default'
@@ -205,10 +207,13 @@ class RouterFactory extends Object {
             'presenter' => 'Media',
         ));
 
-        $router[] = new Route('login/', "Sign:in");
-        $router[] = new Route('logout/', "Sign:out");
+        $router[] = $route('', array(
+            'module' => 'Front',
+            'presenter' => 'Homepage',
+            'action' => 'default'
+        ));
 
-        $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+        // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;
     }
 

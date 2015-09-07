@@ -45,6 +45,8 @@ abstract class BaseFrontPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
+        if ($this->category) {
+            $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
+        }
     }
 }

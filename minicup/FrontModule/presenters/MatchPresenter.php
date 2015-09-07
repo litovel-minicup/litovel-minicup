@@ -13,11 +13,6 @@ final class MatchPresenter extends BaseFrontPresenter
     /** @var IListOfMatchesComponentFactory @inject */
     public $LOMCFactory;
 
-    public function renderList(Category $category)
-    {
-
-    }
-
     public function renderDefault(Category $category)
     {
 

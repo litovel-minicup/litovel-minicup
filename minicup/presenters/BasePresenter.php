@@ -115,7 +115,8 @@ abstract class BasePresenter extends Presenter {
      */
     protected function startup() {
         parent::startup();
-        // $this->CM->initEvents();
+        $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
+        $this->CM->initEvents();
         $this->category ? $this->YR->setSelectedYear($this->category->year) : NULL;
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);

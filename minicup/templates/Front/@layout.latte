@@ -13,6 +13,16 @@
         </div>
     <![endif]-->
 
+    <div id="info" n:if="!$category->year->actual">
+        <a n:href=":Front:Homepage:default category => $actualYear->categories[0]">
+            <div class="iconBlock">!</div>
+            <div class="textBlock">
+                <h2>Upozornění</h2>
+                <h3>Zobrazeny jsou archivní data, nechceš se kouknout na aktuální ročník?</h3>
+            </div>
+        </a>
+    </div>
+
     <div class="Header animated">
             <!-- svg logo with fallback -->
             <div id="nav-mobile" class="Header__nav--mobile">
@@ -21,7 +31,7 @@
                         <option value={plink Homepage:default} selected="selected">novinky</option>
                         <option value={plink Homepage:informations}>infromace</option>
                         <option value={plink Team:list}>týmy</option>
-                        <option value={plink Match:list}>zápasy</option>
+                        <option value={plink Match:default}>zápasy</option>
                         <option value={plink Stats:default}>statistiky</option>
                         <option value={plink Gallery:default}>foto</option>
                         <option value={plink Homepage:sponsors}>sponzoři</option>
@@ -49,10 +59,6 @@
                     <a n:href="Homepage:sponsors"><li>sponzoři</li></a>
                 </ul>
             </div>
-        </div>
-
-        <div n:if="!$category->year->actual" class="alert alert-info">Prohlížíš si zastaralou verzi MC, co takhle
-            <a n:href=":Front:Homepage:default category => $actualYear->categories[0]">aktuální ročník?</a>
         </div>
 
         <div class="Main__wrapper animated fadeInUp">
@@ -99,7 +105,7 @@
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
                 <div class="Box__content Footer__content">
-                    <a n:foreach="$years as $year" n:href=":Front:Homepage:default category => $year->categories[0]">Litovel MINICUP {$year->year}<br></a>
+                    <a n:foreach="$years as $_year" href="{plink :Front:Homepage:default category => $_year->categories[0]}">Litovel MINICUP {$_year->year}<br></a>
                 </div>
             </div>
         </div>

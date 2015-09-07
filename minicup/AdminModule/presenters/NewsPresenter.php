@@ -32,7 +32,7 @@ class NewsPresenter extends BaseAdminPresenter
             array('link' => 'Homepage:informations', 'name' => 'informace o turnaji', 'args' => array()),
             array('link' => 'Team:list', 'name' => 'seznam týmů dané kategorie', 'args' => array('category' => 'mladsi')),
             array('link' => 'Team:detail', 'name' => 'detail týmu dané kategorie', 'args' => array('category' => 'mladsi', 'team' => 'tatran-litovel')),
-            array('link' => 'Match:list', 'name' => 'seznam zápasů dané kategorie', 'args' => array('category' => 'mladsi')),
+            array('link' => 'Match:default', 'name' => 'seznam zápasů dané kategorie', 'args' => array('category' => 'mladsi')),
             array('link' => 'Stats:default', 'name' => 'tabulka turnaje dané kategorie', 'args' => array('category' => 'mladsi')),
             array('link' => 'Gallery:default', 'name' => 'výchozí stránka fotogalerie', 'args' => array()),
             array('link' => 'Gallery:tags', 'name' => 'interaktivní výběr fotogalerie', 'args' => array()),

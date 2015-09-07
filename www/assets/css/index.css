@@ -2951,41 +2951,54 @@ Copyright (c) 2015 Daniel Eden
     .Box__head--toggle__select {
       display: table-cell;
       width: 50%; } }
-#warning {
-  background: #cc0000;
+#warning,
+#info {
   float: left;
   display: block;
   margin-right: 0.70671%;
   width: 100%;
   height: 75px;
   margin-bottom: 8px; }
-  #warning:last-child {
+  #warning:last-child,
+  #info:last-child {
     margin-right: 0; }
-  #warning a {
+  #warning a,
+  #info a {
     float: left;
     display: block;
     margin-right: 0.70671%;
     width: 83.21555%;
     margin-top: 10px;
     color: white; }
-    #warning a:last-child {
+    #warning a:last-child,
+    #info a:last-child {
       margin-right: 0; }
-    #warning a .textBlock {
+    #warning a .textBlock,
+    #info a .textBlock {
       float: left;
       display: block;
       margin-right: 0.70671%;
       width: 83.21555%; }
-      #warning a .textBlock:last-child {
+      #warning a .textBlock:last-child,
+      #info a .textBlock:last-child {
         margin-right: 0; }
-    #warning a .iconBlock {
+    #warning a .iconBlock,
+    #info a .iconBlock {
       float: left;
       display: block;
       margin-right: 0.70671%;
       width: 16.07774%;
       font-size: 50px;
       text-align: center; }
-      #warning a .iconBlock:last-child {
+      #warning a .iconBlock:last-child,
+      #info a .iconBlock:last-child {
         margin-right: 0; }
+
+#warning {
+  background: #cc0000; }
+
+#info {
+  background: #4A4A4A; }
 
 .Header {
   float: left;

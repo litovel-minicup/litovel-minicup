@@ -14,8 +14,8 @@ use Nette\Utils\Strings;
 
 class YearCategoryRouteFactory extends Object {
 
-    const DEFAULT_REQUIRED_PATTERN = '/<category>';
-    const DEFAULT_OPTIONAL_PATTERN = '[/<category>]';
+    const DEFAULT_REQUIRED_PATTERN = '<category>';
+    const DEFAULT_OPTIONAL_PATTERN = '[!<category>]';
 
     const DEFAULT_KEY = 'category';
 
@@ -23,7 +23,6 @@ class YearCategoryRouteFactory extends Object {
      * @var YearRepository
      */
     private $yearRepository;
-
 
     /**
      * @var CategoryRepository
@@ -53,7 +52,7 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function __invoke($mask, $metadata = array(), $flags = 0, $required = TRUE) {
+    public function __invoke($mask, $metadata = array(), $flags = 0, $required = FALSE) {
         return $this->route($mask, $metadata, $flags, $required);
     }
 
@@ -64,9 +63,9 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function route($mask, $metadata = array(), $flags = 0, $required = TRUE) {
+    public function route($mask, $metadata = array(), $flags = 0, $required = FALSE) {
         $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
-        $mask = $mask . (!$required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
+        $mask = $mask . ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
 
         return new Route($mask, $metadata, $flags);
     }
@@ -76,6 +75,7 @@ class YearCategoryRouteFactory extends Object {
      * @return array
      */
     public function getMetadata($requiredCategory) {
+        $CR = $this->categoryRepository;
         $metadata = array(
             Route::FILTER_IN => function ($slug) {
                 if (!$m = Strings::matchAll($slug, '#([0-9]{4})-([\w]*)#')) {
@@ -87,7 +87,10 @@ class YearCategoryRouteFactory extends Object {
 
                 return $year && $category ? $category : NULL;
             },
-            Route::FILTER_OUT => function (Category $category) {
+            Route::FILTER_OUT => function ($category) use ($CR) {
+                if (!$category instanceof Category) {
+                    $category = $CR->getBySlug($category);
+                }
                 return "{$category->year->year}-{$category->slug}";
             }
         );
