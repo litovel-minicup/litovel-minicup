@@ -39,7 +39,7 @@ class Team extends BaseEntity
      */
     public function __get($name /*, array $filterArgs*/)
     {
-        if (in_array($name, array('slug', 'name', 'matches', 'staticContent'))) {
+        if (in_array($name, array('slug', 'name', 'matches', 'staticContent'), TRUE)) {
             return $this->i->$name;
         }
         return parent::__get($name);

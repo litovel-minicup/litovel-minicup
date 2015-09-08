@@ -40,7 +40,7 @@ class LoginFormComponent extends BaseComponent
             $form->addError($e->getMessage());
             $this->redrawControl();
         }
-        if ($values->remember || in_array('admin', $user->roles)) {
+        if ($values->remember || in_array('admin', $user->roles, TRUE)) {
             $user->setExpiration('14 days', FALSE);
         } else {
             $user->setExpiration('20 minutes', TRUE);

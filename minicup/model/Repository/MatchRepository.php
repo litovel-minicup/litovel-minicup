@@ -27,9 +27,9 @@ class MatchRepository extends BaseRepository
     public function findMatchesByCategory(Category $category, $mode = MatchRepository::BOTH)
     {
         $fluent = $this->createCategoryFluent($category);
-        if ($mode == static::CONFIRMED) {
+        if ($mode === static::CONFIRMED) {
             $fluent->applyFilter($mode);
-        } elseif ($mode == static::UNCONFIRMED) {
+        } elseif ($mode === static::UNCONFIRMED) {
             $fluent->applyFilter($mode);
         }
         return $this->createEntities($fluent->fetchAll());

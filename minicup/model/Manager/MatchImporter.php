@@ -48,7 +48,7 @@ class MatchImporter
         $data = file_get_contents($file);
         foreach (Strings::split($data, "#\r|\n#") as $line) {
             $line = Strings::split($line, "#\t#");
-            $datetime =  \DateTime::createFromFormat("j. n. Y H:i", $line[0]." ".$line[1]);
+            $datetime =  \DateTime::createFromFormat('j. n. Y H:i', $line[0].' '.$line[1]);
             $term = $this->MTR->getByStart($datetime);
             $home = $this->TIR->getByName($category, $line[2]);
             $away = $this->TIR->getByName($category, $line[3]);

@@ -10,7 +10,6 @@ class TagRepository extends BaseRepository
     /**
      * @param $slug
      * @return Tag
-     * @throws EntityNotFoundException
      */
     public function getBySlug($slug)
     {

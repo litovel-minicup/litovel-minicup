@@ -50,15 +50,15 @@ class FilterLoader extends Object
         $texy = $this->texy;
 
         $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->day->day, "j. n."));
+            return $latte->invokeFilter('date', array($matchTerm->day->day, 'j. n.'));
         });
 
         $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->start, "G:i"));
+            return $latte->invokeFilter('date', array($matchTerm->start, 'G:i'));
         });
 
         $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->end, "G:i"));
+            return $latte->invokeFilter('date', array($matchTerm->end, 'G:i'));
         });
 
         $template->addFilter('toJson', function (array $array) {
@@ -74,30 +74,30 @@ class FilterLoader extends Object
             $years = floor($days / 365);
             if ($years >= 2) {
                 return "před $years lety";
-            } elseif ($years == 1) {
-                return "před rokem";
+            } elseif ($years === 1) {
+                return 'před rokem';
             } elseif ($months >= 2) {
                 return "před $months měsíci";
-            } elseif ($months == 1) {
-                return "před měsícem";
+            } elseif ($months === 1) {
+                return 'před měsícem';
             } elseif ($days >= 2) {
                 return "před $days dny";
             } elseif ($hours >= 2) {
                 return "před $hours hodinami";
-            } elseif ($hours == 1) {
-                return "před hodinou";
+            } elseif ($hours === 1) {
+                return 'před hodinou';
             } elseif ($minutes >= 2) {
                 return "před $minutes minutami";
-            } elseif ($minutes == 1) {
-                return "před minutou";
+            } elseif ($minutes === 1) {
+                return 'před minutou';
             } elseif ($seconds >= 0) {
-                return "před chvílí";
+                return 'před chvílí';
             }
-            return "v budoucnu";
+            return 'v budoucnu';
         });
 
         $template->addFilter('dayName', function ($time, $len = 2) use ($latte) {
-            $name = $latte->invokeFilter('date', array($time, "w"));
+            $name = $latte->invokeFilter('date', array($time, 'w'));
             $names = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
             return Strings::substring($names[$name], 0, $len);
         });

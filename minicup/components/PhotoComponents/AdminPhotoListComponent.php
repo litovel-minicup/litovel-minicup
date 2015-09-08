@@ -73,10 +73,9 @@ class AdminPhotoListComponent extends BaseComponent
         } else {
             $this->id = Random::generate(10);
         }
+        $this->allPhotos = FALSE;
         if (isset($this->session->allPhotos)) {
             $this->allPhotos = $this->session->allPhotos;
-        } else {
-            $this->allPhotos = FALSE;
         }
         $this->session->adminPhotoList = $this->id;
         $this->session->allPhotos = $this->allPhotos;
@@ -86,10 +85,9 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function render()
     {
+        $this->view = 'list';
         if (!$this->photos && !$this->session[$this->id]) {
-            $this->view = "default";
-        } else {
-            $this->view = "list";
+            $this->view = 'default';
         }
         $this->template->tags = $this->TR->findAll();
         $this->template->selectedTags = (array)$this->session[$this->id];
@@ -113,8 +111,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleActivePhotos()
     {
-        unset($this->session->adminPhotoList);
-        unset($this->session[$this->id]);
+        unset($this->session->adminPhotoList, $this->session[$this->id]);
         $this->session->allPhotos = FALSE;
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
@@ -125,8 +122,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleAllPhotos()
     {
-        unset($this->session->adminPhotoList);
-        unset($this->session[$this->id]);
+        unset($this->session->adminPhotoList, $this->session[$this->id]);
         $this->session->allPhotos = TRUE;
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');

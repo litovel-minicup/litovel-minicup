@@ -11,7 +11,6 @@ class TeamInfoRepository extends BaseRepository
      * @param $category Category|int
      * @param $name string
      * @param $slug string
-     * @throws EntityNotFoundException
      * @return TeamInfo
      */
     public function findByCategoryNameSlug($category, $name, $slug)

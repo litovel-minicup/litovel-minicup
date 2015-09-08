@@ -42,6 +42,7 @@ class DayRepository extends BaseRepository
     }
 
     /**
+     * @param bool|TRUE $withFilters
      * @return Day[]
      */
     public function findAll($withFilters = TRUE)

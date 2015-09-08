@@ -42,6 +42,7 @@ class TagFormComponent extends BaseComponent
         $this->TR = $TR;
         $this->tag = $tag;
         $this->PR = $PR;
+        parent::__construct();
     }
 
     public function render()
@@ -105,8 +106,8 @@ class TagFormComponent extends BaseComponent
             return;
         }
         $form->setValues(array(), TRUE);
-        $this->presenter->flashMessage($this->tag ? "Tag upraven!" : 'Tag přidán!', 'success');
-        if ($this->presenter->action == "tagDetail") {
+        $this->presenter->flashMessage($this->tag ? 'Tag upraven!' : 'Tag přidán!', 'success');
+        if ($this->presenter->action === 'tagDetail') {
             $this->presenter->redirect(':Admin:Photo:tags');
         } elseif ($this->presenter->isAjax()) {
             $this->redrawControl('tag-form');

@@ -13,8 +13,8 @@ use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
 /**
- * @method onDelete
- * @method onSave
+ * @method onDelete(Photo $photo)
+ * @method onSave(Photo $photo)
  */
 class PhotoEditComponent extends BaseComponent
 {
@@ -70,11 +70,11 @@ class PhotoEditComponent extends BaseComponent
     {
         $parent = $this->getParent()->getParent();
         if ($parent instanceof AdminPhotoListComponent) {
-            $this->view = "edit";
+            $this->view = 'edit';
         } else if ($parent instanceof PhotoUploadComponent) {
-            $this->view = "upload";
+            $this->view = 'upload';
         } else if ($this->getParent() instanceof PhotoPresenter) {
-            $this->view = "edit";
+            $this->view = 'edit';
         }
         $this->template->photo = $this->photo;
         parent::render();

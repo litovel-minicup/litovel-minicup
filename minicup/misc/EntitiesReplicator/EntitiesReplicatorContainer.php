@@ -60,7 +60,7 @@ class EntitiesReplicatorContainer extends RContainer
         $_entity = NULL;
         /** @var Entity $entity */
         foreach ($this->entities as $entity) {
-            if ((int)$name == $entity->id) {
+            if ((int)$name === $entity->id) {
                 $_entity = $entity;
             }
         }

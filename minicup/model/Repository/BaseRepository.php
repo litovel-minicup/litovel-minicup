@@ -41,7 +41,8 @@ abstract class BaseRepository extends Repository {
     }
 
     /**
-     * @return BaseEntity[]
+     * @param bool|TRUE $withFilters
+     * @return array
      */
     public function findAll($withFilters = TRUE) {
         if ($withFilters) {

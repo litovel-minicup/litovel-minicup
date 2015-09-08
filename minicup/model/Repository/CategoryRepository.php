@@ -52,7 +52,7 @@ class CategoryRepository extends BaseRepository {
     }
 
     /**
-     * @return Category|NULL
+     * @return Category
      */
     public function getDefaultCategory() {
         $row = $this->createFluent()->where('[default] = 1')->fetch();

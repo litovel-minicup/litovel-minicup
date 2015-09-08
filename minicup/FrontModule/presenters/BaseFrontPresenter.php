@@ -13,8 +13,6 @@ use Minicup\Presenters\BasePresenter;
  * Base presenter for all application presenters.
  */
 abstract class BaseFrontPresenter extends BasePresenter {
-
-
     /** @var ICategoryToggleFormComponentFactory @inject */
     public $CTCF;
 
@@ -47,6 +45,8 @@ abstract class BaseFrontPresenter extends BasePresenter {
         parent::startup();
         if ($this->category) {
             $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
+        } else {
+            $this->category = $this->CR->getDefaultCategory();
         }
     }
 }

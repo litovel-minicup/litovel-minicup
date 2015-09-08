@@ -18,7 +18,7 @@ class MediaPresenter extends Presenter
     public static function formatActionMethod($action)
     {
         if (isset(PhotoManager::$resolutions[$action])) {
-            return "servePhoto";
+            return 'servePhoto';
         }
         return parent::formatActionMethod($action);
     }

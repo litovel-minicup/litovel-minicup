@@ -26,6 +26,7 @@ class PhotoListComponent extends BaseComponent
         $this->photos = $photos;
         $this->actual = $initial;
         $this->step = $step;
+        parent::__construct();
     }
 
     public function render()
@@ -51,8 +52,8 @@ class PhotoListComponent extends BaseComponent
         foreach ($this->photos as $i => $photo) {
             $i++;
             $data[] = array(
-                "href" => $this->presenter->link(':Media:medium', $photo->filename),
-                "title" => "Fotka {$i}. z {$count}"
+                'href' => $this->presenter->link(':Media:medium', $photo->filename),
+                'title' => "Fotka {$i}. z {$count}"
             );
         }
         $this->presenter->sendJson($data);

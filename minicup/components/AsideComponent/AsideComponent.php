@@ -32,6 +32,7 @@ class AsideComponent extends BaseComponent
         $this->LOMCF = $LOMCF;
         $this->CTCF = $CTCF;
         $this->MM = $MM;
+        parent::__construct();
     }
 
     public function render()

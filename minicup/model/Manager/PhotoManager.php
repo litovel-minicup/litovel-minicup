@@ -15,14 +15,14 @@ use Nette\Utils\Random;
 class PhotoManager extends Object
 {
     /** @internal */
-    const PHOTO_ORIGINAL = "_original";
+    const PHOTO_ORIGINAL = '_original';
 
-    const PHOTO_MINI = "mini";
-    const PHOTO_SMALL = "small";
-    const PHOTO_THUMB = "thumb";
-    const PHOTO_MEDIUM = "medium";
-    const PHOTO_LARGE = "large";
-    const PHOTO_FULL = "full";
+    const PHOTO_MINI = 'mini';
+    const PHOTO_SMALL = 'small';
+    const PHOTO_THUMB = 'thumb';
+    const PHOTO_MEDIUM = 'medium';
+    const PHOTO_LARGE = 'large';
+    const PHOTO_FULL = 'full';
     const DEFAULT_FLAG = Image::FILL;
 
     /**
@@ -86,9 +86,9 @@ class PhotoManager extends Object
 
             $exif = exif_read_data($path);
             $taken = new \DibiDateTime();
-            if (isset($exif["DateTimeOriginal"])) {
+            if (isset($exif['DateTimeOriginal'])) {
                 try {
-                    $taken = new \DibiDateTime($exif["DateTimeOriginal"]);
+                    $taken = new \DibiDateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
                 }
             }
@@ -107,7 +107,7 @@ class PhotoManager extends Object
      */
     public function formatPhotoPath($format, $filename)
     {
-        @mkdir("$this->wwwPath/media/" . $format . "/");
+        @mkdir("$this->wwwPath/media/" . $format . '/');
         return "$this->wwwPath/media/" . $format . "/$filename";
     }
 
@@ -122,7 +122,7 @@ class PhotoManager extends Object
             $photo->active = 0;
             $this->PR->persist($photo);
         } else {
-            foreach (array_keys($this::$resolutions) as $format) {
+            foreach ($this::$resolutions as $format => $val) {
                 $path = $this->formatPhotoPath($format, $photo->filename);
                 if (file_exists($path)) {
                     unlink($path);
@@ -143,7 +143,7 @@ class PhotoManager extends Object
      */
     public function getInFormat($photo, $format)
     {
-        if (!in_array($format, array_keys($this::$resolutions))) {
+        if (!in_array($format, array_keys($this::$resolutions), TRUE)) {
             throw new InvalidArgumentException('Unknown photo format!');
         }
 
@@ -183,7 +183,7 @@ class PhotoManager extends Object
      * @param array $formats
      * @return array
      */
-    public function cleanCachedPhotos($formats = array())
+    public function cleanCachedPhotos(array $formats = array())
     {
         if (!$formats) {
             $formats = array_keys($this::$resolutions);

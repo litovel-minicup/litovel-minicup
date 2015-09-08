@@ -134,7 +134,7 @@ class MatchManager extends Object
     public function isPlayingTime(Category $category)
     {
         $now = new \DibiDateTime();
-        return !is_null($this->MTR->getInTime($now));
+        return NULL !== $this->MTR->getInTime($now);
     }
 
     /**

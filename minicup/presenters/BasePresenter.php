@@ -53,7 +53,7 @@ abstract class BasePresenter extends Presenter {
     public function beforeRender() {
         parent::beforeRender();
         $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
-        $this->template->productionMode = $this->context->parameters["productionMode"];
+        $this->template->productionMode = $this->context->parameters['productionMode'];
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class BasePresenter extends Presenter {
      * @return array
      */
     public function formatLayoutTemplateFiles() {
-        $layout = $this->layout ? $this->layout : 'layout';
+        $layout = $this->layout ?: 'layout';
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];

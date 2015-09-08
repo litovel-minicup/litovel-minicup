@@ -52,7 +52,7 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function __invoke($mask, $metadata = array(), $flags = 0, $required = FALSE) {
+    public function __invoke($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
         return $this->route($mask, $metadata, $flags, $required);
     }
 
@@ -63,9 +63,9 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function route($mask, $metadata = array(), $flags = 0, $required = FALSE) {
+    public function route($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
         $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
-        $mask = $mask . ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
+        $mask .= ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
 
         return new Route($mask, $metadata, $flags);
     }
@@ -76,27 +76,32 @@ class YearCategoryRouteFactory extends Object {
      */
     public function getMetadata($requiredCategory) {
         $CR = $this->categoryRepository;
+        $YR = $this->yearRepository;
         $metadata = array(
-            Route::FILTER_IN => function ($slug) {
+            Route::FILTER_IN => function ($slug) use ($CR, $YR) {
+                // TEMPORARILY SOLUTION
+                if ($category = $CR->getBySlug($slug, $YR->getBySlug('2014'))) {
+                    return $category;
+                }
                 if (!$m = Strings::matchAll($slug, '#([0-9]{4})-([\w]*)#')) {
                     return NULL;
                 }
                 list(, $yearSlug, $categorySlug) = $m[0];
-                $year = $this->yearRepository->getBySlug($yearSlug);
-                $category = $this->categoryRepository->getBySlug($categorySlug, $year);
+                $year = $YR->getBySlug($yearSlug);
+                $category = $CR->getBySlug($categorySlug, $year);
 
-                return $year && $category ? $category : NULL;
+                return ($year && $category) ? $category : NULL;
             },
-            Route::FILTER_OUT => function ($category) use ($CR) {
+            Route::FILTER_OUT => function ($category) use ($CR, $YR) {
                 if (!$category instanceof Category) {
-                    $category = $CR->getBySlug($category);
+                    $category = $CR->getBySlug($category, $YR->getBySlug('2014'));
                 }
                 return "{$category->year->year}-{$category->slug}";
             }
         );
         if (!$requiredCategory) {
             $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
-            $metadata[Route::VALUE] = $category ? $category : $this->categoryRepository->getDefaultCategory();
+            $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
         }
         return $metadata;
     }

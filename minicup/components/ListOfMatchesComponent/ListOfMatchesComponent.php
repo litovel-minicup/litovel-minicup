@@ -40,15 +40,15 @@ class ListOfMatchesComponent extends BaseComponent
             $matches = $this->arg->i->matches;
             $this->template->team = $this->arg->i;
         } elseif ($this->arg instanceof Category) {
-            if ($mode == 'current') {
+            if ($mode === 'current') {
                 $matches = $this->MR->getCurrentMatches($this->arg, $limit);
-            } elseif ($mode == 'next') {
+            } elseif ($mode === 'next') {
                 $matches = $this->MR->getNextMatches($this->arg, $limit);
-            } elseif ($mode == 'last') {
+            } elseif ($mode === 'last') {
                 $matches = $this->MR->getLastMatches($this->arg, $limit);
             } elseif ($this->view === 'full' && $mode === 'all') {
                 $this->template->days = $this->MR->groupMatchesByDay($this->arg);
-            } elseif ($mode == 'all') {
+            } elseif ($mode === 'all') {
                 $matches = $this->arg->matches;
             } else {
                 throw new InvalidArgumentException("Unknown render mode: '{$mode}'.");

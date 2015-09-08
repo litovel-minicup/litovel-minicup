@@ -64,19 +64,19 @@ class Mapper extends DefaultMapper
     public function getImplicitFilters($entityClass, Caller $caller = null)
     {
         $entityName = $this->trimNamespace($entityClass);
-        if ($entityName === "Team") {
-            if ($caller->getComplement() instanceof Property && $caller->getComplement()->getName() == "historyTeams") {
+        if ($entityName === 'Team') {
+            if ($caller->getComplement() instanceof Property && $caller->getComplement()->getName() === 'historyTeams') {
                 return new ImplicitFilters(array('info', 'orderTeams'));
             }
             return new ImplicitFilters(array('info', 'actual', 'orderTeams'));
-        } elseif (in_array($entityName, array('Category', 'Day', 'Photo'))) {
+        } elseif (in_array($entityName, array('Category', 'Day', 'Photo'), TRUE)) {
             return new ImplicitFilters(array('year'));
-        } elseif ($entityName === "Match") {
+        } elseif ($entityName === 'Match') {
             return new ImplicitFilters(array('orderMatches'));
-        } elseif ($entityName === "News") {
-            return new ImplicitFilters(array("orderNews"));
-        } elseif ($entityName === "Photo") {
-            return new ImplicitFilters(array("orderPhotos"));
+        } elseif ($entityName === 'News') {
+            return new ImplicitFilters(array('orderNews'));
+        } elseif ($entityName === 'Photo') {
+            return new ImplicitFilters(array('orderPhotos'));
         }
         return array();
     }

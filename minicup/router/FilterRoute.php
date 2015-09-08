@@ -145,7 +145,7 @@ class FilterRoute extends Route
     {
         // tady mám k dispozici všechny parametry
         foreach ($this->getFilters() as $param => $filters) {
-            if (!isset($params[$param]) || !isset($filters[$way])) {
+            if (!isset($params[$param], $filters[$way])) {
                 continue; // param not found
             }
 
