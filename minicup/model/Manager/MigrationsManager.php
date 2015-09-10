@@ -19,6 +19,7 @@ use Minicup\Model\Repository\TeamRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Database\Context;
 use Nette\Object;
+use Nette\Utils\ArrayHash;
 use Nette\Utils\DateTime;
 use Nette\Utils\Strings;
 
@@ -28,6 +29,9 @@ use Nette\Utils\Strings;
  */
 class MigrationsManager extends Object
 {
+    private $teamTablePrefix13 = '2013_tymy_';
+    private $matchTablePrefix13 = '2013_zapasy_';
+
     private $teamTablePrefix = '2014_tymy_';
     private $matchTablePrefix = '2014_zapasy_';
 
@@ -68,17 +72,17 @@ class MigrationsManager extends Object
     private $connection;
 
     /**
-     * @param CategoryRepository $CR
-     * @param TeamRepository $TR
-     * @param TeamInfoRepository $TIR
-     * @param MatchRepository $MR
+     * @param CategoryRepository  $CR
+     * @param TeamRepository      $TR
+     * @param TeamInfoRepository  $TIR
+     * @param MatchRepository     $MR
      * @param MatchTermRepository $MTR
-     * @param DayRepository $DR
-     * @param YearRepository $YR
-     * @param Context $con
-     * @param TeamReplicator $replicator
-     * @param TeamDataRefresher $TDR
-     * @param MatchManager $MM
+     * @param DayRepository       $DR
+     * @param YearRepository      $YR
+     * @param Context             $con
+     * @param TeamReplicator      $replicator
+     * @param TeamDataRefresher   $TDR
+     * @param MatchManager        $MM
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
@@ -110,9 +114,9 @@ class MigrationsManager extends Object
 
     /**
      * @param Category $category
-     * @param bool $truncate
-     * @param bool $withScore
-     * @param null $limit
+     * @param bool     $truncate
+     * @param bool     $withScore
+     * @param null     $limit
      * @throws \DibiException
      * @throws \Exception
      */
@@ -197,8 +201,22 @@ class MigrationsManager extends Object
 
     /**
      * @param Category $category
-     * @param string $name
-     * @param string $slug
+     * @throws  InvalidStateException
+     */
+    private function truncate(Category $category)
+    {
+        foreach ($category->matches as $match) {
+            $this->MR->delete($match);
+        }
+        foreach ($category->allTeams as $team) {
+            $this->TR->delete($team);
+        }
+    }
+
+    /**
+     * @param Category $category
+     * @param string   $name
+     * @param string   $slug
      * @return Team
      * @throws \LeanMapper\Exception\InvalidStateException
      */
@@ -222,17 +240,65 @@ class MigrationsManager extends Object
         return $team;
     }
 
-    /**
-     * @param Category $category
-     * @throws  InvalidStateException
-     */
-    private function truncate(Category $category)
+    public function migrateFrom2013($adaptate = FALSE)
     {
-        foreach ($category->matches as $match) {
-            $this->MR->delete($match);
-        }
-        foreach ($category->allTeams as $team) {
-            $this->TR->delete($team);
+        foreach (array('Mladsi', 'Starsi') as $cat) {
+            if ($adaptate) {
+                $this->adaptateDatabase($cat);
+            }
+            foreach (array(1, 2, 3) as $day) {
+                $this->insertToDatabase($cat, $this->decodeHtmlTable($cat, $day));
+            }
         }
     }
+
+    private function adaptateDatabase($cat)
+    {
+        $matchTable = $this->matchTablePrefix13 . $cat;
+        $teamTable = $this->teamTablePrefix13 . $cat;
+
+        $this->context->query("ALTER TABLE $teamTable ENGINE='InnoDB';>");
+        $this->context->query("ALTER TABLE $matchTable ENGINE='InnoDB';");
+        $this->context->query("ALTER TABLE $teamTable CHANGE `id_teamu` `id_teamu` int(11) NOT NULL AUTO_INCREMENT FIRST;");
+        $this->context->query("ALTER TABLE $matchTable ADD INDEX `ID_domaci` (`ID_domaci`), ADD INDEX `ID_hoste` (`ID_hoste`);");
+        $this->context->query("ALTER TABLE $teamTable ADD FOREIGN KEY (`id_teamu`) REFERENCES `2013_zapasy_mladsi` (`ID_domaci`)");
+        $this->context->query("ALTER TABLE $teamTable ADD FOREIGN KEY (`id_teamu`) REFERENCES `2013_zapasy_mladsi` (`ID_hoste`)");
+        $this->context->query("ALTER TABLE $matchTable ADD `cas_vlozeni` datetime NULL AFTER `posledni_update`, ADD `odehrano` tinyint NOT NULL AFTER `cas_vlozeni`, ADD `cas_odehrani` datetime NOT NULL AFTER `odehrano`;");
+    }
+
+    private function insertToDatabase($cat, $dataArray)
+    {
+        $matchTable = $this->matchTablePrefix13 . $cat;
+        $teamTable = $this->teamTablePrefix13 . $cat;
+        $teams = $this->context->table($teamTable)->select('jmeno, id_teamu')->fetchPairs('jmeno', 'id_teamu');
+        $teams['TJ Rožnov p.Radh.'] = $teams['TJ Rožnov p. Radhoštìm'];
+        foreach ($dataArray as $match) {
+            $this->context->table($matchTable)->where('ID_domaci = ? AND ID_hoste = ?', $teams[$match->homeTeam], $teams[$match->awayTeam])->update(array('cas_odehrani' => $match->time, 'cas_vlozeni' => new \DibiDateTime()));
+        }
+    }
+
+    private function decodeHtmlTable($cat, $day)
+    {
+        $date = array(
+            1 => '2013-5-24',
+            2 => '2013-5-25',
+            3 => '2013-5-26'
+        );
+        $result = new \SimpleXMLElement((file_get_contents(__DIR__ . '\..\..\misc\2013\Mini' . $cat . $day . 'DEN.php')));
+        dump($result);
+        $time = NULL;
+        foreach ($result->tr as $match) {
+            $time = ((string)$match->td[0] == "") ? $time : new \DibiDateTime($date[$day] . ' ' . (string)$match->td[0]);
+            if ($time) {
+                $tableOfMatches[] = ArrayHash::from(array(
+                    'time' => $time,
+                    'homeTeam' => (string)$match->td[1],
+                    'awayTeam' => (string)$match->td[2]
+                ));
+            }
+        }
+        dump($tableOfMatches);
+        return $tableOfMatches;
+    }
+
 }
