@@ -27,7 +27,7 @@
 
     <tr>
         <td></td>
-        <td>TJ Rožnov p. Radhoštěm</td>
+        <td>TJ Rožnov p.Radh.</td>
         <td>TJ Sokol II Prostějov</td>
     </tr>
 
@@ -58,7 +58,7 @@
     <tr>
         <td>15:00</td>
         <td>Tatran Litovel</td>
-        <td>TJ Rožnov p. Radhoštěm</td>
+        <td>TJ Rožnov p.Radh.</td>
     </tr>
 
     <tr>
@@ -87,7 +87,7 @@
 
     <tr>
         <td></td>
-        <td>TJ Rožnov p. Radhoštěm</td>
+        <td>TJ Rožnov p.Radh.</td>
         <td>HBC Jičín</td>
     </tr>
 
