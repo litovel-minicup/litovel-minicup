@@ -10,6 +10,13 @@ use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
+interface IMigrateFormComponentFactory
+{
+    /** @return MigrateFormComponent */
+    public function create();
+
+}
+
 class MigrateFormComponent extends BaseComponent
 {
     /** @var  MigrationsManager */
@@ -46,10 +53,11 @@ class MigrateFormComponent extends BaseComponent
             }
         }
         $f->addRadioList('category_id', 'Kategorie', $select);
-        $f->addCheckbox('confirm', 'Chci přepsat databázi čistými daty z roku 2014!')
+        $f->addCheckbox('confirm', 'Chci přepsat databázi čistými daty!')
             ->setRequired('Jsi si jistý?');
         $f->addCheckbox('truncate', 'Promazat teams & matches');
         $f->addCheckbox('with_score', 'Vložit skore a vygenerovat historii');
+        $f->addCheckbox('adaptate_database', 'Přizpůsobit databázi 2013?');
         $f->addSubmit('migrate', 'Zmigrovat!');
         $f->onSuccess[] = $this->migrateFormSucceed;
         return $f;
@@ -67,17 +75,13 @@ class MigrateFormComponent extends BaseComponent
         }
         /** @var Category $category */
         $category = $this->CR->get($values->category_id, FALSE);
+        if ($values->adaptate_database) {
+            $this->migrator->adaptateDatabase($category);
+        }
         if ($values->confirm) {
             $this->migrator->migrateMatches($category, $values->truncate, $values->with_score);
         }
         $this->presenter->flashMessage("Kategorie {$category->name} byla úspěšně zmigrována!", 'success');
         $this->presenter->redirect('this');
     }
-}
-
-interface IMigrateFormComponentFactory
-{
-    /** @return MigrateFormComponent */
-    public function create();
-
 }

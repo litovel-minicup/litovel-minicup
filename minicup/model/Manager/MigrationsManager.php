@@ -126,10 +126,6 @@ class MigrationsManager extends Object
             $this->truncate($category);
         }
 
-        if ($category->year->year <= '2013') {
-            $this->migrateFrom2013($category, TRUE);
-        }
-
         $year = $category->year;
 
         $data = $this->context
@@ -219,71 +215,6 @@ class MigrationsManager extends Object
         }
     }
 
-    private function migrateFrom2013(Category $category, $adaptate = FALSE)
-    {
-        if ($adaptate) {
-            $this->adaptateDatabase($category);
-        }
-
-        foreach (range(1, 3) as $day) {
-            $this->insertToDatabase($category, $this->decodeHtmlTable($category, $day));
-        }
-    }
-
-    private function adaptateDatabase(Category $category)
-    {
-        $matchTable = $category->year->year . $this->matchTable . $category->slug;
-        $teamTable = $category->year->year . $this->teamTable . $category->slug;
-
-        $this->context->query("ALTER TABLE $teamTable ENGINE='InnoDB';>");
-        $this->context->query("ALTER TABLE $matchTable ENGINE='InnoDB';");
-        $this->context->query("ALTER TABLE $teamTable CHANGE `id_teamu` `id_teamu` int(11) NOT NULL AUTO_INCREMENT FIRST;");
-        $this->context->query("ALTER TABLE $matchTable ADD `cas_vlozeni` datetime NULL, ADD `odehrano` tinyint NOT NULL AFTER `cas_vlozeni`, ADD `cas_odehrani` datetime NOT NULL AFTER `odehrano`;");
-    }
-
-    private function insertToDatabase(Category $category, $dataArray)
-    {
-        $teams = $this->context
-            ->table($category->year->year . $this->teamTable . $category->slug)
-            ->select('jmeno, id_teamu')
-            ->fetchPairs('jmeno', 'id_teamu');
-        $teams['TJ Rožnov p.Radh.'] = $teams['TJ Rožnov p. Radhoštěm'];
-        foreach ($dataArray as $match) {
-            $this->context
-                ->table($category->year->year . $this->matchTable . $category->slug)
-                ->where('ID_domaci = ? AND ID_hoste = ?', $teams[$match->homeTeam], $teams[$match->awayTeam])
-                ->update(array(
-                    'cas_odehrani' => $match->playTime,
-                    'cas_vlozeni' => new \DibiDateTime(),
-                    'odehrano' => 1
-                ));
-        }
-    }
-
-    private function decodeHtmlTable(Category $category, $day)
-    {
-        $date = array(
-            1 => '2013-5-24',
-            2 => '2013-5-25',
-            3 => '2013-5-26'
-        );
-        $pathPrefix = __DIR__ . '\..\..\..\utils\old\2013\Mini';
-        $pathPosfix = 'DEN.php';
-        $result = new \SimpleXMLElement((file_get_contents($pathPrefix . $category->slug . $day . $pathPosfix)));
-        $playTime = NULL;
-        foreach ($result->tr as $match) {
-            $playTime = ((string)$match->td[0] == "") ? $playTime : new \DibiDateTime($date[$day] . ' ' . (string)$match->td[0]);
-            if ($playTime) {
-                $tableOfMatches[] = ArrayHash::from(array(
-                    'playTime' => $playTime,
-                    'homeTeam' => (string)$match->td[1],
-                    'awayTeam' => (string)$match->td[2]
-                ));
-            }
-        }
-        return $tableOfMatches;
-    }
-
     /**
      * @param Category $category
      * @param string   $name
@@ -309,6 +240,84 @@ class MigrationsManager extends Object
         $team->category = $category;
         $this->TR->persist($team);
         return $team;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function adaptateDatabase(Category $category)
+    {
+        $matchTable = $category->year->year . $this->matchTable . $category->slug;
+        $teamTable = $category->year->year . $this->teamTable . $category->slug;
+
+        $this->context->query("ALTER TABLE $teamTable ENGINE='InnoDB';");
+        $this->context->query("ALTER TABLE $matchTable ENGINE='InnoDB';");
+        $this->context->query("ALTER TABLE $teamTable CHANGE `id_teamu` `id_teamu` int(11) NOT NULL AUTO_INCREMENT FIRST;");
+        $this->context->query("ALTER TABLE $matchTable ADD `cas_vlozeni` datetime NULL, ADD `odehrano` tinyint NOT NULL AFTER `cas_vlozeni`, ADD `cas_odehrani` datetime NOT NULL AFTER `odehrano`;");
+    }
+
+    /**
+     * @param Category $category
+     */
+    private function migrateFrom2013(Category $category)
+    {
+        foreach (range(1, 3) as $day) {
+            $this->insertToDatabase($category, $this->decodeHtmlTable($category, $day));
+        }
+    }
+
+    /**
+     * @param Category $category
+     * @param array    $dataArray
+     */
+    private function insertToDatabase(Category $category, array $dataArray)
+    {
+        $teams = $this->context
+            ->table($category->year->year . $this->teamTable . $category->slug)
+            ->select('jmeno, id_teamu')
+            ->fetchPairs('jmeno', 'id_teamu');
+        $teams['TJ Rožnov p.Radh.'] = $teams['TJ Rožnov p. Radhoštěm'];
+        foreach ($dataArray as $match) {
+            $this->context
+                ->table($category->year->year . $this->matchTable . $category->slug)
+                ->where('ID_domaci = ? AND ID_hoste = ? OR ID_domaci = ? AND ID_hoste = ?',
+                    $teams[$match->homeTeam], $teams[$match->awayTeam], $teams[$match->awayTeam], $teams[$match->homeTeam])
+                ->update(array(
+                    'cas_odehrani' => $match->playTime,
+                    'cas_vlozeni' => new \DibiDateTime(),
+                    'odehrano' => 1
+                ));
+        }
+    }
+
+    /**
+     * @param Category $category
+     * @param int      $day
+     * @return array
+     */
+    private function decodeHtmlTable(Category $category, $day)
+    {
+        $date = array(
+            1 => '2013-5-24',
+            2 => '2013-5-25',
+            3 => '2013-5-26'
+        );
+        $pathPrefix = __DIR__ . '\..\..\..\utils\old\2013\Mini';
+        $pathPosfix = 'DEN.php';
+        $result = new \SimpleXMLElement((file_get_contents($pathPrefix . $category->slug . $day . $pathPosfix)));
+        $playTime = NULL;
+        $tableOfMatches = array();
+        foreach ($result->tr as $match) {
+            $playTime = ((string)$match->td[0] == "") ? $playTime : new \DibiDateTime($date[$day] . ' ' . (string)$match->td[0]);
+            if ($playTime) {
+                $tableOfMatches[] = ArrayHash::from(array(
+                    'playTime' => $playTime,
+                    'homeTeam' => (string)$match->td[1],
+                    'awayTeam' => (string)$match->td[2]
+                ));
+            }
+        }
+        return $tableOfMatches;
     }
 
 }
