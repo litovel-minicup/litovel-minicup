@@ -20,8 +20,7 @@ class TeamRepository extends BaseRepository
         } elseif ($arg instanceof TeamInfo) {
             return $arg->team;
         }
-        $row = $this->connection->select('*')->from($this->getTable())
-            ->leftJoin('team_info ON team.team_info_id = team_info.id')
+        $row = $this->createFluent()
             ->where('[team_info.slug] = %s', $arg, 'AND [team.category_id] = ', $category->id)
             ->fetch();
         return $row ? $this->createEntity($row) : NULL;
