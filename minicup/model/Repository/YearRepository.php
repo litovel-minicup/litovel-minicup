@@ -64,4 +64,15 @@ class YearRepository extends BaseRepository {
             $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
         );
     }
+
+    /**
+     * @return array
+     */
+    public function getYearChoices() {
+        $data = array();
+        foreach ($this->findAll(FALSE) as $year) {
+            $data[$year->id] = $year->slug;
+        }
+        return $data;
+    }
 }

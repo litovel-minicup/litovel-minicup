@@ -17,6 +17,7 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Object;
 use Nette\Utils\Strings;
+use Tracy\Debugger;
 
 class RouterFactory extends Object {
     /** @var CategoryRepository */
@@ -34,9 +35,7 @@ class RouterFactory extends Object {
     /** @var TagRepository */
     private $TagR;
 
-    /**
-     * @var YearCategoryRouteFactory
-     */
+    /** @var YearCategoryRouteFactory */
     private $yearCategoryRouteFactory;
 
     /**
@@ -175,6 +174,7 @@ class RouterFactory extends Object {
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
                     }
+                    is_string($params['category']) ? Debugger::barDump($params) : NULL;
                     $params['category'] = $CR->getBySlug($params['category']);
                     $team = $TR->getBySlug($params['team'], $params['category']);
 
@@ -196,6 +196,9 @@ class RouterFactory extends Object {
                         return NULL;
                     }
                     $params['category'] = $CR->getBySlug($params['category'], $CR->getBySlug('2014'));
+                    if ($params['category'] === NULL) {
+                        return NULL;
+                    }
                     $params['team'] = $TR->getBySlug($params['team'], $params['category']);
                     if (!$params['team']) {
                         return NULL;
@@ -212,10 +215,11 @@ class RouterFactory extends Object {
         $router[] = new Route('login/', 'Sign:in');
         $router[] = new Route('logout/', 'Sign:out');
 
-        $router[] = $route('admin/<presenter>/<action>[/<id [0-9]*>]/', array(
+        $router[] = new Route('admin/<presenter>/<action>/[<category>][/<id [0-9]*>]/', array(
             'module' => 'Admin',
             'presenter' => 'Homepage',
-            'action' => 'default'
+            'action' => 'default',
+            'category' => $route->getMetadata(FALSE)
         ));
 
         $router[] = new Route('media/<action>/<slug>', array(

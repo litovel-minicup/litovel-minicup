@@ -55,5 +55,4 @@ class Texy extends \Texy
             return "[{$link}]";
         });
     }
-
 }

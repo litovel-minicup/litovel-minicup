@@ -71,6 +71,10 @@ class NewsPresenter extends BaseAdminPresenter
         ));
         $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
         $g->addActionHref('detail', 'Detail', 'News:detail', array('id' => 'id'));
+        $NR = $this->newsRepository;
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($NR) {
+            $NR->delete($id);
+        })->setConfirm('Jsi si jistý?');
         $g->setModel($this->connection->select('*')->from('[news]'));
         return $g;
     }
