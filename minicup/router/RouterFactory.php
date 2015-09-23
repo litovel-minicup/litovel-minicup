@@ -222,6 +222,13 @@ class RouterFactory extends Object {
             'category' => $route->getMetadata(FALSE)
         ));
 
+        $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', array(
+            'module' => 'Admin',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'category' => $route->getMetadata(TRUE)
+        ));
+
         $router[] = new Route('media/<action>/<slug>', array(
             'presenter' => 'Media',
         ));
