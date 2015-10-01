@@ -9,6 +9,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\Responses\FileResponse;
 use Nette\Application\UI\Presenter;
 use Nette\FileNotFoundException;
+use Nette\Utils\UnknownImageFileException;
 
 class MediaPresenter extends Presenter
 {
@@ -28,6 +29,8 @@ class MediaPresenter extends Presenter
         try {
             $requested = $this->PM->getInFormat($slug, $this->action);
         } catch (FileNotFoundException $e) {
+            throw new BadRequestException($e->getMessage());
+        } catch (UnknownImageFileException $e) {
             throw new BadRequestException($e->getMessage());
         }
         $this->sendResponse(new FileResponse($requested));
