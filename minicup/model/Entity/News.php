@@ -12,7 +12,8 @@ namespace Minicup\Model\Entity;
  * @property Year      $year m:hasOne
  * @property int       $texy
  */
-class News extends BaseEntity {
+class News extends BaseEntity
+{
     public static $CACHE_TAG = 'news';
 
 }

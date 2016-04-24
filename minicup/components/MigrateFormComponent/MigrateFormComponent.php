@@ -29,7 +29,7 @@ class MigrateFormComponent extends BaseComponent
     private $YR;
 
     /**
-     * @param MigrationsManager $migrator
+     * @param MigrationsManager  $migrator
      * @param CategoryRepository $CR
      */
     public function __construct(MigrationsManager $migrator, CategoryRepository $CR, YearRepository $YR)
@@ -64,7 +64,7 @@ class MigrateFormComponent extends BaseComponent
     }
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
     public function migrateFormSucceed(Form $form, ArrayHash $values)

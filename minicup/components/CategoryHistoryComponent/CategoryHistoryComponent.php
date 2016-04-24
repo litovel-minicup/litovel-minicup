@@ -30,10 +30,10 @@ class CategoryHistoryComponent extends BaseComponent
     public function handleData()
     {
         $maxMatches = max(array_map(function (Team $team) {
-            return count($team->getPlayedMatches());
-        }, $this->category->teams)) + 1;
+                return count($team->getPlayedMatches());
+            }, $this->category->teams)) + 1;
 
-        $data = array("labels" => range(1, $maxMatches+1), "series" => array());
+        $data = array("labels" => range(1, $maxMatches + 1), "series" => array());
         $countOfTeams = count($this->category->teams);
         $n = 1;
         foreach ($this->category->teams as $team) {

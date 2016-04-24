@@ -14,7 +14,7 @@ class Texy extends \Texy
     public $destinationPrefix;
 
     /**
-     * @param $destinationPrefix
+     * @param               $destinationPrefix
      * @param LinkGenerator $linkGenerator
      */
     public function __construct($destinationPrefix, LinkGenerator $linkGenerator)
@@ -26,7 +26,7 @@ class Texy extends \Texy
 
     /**
      * @param string $text
-     * @param bool $singleLine
+     * @param bool   $singleLine
      * @return string
      */
     public function process($text, $singleLine = FALSE)

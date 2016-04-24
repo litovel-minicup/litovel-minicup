@@ -9,23 +9,23 @@
 
 
 <table class="Aside__table Aside__table--standings">
-	<thead class="Box__subhead Aside__subhead">
-        <tr>
-        	<th>#</th>
-	        <th>Týmy</th>
-	        <th>Zápasy</th>
-	        <th>Skóre</th>
-	        <th>Body</th>
-        </tr>
+    <thead class="Box__subhead Aside__subhead">
+    <tr>
+        <th>#</th>
+        <th>Týmy</th>
+        <th>Zápasy</th>
+        <th>Skóre</th>
+        <th>Body</th>
+    </tr>
     </thead>
 
-	<tbody n:inner-foreach="$teams as $team">
-		<tr>
-			<td>{if $team->order}{$team->order}{else}&nbsp;{/if}</td>
-			<td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
-			<td>{$team->playedMatches|length}</td>
-			<td>{$team->scored}:{$team->received}</td>
-			<td>{$team->points}</td>
-		</tr>
-	</tbody>    
+    <tbody n:inner-foreach="$teams as $team">
+    <tr>
+        <td>{if $team->order}{$team->order}{else}&nbsp;{/if}</td>
+        <td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
+        <td>{$team->playedMatches|length}</td>
+        <td>{$team->scored}:{$team->received}</td>
+        <td>{$team->points}</td>
+    </tr>
+    </tbody>
 </table>

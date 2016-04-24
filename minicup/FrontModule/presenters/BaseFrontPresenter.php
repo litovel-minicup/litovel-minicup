@@ -12,14 +12,16 @@ use Minicup\Presenters\BasePresenter;
 /**
  * Base presenter for all application presenters.
  */
-abstract class BaseFrontPresenter extends BasePresenter {
+abstract class BaseFrontPresenter extends BasePresenter
+{
     /** @var ICategoryToggleFormComponentFactory @inject */
     public $CTCF;
 
     /** @var IAsideComponentFactory @inject */
     public $ACF;
 
-    public function beforeRender() {
+    public function beforeRender()
+    {
         parent::beforeRender();
         $this->template->category = $this->category;
         $this->template->years = $this->YR->findAll(FALSE);
@@ -30,18 +32,21 @@ abstract class BaseFrontPresenter extends BasePresenter {
     /**
      * @return CategoryToggleComponent
      */
-    protected function createComponentCategoryToggleFormComponent() {
+    protected function createComponentCategoryToggleFormComponent()
+    {
         return $this->CTCF->create();
     }
 
     /**
      * @return AsideComponent
      */
-    protected function createComponentAsideComponent() {
+    protected function createComponentAsideComponent()
+    {
         return $this->ACF->create($this->category);
     }
 
-    protected function startup() {
+    protected function startup()
+    {
         parent::startup();
         if ($this->category) {
             $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);

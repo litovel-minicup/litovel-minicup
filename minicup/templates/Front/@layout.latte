@@ -1,131 +1,150 @@
 {extends '../@layout.latte'}
 {block body}
     <!--[if lt IE 9]>
-        <div id="warning">
-            <a href="http://www.browser-update.org/cs/update.html" target="_blank">
-                <div class="iconBlock">!</div>
-                <div class="textBlock">
+    <div id="warning">
+        <a href="http://www.browser-update.org/cs/update.html" target="_blank">
+            <div class="iconBlock">!</div>
+            <div class="textBlock">
                 <h2>Upozornění</h2>
-                <h3>Používáte zastaralý prohlížeč, proto nemůžeme garantovat plnou  funkčnost webu</h3>
+
+                <h3>Používáte zastaralý prohlížeč, proto nemůžeme garantovat plnou funkčnost webu</h3>
                 <h4>Děkujeme za pochopení</h4>
             </div>
-            </a>
-        </div>
+        </a>
+    </div>
     <![endif]-->
-
     <div id="info" n:if="!$category->year->actual">
         <a n:href=":Front:Homepage:default category => $actualYear->categories[0]">
             <div class="iconBlock">!</div>
             <div class="textBlock">
                 <h2>Upozornění</h2>
+
                 <h3>Zobrazeny jsou archivní data, nechceš se kouknout na aktuální ročník?</h3>
             </div>
         </a>
     </div>
-
     <div class="Header animated">
-            <!-- svg logo with fallback -->
-            <div id="nav-mobile" class="Header__nav--mobile">
-                <label>
-                    <select>
-                        <option value={plink Homepage:default} selected="selected">novinky</option>
-                        <option value={plink Homepage:informations}>infromace</option>
-                        <option value={plink Team:list}>týmy</option>
-                        <option value={plink Match:default}>zápasy</option>
-                        <option value={plink Stats:default}>statistiky</option>
-                        <option value={plink Gallery:default}>foto</option>
-                        <option value={plink Homepage:sponsors}>sponzoři</option>
-                    </select>
-                </label>
-            </div>
+        <!-- svg logo with fallback -->
+        <div id="nav-mobile" class="Header__nav--mobile">
+            <label>
+                <select>
+                    <option value={plink Homepage:default} selected="selected">novinky</option>
+                    <option value={plink Homepage:informations}>infromace</option>
+                    <option value={plink Team:list}>týmy</option>
+                    <option value={plink Match:default}>zápasy</option>
+                    <option value={plink Stats:default}>statistiky</option>
+                    <option value={plink Gallery:default}>foto</option>
+                    <option value={plink Homepage:sponsors}>sponzoři</option>
+                </select>
+            </label>
+        </div>
 
-            <a n:href="Homepage:default">
-                <div class="Header__logo">
-                    <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image" alt="Logo turnaje MINICUP">
-                </div>
-            </a>
-            <div class="Header__toggle">
-                {control categoryToggleFormComponent}
+        <a n:href="Homepage:default">
+            <div class="Header__logo">
+                <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image" alt="Logo turnaje MINICUP">
             </div>
+        </a>
 
-            <div class="Header__nav">
-                <ul>
-                    <a n:href="Homepage:default"><li>novinky</li></a>
-                    <a n:href="Homepage:informations"><li>informace</li></a>
-                    <a n:href="Team:list"><li>Týmy</li></a>
-                    <a n:href="Match:default"><li>Zápasy</li></a>
-                    <a n:href="Stats:default"><li>Statistiky</li></a>
-                    <a n:href="Gallery:default"><li>foto</li></a>
-                    <a n:href="Homepage:sponsors"><li>sponzoři</li></a>
-                </ul>
+        <div class="Header__toggle">
+            {control categoryToggleFormComponent}
+        </div>
+
+        <div class="Header__nav">
+            <ul>
+                <a n:href="Homepage:default">
+                    <li>novinky</li>
+                </a>
+                <a n:href="Homepage:informations">
+                    <li>informace</li>
+                </a>
+                <a n:href="Team:list">
+                    <li>Týmy</li>
+                </a>
+                <a n:href="Match:default">
+                    <li>Zápasy</li>
+                </a>
+                <a n:href="Stats:default">
+                    <li>Statistiky</li>
+                </a>
+                <a n:href="Gallery:default">
+                    <li>foto</li>
+                </a>
+                <a n:href="Homepage:sponsors">
+                    <li>sponzoři</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="Main__wrapper animated fadeInUp">
+        {block outerContent}
+            <div class="Section">
+                {block content}
+                {/block}
+            </div>
+        {/block}
+    </div>
+    <div class="Side__wrapper animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
+        {control asideComponent}
+    </div>
+    <div class="Footer animated fadeInUp">
+        <div class="Footer__block">
+            <div class="Box__subhead Footer__subhead">Kontakt</div>
+            <div class="Box__content Footer__content">
+                TJ Tatran Litovel – oddíl házené <br>
+                Nám. Přemysla Otakara 770, Litovel 784 01 <br>
+                <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
+                <a href="mailto:hazena@tatranlitovel.cz">Email</a>
             </div>
         </div>
 
-        <div class="Main__wrapper animated fadeInUp">
-            {block outerContent}
-                <div class="Section">
-                    {block content}
-                    {/block}
-                </div>
-            {/block}
-        </div>
-
-        <div class="Side__wrapper animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
-            {control asideComponent}
-        </div>
-
-        <div class="Footer animated fadeInUp">
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Kontakt</div>
-                <div class="Box__content Footer__content">
-                    TJ Tatran Litovel – oddíl házené <br>
-                    Nám. Přemysla Otakara 770, Litovel 784 01 <br>
-                    <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
-                    <a href="mailto:hazena@tatranlitovel.cz">Email</a>
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
-                <div class="Box__content Footer__content">Petr Habermann <br>
-                 <a href="mailto:petr.habermann@tatranlitovel.cz">petr.habermann@tatranlitovel.cz</a> <br>
+        <div class="Footer__block">
+            <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
+            <div class="Box__content Footer__content">Petr Habermann <br>
+                <a href="mailto:petr.habermann@tatranlitovel.cz">petr.habermann@tatranlitovel.cz</a> <br>
                 +420 775 771 213
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">&nbsp;</div>
-                <div class="Box__content Footer__content">
-                    <a n:href=":Admin:Homepage:default">administrace</a>
-                    <br>
-                    Matěj Mitaš & Josef Kolář 2015
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
-                <div class="Box__content Footer__content">
-                    <a n:foreach="$years as $_year" href="{plink :Front:Homepage:default category => $_year->categories[0]}">Litovel MINICUP {$_year->year}<br></a>
-                </div>
             </div>
         </div>
-<script n:syntax="off" n:if="$productionMode">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-40772204-1', 'auto');
-    ga('send', 'pageview');
-</script>
-<a href="http://www.toplist.cz/stat/1561645" n:syntax="off" n:if="$productionMode">
-    <script> document.write('<img src="https://toplist.cz/dot.asp?id=1561645&http='+encodeURIComponent(document.referrer)+'&t='+encodeURIComponent(document.title)+
-        '&wi='+encodeURIComponent(window.screen.width)+'&he='+encodeURIComponent(window.screen.height)+'&cd='+encodeURIComponent(window.screen.colorDepth)+'" width="1" height="1" border=0 alt="TOPlist" />');
+        <div class="Footer__block">
+            <div class="Box__subhead Footer__subhead">&nbsp;</div>
+            <div class="Box__content Footer__content">
+                <a n:href=":Admin:Homepage:default">administrace</a>
+                <br>
+                Matěj Mitaš & Josef Kolář 2015
+            </div>
+        </div>
+
+        <div class="Footer__block">
+            <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
+            <div class="Box__content Footer__content">
+                <a n:foreach="$years as $_year"
+                   href="{plink :Front:Homepage:default category => $_year->categories[0]}">Litovel
+                    MINICUP {$_year->year}<br></a>
+            </div>
+        </div>
+    </div>
+    <script n:syntax="off" n:if="$productionMode">
+        (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+        })
+        (window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-40772204-1', 'auto');
+        ga('send', 'pageview');
     </script>
-    <noscript>
-        <img src="https://toplist.cz/dot.asp?id=1561645" border="0" alt="TOPlist" width="1" height="1" />
-    </noscript>
-</a>
+    <a href="http://www.toplist.cz/stat/1561645" n:syntax="off" n:if="$productionMode">
+        <script> document.write('<img src="https://toplist.cz/dot.asp?id=1561645&http=' + encodeURIComponent(document.referrer) + '&t=' + encodeURIComponent(document.title) +
+                    '&wi=' + encodeURIComponent(window.screen.width) + '&he=' + encodeURIComponent(window.screen.height) + '&cd=' + encodeURIComponent(window.screen.colorDepth) + '" width="1" height="1" border=0 alt="TOPlist" />');
+        </script>
+        <noscript>
+            <img src="https://toplist.cz/dot.asp?id=1561645" border="0" alt="TOPlist" width="1" height="1"/>
+        </noscript>
+    </a>
 {/block}
 
 {block head}

@@ -4,6 +4,16 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Category;
 
+interface ICategoryTableComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryTableComponent
+     */
+    public function create(Category $category);
+
+}
+
 class CategoryTableComponent extends BaseComponent
 {
 
@@ -21,14 +31,4 @@ class CategoryTableComponent extends BaseComponent
         $this->template->teams = $this->category->teams;
         parent::render();
     }
-}
-
-interface ICategoryTableComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryTableComponent
-     */
-    public function create(Category $category);
-
 }

@@ -23,7 +23,7 @@ class CacheManager extends Object
 
     /**
      * @param BaseRepository[] $repositories
-     * @param IStorage $cache
+     * @param IStorage         $cache
      */
     public function __construct(array $repositories, IStorage $cache)
     {

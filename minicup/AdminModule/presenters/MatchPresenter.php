@@ -88,7 +88,7 @@ final class MatchPresenter extends BaseAdminPresenter
                 return TRUE;
             });
 
-        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR){
+        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
             return $match->matchTerm->start->format('j. n.') . " " . $match->matchTerm->start->format('G:i');

@@ -37,13 +37,13 @@ class MatchManager extends Object
     private $TR;
 
     /**
-     * @param MatchRepository $MR
-     * @param TeamDataRefresher $TDR
-     * @param TeamReplicator $replicator
-     * @param ReorderManager $RM
-     * @param Connection $connection
+     * @param MatchRepository     $MR
+     * @param TeamDataRefresher   $TDR
+     * @param TeamReplicator      $replicator
+     * @param ReorderManager      $RM
+     * @param Connection          $connection
      * @param MatchTermRepository $MTR
-     * @param TeamRepository $TR
+     * @param TeamRepository      $TR
      */
     public function __construct(MatchRepository $MR,
                                 TeamDataRefresher $TDR,
@@ -66,10 +66,10 @@ class MatchManager extends Object
      * Set scores to match, replicate history table, refresh points in actual teams and reorder teams.
      * Whole in transaction.
      *
-     * @param Match $match
+     * @param Match    $match
      * @param Category $category
-     * @param $scoreHome
-     * @param $scoreAway
+     * @param          $scoreHome
+     * @param          $scoreAway
      * @throws \DibiException
      * @throws \Exception
      */

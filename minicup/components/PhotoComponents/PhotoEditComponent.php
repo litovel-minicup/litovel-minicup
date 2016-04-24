@@ -43,12 +43,12 @@ class PhotoEditComponent extends BaseComponent
     private $request;
 
     /**
-     * @param Photo $photo
-     * @param TagRepository $TR
+     * @param Photo           $photo
+     * @param TagRepository   $TR
      * @param PhotoRepository $PR
-     * @param PhotoManager $PM
-     * @param Request $request
-     * @param CacheManager $CM
+     * @param PhotoManager    $PM
+     * @param Request         $request
+     * @param CacheManager    $CM
      */
     public function __construct(Photo $photo,
                                 TagRepository $TR,
@@ -96,7 +96,7 @@ class PhotoEditComponent extends BaseComponent
 
     public function handleToggle()
     {
-        $this->photo->active  = $this->photo->active ? 0 : 1;
+        $this->photo->active = $this->photo->active ? 0 : 1;
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }

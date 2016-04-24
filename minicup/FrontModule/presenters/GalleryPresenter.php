@@ -26,13 +26,13 @@ class GalleryPresenter extends BaseFrontPresenter
 
     /** @var TagRepository @inject */
     public $TR;
-    
+
     /**
      * @return InteractiveGalleryComponent
      */
     protected function createComponentInteractiveGalleryComponent()
     {
-    	return $this->GCF->create($this->getParameter('tags'));
+        return $this->GCF->create($this->getParameter('tags'));
     }
 
     /**

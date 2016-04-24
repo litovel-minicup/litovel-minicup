@@ -23,7 +23,7 @@ class TeamReplicator extends Object
     private $CR;
 
     /**
-     * @param TeamRepository $TR
+     * @param TeamRepository     $TR
      * @param CategoryRepository $CR
      */
     public function __construct(TeamRepository $TR, CategoryRepository $CR)
@@ -34,7 +34,7 @@ class TeamReplicator extends Object
 
     /**
      * @param Category $category
-     * @param Match $afterMatch
+     * @param Match    $afterMatch
      */
     public function replicate(Category $category, Match $afterMatch = NULL)
     {

@@ -6,7 +6,8 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\News;
 use Minicup\Model\Entity\Year;
 
-class NewsRepository extends BaseRepository {
+class NewsRepository extends BaseRepository
+{
     /**
      * Default limit for news finding.
      */
@@ -17,7 +18,8 @@ class NewsRepository extends BaseRepository {
      * @param Year $year
      * @return News[]
      */
-    public function findLastNews(Year $year, $limit = NewsRepository::DEFAULT_LIMIT) {
+    public function findLastNews(Year $year, $limit = NewsRepository::DEFAULT_LIMIT)
+    {
         return $this->createEntities($this->createFluent()->where('year_id = %i', $year->id)->limit($limit)->fetchAll());
     }
 }

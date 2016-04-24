@@ -24,10 +24,10 @@ class StaticContentComponent extends BaseComponent
     private $content;
 
     /**
-     * @param $arg
+     * @param                         $arg
      * @param StaticContentRepository $SCR
-     * @param Texy $texy
-     * @param StaticContentManager $SCM
+     * @param Texy                    $texy
+     * @param StaticContentManager    $SCM
      */
     public function __construct($arg, StaticContentRepository $SCR, Texy $texy, StaticContentManager $SCM)
     {
@@ -51,7 +51,7 @@ class StaticContentComponent extends BaseComponent
     {
         $this->template->edit = TRUE;
         /** @var Form $form */
-        $form  = $this['editForm'];
+        $form = $this['editForm'];
         $form->setValues(array("content" => $this->content->content));
         if ($this->presenter->isAjax()) {
             $this->redrawControl('component');
@@ -63,7 +63,7 @@ class StaticContentComponent extends BaseComponent
     {
         $f = $this->formFactory->create();
         $lines = count(Strings::matchAll($this->content->content, '#\n#'));
-        $f->addTextArea('content', NULL, NULL, $lines+10);
+        $f->addTextArea('content', NULL, NULL, $lines + 10);
         $f->addSubmit('submit', 'Uložit');
         $f->addSubmit('cancel', 'Zrušit editaci');
         $f->onSuccess[] = $this->editFormSuccess;

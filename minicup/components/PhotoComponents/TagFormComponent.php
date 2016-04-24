@@ -33,8 +33,8 @@ class TagFormComponent extends BaseComponent
     private $tag;
 
     /**
-     * @param Tag $tag
-     * @param TagRepository $TR
+     * @param Tag             $tag
+     * @param TagRepository   $TR
      * @param PhotoRepository $PR
      */
     public function __construct(Tag $tag = NULL, TagRepository $TR, PhotoRepository $PR)
@@ -77,7 +77,7 @@ class TagFormComponent extends BaseComponent
     }
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
     public function tagFormSuccess(Form $form, ArrayHash $values)

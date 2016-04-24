@@ -27,15 +27,15 @@ class TeamInfoRepository extends BaseRepository
 
     /**
      * @param Category $category
-     * @param string $name
+     * @param string   $name
      * @return TeamInfo|NULL
      */
     public function getByName(Category $category, $name)
     {
         $row = $this->createFluent()
-                    ->where('[category_id] = ', $category->id)
-                    ->where('[name] LIKE %~like~', $name)
-                    ->fetch();
+            ->where('[category_id] = ', $category->id)
+            ->where('[name] LIKE %~like~', $name)
+            ->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
 }

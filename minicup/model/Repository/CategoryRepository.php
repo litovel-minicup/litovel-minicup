@@ -9,7 +9,8 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Year;
 use Nette\InvalidStateException;
 
-class CategoryRepository extends BaseRepository {
+class CategoryRepository extends BaseRepository
+{
     /** @var  YearRepository */
     private $YR;
 
@@ -19,7 +20,8 @@ class CategoryRepository extends BaseRepository {
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR) {
+    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR)
+    {
         $this->YR = $YR;
         parent::__construct($connection, $mapper, $entityFactory);
     }
@@ -29,7 +31,8 @@ class CategoryRepository extends BaseRepository {
      * @param Year|NULL $year
      * @return Category|null
      */
-    public function getBySlug($arg, Year $year = NULL) {
+    public function getBySlug($arg, Year $year = NULL)
+    {
         if ($arg instanceof Category) {
             return $arg;
         }
@@ -46,7 +49,8 @@ class CategoryRepository extends BaseRepository {
         return NULL;
     }
 
-    protected function createFluent(/*$filterArg1, $filterArg2, ...*/) {
+    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
+    {
         $year = $this->YR->getSelectedYear();
         return parent::createFluent(array_merge(array($year->id), func_get_args()));
     }
@@ -54,7 +58,8 @@ class CategoryRepository extends BaseRepository {
     /**
      * @return Category
      */
-    public function getDefaultCategory() {
+    public function getDefaultCategory()
+    {
         $row = $this->createFluent()->where('[default] = 1')->fetch();
         if ($row) {
             return $this->createEntity($row);

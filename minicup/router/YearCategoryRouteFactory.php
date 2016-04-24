@@ -12,7 +12,8 @@ use Nette\Http\SessionSection;
 use Nette\Object;
 use Nette\Utils\Strings;
 
-class YearCategoryRouteFactory extends Object {
+class YearCategoryRouteFactory extends Object
+{
 
     const DEFAULT_REQUIRED_PATTERN = '<category>';
     const DEFAULT_OPTIONAL_PATTERN = '[!<category>]';
@@ -39,7 +40,8 @@ class YearCategoryRouteFactory extends Object {
      */
     public function __construct(CategoryRepository $categoryRepository,
                                 YearRepository $yearRepository,
-                                Session $session) {
+                                Session $session)
+    {
         $this->categoryRepository = $categoryRepository;
         $this->yearRepository = $yearRepository;
         $this->session = $session->getSection('minicup');
@@ -52,7 +54,8 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function __invoke($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
+    public function __invoke($mask, array $metadata = array(), $flags = 0, $required = FALSE)
+    {
         return $this->route($mask, $metadata, $flags, $required);
     }
 
@@ -63,7 +66,8 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function route($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
+    public function route($mask, array $metadata = array(), $flags = 0, $required = FALSE)
+    {
         $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
         $mask .= ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
 
@@ -74,7 +78,8 @@ class YearCategoryRouteFactory extends Object {
      * @param bool $requiredCategory
      * @return array
      */
-    public function getMetadata($requiredCategory) {
+    public function getMetadata($requiredCategory)
+    {
         $CR = $this->categoryRepository;
         $YR = $this->yearRepository;
         $metadata = array(

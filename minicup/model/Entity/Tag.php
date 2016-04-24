@@ -16,6 +16,7 @@ namespace Minicup\Model\Entity;
  * @method      removeFromPhotos
  * @method      removeAllPhotos
  */
-class Tag extends BaseEntity {
+class Tag extends BaseEntity
+{
     public static $CACHE_TAG = 'tag';
 }

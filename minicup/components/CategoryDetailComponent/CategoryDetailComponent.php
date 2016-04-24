@@ -24,11 +24,11 @@ class CategoryDetailComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
-     * @param ICategoryTableComponentFactory $CTCF
-     * @param ICategoryStatsComponentFactory $CSCF
+     * @param Category                         $category
+     * @param ICategoryTableComponentFactory   $CTCF
+     * @param ICategoryStatsComponentFactory   $CSCF
      * @param ICategoryHistoryComponentFactory $CHCF
-     * @param MatchManager $MM
+     * @param MatchManager                     $MM
      */
     public function __construct(Category $category,
                                 ICategoryTableComponentFactory $CTCF,

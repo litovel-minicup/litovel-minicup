@@ -19,8 +19,8 @@ class EntitiesReplicatorContainer extends RContainer
 
     /**
      * @param callable $factory
-     * @param int $createDefault
-     * @param array $entities
+     * @param int      $createDefault
+     * @param array    $entities
      */
     public function __construct($factory, $createDefault, array $entities)
     {
@@ -78,7 +78,7 @@ class EntitiesReplicatorContainer extends RContainer
     }
 
 
-    /** @var bool  */
+    /** @var bool */
     private static $registered = FALSE;
 
     /**

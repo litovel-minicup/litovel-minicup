@@ -54,7 +54,7 @@ class PhotoManager extends Object
     private $wwwPath;
 
     /**
-     * @param string $wwwPath
+     * @param string          $wwwPath
      * @param PhotoRepository $PR
      */
     public function __construct($wwwPath, PhotoRepository $PR)
@@ -65,7 +65,7 @@ class PhotoManager extends Object
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL $prefix
+     * @param string|NULL  $prefix
      * @return Photo[]
      */
     public function save($files, $prefix = NULL)
@@ -113,7 +113,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool $lazy
+     * @param bool  $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -135,7 +135,7 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo $photo
-     * @param string $format
+     * @param string       $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -170,8 +170,8 @@ class PhotoManager extends Object
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
         $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-                    ->resize($this::$resolutions[$format][0] / 6,$this::$resolutions[$format][1] / 6,
-                            Image::FIT | Image::SHRINK_ONLY);
+            ->resize($this::$resolutions[$format][0] / 6, $this::$resolutions[$format][1] / 6,
+                Image::FIT | Image::SHRINK_ONLY);
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);

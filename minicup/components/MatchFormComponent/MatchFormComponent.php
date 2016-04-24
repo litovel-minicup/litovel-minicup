@@ -111,7 +111,7 @@ interface IMatchFormComponentFactory
 {
     /**
      * @param Category $category
-     * @param int $count
+     * @param int      $count
      * @return MatchFormComponent
      */
     public function create(Category $category, $count);

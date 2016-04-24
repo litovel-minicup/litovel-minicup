@@ -14,8 +14,8 @@ class DayRepository extends BaseRepository
     private $YR;
 
     /**
-     * @param Connection $connection
-     * @param IMapper $mapper
+     * @param Connection     $connection
+     * @param IMapper        $mapper
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */

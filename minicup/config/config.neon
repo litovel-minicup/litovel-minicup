@@ -17,10 +17,6 @@ application:
     mapping:
         *: Minicup\*Module\Presenters\*Presenter
 
-tracy:
-    bar:
-        - NetteExtras\XDebugHelper(PHPSTORM)
-
 session:
     expiration: 14 days
 

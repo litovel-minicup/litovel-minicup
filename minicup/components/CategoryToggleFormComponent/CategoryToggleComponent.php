@@ -12,12 +12,14 @@ use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\UrlScript;
 
-interface ICategoryToggleFormComponentFactory {
+interface ICategoryToggleFormComponentFactory
+{
     /** @return CategoryToggleComponent */
     public function create();
 }
 
-class CategoryToggleComponent extends BaseComponent {
+class CategoryToggleComponent extends BaseComponent
+{
     /** @var CategoryRepository */
     private $CR;
 
@@ -44,7 +46,8 @@ class CategoryToggleComponent extends BaseComponent {
                                 YearRepository $YR,
                                 Session $session,
                                 IRouter $router,
-                                IRequest $request) {
+                                IRequest $request)
+    {
         $this->CR = $CR;
         $this->YR = $YR;
         $this->router = $router;
@@ -53,13 +56,15 @@ class CategoryToggleComponent extends BaseComponent {
         parent::__construct();
     }
 
-    public function render() {
+    public function render()
+    {
         $this->template->selectedCategory = $this->presenter->category;
         $this->template->categories = $this->presenter->category->year->categories;
         parent::render();
     }
 
-    public function handleChangeCategory($id) {
+    public function handleChangeCategory($id)
+    {
         $category = $this->CR->get($id, FALSE);
         $this->session->offsetSet('category', $category->id);
         /** @var BaseFrontPresenter $presenter */

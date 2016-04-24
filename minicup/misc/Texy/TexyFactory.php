@@ -5,7 +5,8 @@ namespace Minicup\Misc;
 use Nette\Application\LinkGenerator;
 use Nette\Object;
 
-class TexyFactory extends Object {
+class TexyFactory extends Object
+{
     /** @var  LinkGenerator */
     private $linkGenerator;
 
@@ -16,7 +17,8 @@ class TexyFactory extends Object {
      * @param string        $modulePrefix
      * @param LinkGenerator $linkGenerator
      */
-    public function __construct($modulePrefix, LinkGenerator $linkGenerator) {
+    public function __construct($modulePrefix, LinkGenerator $linkGenerator)
+    {
         $this->linkGenerator = $linkGenerator;
         $this->modulePrefix = $modulePrefix;
     }
@@ -24,7 +26,8 @@ class TexyFactory extends Object {
     /**
      * @return Texy
      */
-    public function create() {
+    public function create()
+    {
         $t = new Texy($this->modulePrefix, $this->linkGenerator);
         //TODO: custom texy configuration
         $t->setOutputMode(Texy::HTML5);

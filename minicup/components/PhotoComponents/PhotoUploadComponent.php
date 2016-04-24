@@ -45,15 +45,15 @@ class PhotoUploadComponent extends BaseComponent
     private $CM;
 
     /**
-     * @param string $wwwPath
-     * @param Session $session
-     * @param Request $request
-     * @param PhotoRepository $PR
-     * @param TagRepository $TR
-     * @param PhotoManager $PM
+     * @param string                     $wwwPath
+     * @param Session                    $session
+     * @param Request                    $request
+     * @param PhotoRepository            $PR
+     * @param TagRepository              $TR
+     * @param PhotoManager               $PM
      * @param IPhotoEditComponentFactory $PECF
-     * @param ITagFormComponentFactory $TFCF
-     * @param CacheManager $CM
+     * @param ITagFormComponentFactory   $TFCF
+     * @param CacheManager               $CM
      */
     public function __construct($wwwPath,
                                 Session $session,

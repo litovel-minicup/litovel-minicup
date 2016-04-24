@@ -21,7 +21,7 @@ class MatchRepository extends BaseRepository
 
     /**
      * @param Category $category
-     * @param string $mode
+     * @param string   $mode
      * @return Match[]
      */
     public function findMatchesByCategory(Category $category, $mode = MatchRepository::BOTH)
@@ -36,8 +36,8 @@ class MatchRepository extends BaseRepository
     }
 
     /**
-     * @param Category  $category
-     * @param int       $limit
+     * @param Category $category
+     * @param int      $limit
      * @return Match[]
      */
     public function getCurrentMatches(Category $category, $limit = 0)
@@ -57,8 +57,8 @@ class MatchRepository extends BaseRepository
     /**
      * TODO: remove actual playing matches from select
      *
-     * @param Category  $category
-     * @param int       $limit
+     * @param Category $category
+     * @param int      $limit
      * @return Match[]
      */
     public function getNextMatches(Category $category, $limit = 0)
@@ -72,8 +72,8 @@ class MatchRepository extends BaseRepository
     }
 
     /**
-     * @param Category  $category
-     * @param int       $limit
+     * @param Category $category
+     * @param int      $limit
      * @return Match[]
      */
     public function getLastMatches(Category $category, $limit = 0)
@@ -125,8 +125,8 @@ class MatchRepository extends BaseRepository
     /**
      * provide to fluent aliases 'mt'(match_term) and 'd'(day) joined to match
      * @param Category $category
-     * @param string $order
-     * @param int $limit
+     * @param string   $order
+     * @param int      $limit
      * @return Fluent
      */
     private function createCategoryFluent(Category $category, $limit = 0, $order = BaseRepository::ORDER_ASC)

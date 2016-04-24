@@ -5,14 +5,14 @@ namespace Minicup\Model\Entity;
 use LeanMapper\Exception\InvalidStateException;
 
 /**
- * @property        int         $id
- * @property        Category    $category m:hasOne      category
- * @property-read   Match[]     $matches                matches for this team
- * @property        string      $name                   czech name of team
- * @property        string      $slug                   slug for URL
- * @property        Team        $team m:belongsToOne    actually connected team
+ * @property        int                $id
+ * @property        Category           $category m:hasOne      category
+ * @property-read   Match[]            $matches                matches for this team
+ * @property        string             $name                   czech name of team
+ * @property        string             $slug                   slug for URL
+ * @property        Team               $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
- * @property        Tag|NULL    $tag m:hasOne
+ * @property        Tag|NULL           $tag m:hasOne
  */
 class TeamInfo extends BaseEntity
 {
@@ -43,8 +43,8 @@ class TeamInfo extends BaseEntity
          * @return int
          */
         $cmp = function ($match1, $match2) {
-            $match1Start = $match1->matchTerm->start->getTimestamp() + $match1->matchTerm->day->day->getTimestamp();
-            $match2Start = $match2->matchTerm->start->getTimestamp() + $match2->matchTerm->day->day->getTimestamp();
+            $match1Start = $match1->matchTerm->start + $match1->matchTerm->day->day;
+            $match2Start = $match2->matchTerm->start + $match2->matchTerm->day->day;
             if ($match1Start > $match2Start) {
                 return 1;
             } elseif ($match1Start < $match2Start) {

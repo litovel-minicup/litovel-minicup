@@ -19,7 +19,8 @@ use WebLoader\Nette\JavaScriptLoader;
 /**
  * Base presenter.
  */
-abstract class BasePresenter extends Presenter {
+abstract class BasePresenter extends Presenter
+{
     /** @var IFormFactory @inject */
     public $formFactory;
 
@@ -50,7 +51,8 @@ abstract class BasePresenter extends Presenter {
     /**
      * before render
      */
-    public function beforeRender() {
+    public function beforeRender()
+    {
         parent::beforeRender();
         $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
         $this->template->productionMode = $this->context->parameters['productionMode'];
@@ -61,7 +63,8 @@ abstract class BasePresenter extends Presenter {
      *
      * @return array
      */
-    public function formatLayoutTemplateFiles() {
+    public function formatLayoutTemplateFiles()
+    {
         $layout = $this->layout ?: 'layout';
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
@@ -87,7 +90,8 @@ abstract class BasePresenter extends Presenter {
      *
      * @return array
      */
-    public function formatTemplateFiles() {
+    public function formatTemplateFiles()
+    {
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
@@ -106,14 +110,16 @@ abstract class BasePresenter extends Presenter {
      *
      * @return ITemplate
      */
-    public function createTemplate() {
+    public function createTemplate()
+    {
         return $this->filterLoader->loadFilters(parent::createTemplate());
     }
 
     /**
      * set module property
      */
-    protected function startup() {
+    protected function startup()
+    {
         parent::startup();
         $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
         $this->CM->initEvents();
@@ -123,12 +129,14 @@ abstract class BasePresenter extends Presenter {
     }
 
     /** @return CssLoader */
-    protected function createComponentCss() {
+    protected function createComponentCss()
+    {
         return $this->CSSCF->create($this->module);
     }
 
     /** @return JavaScriptLoader */
-    protected function createComponentJs() {
+    protected function createComponentJs()
+    {
         return $this->JSCF->create($this->module);
     }
 }

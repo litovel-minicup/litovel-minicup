@@ -17,28 +17,32 @@ use Nette\InvalidArgumentException;
  * @property OnlineReport[]     $onlineReports                                  m:belongsToMany(:online_report)  reports
  * @property Team[]             $historyTeams                                   m:belongsToMany(after_match_id)   history teams
  */
-class Match extends BaseEntity {
+class Match extends BaseEntity
+{
     public static $CACHE_TAG = 'match';
 
     /**
      * @return int|string
      */
-    public function getScoreHome() {
-        return $this->__get('scoreHome') ?: ' - ';
+    public function getScoreHome()
+    {
+        return $this->get('scoreHome') ?: ' - ';
     }
 
     /**
      * @return int|string
      */
-    public function getScoreAway() {
-        return $this->__get('scoreAway') ?: ' - ';
+    public function getScoreAway()
+    {
+        return $this->get('scoreAway') ?: ' - ';
     }
 
     /**
      * @param TeamInfo|Team $teamInfo
      * @return bool
      */
-    public function isWinner($teamInfo) {
+    public function isWinner($teamInfo)
+    {
         if ($teamInfo instanceof Team) {
             $teamInfo = $teamInfo->i;
         } elseif (!$teamInfo instanceof TeamInfo) {
@@ -56,7 +60,8 @@ class Match extends BaseEntity {
      * @param Team|TeamInfo $teamInfo
      * @return bool
      */
-    public function isLoser($teamInfo) {
+    public function isLoser($teamInfo)
+    {
         if ($teamInfo instanceof Team) {
             $teamInfo = $teamInfo->i;
         } elseif (!$teamInfo instanceof TeamInfo) {
@@ -73,7 +78,8 @@ class Match extends BaseEntity {
     /**
      * @return bool
      */
-    public function isDraw() {
+    public function isDraw()
+    {
         if (!$this->confirmed) {
             return FALSE;
         }

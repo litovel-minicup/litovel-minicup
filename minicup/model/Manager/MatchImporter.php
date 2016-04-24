@@ -26,10 +26,10 @@ class MatchImporter
     private $TIR;
 
     /**
-     * @param MatchRepository $MR
+     * @param MatchRepository     $MR
      * @param MatchTermRepository $MTR
-     * @param DayRepository $DR
-     * @param TeamInfoRepository $TIR
+     * @param DayRepository       $DR
+     * @param TeamInfoRepository  $TIR
      */
     public function __construct(MatchRepository $MR, MatchTermRepository $MTR, DayRepository $DR, TeamInfoRepository $TIR)
     {
@@ -41,14 +41,14 @@ class MatchImporter
 
     /**
      * @param Category $category
-     * @param string $file
+     * @param string   $file
      */
     public function import(Category $category, $file)
     {
         $data = file_get_contents($file);
         foreach (Strings::split($data, "#\r|\n#") as $line) {
             $line = Strings::split($line, "#\t#");
-            $datetime =  \DateTime::createFromFormat('j. n. Y H:i', $line[0].' '.$line[1]);
+            $datetime = \DateTime::createFromFormat('j. n. Y H:i', $line[0] . ' ' . $line[1]);
             $term = $this->MTR->getByStart($datetime);
             $home = $this->TIR->getByName($category, $line[2]);
             $away = $this->TIR->getByName($category, $line[3]);

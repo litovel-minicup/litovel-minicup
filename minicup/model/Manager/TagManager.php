@@ -21,7 +21,7 @@ class TagManager extends Object
     private $tag;
 
     /**
-     * @param TagRepository $tag
+     * @param TagRepository      $tag
      * @param TeamInfoRepository $teamInfo
      */
     public function __construct(TagRepository $tag, TeamInfoRepository $teamInfo)

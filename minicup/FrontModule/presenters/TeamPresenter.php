@@ -11,7 +11,8 @@ use Nette\Application\UI\Multiplier;
 /**
  * Team presenter.
  */
-final class TeamPresenter extends BaseFrontPresenter {
+final class TeamPresenter extends BaseFrontPresenter
+{
 
     /** @var IListOfTeamsComponentFactory @inject */
     public $LOTCFactory;
@@ -19,18 +20,22 @@ final class TeamPresenter extends BaseFrontPresenter {
     /** @var ITeamDetailComponentFactory @inject */
     public $TDCFactory;
 
-    public function renderDefault() {
+    public function renderDefault()
+    {
 
     }
 
-    public function renderList(Category $category) {
+    public function renderList(Category $category)
+    {
     }
 
-    public function renderDetail(Category $category, Team $team) {
+    public function renderDetail(Category $category, Team $team)
+    {
         $this->template->team = $team;
     }
 
-    public function createComponentListOfTeamsComponent() {
+    public function createComponentListOfTeamsComponent()
+    {
         $CR = $this->CR;
         $me = $this;
         return new Multiplier(function ($categorySlug) use ($CR, $me) {
@@ -40,7 +45,8 @@ final class TeamPresenter extends BaseFrontPresenter {
     }
 
 
-    public function createComponentTeamDetailComponent() {
+    public function createComponentTeamDetailComponent()
+    {
         return $this->TDCFactory->create($this->getParameter('team'));
     }
 }

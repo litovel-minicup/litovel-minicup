@@ -28,7 +28,7 @@ class LoginFormComponent extends BaseComponent
     }
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
     public function loginFormValidated(Form $form, ArrayHash $values)

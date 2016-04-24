@@ -5,7 +5,8 @@ namespace Minicup\Model\Repository;
 use LeanMapper\Repository;
 use Minicup\Model\Entity\BaseEntity;
 
-abstract class BaseRepository extends Repository {
+abstract class BaseRepository extends Repository
+{
 
     /** constants for ordering options  */
     const ORDER_ASC = 'ASC';
@@ -19,7 +20,8 @@ abstract class BaseRepository extends Repository {
      * @param string   $event
      * @param callable $callback
      */
-    public function registerCallback($event, $callback) {
+    public function registerCallback($event, $callback)
+    {
         $this->events->registerCallback($event, $callback);
     }
 
@@ -28,7 +30,8 @@ abstract class BaseRepository extends Repository {
      * @param bool $useFilters
      * @return BaseEntity|NULL
      */
-    public function get($id, $useFilters = TRUE) {
+    public function get($id, $useFilters = TRUE)
+    {
         if ($useFilters) {
             $f = $this->createFluent();
         } else {
@@ -44,7 +47,8 @@ abstract class BaseRepository extends Repository {
      * @param bool|TRUE $withFilters
      * @return array
      */
-    public function findAll($withFilters = TRUE) {
+    public function findAll($withFilters = TRUE)
+    {
         if ($withFilters) {
             return $this->createEntities(
                 $this->createFluent()->fetchAll()
@@ -60,7 +64,8 @@ abstract class BaseRepository extends Repository {
      * @param int[] $ids
      * @return BaseEntity[]
      */
-    public function findByIds(array $ids) {
+    public function findByIds(array $ids)
+    {
         if (!$ids) {
             return array();
         }

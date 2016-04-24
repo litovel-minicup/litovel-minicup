@@ -24,7 +24,7 @@ class ListOfMatchesComponent extends BaseComponent
 
     /**
      * @param Day|Year|Team|Category|NULL $arg
-     * @param MatchRepository $MR
+     * @param MatchRepository             $MR
      */
     public function __construct($arg, MatchRepository $MR)
     {

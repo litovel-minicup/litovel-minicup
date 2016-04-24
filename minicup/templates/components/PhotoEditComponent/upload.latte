@@ -1,7 +1,9 @@
 <div class="thumbnail photo-{$photo->id}" data-id="{$photo->id}" n:snippet>
     <img class="img-thumbnail" src={plink :Media:thumb $photo->filename} alt="">
+
     <div class="caption">
         <h4>{$photo->id}</h4>
+
         <form>
             <div class="form-group">
                 {*}XSS? parent->parent because Multiplier{/*}
@@ -38,13 +40,13 @@
                         $photo.find('.photo-save').on('click', function (e) {
                             e.preventDefault();
                             e.stopPropagation();
-                            $.post({link save!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                            $.post({link save!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Fotka {$photo->id} úspěšně vložena do aplikace!', 'Výborně!');
                                 redrawSnippets(response);
                             });
                         });
                         select2.on('change', function (e) {
-                            $.post({link saveTags!}, { tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
+                            $.post({link saveTags!}, {tags: $photo.find('.select2').val()}, function (response, textStatus, xhr) {
                                 toastr.success('Tagy u fotky {$photo->id} aktualizovány!', 'Excelentně!');
                                 redrawSnippets(response);
                             });
@@ -74,7 +76,7 @@
                     <div class="col-md-8">
                         <p class="lead">Máš naprostou jistotu, že tu fotku chceš <strong>smazat?</strong></p>
                         <small>Už je nahraná v aplikaci a víš, jak je to s rychlostí internetu...</small>
-                </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="btn btn-default" data-dismiss="modal">Nechci!</div>

@@ -24,10 +24,10 @@ class InteractiveGalleryComponent extends BaseComponent
     private $PLCF;
 
     /**
-     * @param Photo[] $tags
+     * @param Photo[]                    $tags
      * @param IPhotoListComponentFactory $PLCF
-     * @param PhotoRepository $PR
-     * @param TagRepository $TR
+     * @param PhotoRepository            $PR
+     * @param TagRepository              $TR
      */
     public function __construct(array $tags = NULL, IPhotoListComponentFactory $PLCF, PhotoRepository $PR, TagRepository $TR)
     {
@@ -43,7 +43,9 @@ class InteractiveGalleryComponent extends BaseComponent
     public function render()
     {
         $photos = $this->PR->findByTags($this->tags);
-        $this->template->selectedTags = array_map(function(Tag $tag) { return $tag->id;}, $this->tags);
+        $this->template->selectedTags = array_map(function (Tag $tag) {
+            return $tag->id;
+        }, $this->tags);
         $this->template->tags = $this->TR->findAll();
         $this->template->photos = $photos;
         parent::render();

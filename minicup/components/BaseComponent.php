@@ -11,7 +11,8 @@ use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;
 use Nette\Utils\Strings;
 
-abstract class BaseComponent extends Control {
+abstract class BaseComponent extends Control
+{
     /** @var String|NULL */
     public $view;
     /** @var IFormFactory */
@@ -24,28 +25,32 @@ abstract class BaseComponent extends Control {
     /**
      * @param IFormFactory $formFactory
      */
-    public function injectFormFactory(IFormFactory $formFactory) {
+    public function injectFormFactory(IFormFactory $formFactory)
+    {
         $this->formFactory = $formFactory;
     }
 
     /**
      * @param FilterLoader $filterLoader
      */
-    public function injectFilterLoader(FilterLoader $filterLoader) {
+    public function injectFilterLoader(FilterLoader $filterLoader)
+    {
         $this->filterLoader = $filterLoader;
     }
 
     /**
      * @param bool $productionMode
      */
-    public function injectProductionMode($productionMode) {
+    public function injectProductionMode($productionMode)
+    {
         $this->productionMode = $productionMode;
     }
 
     /**
      * render component
      */
-    public function render() {
+    public function render()
+    {
         $this->template->productionMode = $this->productionMode;
         $this->template->render();
     }
@@ -55,7 +60,8 @@ abstract class BaseComponent extends Control {
      * @param array  $args
      * @return mixed
      */
-    public function __call($name, $args) {
+    public function __call($name, $args)
+    {
         if ($name !== 'render' && substr($name, 0, 6) === 'render') {
             $this->tryCall($name, $args);
             $view = Strings::lower(Strings::substring($name, 6));
@@ -69,7 +75,8 @@ abstract class BaseComponent extends Control {
     /**
      * refresh entire component snippet
      */
-    public function handleRefresh() {
+    public function handleRefresh()
+    {
         $this->redrawControl();
     }
 
@@ -78,7 +85,8 @@ abstract class BaseComponent extends Control {
      *
      * @return \Nette\Application\UI\ITemplate
      */
-    protected function createTemplate() {
+    protected function createTemplate()
+    {
         $template = $this->filterLoader->loadFilters(parent::createTemplate());
         $name = $this->reflection->shortName;
         $dir = $this->presenter->context->parameters['appDir'];
@@ -105,7 +113,8 @@ abstract class BaseComponent extends Control {
      * @param string $name
      * @return IComponent
      */
-    protected function createComponent($name) {
+    protected function createComponent($name)
+    {
         $comp = parent::createComponent($name);
         if ($comp instanceof Grid && $this->getPresenter(FALSE) && $this->getPresenter() instanceof BaseAdminPresenter) {
             return $this->getPresenter()->improveGrid($comp);

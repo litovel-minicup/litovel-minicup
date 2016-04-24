@@ -25,7 +25,7 @@ class FilterLoader extends Object
 
     /**
      * @param LinkGenerator $linkGenerator
-     * @param Texy $texy
+     * @param Texy          $texy
      */
     public function __construct(LinkGenerator $linkGenerator, Texy $texy)
     {

@@ -21,10 +21,10 @@ class AsideComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
+     * @param Category                       $category
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param ICategoryTableComponentFactory $CTCF
-     * @param MatchManager $MM
+     * @param MatchManager                   $MM
      */
     public function __construct(Category $category, IListOfMatchesComponentFactory $LOMCF, ICategoryTableComponentFactory $CTCF, MatchManager $MM)
     {

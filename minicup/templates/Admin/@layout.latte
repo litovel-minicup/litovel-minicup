@@ -3,7 +3,8 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse-1">
                     <span class="sr-only">Navigace</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -15,34 +16,47 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-list-alt"></i> Správa turnaje<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i
+                                    class="glyphicon glyphicon-list-alt"></i> Správa turnaje<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {foreach $categories as $_category}
                                 <li class="dropdown-header">{$_category->year->year} kategorie {$_category->name}</li>
-                                <li><a n:href="Team:list $_category"><i class="glyphicon glyphicon-list"></i> Týmy</a></li>
-                                <li><a n:href="Match:confirm $_category"><i class="glyphicon glyphicon-tasks"></i> Vkládání výsledků</a></li>
-                                <li><a n:href="Match:list $_category"><i class="glyphicon glyphicon-calendar"></i> Přehled zápasů</a></li>
-                                {sep}<li class="divider"></li>{/sep}
+                                <li><a n:href="Team:list $_category"><i class="glyphicon glyphicon-list"></i> Týmy</a>
+                                </li>
+                                <li><a n:href="Match:confirm $_category"><i class="glyphicon glyphicon-tasks"></i>
+                                        Vkládání výsledků</a></li>
+                                <li><a n:href="Match:list $_category"><i class="glyphicon glyphicon-calendar"></i>
+                                        Přehled zápasů</a></li>
+                                {sep}
+                                    <li class="divider"></li>
+                                {/sep}
                             {/foreach}
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="glyphicon glyphicon-picture"></i> Správa médií<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i
+                                    class="glyphicon glyphicon-picture"></i> Správa médií<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="{ifCurrent Photo:upload}active{/ifCurrent}"><a n:href="Photo:upload"><i class="glyphicon glyphicon-cloud-upload"></i> Upload fotek</a></li>
-                            <li class="{ifCurrent Photo:tags}active{/ifCurrent}"><a n:href="Photo:tags"><i class="glyphicon glyphicon-tags"></i> Správa tagů</a></li>
+                            <li class="{ifCurrent Photo:upload}active{/ifCurrent}"><a n:href="Photo:upload"><i
+                                            class="glyphicon glyphicon-cloud-upload"></i> Upload fotek</a></li>
+                            <li class="{ifCurrent Photo:tags}active{/ifCurrent}"><a n:href="Photo:tags"><i
+                                            class="glyphicon glyphicon-tags"></i> Správa tagů</a></li>
                             <li class="{ifCurrent Photo:photos}active{/ifCurrent}"><a n:href="Photo:photos"><i
                                             class="glyphicon glyphicon-camera"></i> Správa fotek</a></li>
                         </ul>
                     </li>
-                    <li><a class="navbar-link{ifCurrent User:} active{/ifCurrent}" n:href="User:"><i class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
-                    <li><a class="navbar-link{ifCurrent News:} active{/ifCurrent}" n:href="News:"><i class="glyphicon glyphicon-bold"></i> Správa novinek</a></li>
+                    <li><a class="navbar-link{ifCurrent User:} active{/ifCurrent}" n:href="User:"><i
+                                    class="glyphicon glyphicon-user"></i> Správa uživatelů</a></li>
+                    <li><a class="navbar-link{ifCurrent News:} active{/ifCurrent}" n:href="News:"><i
+                                    class="glyphicon glyphicon-bold"></i> Správa novinek</a></li>
                     <li><a class="navbar-link{ifCurrent System:} active{/ifCurrent}" n:href="System:"><i
                                     class="glyphicon glyphicon-lock"></i> Systémové akce</a></li>
                 </ul>
                 <p class="navbar-text navbar-right">
-                    <a class="navbar-link" n:href=":Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit se</a>
-                    <a class="navbar-link" n:href=":Front:Homepage:"><i class="glyphicon glyphicon-home"></i> Veřejná sekce</a>
+                    <a class="navbar-link" n:href=":Sign:out"><i class="glyphicon glyphicon-log-out"></i> Odhlásit
+                        se</a>
+                    <a class="navbar-link" n:href=":Front:Homepage:"><i class="glyphicon glyphicon-home"></i> Veřejná
+                        sekce</a>
                 </p>
             </div>
         </div>

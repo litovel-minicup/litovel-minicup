@@ -4,14 +4,14 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\News;
-use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 
-interface INewsFormComponentFactory {
+interface INewsFormComponentFactory
+{
     /**
      * @param News $news
      * @return NewsFormComponent
@@ -19,7 +19,8 @@ interface INewsFormComponentFactory {
     public function create(News $news = NULL);
 }
 
-class NewsFormComponent extends BaseComponent {
+class NewsFormComponent extends BaseComponent
+{
     /** @var NewsRepository */
     private $NR;
 
@@ -31,13 +32,15 @@ class NewsFormComponent extends BaseComponent {
 
     public function __construct(News $news = NULL,
                                 NewsRepository $NR,
-                                YearRepository $yearRepository) {
+                                YearRepository $yearRepository)
+    {
         $this->news = $news;
         $this->NR = $NR;
         $this->YR = $yearRepository;
     }
 
-    public function render() {
+    public function render()
+    {
         $this->template->news = $this->news;
         if ($this->news) {
             /** @var Form $form */
@@ -50,7 +53,8 @@ class NewsFormComponent extends BaseComponent {
     /**
      * @return Form
      */
-    public function createComponentNewsForm() {
+    public function createComponentNewsForm()
+    {
         $f = $this->formFactory->create();
         $f->addText('title', 'Titulek')->setRequired();
         $f->addSelect('year', 'Rok', $this->YR->getYearChoices());
@@ -72,7 +76,8 @@ class NewsFormComponent extends BaseComponent {
      * @param Form      $form
      * @param ArrayHash $values
      */
-    public function newsFormSubmitted(Form $form, ArrayHash $values) {
+    public function newsFormSubmitted(Form $form, ArrayHash $values)
+    {
         if ($this->news) {
             $news = $this->news;
         } else {

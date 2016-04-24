@@ -20,7 +20,7 @@ class CategoryStatsComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
+     * @param Category     $category
      * @param StatsManager $SM
      * @param MatchManager $MM
      */

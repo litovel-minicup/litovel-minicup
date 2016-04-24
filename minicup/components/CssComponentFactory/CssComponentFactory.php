@@ -28,8 +28,8 @@ class CssComponentFactory extends Object
     public $request;
 
     /**
-     * @param string $wwwPath
-     * @param bool $productionMode
+     * @param string  $wwwPath
+     * @param bool    $productionMode
      * @param Request $request
      */
     public function __construct($wwwPath, $productionMode, IRequest $request)

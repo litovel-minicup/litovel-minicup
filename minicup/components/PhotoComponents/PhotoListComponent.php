@@ -5,6 +5,17 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Photo;
 
+interface IPhotoListComponentFactory
+{
+    /**
+     * @param Photo[] $photos
+     * @param int     $initial
+     * @param int     $step
+     * @return PhotoListComponent
+     */
+    public function create(array $photos, $initial = 12, $step = 18);
+}
+
 class PhotoListComponent extends BaseComponent
 {
     /** @var Photo[] */
@@ -18,8 +29,8 @@ class PhotoListComponent extends BaseComponent
 
     /**
      * @param array $photos
-     * @param int $initial
-     * @param int $step
+     * @param int   $initial
+     * @param int   $step
      */
     public function __construct(array $photos, $initial = 12, $step = 18)
     {
@@ -60,15 +71,4 @@ class PhotoListComponent extends BaseComponent
     }
 
 
-}
-
-interface IPhotoListComponentFactory
-{
-    /**
-     * @param Photo[] $photos
-     * @param int $initial
-     * @param int $step
-     * @return PhotoListComponent
-     */
-    public function create(array $photos, $initial = 12, $step = 18);
 }

@@ -41,6 +41,15 @@ class SystemPresenter extends BaseAdminPresenter
         }
     }
 
+    private static function rmDir($dir)
+    {
+        $files = array_diff(scandir($dir), array('.', '..'));
+        foreach ($files as $file) {
+            (is_dir("$dir/$file")) ? static::rmDir("$dir/$file") : unlink("$dir/$file");
+        }
+        return rmdir($dir);
+    }
+
     public function handleDeleteTemp()
     {
         $cache = $this->context->parameters['tempDir'] . '/cache';
@@ -50,14 +59,5 @@ class SystemPresenter extends BaseAdminPresenter
         } else {
             $this->flashMessage('Něco se pokazilo při mazání tempu.', 'danger');
         }
-    }
-
-    private static function rmDir($dir)
-    {
-        $files = array_diff(scandir($dir), array('.', '..'));
-        foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? static::rmDir("$dir/$file") : unlink("$dir/$file");
-        }
-        return rmdir($dir);
     }
 }

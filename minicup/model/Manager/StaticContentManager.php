@@ -27,7 +27,7 @@ class StaticContentManager extends Object
     private $SCR;
 
     /**
-     * @param TeamInfoRepository $TIR
+     * @param TeamInfoRepository      $TIR
      * @param StaticContentRepository $SCR
      */
     public function __construct(TeamInfoRepository $TIR, StaticContentRepository $SCR)

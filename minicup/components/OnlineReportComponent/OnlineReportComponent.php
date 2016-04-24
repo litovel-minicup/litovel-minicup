@@ -18,7 +18,7 @@ class OnlineReportComponent extends BaseComponent
     private $ORR;
 
     /**
-     * @param Match $match
+     * @param Match                  $match
      * @param OnlineReportRepository $ORR
      */
     public function __construct(Match $match, OnlineReportRepository $ORR)
@@ -59,7 +59,7 @@ class OnlineReportComponent extends BaseComponent
     }
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
     public function newReportFormSubmitted($form, $values)

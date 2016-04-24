@@ -17,9 +17,9 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Object;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 
-class RouterFactory extends Object {
+class RouterFactory extends Object
+{
     /** @var CategoryRepository */
     private $CR;
 
@@ -51,7 +51,8 @@ class RouterFactory extends Object {
                                 YearRepository $YR,
                                 TagRepository $TagR,
                                 Session $session,
-                                YearCategoryRouteFactory $yearCategoryRouteFactory) {
+                                YearCategoryRouteFactory $yearCategoryRouteFactory)
+    {
         $this->CR = $CR;
         $this->TR = $TR;
         $this->YR = $YR;
@@ -63,7 +64,8 @@ class RouterFactory extends Object {
     /**
      * @return IRouter
      */
-    public function create() {
+    public function create()
+    {
         $CR = $this->CR;
         $YR = $this->YR;
         $TR = $this->TR;
@@ -174,7 +176,6 @@ class RouterFactory extends Object {
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
                     }
-                    is_string($params['category']) ? Debugger::barDump($params) : NULL;
                     $params['category'] = $CR->getBySlug($params['category']);
                     $team = $TR->getBySlug($params['team'], $params['category']);
 
@@ -248,7 +249,8 @@ class RouterFactory extends Object {
      * @param Request $request
      * @return Team|NULL
      */
-    public function teamSlug2Team($teamSlug, Request $request) {
+    public function teamSlug2Team($teamSlug, Request $request)
+    {
         return $this->TR->getBySlug($teamSlug, $request->parameters['category']);
     }
 
@@ -257,7 +259,8 @@ class RouterFactory extends Object {
      * @param Request       $request
      * @return string
      */
-    public function team2TeamSlug($team, Request $request) {
+    public function team2TeamSlug($team, Request $request)
+    {
         if ($team instanceof Team) {
             return $team->slug;
         } else {
