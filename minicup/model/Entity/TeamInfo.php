@@ -43,8 +43,8 @@ class TeamInfo extends BaseEntity
          * @return int
          */
         $cmp = function ($match1, $match2) {
-            $match1Start = $match1->matchTerm->start + $match1->matchTerm->day->day;
-            $match2Start = $match2->matchTerm->start + $match2->matchTerm->day->day;
+            $match1Start = $match1->matchTerm->start->s + $match1->matchTerm->day->day->getTimestamp();
+            $match2Start = $match2->matchTerm->start->s + $match2->matchTerm->day->day->getTimestamp();
             if ($match1Start > $match2Start) {
                 return 1;
             } elseif ($match1Start < $match2Start) {
