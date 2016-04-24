@@ -66,12 +66,12 @@ class NewsPresenter extends BaseAdminPresenter
         $g->addColumnText('title', 'Titulek');
         $g->addColumnText('content', 'Obsah');
         $g->addColumnNumber('texy', 'Texy?')->setReplacement(array(
-            0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
-            1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
+            0 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-remove')),
+            1 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-ok'))
         ));
         $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
         $g->addActionHref('detail', 'Detail', 'News:detail', array('id' => 'id'));
-        $NR = $this->newsRepository;
+        $NR = $this->NR;
         $g->addActionEvent('delete', 'Smazat', function ($id) use ($NR) {
             $NR->delete($id);
         })->setConfirm('Jsi si jistý?');
