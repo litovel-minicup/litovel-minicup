@@ -54,11 +54,11 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->start, 'G:i'));
+            return $matchTerm->start->format('%h:%I');
         });
 
         $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->end, 'G:i'));
+            return $matchTerm->end->format('%h:%I');
         });
 
         $template->addFilter('toJson', function (array $array) {

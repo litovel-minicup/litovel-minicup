@@ -51,7 +51,7 @@
     </div>
 {/if}
 
-{if $team->i->staticContent || $user->isAllowed('static-content', 'edit')}
+{if $team->i->staticContent->content || $user->isAllowed('static-content', 'edit')}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
