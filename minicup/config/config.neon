@@ -163,5 +163,5 @@ migrations:
     table: db_migrations
     dirs:
         - %appDir%/migrations
-    namespace: App\Migrations
+    namespace: Minicup\Migrations
     codingStandard: spaces

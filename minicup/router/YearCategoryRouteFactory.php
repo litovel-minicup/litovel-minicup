@@ -3,6 +3,7 @@
 namespace Minicup\Router;
 
 
+use Dibi\DriverException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
@@ -105,9 +106,14 @@ class YearCategoryRouteFactory extends Object
                 return "{$category->year->year}-{$category->slug}";
             }
         );
-        if (!$requiredCategory) {
-            $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
-            $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
+        try {
+            if (!$requiredCategory) {
+                $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
+                $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
+            }
+
+        } catch (DriverException $e) {
+
         }
         return $metadata;
     }

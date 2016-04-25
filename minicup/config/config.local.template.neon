@@ -3,8 +3,10 @@ parameters:
     connection:
         host: host
         username: username
-        password: password
+        user: username
+        password:
         database: database
+        dbname: dbname
 
         driver: mysqli
         # optional
