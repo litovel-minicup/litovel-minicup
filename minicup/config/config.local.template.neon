@@ -1,28 +1,34 @@
 # default database connection
-leanMapper:
-    host:
-    username:
-    password:
-    database:
+parameters:
+    connection:
+        host: host
+        username: username
+        password: password
+        database: database
+
+        driver: mysqli
+        # optional
+        lazy: yes
+        profiler: yes
 
 
 tracy:
-	# link to editor
+    # link to editor
     editor:
 
 
 di:
-	# DI panel in Tracy Debug Bar
+    # DI panel in Tracy Debug Bar
     debugger: no
 
 
 session:
-	# session overview in Tracy Debug Bar
+    # session overview in Tracy Debug Bar
     debugger: no
 
 
 application:
-	# aplication panel in Tracy Debug Bar
+    # aplication panel in Tracy Debug Bar
     debugger: no
     # catch exception like 404, 403
     catchExceptions: false

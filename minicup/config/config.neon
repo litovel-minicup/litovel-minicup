@@ -29,6 +29,8 @@ decorator:
 		setup:
 			- injectProductionMode(%productionMode%)
 
+leanMapper: %connection%
+
 services:
     router: @Minicup\Router\RouterFactory::create
     texy: @Minicup\Misc\TexyFactory::create
@@ -59,6 +61,8 @@ services:
     # lean mapper
     - LeanMapper\DefaultEntityFactory
     - Minicup\Model\Mapper(%entityFQN%)
+    - Doctrine\DBAL\Connection(%connection%)
+    - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
 
     leanMapper.connection:
@@ -151,3 +155,13 @@ services:
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension
     replicator: Minicup\Misc\EntitiesReplicatorExtension
+    console: Kdyby\Console\DI\ConsoleExtension
+    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    - Symnedi\EventDispatcher\DI\EventDispatcherExtension
+
+migrations:
+    table: db_migrations
+    dirs:
+        - %appDir%/migrations
+    namespace: App\Migrations
+    codingStandard: spaces

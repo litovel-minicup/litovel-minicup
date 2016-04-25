@@ -23,7 +23,9 @@
     "natxet/CssMin": "@dev",
     "neeckeloo/closure-compiler-php": "@dev",
     "texy/texy": "~2.6",
-    "kdyby/forms-replicator": "@dev"
+    "kdyby/forms-replicator": "@dev",
+    "zenify/doctrine-migrations": "~2.3",
+    "kdyby/console": "~2.4"
   },
   "minimum-stability": "beta",
   "prefer-stable": true
