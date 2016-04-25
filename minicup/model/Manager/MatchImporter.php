@@ -3,6 +3,7 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\DriverException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Repository\DayRepository;
@@ -60,7 +61,7 @@ class MatchImporter
             $match->matchTerm = $term;
             try {
                 $this->MR->persist($match);
-            } catch (\DibiDriverException $e) {
+            } catch (DriverException $e) {
 
             }
 

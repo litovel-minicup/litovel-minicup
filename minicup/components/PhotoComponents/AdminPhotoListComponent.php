@@ -2,6 +2,7 @@
 
 namespace Minicup\Components;
 
+use Dibi\Row;
 use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
@@ -17,6 +18,15 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Html;
 use Nette\Utils\Random;
+
+interface IAdminPhotoListComponentFactory
+{
+    /**
+     * @return AdminPhotoListComponent
+     */
+    public function create();
+
+}
 
 class AdminPhotoListComponent extends BaseComponent
 {
@@ -79,8 +89,9 @@ class AdminPhotoListComponent extends BaseComponent
         }
         $this->session->adminPhotoList = $this->id;
         $this->session->allPhotos = $this->allPhotos;
-        $this->session[$this->id] = $this->session[$this->id] ? $this->session[$this->id] : array();
+        $this->session[$this->id] = $this->session[$this->id] ?: array();
         $this->photos = $this->PR->findByTags($this->TR->findByIds($this->session[$this->id]));
+        parent::__construct();
     }
 
     public function render()
@@ -166,25 +177,25 @@ class AdminPhotoListComponent extends BaseComponent
             $photo = $PR->get($id);
             $photo->active = $photo->active ? 0 : 1;
             $PR->persist($photo);
-        })->setCustomRender(function (\DibiRow $row, Html $element) {
+        })->setCustomRender(function (Row $row, Html $element) {
             return $element->setText($row['active'] ? 'Skrýt' : 'Zobrazit');
         });
 
-        $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (\DibiRow $row) use ($linkGenerator) {
-            return Html::el('img', array("src" => $linkGenerator->link("Media:mini", array($row->filename))));
+        $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (Row $row) use ($linkGenerator) {
+            return Html::el('img', array('src' => $linkGenerator->link('Media:mini', array($row->filename))));
         });
 
-        $g->addColumnDate('taken', "Pořízena", Date::FORMAT_DATETIME);
+        $g->addColumnDate('taken', 'Pořízena', Date::FORMAT_DATETIME);
 
-        $g->addColumnDate('added', "Přidána", Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
+        $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
 
         $g->addColumnText('count_of_tags', 'Počet tagů')->setSortable();
 
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
             $active->setReplacement(array(
-                0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
-                1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
+                0 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-remove')),
+                1 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-ok'))
             ));
         } else {
             $model->where('[active] = 1');
@@ -213,14 +224,4 @@ class AdminPhotoListComponent extends BaseComponent
             return $photoEdit;
         });
     }
-}
-
-
-interface IAdminPhotoListComponentFactory
-{
-    /**
-     * @return AdminPhotoListComponent
-     */
-    public function create();
-
 }

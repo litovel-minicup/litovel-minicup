@@ -8,6 +8,15 @@ use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Manager\StatsManager;
 use Nette\Utils\ArrayHash;
 
+interface ICategoryStatsComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryStatsComponent
+     */
+    public function create(Category $category);
+}
+
 class CategoryStatsComponent extends BaseComponent
 {
     /** @var Category */
@@ -24,8 +33,11 @@ class CategoryStatsComponent extends BaseComponent
      * @param StatsManager $SM
      * @param MatchManager $MM
      */
-    public function __construct(Category $category, StatsManager $SM, MatchManager $MM)
+    public function __construct(Category $category,
+                                StatsManager $SM,
+                                MatchManager $MM)
     {
+        parent::__construct();
         $this->category = $category;
         $this->SM = $SM;
         $this->MM = $MM;
@@ -44,13 +56,4 @@ class CategoryStatsComponent extends BaseComponent
     {
         return $this->MM->isStarted($this->category);
     }
-}
-
-interface ICategoryStatsComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryStatsComponent
-     */
-    public function create(Category $category);
 }

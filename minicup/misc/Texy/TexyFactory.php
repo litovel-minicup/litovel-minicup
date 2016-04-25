@@ -17,7 +17,8 @@ class TexyFactory extends Object
      * @param string        $modulePrefix
      * @param LinkGenerator $linkGenerator
      */
-    public function __construct($modulePrefix, LinkGenerator $linkGenerator)
+    public function __construct($modulePrefix,
+                                LinkGenerator $linkGenerator)
     {
         $this->linkGenerator = $linkGenerator;
         $this->modulePrefix = $modulePrefix;

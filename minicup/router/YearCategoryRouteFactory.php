@@ -85,6 +85,7 @@ class YearCategoryRouteFactory extends Object
         $metadata = array(
             Route::FILTER_IN => function ($slug) use ($CR, $YR) {
                 // TEMPORARILY SOLUTION
+                // TODO: remove after search engines reindex old project
                 if ($category = $CR->getBySlug($slug, $YR->getBySlug('2014'))) {
                     return $category;
                 }

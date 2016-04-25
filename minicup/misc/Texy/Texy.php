@@ -5,7 +5,7 @@ namespace Minicup\Misc;
 use Nette\Application\LinkGenerator;
 use Nette\Utils\Strings;
 
-class Texy extends \Texy
+class Texy extends \Texy\Texy
 {
     /** @var LinkGenerator */
     public $linkGenerator;

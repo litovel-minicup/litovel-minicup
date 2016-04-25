@@ -9,6 +9,15 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
 
+interface IInteractiveGalleryComponentFactory
+{
+    /**
+     * @param array $tags
+     * @return InteractiveGalleryComponent
+     */
+    public function create(array $tags = NULL);
+}
+
 class InteractiveGalleryComponent extends BaseComponent
 {
     /** @var PhotoRepository */
@@ -29,7 +38,10 @@ class InteractiveGalleryComponent extends BaseComponent
      * @param PhotoRepository            $PR
      * @param TagRepository              $TR
      */
-    public function __construct(array $tags = NULL, IPhotoListComponentFactory $PLCF, PhotoRepository $PR, TagRepository $TR)
+    public function __construct(array $tags = NULL,
+                                IPhotoListComponentFactory $PLCF,
+                                PhotoRepository $PR,
+                                TagRepository $TR)
     {
         if (!$tags) {
             $tags = array();
@@ -38,6 +50,7 @@ class InteractiveGalleryComponent extends BaseComponent
         $this->TR = $TR;
         $this->tags = $tags;
         $this->PLCF = $PLCF;
+        parent::__construct();
     }
 
     public function render()
@@ -67,7 +80,7 @@ class InteractiveGalleryComponent extends BaseComponent
         $results = array();
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
+            $results[] = array('id' => $tag->id, 'text' => $tag->name ?: $tag->slug);
         }
         $this->redrawControl('photo-list');
         $this->presenter->payload->results = $results;
@@ -87,13 +100,4 @@ class InteractiveGalleryComponent extends BaseComponent
     {
         return $this->PLCF->create($this->PR->findByTags($this->tags));
     }
-}
-
-interface IInteractiveGalleryComponentFactory
-{
-    /**
-     * @param array $tags
-     * @return InteractiveGalleryComponent
-     */
-    public function create(array $tags = NULL);
 }

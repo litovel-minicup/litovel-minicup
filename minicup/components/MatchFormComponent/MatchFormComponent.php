@@ -13,6 +13,16 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 
+interface IMatchFormComponentFactory
+{
+    /**
+     * @param Category $category
+     * @param int      $count
+     * @return MatchFormComponent
+     */
+    public function create(Category $category, $count);
+}
+
 class MatchFormComponent extends BaseComponent
 {
     /** @var Category */
@@ -27,12 +37,16 @@ class MatchFormComponent extends BaseComponent
     /** @var MatchManager */
     private $MM;
 
-    public function __construct(Category $category, $count, MatchRepository $MR, MatchManager $MM)
+    public function __construct(Category $category,
+                                $count,
+                                MatchRepository $MR,
+                                MatchManager $MM)
     {
         $this->category = $category;
         $this->count = $count;
         $this->MR = $MR;
         $this->MM = $MM;
+        parent::__construct();
     }
 
     public function render()
@@ -40,6 +54,32 @@ class MatchFormComponent extends BaseComponent
         $this->template->match = $this->category;
         parent::render();
     }
+
+    public function addMatchClicked(SubmitButton $button)
+    {
+        $button->parent->createOne();
+        $this->redrawControl();
+    }
+
+    public function formSubmitted(Form $form, ArrayHash $values)
+    {
+        /** @var SubmitButton $submitButton */
+        $submitButton = $form['submit'];
+        if ($submitButton->isSubmittedBy()) {
+            foreach ($values['matches'] as $matchId => $matchData) {
+                if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
+                    continue;
+                }
+                /** @var Match $match */
+                $match = $this->MR->get((int)$matchId);
+                $this->MM->confirmMatch($match, $match->category, $matchData['scoreHome'], $matchData['scoreAway']);
+                $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
+            }
+            $this->redirect('this');
+        }
+    }
+
+    /***/
 
     /**
      * @return Form
@@ -59,7 +99,7 @@ class MatchFormComponent extends BaseComponent
             $home->addCondition(Form::INTEGER);
             $container->addText('time')
                 ->setDisabled()
-                ->setDefaultValue($match->matchTerm->start->format('j. n.') . " " . $match->matchTerm->start->format('G:i'));
+                ->setDefaultValue($match->matchTerm->start->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i'));
             $away = $container
                 ->addText('scoreAway', $match->awayTeam->name)
                 ->setType('number');
@@ -80,39 +120,4 @@ class MatchFormComponent extends BaseComponent
         $f->onSuccess[] = $this->formSubmitted;
         return $f;
     }
-
-    public function addMatchClicked(SubmitButton $button)
-    {
-        $button->parent->createOne();
-        $this->redrawControl();
-    }
-
-    /***/
-    public function formSubmitted(Form $form, ArrayHash $values)
-    {
-        /** @var SubmitButton $submitButton */
-        $submitButton = $form['submit'];
-        if ($submitButton->isSubmittedBy()) {
-            foreach ($values['matches'] as $matchId => $matchData) {
-                if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
-                    continue;
-                }
-                /** @var Match $match */
-                $match = $this->MR->get((int)$matchId);
-                $this->MM->confirmMatch($match, $match->category, $matchData['scoreHome'], $matchData['scoreAway']);
-                $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
-            }
-            $this->redirect('this');
-        }
-    }
-}
-
-interface IMatchFormComponentFactory
-{
-    /**
-     * @param Category $category
-     * @param int      $count
-     * @return MatchFormComponent
-     */
-    public function create(Category $category, $count);
 }

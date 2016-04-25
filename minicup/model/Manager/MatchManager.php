@@ -3,6 +3,8 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\DateTime;
+use Dibi\Exception;
 use LeanMapper\Connection;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
@@ -63,40 +65,11 @@ class MatchManager extends Object
     }
 
     /**
-     * Set scores to match, replicate history table, refresh points in actual teams and reorder teams.
-     * Whole in transaction.
-     *
-     * @param Match    $match
-     * @param Category $category
-     * @param          $scoreHome
-     * @param          $scoreAway
-     * @throws \DibiException
-     * @throws \Exception
-     */
-    public function confirmMatch(Match $match, Category $category, $scoreHome, $scoreAway)
-    {
-        $this->connection->begin();
-        try {
-            $match->scoreHome = $scoreHome;
-            $match->scoreAway = $scoreAway;
-            $match->confirmed = new \DibiDateTime();
-            $this->MR->persist($match);
-            $this->replicator->replicate($category, $match);
-            $this->TDR->refreshData($category);
-            $this->RM->reorder($category);
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-            throw $e;
-        }
-        $this->connection->commit();
-    }
-
-    /**
      * Finds all matches confirmed later the current, for this matches deletes all history teams.
      * After that regenerates for repaired match.
      *
      * @param Match $match repaired match
-     * @throws \DibiException
+     * @throws Exception
      * @throws \Exception
      */
     public function regenerateFromMatch(Match $match)
@@ -128,12 +101,41 @@ class MatchManager extends Object
     }
 
     /**
+     * Set scores to match, replicate history table, refresh points in actual teams and reorder teams.
+     * Whole in transaction.
+     *
+     * @param Match    $match
+     * @param Category $category
+     * @param          $scoreHome
+     * @param          $scoreAway
+     * @throws Exception
+     * @throws \Exception
+     */
+    public function confirmMatch(Match $match, Category $category, $scoreHome, $scoreAway)
+    {
+        $this->connection->begin();
+        try {
+            $match->scoreHome = $scoreHome;
+            $match->scoreAway = $scoreAway;
+            $match->confirmed = new DateTime();
+            $this->MR->persist($match);
+            $this->replicator->replicate($category, $match);
+            $this->TDR->refreshData($category);
+            $this->RM->reorder($category);
+        } catch (\Exception $e) {
+            $this->connection->rollback();
+            throw $e;
+        }
+        $this->connection->commit();
+    }
+
+    /**
      * @param Category $category
      * @return bool
      */
     public function isPlayingTime(Category $category)
     {
-        $now = new \DibiDateTime();
+        $now = new DateTime();
         return NULL !== $this->MTR->getInTime($now);
     }
 

@@ -7,6 +7,16 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
 
+interface ICategoryHistoryComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryHistoryComponent
+     */
+    public function create(Category $category);
+
+}
+
 class CategoryHistoryComponent extends BaseComponent
 {
     /** @var Category $category */
@@ -15,10 +25,12 @@ class CategoryHistoryComponent extends BaseComponent
     /** @var TeamRepository */
     private $TR;
 
-    public function __construct(Category $category, TeamRepository $TR)
+    public function __construct(Category $category,
+                                TeamRepository $TR)
     {
         $this->category = $category;
         $this->TR = $TR;
+        parent::__construct();
     }
 
     public function render()
@@ -33,7 +45,7 @@ class CategoryHistoryComponent extends BaseComponent
                 return count($team->getPlayedMatches());
             }, $this->category->teams)) + 1;
 
-        $data = array("labels" => range(1, $maxMatches + 1), "series" => array());
+        $data = array('labels' => range(1, $maxMatches + 1), 'series' => array());
         $countOfTeams = count($this->category->teams);
         $n = 1;
         foreach ($this->category->teams as $team) {
@@ -61,14 +73,4 @@ class CategoryHistoryComponent extends BaseComponent
             $this->presenter->sendJson($data);
         }
     }
-}
-
-interface ICategoryHistoryComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryHistoryComponent
-     */
-    public function create(Category $category);
-
 }

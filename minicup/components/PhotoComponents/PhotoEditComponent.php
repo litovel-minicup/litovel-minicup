@@ -12,6 +12,15 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
+}
+
 /**
  * @method onDelete(Photo $photo)
  * @method onSave(Photo $photo)
@@ -119,14 +128,4 @@ class PhotoEditComponent extends BaseComponent
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
-}
-
-
-interface IPhotoEditComponentFactory
-{
-    /**
-     * @param Photo $photo
-     * @return PhotoEditComponent
-     */
-    public function create(Photo $photo);
 }

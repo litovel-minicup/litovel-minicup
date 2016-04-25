@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Dibi\DateTime;
 use Minicup\Misc\Texy;
 use Minicup\Model\Entity\StaticContent;
 use Minicup\Model\Manager\StaticContentManager;
@@ -11,6 +12,15 @@ use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
+
+interface IStaticContentComponentFactory
+{
+    /**
+     * @param StaticContent|NULL $content
+     * @return StaticContentComponent
+     */
+    public function create($arg);
+}
 
 class StaticContentComponent extends BaseComponent
 {
@@ -29,7 +39,10 @@ class StaticContentComponent extends BaseComponent
      * @param Texy                    $texy
      * @param StaticContentManager    $SCM
      */
-    public function __construct($arg, StaticContentRepository $SCR, Texy $texy, StaticContentManager $SCM)
+    public function __construct($arg,
+                                StaticContentRepository $SCR,
+                                Texy $texy,
+                                StaticContentManager $SCM)
     {
         parent::__construct();
         $this->SCR = $SCR;
@@ -52,7 +65,7 @@ class StaticContentComponent extends BaseComponent
         $this->template->edit = TRUE;
         /** @var Form $form */
         $form = $this['editForm'];
-        $form->setValues(array("content" => $this->content->content));
+        $form->setValues(array('content' => $this->content->content));
         if ($this->presenter->isAjax()) {
             $this->redrawControl('component');
         }
@@ -76,7 +89,7 @@ class StaticContentComponent extends BaseComponent
         $submit = $form['submit'];
         if ($submit->isSubmittedBy()) {
             $this->content->content = $values->content;
-            $this->content->updated = new \DibiDateTime();
+            $this->content->updated = new DateTime();
             $this->SCR->persist($this->content);
         }
 
@@ -88,13 +101,4 @@ class StaticContentComponent extends BaseComponent
     }
 
 
-}
-
-interface IStaticContentComponentFactory
-{
-    /**
-     * @param StaticContent|NULL $content
-     * @return StaticContentComponent
-     */
-    public function create($arg);
 }

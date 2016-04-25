@@ -27,7 +27,8 @@ class FilterLoader extends Object
      * @param LinkGenerator $linkGenerator
      * @param Texy          $texy
      */
-    public function __construct(LinkGenerator $linkGenerator, Texy $texy)
+    public function __construct(LinkGenerator $linkGenerator,
+                                Texy $texy)
     {
         $this->linkGenerator = $linkGenerator;
         $this->texy = $texy;
@@ -35,7 +36,7 @@ class FilterLoader extends Object
 
 
     /**
-     * @param Template $template
+     * @param ITemplate|Template $template
      * @return Template
      */
     public function loadFilters(ITemplate $template)

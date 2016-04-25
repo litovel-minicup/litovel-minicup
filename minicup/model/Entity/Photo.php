@@ -12,7 +12,7 @@ namespace Minicup\Model\Entity;
  * @property int       $active
  *
  * @method removeAllTags
- * @method addToTags
+ * @method addToTags(Tag $tag)
  */
 class Photo extends BaseEntity
 {

@@ -2,6 +2,7 @@
 
 namespace Minicup\Model\Repository;
 
+use Dibi\DateTime;
 use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
@@ -19,26 +20,29 @@ class DayRepository extends BaseRepository
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR)
+    public function __construct(Connection $connection,
+                                IMapper $mapper,
+                                IEntityFactory $entityFactory,
+                                YearRepository $YR)
     {
         $this->YR = $YR;
         parent::__construct($connection, $mapper, $entityFactory);
+    }
+
+    /**
+     * @param DateTime $dt
+     * @return MatchTerm|null
+     */
+    public function getByDatetime(DateTime $dt)
+    {
+        $row = $this->createFluent()->where('[day] = %s', $dt->format('Y-m-d'))->fetch();
+        return $row ? $this->createEntity($row) : NULL;
     }
 
     protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
     {
         $year = $this->YR->getSelectedYear();
         return parent::createFluent(array_merge(array($year->id), func_get_args()));
-    }
-
-    /**
-     * @param \DibiDateTime $dt
-     * @return MatchTerm|null
-     */
-    public function getByDatetime(\DibiDateTime $dt)
-    {
-        $row = $this->createFluent()->where('[day] = %s', $dt->format('Y-m-d'))->fetch();
-        return $row ? $this->createEntity($row) : NULL;
     }
 
     /**

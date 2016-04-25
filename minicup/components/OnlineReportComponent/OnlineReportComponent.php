@@ -8,6 +8,16 @@ use Minicup\Model\Repository\OnlineReportRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
+interface IOnlineReportComponentFactory
+{
+    /**
+     * @param $match Match
+     * @return OnlineReportComponent
+     */
+    public function create(Match $match);
+
+}
+
 class OnlineReportComponent extends BaseComponent
 {
 
@@ -21,7 +31,8 @@ class OnlineReportComponent extends BaseComponent
      * @param Match                  $match
      * @param OnlineReportRepository $ORR
      */
-    public function __construct(Match $match, OnlineReportRepository $ORR)
+    public function __construct(Match $match,
+                                OnlineReportRepository $ORR)
     {
         parent::__construct();
         $this->match = $match;
@@ -76,14 +87,4 @@ class OnlineReportComponent extends BaseComponent
         $this->ORR->persist($ORE);
         $this->redrawControl();
     }
-}
-
-interface IOnlineReportComponentFactory
-{
-    /**
-     * @param $match Match
-     * @return OnlineReportComponent
-     */
-    public function create(Match $match);
-
 }

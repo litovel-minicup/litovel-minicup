@@ -2,6 +2,7 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\DateTime;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
 use Nette\FileNotFoundException;
@@ -85,10 +86,10 @@ class PhotoManager extends Object
             $file->move($path);
 
             $exif = exif_read_data($path);
-            $taken = new \DibiDateTime();
+            $taken = new DateTime();
             if (isset($exif['DateTimeOriginal'])) {
                 try {
-                    $taken = new \DibiDateTime($exif['DateTimeOriginal']);
+                    $taken = new DateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
                 }
             }

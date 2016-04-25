@@ -10,6 +10,16 @@ use Minicup\Model\Repository\MatchRepository;
 use Nette\InvalidArgumentException;
 use Nette\Utils\DateTime;
 
+interface IListOfMatchesComponentFactory
+{
+    /**
+     * @param Day|Team|Category|Year|NULL $arg
+     * @return ListOfMatchesComponent
+     */
+    public function create($arg);
+
+}
+
 class ListOfMatchesComponent extends BaseComponent
 {
     /**
@@ -26,7 +36,8 @@ class ListOfMatchesComponent extends BaseComponent
      * @param Day|Year|Team|Category|NULL $arg
      * @param MatchRepository             $MR
      */
-    public function __construct($arg, MatchRepository $MR)
+    public function __construct($arg,
+                                MatchRepository $MR)
     {
         parent::__construct();
         $this->arg = $arg;
@@ -68,15 +79,5 @@ class ListOfMatchesComponent extends BaseComponent
         $now = new DateTime();
         return $time->format('Y-m-d') === $now->format('Y-m-d');
     }
-}
-
-interface IListOfMatchesComponentFactory
-{
-    /**
-     * @param Day|Team|Category|Year|NULL $arg
-     * @return ListOfMatchesComponent
-     */
-    public function create($arg);
-
 }
 

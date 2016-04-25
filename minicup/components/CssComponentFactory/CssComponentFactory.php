@@ -4,7 +4,6 @@ namespace Minicup\Components;
 
 
 use Nette\Http\IRequest;
-use Nette\Http\Request;
 use Nette\Object;
 use Nette\Utils\Strings;
 use WebLoader\Compiler;
@@ -18,21 +17,21 @@ use WebLoader\Nette\CssLoader;
  */
 class CssComponentFactory extends Object
 {
+    /** @var IRequest */
+    public $request;
     /** @var  string */
     private $wwwPath;
-
     /** @var  bool */
     private $productionMode;
 
-    /** @var IRequest */
-    public $request;
-
     /**
-     * @param string  $wwwPath
-     * @param bool    $productionMode
-     * @param Request $request
+     * @param string   $wwwPath
+     * @param bool     $productionMode
+     * @param IRequest $request
      */
-    public function __construct($wwwPath, $productionMode, IRequest $request)
+    public function __construct($wwwPath,
+                                $productionMode,
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
@@ -65,7 +64,7 @@ class CssComponentFactory extends Object
 
         // TODO: Errrghh!!!
         $compiler->addFileFilter(function ($code, Compiler $loader, $file = null) use ($control) {
-            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . "assets/");
+            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . 'assets/');
         });
 
         if ($this->productionMode) {

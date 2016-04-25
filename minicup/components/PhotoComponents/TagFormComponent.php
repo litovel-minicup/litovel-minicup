@@ -37,7 +37,9 @@ class TagFormComponent extends BaseComponent
      * @param TagRepository   $TR
      * @param PhotoRepository $PR
      */
-    public function __construct(Tag $tag = NULL, TagRepository $TR, PhotoRepository $PR)
+    public function __construct(Tag $tag = NULL,
+                                TagRepository $TR,
+                                PhotoRepository $PR)
     {
         $this->TR = $TR;
         $this->tag = $tag;

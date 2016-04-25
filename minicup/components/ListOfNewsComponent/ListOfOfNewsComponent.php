@@ -28,7 +28,8 @@ class ListOfNewsComponent extends BaseComponent
      * @param Year           $year
      * @param NewsRepository $NR
      */
-    public function __construct(Year $year, NewsRepository $NR)
+    public function __construct(Year $year,
+                                NewsRepository $NR)
     {
         $this->NR = $NR;
         $this->year = $year;

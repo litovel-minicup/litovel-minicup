@@ -3,6 +3,8 @@
 namespace Minicup\Components;
 
 
+use Dibi\DateTime;
+use Dibi\DriverException;
 use Minicup\Model\Entity\News;
 use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\YearRepository;
@@ -37,6 +39,7 @@ class NewsFormComponent extends BaseComponent
         $this->news = $news;
         $this->NR = $NR;
         $this->YR = $yearRepository;
+        parent::__construct();
     }
 
     public function render()
@@ -82,15 +85,15 @@ class NewsFormComponent extends BaseComponent
             $news = $this->news;
         } else {
             $news = new News();
-            $news->added = new \DibiDateTime();
+            $news->added = new DateTime();
         }
         $news->year = $this->YR->get($values->year, FALSE);
         $news->assign($values, array('title', 'content', 'texy'));
-        $news->updated = new \DibiDateTime();
+        $news->updated = new DateTime();
 
         try {
             $this->NR->persist($news);
-        } catch (\DibiDriverException $e) {
+        } catch (DriverException $e) {
             $this->presenter->flashMessage('Chyba při ukládání novinky!', 'warning');
             return;
         }

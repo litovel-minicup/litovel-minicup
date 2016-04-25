@@ -81,6 +81,7 @@ class PhotoUploadComponent extends BaseComponent
         }
         $this->session['uploadId'] = $this->uploadId;
         $this->photos = (array)$this->session[$this->uploadId];
+        parent::__construct();
 
     }
 
@@ -115,7 +116,7 @@ class PhotoUploadComponent extends BaseComponent
         $photos = $this->PR->findByIds($this->photos);
         foreach ($photos as $photo) {
             foreach ($tags as $tag) {
-                if (!in_array($tag, $photo->tags)) {
+                if (!in_array($tag, $photo->tags, TRUE)) {
                     $photo->addToTags($tag);
                 }
                 if ($tag->teamInfo) {
@@ -156,7 +157,7 @@ class PhotoUploadComponent extends BaseComponent
     protected function createComponentTagFormComponent()
     {
         $tagForm = $this->TFCF->create(NULL);
-        $tagForm->view = "small";
+        $tagForm->view = 'small';
         return $tagForm;
     }
 }

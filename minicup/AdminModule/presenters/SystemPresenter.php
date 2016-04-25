@@ -33,7 +33,7 @@ class SystemPresenter extends BaseAdminPresenter
     {
         $latte = $this->context->parameters['tempDir'] . '/cache/latte';
         if (file_exists($latte)) {
-            if ($this->rmDir($latte)) {
+            if (static::rmDir($latte)) {
                 $this->flashMessage('Latte cache promazány', 'success');
             } else {
                 $this->flashMessage('Selhalo promazání latte cache.', 'danger');
@@ -53,7 +53,7 @@ class SystemPresenter extends BaseAdminPresenter
     public function handleDeleteTemp()
     {
         $cache = $this->context->parameters['tempDir'] . '/cache';
-        if ($this->rmDir($cache)) {
+        if (static::rmDir($cache)) {
             mkdir($cache);
             $this->flashMessage('Obsah temp smazán!', 'success');
         } else {

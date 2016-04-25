@@ -32,7 +32,9 @@ class PhotoListComponent extends BaseComponent
      * @param int   $initial
      * @param int   $step
      */
-    public function __construct(array $photos, $initial = 12, $step = 18)
+    public function __construct(array $photos,
+                                $initial = 12,
+                                $step = 18)
     {
         $this->photos = $photos;
         $this->actual = $initial;
