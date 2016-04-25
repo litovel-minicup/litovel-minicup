@@ -41,7 +41,6 @@ services:
 
     # application logic services
     - Minicup\Model\Manager\UserManager
-    - Minicup\Model\Manager\MigrationsManager
     - Minicup\Model\Manager\TeamReplicator
     - Minicup\Model\Manager\ReorderManager
     - Minicup\Model\Manager\TeamDataRefresher
@@ -92,7 +91,6 @@ services:
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
-    - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory

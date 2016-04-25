@@ -32,9 +32,3 @@ services:
 	cacheStorage:
 		# uncomment for disable {cache} and n:cache in templates
 		class: Nette\Caching\Storages\DevNullStorage
-
-# only for MigrationsManager!
-database:
-    dsn:
-    user:
-    password:
