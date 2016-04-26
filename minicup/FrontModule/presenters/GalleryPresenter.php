@@ -27,6 +27,16 @@ class GalleryPresenter extends BaseFrontPresenter
     /** @var TagRepository @inject */
     public $TR;
 
+    public function renderDefault()
+    {
+        $this->template->tags = $this->TR->findMainTags($this->category->year);
+    }
+
+    public function renderDetail(Tag $tag)
+    {
+        $this->template->tag = $tag;
+    }
+
     /**
      * @return InteractiveGalleryComponent
      */
@@ -41,15 +51,5 @@ class GalleryPresenter extends BaseFrontPresenter
     protected function createComponentPhotoListComponent()
     {
         return $this->PLCF->create($this->getParameter('tag')->photos);
-    }
-
-    public function renderDefault()
-    {
-        $this->template->tags = $this->TR->findMainTags();
-    }
-
-    public function renderDetail(Tag $tag)
-    {
-        $this->template->tag = $tag;
     }
 }
