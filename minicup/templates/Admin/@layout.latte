@@ -66,7 +66,7 @@
 {block body}
     {include navbar}
     <div class="container">
-        {snippet flashes}{if $flashes|length}
+        {snippet flashes}{if $flashes}
             <script>
                 {foreach $flashes as $flash}
                 toastr.{$flash->type|noescape}({$flash->message});

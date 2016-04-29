@@ -43,9 +43,9 @@ class CategoryHistoryComponent extends BaseComponent
     {
         $maxMatches = max(array_map(function (Team $team) {
                 return count($team->getPlayedMatches());
-            }, $this->category->teams)) + 1;
+            }, $this->category->teams));
 
-        $data = array('labels' => range(1, $maxMatches + 1), 'series' => array());
+        $data = array('labels' => range(1, $maxMatches), 'series' => array());
         $countOfTeams = count($this->category->teams);
         $n = 1;
         foreach ($this->category->teams as $team) {
@@ -62,7 +62,7 @@ class CategoryHistoryComponent extends BaseComponent
                     $lastOrder = $countOfTeams - $n;
                 }
                 foreach (range(0, $maxMatches - count($series)) as $_) {
-                    array_unshift($series, $lastOrder);
+                    array_unshift($series, $lastOrder - 2);
                 }
 
             }

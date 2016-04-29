@@ -18,11 +18,11 @@
         </div>
     {/if}
 
-    <script>
+    <script n:syntax="double">
         jQuery(function ($) {
             $('a.swipebox').click(function (e) {
                 var i = $('.Photo__rows').children().index(this);
-                $.ajax({link all!}).then(function (data) {
+                $.ajax({{link all!}}).then(function (data) {
                     $.swipebox(data, {initialIndexOnArray: i});
                 });
                 e.preventDefault();

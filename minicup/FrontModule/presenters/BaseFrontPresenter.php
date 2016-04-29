@@ -24,7 +24,7 @@ abstract class BaseFrontPresenter extends BasePresenter
     {
         parent::beforeRender();
         $this->template->category = $this->category;
-        $this->template->years = $this->YR->findAll(FALSE);
+        $this->template->years = $this->YR->findArchiveYears();
         $this->template->actualYear = $this->YR->getActualYear();
         $this->template->categories = $this->YR->getSelectedYear()->categories;
     }

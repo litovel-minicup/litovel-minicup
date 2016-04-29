@@ -14,7 +14,7 @@
                         axisY: {
                             scaleMinSpace: 15,
                             labelInterpolationFnc: function (value) {
-                                return ({{$category->teams|length}} -parseInt(value) + 1) + ". ";
+                                return ({{$category->teams|length}} -parseInt(value)) + ". ";
                             },
                             labelOffset: {
                                 x: 0,

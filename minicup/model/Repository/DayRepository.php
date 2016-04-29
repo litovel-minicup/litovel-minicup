@@ -2,7 +2,6 @@
 
 namespace Minicup\Model\Repository;
 
-use Dibi\DateTime;
 use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
@@ -30,10 +29,10 @@ class DayRepository extends BaseRepository
     }
 
     /**
-     * @param DateTime $dt
+     * @param \DateTime $dt
      * @return MatchTerm|null
      */
-    public function getByDatetime(DateTime $dt)
+    public function getByDatetime(\DateTime $dt)
     {
         $row = $this->createFluent()->where('[day] = %s', $dt->format('Y-m-d'))->fetch();
         return $row ? $this->createEntity($row) : NULL;

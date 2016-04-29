@@ -5,6 +5,7 @@ namespace Minicup\FrontModule\Presenters;
 use Minicup\Components\IListOfNewsComponentFactory;
 use Minicup\Components\IStaticContentComponentFactory;
 use Minicup\Components\ListOfNewsComponent;
+use Minicup\Components\StaticContentComponent;
 use Minicup\Model\Repository\StaticContentRepository;
 
 /**
@@ -29,6 +30,9 @@ final class HomepagePresenter extends BaseFrontPresenter
         return $this->NLCF->create($this->category->year);
     }
 
+    /**
+     * @return StaticContentComponent
+     */
     protected function createComponentStaticContentComponent()
     {
         return $this->SCCF->create($this->SCR->getBySlug($this->action));

@@ -3,6 +3,7 @@
 namespace Minicup\FrontModule\Presenters;
 
 use Minicup\Components\IListOfMatchesComponentFactory;
+use Minicup\Components\ListOfMatchesComponent;
 use Minicup\Model\Entity\Category;
 
 /**
@@ -18,6 +19,9 @@ final class MatchPresenter extends BaseFrontPresenter
 
     }
 
+    /**
+     * @return ListOfMatchesComponent
+     */
     public function createComponentListOfMatchesComponent()
     {
         return $this->LOMCFactory->create($this->getParameter('category'));

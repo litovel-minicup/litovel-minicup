@@ -10,7 +10,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property-read   Match[]            $matches                matches for this team
  * @property        string             $name                   czech name of team
  * @property        string             $slug                   slug for URL
- * @property        Team               $team m:belongsToOne    actually connected team
+ * @property        Team|NULL          $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL           $tag m:hasOne
  */
@@ -43,8 +43,8 @@ class TeamInfo extends BaseEntity
          * @return int
          */
         $cmp = function ($match1, $match2) {
-            $match1Start = $match1->matchTerm->start->s + $match1->matchTerm->day->day->getTimestamp();
-            $match2Start = $match2->matchTerm->start->s + $match2->matchTerm->day->day->getTimestamp();
+            $match1Start = $match1->matchTerm->start->setDate(0, 0, 0)->getTimestamp() + $match1->matchTerm->day->day->getTimestamp();
+            $match2Start = $match2->matchTerm->start->setDate(0, 0, 0)->getTimestamp() + $match2->matchTerm->day->day->getTimestamp();
             if ($match1Start > $match2Start) {
                 return 1;
             } elseif ($match1Start < $match2Start) {

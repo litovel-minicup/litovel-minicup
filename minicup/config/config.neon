@@ -165,3 +165,7 @@ migrations:
         - %appDir%/migrations
     namespace: Minicup\Migrations
     codingStandard: spaces
+
+console:
+    commands:
+        - Minicup\Commands\MatchesImportCommand
