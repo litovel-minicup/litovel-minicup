@@ -56,6 +56,7 @@ abstract class BasePresenter extends Presenter
         parent::beforeRender();
         $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
         $this->template->productionMode = $this->context->parameters['productionMode'];
+        $this->template->category = $this->category;
     }
 
     /**
@@ -123,7 +124,7 @@ abstract class BasePresenter extends Presenter
         parent::startup();
         $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
         $this->CM->initEvents();
-        $this->category ? $this->YR->setSelectedYear($this->category->year) : NULL;
+        ($this->category instanceof Category) ? $this->YR->setSelectedYear($this->category->year) : NULL;
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
     }

@@ -99,7 +99,7 @@ class MatchFormComponent extends BaseComponent
             $home->addCondition(Form::INTEGER);
             $container->addText('time')
                 ->setDisabled()
-                ->setDefaultValue($match->matchTerm->start->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i'));
+                ->setDefaultValue($match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i'));
             $away = $container
                 ->addText('scoreAway', $match->awayTeam->name)
                 ->setType('number');

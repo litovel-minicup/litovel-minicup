@@ -169,3 +169,4 @@ migrations:
 console:
     commands:
         - Minicup\Commands\MatchesImportCommand
+        - Minicup\Commands\UserAddCommand

@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Dibi\DriverException;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Repository\PhotoRepository;
@@ -103,7 +104,7 @@ class TagFormComponent extends BaseComponent
         }
         try {
             $this->TR->persist($tag);
-        } catch (\DibiDriverException $e) {
+        } catch (DriverException $e) {
             $this->presenter->flashMessage("Chyba při ukládání tagu {$tag->id} ({$tag->slug})!", 'warning');
             return;
         }
