@@ -84,7 +84,7 @@
         {snippet flashes}{if $flashes}
             <script>
                 {foreach $flashes as $flash}
-                toastr.{$flash->type|noescape}({$flash->message});
+                toastr[{$flash->type}]({$flash->message});
                 {/foreach}
             </script>
         {/if}{/snippet}
@@ -102,4 +102,5 @@
     {include parent}
     {control css}
     {control js}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 {/block}

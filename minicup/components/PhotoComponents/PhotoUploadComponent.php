@@ -101,6 +101,7 @@ class PhotoUploadComponent extends BaseComponent
             $this->photos[] = $photo->id;
         }
         $this->redrawControl('photos-list');
+        //dump($this->request->files);exit;
     }
 
     /** Signal for tagging all actually uploaded photos */

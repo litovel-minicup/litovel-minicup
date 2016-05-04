@@ -75,7 +75,7 @@ class NewsPresenter extends BaseAdminPresenter
         $g->addActionEvent('delete', 'Smazat', function ($id) use ($NR) {
             $NR->delete($id);
         })->setConfirm('Jsi si jistý?');
-        $g->setModel($this->connection->select('*')->from('[news]'));
+        $g->setModel($this->connection->select('*')->from('[news]')->where('[year_id] = ', $this->category->year->id));
         return $g;
     }
 }

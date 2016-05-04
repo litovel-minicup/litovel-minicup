@@ -20,6 +20,7 @@ use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
 use Minicup\Model\Repository\BaseRepository;
+use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
@@ -54,6 +55,9 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoEditComponentFactory @inject */
     public $PECF;
 
+    /** @var NewsRepository @inject */
+    public $NR;
+
     /** @var int @persistent */
     public $id = 0;
 
@@ -80,17 +84,13 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     /**
      * Provide data about tags for select2 by optional term in post parameters
-     *
+     * TODO: Extract to Trait!
      * @throws AbortException
      */
     public function handleTags()
     {
         $term = $this->request->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
+        $tags = $this->TR->findLikeTerm($term, $this->category->year);
         $results = array();
         /** @var Tag $tag */
         foreach ($tags as $tag) {
@@ -107,6 +107,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     {
         $TR = $this->TR;
         $PR = $this->PR;
+        $NR = $this->NR;
         $presenter = $this;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
@@ -136,7 +137,7 @@ final class PhotoPresenter extends BaseAdminPresenter
 
         $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
 
-        $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR) {
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR, $NR) {
             /** @var Tag $tag */
             $tag = $TR->get($id);
             $tag->removeAllPhotos();
@@ -153,7 +154,7 @@ final class PhotoPresenter extends BaseAdminPresenter
         });
 
         $g->setModel(
-            $model = $this->connection->select('*')->from('[tag]')->select(
+            $model = $this->connection->select('*')->from('[tag]')->where('[year_id] = ', $this->category->year->id)->select(
                 $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[tag_id] = [id]'), 'count_of_photos')
         );
         return $g;

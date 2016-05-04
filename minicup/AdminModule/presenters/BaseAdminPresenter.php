@@ -55,14 +55,15 @@ abstract class BaseAdminPresenter extends BasePresenter
     {
         $grid->defaultPerPage = 100;
         $grid->setFilterRenderType(Filter::RENDER_INNER);
+        $grid->customization->useTemplateBootstrap();
         $presenter = $this;
         foreach ($grid->getComponents(TRUE) as $child) {
             if ($child instanceof Event) {
                 $child->getElementPrototype()->addAttributes(array('class' => 'ajax'));
-                $child->onClick[] = function ($id) use ($grid, $presenter, $child) {
+                $child->setOnClick(function ($id) use ($grid, $presenter, $child) {
                     $presenter->flashMessage("Akce '{$child->getLabel()}' s prvkem {$id} byl úspěšně provedena!", 'success');
                     $grid->reload();
-                };
+                });
             } elseif ($child instanceof Column) {
                 if (!$child->getCustomRender() instanceof \Closure) {
                     $child->setSortable();

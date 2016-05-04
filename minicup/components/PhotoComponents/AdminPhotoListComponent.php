@@ -8,12 +8,15 @@ use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
+use Minicup\Presenters\BasePresenter;
 use Nette\Application\LinkGenerator;
 use Nette\Application\UI\Multiplier;
+use Nette\ComponentModel\IComponent;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Html;
@@ -62,6 +65,9 @@ class AdminPhotoListComponent extends BaseComponent
 
     /** @var PhotoManager */
     private $PM;
+
+    /** @var Year */
+    private $year;
 
     public function __construct(Session $session,
                                 IPhotoEditComponentFactory $PECF,
@@ -158,8 +164,13 @@ class AdminPhotoListComponent extends BaseComponent
         $PR = $this->PR;
         $PM = $this->PM;
         $linkGenerator = $this->linkGenerator;
-        $model = $this->connection->select('*')->from('[photo]')->select(
-            $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [id]'), 'count_of_tags');
+        $model = $this->connection->select('[photo.*]')
+            ->from('[photo]')
+            ->rightJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
+            ->rightJoin('[tag]')->on('[photo_tag.tag_id] = [tag.id]')
+            ->where('[tag.year_id] =', $this->year->id)
+            ->where('[photo.id] IS NOT NULL')
+            ->select($this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [photo.id]'), 'count_of_tags');
         $g = new Grid($this, $name);
 
         $g->addColumnNumber('id', '#');
@@ -202,6 +213,16 @@ class AdminPhotoListComponent extends BaseComponent
         }
         $g->setModel($model);
         return $g;
+    }
+
+    /**
+     * @param IComponent $presenter
+     */
+    protected function attached($presenter)
+    {
+        /** @var BasePresenter $presenter */
+        parent::attached($presenter);
+        $this->year = $presenter->category->year;
     }
 
     /**

@@ -12,14 +12,16 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
+use Nette\Neon\Exception;
 use Nette\Object;
 use Nette\Utils\Strings;
+use ProxyManagerTest\Functional\FatalPreventionFunctionalTest;
 
 class YearCategoryRouteFactory extends Object
 {
 
-    const DEFAULT_REQUIRED_PATTERN = '<category>';
-    const DEFAULT_OPTIONAL_PATTERN = '[!<category>]';
+    const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
+    const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
 
     const DEFAULT_KEY = 'category';
 

@@ -3,12 +3,10 @@
 
     <div class="caption">
         <div class="row">
-            <h4 class="col-md-1">{$photo->id}</h4>
-
-            <div class="form-group text-center col-md-8">
+            <div class="form-group text-center col-md-9">
                 <p>
                     {php $states = array("neaktivní", "aktivní");}
-                    <a n:class="ajax,btn,btn-sm,$photo->active?btn-warning:btn-success" n:href="toggle!">Nastav
+                    <a n:class="ajax,btn,btn-sm,$photo->active?btn-warning:btn-success" n:href="toggle!">Nastav {$photo->id}
                         jako {$states[!$photo->active]}!</a>
                 </p>
             </div>

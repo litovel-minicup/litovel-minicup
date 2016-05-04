@@ -1,8 +1,16 @@
 <div class="Article">
-    <div n:inner-foreach="$news as $new" class="Box__content">
+    <div n:foreach="$news as $new" class="Box__content">
         <div class="Article__heading">{$new->title}</div>
         <div class="Article__date">{$new->added|relDate}</div>
         <div n:if="$new->texy" class="Article__content">{$new->content|texy|noescape}</div>
         <div n:if="!$new->texy" class="Article__content">{$new->content|noescape}</div>
+        <div n:if="$new->tag && $new->tag->photos" class="Article__photos">
+            {php $size = count($new->tag->photos) == 1 ? "medium": "thumb"}
+            {foreach $new->tag->photos as $photo}
+                <div class="photo">
+                    <img src="{plink :Media:$size $photo->filename}" alt="Fotka k novince {$new->title}">
+                </div>
+            {/foreach}
+        </div>
     </div>
 </div>

@@ -124,7 +124,13 @@ abstract class BasePresenter extends Presenter
         parent::startup();
         $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
         $this->CM->initEvents();
-        ($this->category instanceof Category) ? $this->YR->setSelectedYear($this->category->year) : NULL;
+
+        if (($this->category instanceof Category) && !$this->category->isDetached()) {
+            $this->YR->setSelectedYear($this->category->year);
+        } else {
+            $this->category = $this->CR->getDefaultCategory();
+            $this->YR->setSelectedYear($this->category->year);
+        }
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
     }

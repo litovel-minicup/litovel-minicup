@@ -85,7 +85,7 @@ class UserPresenter extends BaseAdminPresenter
             ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $f['password']);
         $f->addSelect('role', 'role uživatele', Array('admin' => 'administrátor', 'moderator' => 'moderátor'));
         $f->addSubmit('submit', 'vytvořit');
-        $f->onSuccess[] = $this->userFormSuccess;
+        $f->onSuccess[] = [$this, 'userFormSuccess'];
         return $f;
     }
 }

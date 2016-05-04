@@ -92,7 +92,7 @@ class MatchFormComponent extends BaseComponent
 
         /** @var EntitiesReplicatorContainer $matches */
         $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
-            $container->currentGroup = $container->getForm()->addGroup('Zápas', FALSE);
+            $container->setCurrentGroup($container->getForm()->addGroup('Zápas', FALSE));
             $home = $container
                 ->addText('scoreHome', $match->homeTeam->name)
                 ->setType('number');
@@ -115,9 +115,9 @@ class MatchFormComponent extends BaseComponent
         $matches->addSubmit('addMatch', 'zobrazit další zápas')
             ->setValidationScope(NULL)
             ->setAttribute('class', 'ajax')
-            ->onClick[] = $this->addMatchClicked;
+            ->onClick[] = [$this, 'addMatchClicked'];
         $f->addSubmit('submit', 'odeslat');
-        $f->onSuccess[] = $this->formSubmitted;
+        $f->onSuccess[] = [$this, 'formSubmitted'];
         return $f;
     }
 }

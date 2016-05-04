@@ -6,6 +6,7 @@ namespace Minicup\Components;
 use Dibi\DateTime;
 use Dibi\DriverException;
 use Minicup\Model\Entity\News;
+use Minicup\Model\Manager\TagManager;
 use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
@@ -32,13 +33,19 @@ class NewsFormComponent extends BaseComponent
     /** @var News */
     private $news;
 
+    /** @var TagManager */
+    private $tagManager;
+
     public function __construct(News $news = NULL,
                                 NewsRepository $NR,
-                                YearRepository $yearRepository)
+                                YearRepository $yearRepository,
+                                TagManager $tagManager)
     {
         $this->news = $news;
         $this->NR = $NR;
         $this->YR = $yearRepository;
+
+        $this->tagManager = $tagManager;
         parent::__construct();
     }
 
@@ -49,6 +56,7 @@ class NewsFormComponent extends BaseComponent
             /** @var Form $form */
             $form = $this['newsForm'];
             $form->setDefaults($this->news->getData(array('title', 'content', 'id', 'texy')));
+            $form->setDefaults(['year' => $this->news->year->id]);
         }
         parent::render();
     }
@@ -60,7 +68,7 @@ class NewsFormComponent extends BaseComponent
     {
         $f = $this->formFactory->create();
         $f->addText('title', 'Titulek')->setRequired();
-        $f->addSelect('year', 'Rok', $this->YR->getYearChoices());
+        $f->addSelect('year', 'Rok', $this->YR->getYearChoices())->setDefaultValue($this->YR->getSelectedYear()->id);
         $f->addCheckbox('texy', 'Užít Texy')->setDefaultValue(TRUE);
         $f->addHidden('id');
         $content = $f->addTextArea('content', 'Obsah')->setRequired();
@@ -71,7 +79,7 @@ class NewsFormComponent extends BaseComponent
         }
         $content->getControlPrototype()->attrs['rows'] = $rows;
         $f->addSubmit('submit', $this->news ? 'Upravit' : 'Přidat');
-        $f->onSuccess[] = $this->newsFormSubmitted;
+        $f->onSuccess[] = [$this, 'newsFormSubmitted'];
         return $f;
     }
 
@@ -86,6 +94,7 @@ class NewsFormComponent extends BaseComponent
         } else {
             $news = new News();
             $news->added = new DateTime();
+            $news->tag = NULL;
         }
         $news->year = $this->YR->get($values->year, FALSE);
         $news->assign($values, array('title', 'content', 'texy'));
@@ -97,8 +106,16 @@ class NewsFormComponent extends BaseComponent
             $this->presenter->flashMessage('Chyba při ukládání novinky!', 'warning');
             return;
         }
+        $this->tagManager->getTag($news);
         $form->setValues(array(), TRUE);
         $this->presenter->flashMessage($values->id ? 'Novinka upravena!' : 'Novinka přidána!', 'success');
     }
 
+
+    public function handleCreateTag()
+    {
+        $tag= $this->tagManager->getTag($this->news);
+        $this->presenter->flashMessage("Tag k novince vytvořen tag {$tag->slug}.");
+        $this->presenter->redrawControl('content');
+    }
 }

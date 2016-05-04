@@ -65,7 +65,7 @@ class CategoryRepository extends BaseRepository
     {
         static $defaultCategory;
         if (!$defaultCategory) {
-            $row = $this->connection->select('*')->from($this->getTable())
+            $row = $this->connection->select('[category.*]')->from('[category]')
                 ->leftJoin('year')->on('[year.id] = [category.year_id]')
                 ->where('[category.default] = 1')
                 ->where('[year.actual] = 1')->fetch();

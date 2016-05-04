@@ -3,7 +3,7 @@
     "php": ">= 5.5",
     "nette/application": "~2.4",
     "nette/bootstrap": "~2.4",
-    "nette/caching": "~2.4",
+    "nette/caching": "^2.5",
     "nette/database": "~2.4",
     "nette/di": "~2.4",
     "nette/finder": "~2.4",
@@ -17,7 +17,7 @@
     "latte/latte": "~2.4",
     "tracy/tracy": "~2.4",
     "tharos/leanmapper": "~3.0",
-    "o5/grido": "~2.1",
+    "o5/grido": "dev-master",
     "janmarek/webloader": "~2.5",
     "natxet/CssMin": "@dev",
     "neeckeloo/closure-compiler-php": "@dev",
@@ -26,6 +26,15 @@
     "zenify/doctrine-migrations": "~2.3",
     "kdyby/console": "^2.6"
   },
+  "require-dev": {
+    "dg/ftp-deployment": "~2.5"
+  },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/thejoeejoee/grido"
+    }
+  ]
 }

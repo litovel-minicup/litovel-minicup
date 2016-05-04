@@ -20,11 +20,6 @@ final class TeamPresenter extends BaseFrontPresenter
     /** @var ITeamDetailComponentFactory @inject */
     public $TDCFactory;
 
-    public function renderDefault()
-    {
-
-    }
-
     /**
      * @param Category|string $category
      * @param TeamInfo|string $team
