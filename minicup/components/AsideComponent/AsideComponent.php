@@ -15,6 +15,11 @@ interface IAsideComponentFactory
     public function create(Category $category);
 }
 
+/**
+ * @property bool $playingTime
+ * @property bool $started
+ * @property bool $finished
+ */
 class AsideComponent extends BaseComponent
 {
     /** @var ICategoryTableComponentFactory */

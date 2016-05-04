@@ -38,7 +38,7 @@
     </div>
 {/if}
 
-{if count($team->i->matches)}
+{if count($team->matches)}
     <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag">
         <div class="Article">
             <div class="Article__head Box__head">
@@ -51,7 +51,7 @@
     </div>
 {/if}
 
-{if ($team->i->staticContent && $team->i->staticContent->content) || $user->isAllowed('static-content', 'edit')}
+{if ($team->staticContent && $team->staticContent->content) || $user->isAllowed('static-content', 'edit')}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
@@ -63,20 +63,20 @@
     </div>
 {/if}
 
-{if $team->i->tag && $team->i->tag->mainPhoto}
+{if $team->tag && $team->tag->mainPhoto}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__photo"></div>
                 <div class="Article__head__text Box__head__text">Foto týmu</div>
             </div>
-            <img style="width: 100%;" src="{plink :Media:medium $team->i->tag->mainPhoto->filename}"
-                 title="Foto týmu {$team->i->name}" alt="Foto týmu {$team->i->name}"/>
+            <img style="width: 100%;" src="{plink :Media:medium $team->tag->mainPhoto->filename}"
+                 title="Foto týmu {$team->name}" alt="Foto týmu {$team->name}"/>
         </div>
     </div>
 {/if}
 
-{if $team->i->tag && $team->i->tag->photos}
+{if $team->tag && $team->tag->photos}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">

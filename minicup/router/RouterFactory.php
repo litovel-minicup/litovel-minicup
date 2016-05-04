@@ -166,10 +166,11 @@ class RouterFactory extends Object
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
                     }
-                    $params['team'] = $TR->getBySlug($params['team'], $params['category']);
-                    if (!$params['team']) {
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+                    if (!$team) {
                         return NULL;
                     }
+                    $params['team'] = $team->i;
                     return $params;
                 },
                 Route::FILTER_OUT => function ($params) use ($CR, $TR) {

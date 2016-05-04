@@ -75,7 +75,7 @@ class TagFormComponent extends BaseComponent
         $f->addCheckbox('is_main', 'Hlavní kategorie');
         $f->addHidden('main_photo_id');
         $f->addSubmit('submit', $this->tag ? 'Upravit' : 'Přidat');
-        $f->onSuccess[] = $this->tagFormSuccess;
+        $f->onSuccess[] = [$this, 'tagFormSuccess'];
         return $f;
     }
 

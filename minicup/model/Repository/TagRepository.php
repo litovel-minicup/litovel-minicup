@@ -30,12 +30,19 @@ class TagRepository extends BaseRepository
 
     /**
      * @param string $term
+     * @param Year   $year
      * @return Tag[]
      */
-    public function findLikeTerm($term)
+    public function findLikeTerm($term = NULL, Year $year = NULL)
     {
-        $rows = $this->createFluent()->where('[slug] LIKE %~like~', $term)->fetchAll();
-        return $this->createEntities($rows);
+        $fluent = $this->createFluent();
+        if ($term) {
+            $fluent->where('[slug] LIKE %~like~', $term);
+        }
+        if ($year) {
+            $fluent->where('[year_id] = ', $year->id);
+        }
+        return $this->createEntities($fluent->fetchAll());
     }
 
     /**

@@ -26,6 +26,7 @@ abstract class BaseAdminPresenter extends BasePresenter
     {
         parent::beforeRender();
         $this->template->categories = $this->CR->findAll(FALSE);
+        $this->template->years = $this->YR->findAll(FALSE);
     }
 
 
@@ -63,7 +64,7 @@ abstract class BaseAdminPresenter extends BasePresenter
                     $grid->reload();
                 };
             } elseif ($child instanceof Column) {
-                if (!$child->customRender instanceof \Closure) {
+                if (!$child->getCustomRender() instanceof \Closure) {
                     $child->setSortable();
                 }
             }

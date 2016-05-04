@@ -19,7 +19,7 @@
         {foreach $teams as $team}
             <tr>
                 <td>{$team->order}</td>
-                <td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
+                <td><a href={plink Team:detail $team->category, $team->i}>{$team->name}</a></td>
                 <td>{$team->playedMatches|length}</td>
                 <td>{$team->wins|length}</td>
                 <td>{$team->draws|length}</td>

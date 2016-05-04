@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <script>
+    <script n:syntax="double">
         $(function () {
             var $dropperList = $('#upload-list'),
                     itemTemplate = $("#uploadTemplate").html(),
@@ -160,7 +160,7 @@
 
             var $select2all = initTagsSelect2($('#select2-all'));
             $('#tag-all').on('click', function (e) {
-                $.post({link tagsAll!}, {tags: $select2all.val()}, function (response, textStatus, xhr) {
+                $.post({{link tagsAll!}}, {tags: $select2all.val()}, function (response, textStatus, xhr) {
                     toastr.success('Otagovány všechny fotky!', 'Výborně!');
                     redrawSnippets(response);
                 });

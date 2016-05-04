@@ -18,7 +18,7 @@
     </script>
 </div>
 <div class="tab-content">
-    <div n:foreach="$days as $timestamp => $matches"
+    <div n:foreach="$days as $timestamp => $_matches"
          n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">
         <table class="Table Table__matches">
             <thead class="Box__subhead Article__subhead">
@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr n:foreach="$matches as $match">
+            <tr n:foreach="$_matches as $match">
                 <td><a href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                 <td>{$match->scoreHome} : {$match->scoreAway}</td>
                 <td><a href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>

@@ -8,6 +8,7 @@ use Nette\Forms\Container as FContainer;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\MemberAccessException;
 use Nette\Utils\Callback;
+use Nette\Utils\ObjectMixin;
 
 class EntitiesReplicatorContainer extends RContainer
 {
@@ -93,7 +94,7 @@ class EntitiesReplicatorContainer extends RContainer
             });
         }
 
-        FContainer::extensionMethod($methodName, function (FContainer $_this, $name, $factory, array $entities, $createDefault = 0) {
+        ObjectMixin::setExtensionMethod(FContainer::class, $methodName, function (FContainer $_this, $name, $factory, array $entities, $createDefault = 0) {
             $control = new EntitiesReplicatorContainer($factory, $createDefault, $entities);
             $control->currentGroup = $_this->currentGroup;
             return $_this[$name] = $control;
@@ -103,7 +104,7 @@ class EntitiesReplicatorContainer extends RContainer
             return;
         }
 
-        SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
+        ObjectMixin::setExtensionMethod(SubmitButton::class, 'addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
             $_this->setValidationScope(FALSE);
             $_this->onClick[] = function (SubmitButton $button) use ($callback) {
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
@@ -120,7 +121,7 @@ class EntitiesReplicatorContainer extends RContainer
             return $_this;
         });
 
-        SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
+        ObjectMixin::setExtensionMethod(SubmitButton::class, 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
             $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
                 /** @var EntitiesReplicatorContainer $replicator */

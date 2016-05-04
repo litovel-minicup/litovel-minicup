@@ -10,6 +10,8 @@ use Minicup\Model\Repository\YearRepository;
 use Nette\Application\Routers\Route;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
+use Nette\InvalidArgumentException;
+use Nette\InvalidStateException;
 use Nette\Object;
 use Nette\Utils\Strings;
 
@@ -103,12 +105,19 @@ class YearCategoryRouteFactory extends Object
                 if (!$category instanceof Category) {
                     $category = $CR->getBySlug($category, $YR->getBySlug('2014'));
                 }
-                return "{$category->year->year}-{$category->slug}";
+                $slug = "{$category->year->year}-{$category->slug}";
+                if (!Strings::match($slug, '#([0-9]{4})-([\w]*)#')) {
+                    throw new InvalidStateException;
+                }
+                return $slug;
             }
         );
         try {
             if (!$requiredCategory) {
-                $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
+                static $category;
+                if (!$category) {
+                    $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
+                }
                 $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
             }
 

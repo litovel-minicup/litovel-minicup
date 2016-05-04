@@ -22,7 +22,7 @@
     <tbody n:inner-foreach="$teams as $team">
     <tr>
         <td>{if $team->order}{$team->order}{else}&nbsp;{/if}</td>
-        <td><a href={plink Team:detail $team->category, $team}>{$team->name}</a></td>
+        <td><a href={plink Team:detail $team->category, $team->i}>{$team->name}</a></td>
         <td>{$team->playedMatches|length}</td>
         <td>{$team->scored}:{$team->received}</td>
         <td>{$team->points}</td>

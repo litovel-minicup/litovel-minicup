@@ -66,7 +66,7 @@ abstract class BaseComponent extends Control
             $this->tryCall($name, $args);
             $view = Strings::lower(Strings::substring($name, 6));
             $this->view = $view;
-            return call_user_func_array($this->render, $args);
+            return call_user_func_array([$this, 'render'], $args);
         } else {
             return parent::__call($name, $args);
         }
@@ -88,7 +88,7 @@ abstract class BaseComponent extends Control
     protected function createTemplate()
     {
         $template = $this->filterLoader->loadFilters(parent::createTemplate());
-        $name = $this->reflection->shortName;
+        $name = static::getReflection()->getShortName();
         $dir = $this->presenter->context->parameters['appDir'];
         $paths = array();
         if ($this->view) {

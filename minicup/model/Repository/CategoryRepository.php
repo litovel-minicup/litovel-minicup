@@ -11,8 +11,11 @@ use Nette\InvalidStateException;
 
 class CategoryRepository extends BaseRepository
 {
-    /** @var  YearRepository */
+    /** @var YearRepository */
     private $YR;
+
+    /** @var Category */
+    private $defaultCategory;
 
     /**
      * @param Connection     $connection
@@ -60,10 +63,17 @@ class CategoryRepository extends BaseRepository
      */
     public function getDefaultCategory()
     {
-        $row = $this->createFluent()->where('[default] = 1')->fetch();
-        if ($row) {
-            return $this->createEntity($row);
+        static $defaultCategory;
+        if (!$defaultCategory) {
+            $row = $this->connection->select('*')->from($this->getTable())
+                ->leftJoin('year')->on('[year.id] = [category.year_id]')
+                ->where('[category.default] = 1')
+                ->where('[year.actual] = 1')->fetch();
+            if (!$row) {
+                throw new InvalidStateException('Default category not found.');
+            }
+            $defaultCategory = $this->createEntity($row);
         }
-        throw new InvalidStateException('Default category not found.');
+        return $defaultCategory;
     }
 } 

@@ -32,7 +32,7 @@ class LoginFormComponent extends BaseComponent
             ->getControlPrototype()->addAttributes(array('placeholder' => 'password'));
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('submit', 'Přihlásit');
-        $form->onSuccess[] = $this->loginFormValidated;
+        $form->onSuccess[] = [$this, 'loginFormValidated'];
         return $form;
     }
 

@@ -64,7 +64,7 @@ class CssComponentFactory extends Object
 
         // TODO: Errrghh!!!
         $compiler->addFileFilter(function ($code, Compiler $loader, $file = null) use ($control) {
-            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . 'assets/');
+            return Strings::replace($code, "#\.\./#", $control->request->getUrl()->scriptPath . 'assets/');
         });
 
         if ($this->productionMode) {
@@ -72,7 +72,7 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
-        $control = new CssLoader($compiler, $this->request->url->scriptPath . 'webtemp');
+        $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }
 }
