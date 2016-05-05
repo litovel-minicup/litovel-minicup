@@ -30,23 +30,23 @@ class PhotoManager extends Object
      * type => (width, height, flags)
      * @var array
      */
-    public static $resolutions = array(
-        PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
-        PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
-        PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(750, 750, Image::FILL),
-        PhotoManager::PHOTO_LARGE => array(1200, 1200),
-        PhotoManager::PHOTO_FULL => array(2000, 2000),
-    );
+    public static $resolutions = [
+        PhotoManager::PHOTO_MINI => [50, 50, Image::FILL],
+        PhotoManager::PHOTO_SMALL => [100, 100, Image::FILL],
+        PhotoManager::PHOTO_THUMB => [300, 300, Image::FILL],
+        PhotoManager::PHOTO_MEDIUM => [750, 750, Image::FILL],
+        PhotoManager::PHOTO_LARGE => [1200, 1200],
+        PhotoManager::PHOTO_FULL => [2000, 2000],
+    ];
 
     /**
      * mime type => file extension
      * @var array
      */
-    public static $extensions = array(
+    public static $extensions = [
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
-    );
+    ];
 
     /** @var PhotoRepository */
     private $PR;
@@ -74,7 +74,7 @@ class PhotoManager extends Object
         if (!$prefix) {
             $prefix = Random::generate(20);
         }
-        $photos = array();
+        $photos = [];
         foreach ($files as $file) {
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
@@ -184,12 +184,12 @@ class PhotoManager extends Object
      * @param array $formats
      * @return array
      */
-    public function cleanCachedPhotos(array $formats = array())
+    public function cleanCachedPhotos(array $formats = [])
     {
         if (!$formats) {
             $formats = array_keys($this::$resolutions);
         }
-        $failed = array();
+        $failed = [];
         /** @var Photo $photo */
         foreach ($this->PR->findAll() as $photo) {
             /** @var string $format */

@@ -91,12 +91,12 @@ final class PhotoPresenter extends BaseAdminPresenter
     {
         $term = $this->request->getPost('term');
         $tags = $this->TR->findLikeTerm($term, $this->category->year);
-        $results = array();
+        $results = [];
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ?: $tag->slug);
+            $results[] = ['id' => $tag->id, 'text' => $tag->name ?: $tag->slug];
         }
-        $this->presenter->sendJson(array('results' => $results));
+        $this->presenter->sendJson(['results' => $results]);
     }
 
     /**
@@ -120,22 +120,22 @@ final class PhotoPresenter extends BaseAdminPresenter
 
         $g->addColumnText('count_of_photos', 'Počet fotek');
 
-        $g->addColumnText('is_main', 'Hlavní')->setReplacement(array(
-            0 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-remove')),
-            1 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-ok'))
-        ))->setDefaultSort(BaseRepository::ORDER_DESC);
+        $g->addColumnText('is_main', 'Hlavní')->setReplacement([
+            0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
+            1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
+        ])->setDefaultSort(BaseRepository::ORDER_DESC);
 
         $g->addColumnText('main_photo', 'Hlavní fotka')->setCustomRender(function (Row $row) use ($presenter, $PR) {
             /** @var Photo $photo */
             $photo = $PR->get($row->main_photo_id, FALSE);
             if ($photo) {
-                $src = $presenter->link(':Media:mini', array($photo->filename));
-                return Html::el('img', array('src' => $src));
+                $src = $presenter->link(':Media:mini', [$photo->filename]);
+                return Html::el('img', ['src' => $src]);
             }
             return ' - ';
         });
 
-        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
+        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', ['id' => 'id']);
 
         $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR, $NR) {
             /** @var Tag $tag */

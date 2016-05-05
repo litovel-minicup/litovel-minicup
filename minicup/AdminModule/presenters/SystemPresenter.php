@@ -43,7 +43,7 @@ class SystemPresenter extends BaseAdminPresenter
 
     private static function rmDir($dir)
     {
-        $files = array_diff(scandir($dir), array('.', '..'));
+        $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
             (is_dir("$dir/$file")) ? static::rmDir("$dir/$file") : unlink("$dir/$file");
         }

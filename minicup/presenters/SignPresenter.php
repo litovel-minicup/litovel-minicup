@@ -46,7 +46,7 @@ class SignPresenter extends BasePresenter
     public function formatTemplateFiles()
     {
         $dir = $this->context->parameters['appDir'];
-        return array("$dir/templates/{$this->name}.{$this->action}.latte");
+        return ["$dir/templates/{$this->name}.{$this->action}.latte"];
     }
 
 }

@@ -76,7 +76,7 @@ class YearRepository extends BaseRepository
      */
     public function getYearChoices()
     {
-        $data = array();
+        $data = [];
         foreach ($this->findAll(FALSE) as $year) {
             $data[$year->id] = $year->slug;
         }

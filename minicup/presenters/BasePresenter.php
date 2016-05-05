@@ -72,13 +72,13 @@ abstract class BasePresenter extends Presenter
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = array(
+        $list = [
             "$dir/templates/$module/$presenter/@$layout.latte",
             "$dir/templates/$module/$presenter.@$layout.latte",
             "$dir/templates/$module.$presenter.@$layout.latte",
             "$dir/templates/$module/@$layout.latte",
             "$dir/templates/$module.@$layout.latte",
-        );
+        ];
         do {
             $list[] = "$dir/templates/@$layout.latte";
             $dir = dirname($dir);
@@ -98,11 +98,11 @@ abstract class BasePresenter extends Presenter
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = array(
+        $list = [
             "$dir/templates/$module.$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter/$this->view.latte",
-        );
+        ];
         return $list;
     }
 

@@ -54,7 +54,7 @@ class TagFormComponent extends BaseComponent
         if ($this->tag) {
             /** @var Form $form */
             $form = $this['tagForm'];
-            $form->setDefaults($this->tag->getData(array('name', 'slug', 'id', 'is_main')));
+            $form->setDefaults($this->tag->getData(['name', 'slug', 'id', 'is_main']));
             if ($this->tag->mainPhoto) {
                 /** @var HiddenField $mainPhoto */
                 $mainPhoto = $form['main_photo_id'];
@@ -108,7 +108,7 @@ class TagFormComponent extends BaseComponent
             $this->presenter->flashMessage("Chyba při ukládání tagu {$tag->id} ({$tag->slug})!", 'warning');
             return;
         }
-        $form->setValues(array(), TRUE);
+        $form->setValues([], TRUE);
         $this->presenter->flashMessage($this->tag ? 'Tag upraven!' : 'Tag přidán!', 'success');
         if ($this->presenter->action === 'tagDetail') {
             $this->presenter->redirect(':Admin:Photo:tags');

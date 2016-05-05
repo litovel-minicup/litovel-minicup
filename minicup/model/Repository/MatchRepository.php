@@ -132,7 +132,7 @@ class MatchRepository extends BaseRepository
      */
     public function groupMatchesByDay(Category $category)
     {
-        $days = array();
+        $days = [];
         foreach ($category->matches as $match) {
             $days[$match->matchTerm->day->day->getTimestamp()][] = $match;
         }

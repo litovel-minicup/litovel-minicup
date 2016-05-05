@@ -65,7 +65,7 @@ class StaticContentComponent extends BaseComponent
         $this->template->edit = TRUE;
         /** @var Form $form */
         $form = $this['editForm'];
-        $form->setValues(array('content' => $this->content->content));
+        $form->setValues(['content' => $this->content->content]);
         if ($this->presenter->isAjax()) {
             $this->redrawControl('component');
         }

@@ -24,7 +24,7 @@ interface IPhotoUploadComponentFactory
 class PhotoUploadComponent extends BaseComponent
 {
     /** @var int[] */
-    public $photos = array();
+    public $photos = [];
     /** @var Request */
     private $request;
     /** @var SessionSection */
@@ -141,11 +141,11 @@ class PhotoUploadComponent extends BaseComponent
             $photo = $PR->get($id);
             $PEC = $PECF->create($photo);
             $PEC->onDelete[] = function (Photo $photo) use ($PUC, $PR) {
-                $PUC->photos = array_diff($PUC->photos, array($photo->id));
+                $PUC->photos = array_diff($PUC->photos, [$photo->id]);
                 $PUC->redrawControl('photos-list');
             };
             $PEC->onSave[] = function (Photo $photo) use ($PUC) {
-                $PUC->photos = array_diff($PUC->photos, array($photo->id));
+                $PUC->photos = array_diff($PUC->photos, [$photo->id]);
                 $PUC->redrawControl('photos-list');
             };
             return $PEC;

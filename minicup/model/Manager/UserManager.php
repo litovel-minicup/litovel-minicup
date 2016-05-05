@@ -50,7 +50,7 @@ class UserManager extends Object implements IAuthenticator
             $user->password_hash = Passwords::hash($password);
             $this->UR->persist($user);
         }
-        return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
+        return new Identity($user->id, $user->role, ['fullname' => $user->fullname]);
 
     }
 

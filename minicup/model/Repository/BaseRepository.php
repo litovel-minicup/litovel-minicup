@@ -67,9 +67,9 @@ abstract class BaseRepository extends Repository
     public function findByIds(array $ids)
     {
         if (!$ids) {
-            return array();
+            return [];
         }
-        $entities = array();
+        $entities = [];
         foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $entity) {
             $entities[$entity->id] = $entity;
         }

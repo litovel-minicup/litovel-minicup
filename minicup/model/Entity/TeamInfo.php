@@ -27,7 +27,7 @@ class TeamInfo extends BaseEntity
         $matchTableName = $this->mapper->getTable('match');
 
         /** @var Match[] $matches */
-        $matches = array();
+        $matches = [];
         foreach ($this->row->referencing($matchTableName, 'home_team_info_id') as $match) {
             $matches[$match->id] = $this->entityFactory->createEntity($this->mapper->getEntityClass('match'), $match);
             $matches[$match->id]->makeAlive($this->entityFactory, null, $this->mapper);

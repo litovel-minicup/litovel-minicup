@@ -40,7 +40,7 @@ class TeamReplicator extends Object
     {
         foreach ($this->TR->getByCategory($category) as $oldTeam) {
             $newTeam = new Team();
-            $data = $oldTeam->getData(array('i', 'order', 'points', 'scored', 'received', 'category'));
+            $data = $oldTeam->getData(['i', 'order', 'points', 'scored', 'received', 'category']);
             $newTeam->i = $oldTeam->i;
             $newTeam->actual = 1;
             $oldTeam->actual = 0;

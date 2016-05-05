@@ -46,7 +46,7 @@ class ListOfMatchesComponent extends BaseComponent
 
     public function render($mode = 'all', $limit = 0)
     {
-        $matches = array();
+        $matches = [];
         if ($this->arg instanceof Team) {
             $matches = $this->arg->i->matches;
             $this->template->team = $this->arg->i;

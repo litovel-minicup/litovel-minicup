@@ -59,7 +59,7 @@ class YearCategoryRouteFactory extends Object
      * @param bool|TRUE $required
      * @return Route
      */
-    public function __invoke($mask, array $metadata = array(), $flags = 0, $required = FALSE)
+    public function __invoke($mask, array $metadata = [], $flags = 0, $required = FALSE)
     {
         return $this->route($mask, $metadata, $flags, $required);
     }
@@ -71,7 +71,7 @@ class YearCategoryRouteFactory extends Object
      * @param bool|TRUE $required
      * @return Route
      */
-    public function route($mask, array $metadata = array(), $flags = 0, $required = FALSE)
+    public function route($mask, array $metadata = [], $flags = 0, $required = FALSE)
     {
         $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
         $mask .= ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
@@ -87,7 +87,7 @@ class YearCategoryRouteFactory extends Object
     {
         $CR = $this->categoryRepository;
         $YR = $this->yearRepository;
-        $metadata = array(
+        $metadata = [
             Route::FILTER_IN => function ($slug) use ($CR, $YR) {
                 // TEMPORARILY SOLUTION
                 // TODO: remove after search engines reindex old project
@@ -113,7 +113,7 @@ class YearCategoryRouteFactory extends Object
                 }
                 return $slug;
             }
-        );
+        ];
         try {
             if (!$requiredCategory) {
                 static $category;

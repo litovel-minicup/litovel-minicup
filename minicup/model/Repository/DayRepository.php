@@ -41,7 +41,7 @@ class DayRepository extends BaseRepository
     protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
     {
         $year = $this->YR->getSelectedYear();
-        return parent::createFluent(array_merge(array($year->id), func_get_args()));
+        return parent::createFluent(array_merge([$year->id], func_get_args()));
     }
 
     /**

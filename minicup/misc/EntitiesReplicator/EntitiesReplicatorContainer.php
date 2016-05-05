@@ -16,7 +16,7 @@ class EntitiesReplicatorContainer extends RContainer
     protected $entities;
 
     /** @var array */
-    protected $created = array();
+    protected $created = [];
 
     /**
      * @param callable $factory
@@ -114,7 +114,7 @@ class EntitiesReplicatorContainer extends RContainer
                 }
                 $form = $button->getForm(FALSE);
                 if ($form) {
-                    $form->onSuccess = array();
+                    $form->onSuccess = [];
                 }
                 $replicator->remove($button->parent);
             };
@@ -135,7 +135,7 @@ class EntitiesReplicatorContainer extends RContainer
                         Callback::invoke($callback, $replicator, $newContainer);
                     }
                 }
-                $button->getForm()->onSuccess = array();
+                $button->getForm()->onSuccess = [];
             };
             return $_this;
         });

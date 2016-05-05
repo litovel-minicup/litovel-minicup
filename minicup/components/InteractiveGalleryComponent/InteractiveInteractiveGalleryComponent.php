@@ -44,7 +44,7 @@ class InteractiveGalleryComponent extends BaseComponent
                                 TagRepository $TR)
     {
         if (!$tags) {
-            $tags = array();
+            $tags = [];
         }
         $this->PR = $PR;
         $this->TR = $TR;
@@ -77,10 +77,10 @@ class InteractiveGalleryComponent extends BaseComponent
         } else {
             $tags = $this->TR->findAll();
         }
-        $results = array();
+        $results = [];
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ?: $tag->slug);
+            $results[] = ['id' => $tag->id, 'text' => $tag->name ?: $tag->slug];
         }
         $this->redrawControl('photo-list');
         $this->presenter->payload->results = $results;
@@ -90,7 +90,7 @@ class InteractiveGalleryComponent extends BaseComponent
     public function handleRefresh()
     {
         $ids = $this->presenter->request->parameters['ids'];
-        $tags = $ids ? $this->TR->findByIds($ids) : array();
+        $tags = $ids ? $this->TR->findByIds($ids) : [];
         // $this->presenter->redirect("Gallery:tags", array("tags" => $tags));
         $this->tags = $tags;
         $this->redrawControl('photo-list');

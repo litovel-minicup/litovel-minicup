@@ -90,7 +90,7 @@ abstract class BaseComponent extends Control
         $template = $this->filterLoader->loadFilters(parent::createTemplate());
         $name = static::getReflection()->getShortName();
         $dir = $this->presenter->context->parameters['appDir'];
-        $paths = array();
+        $paths = [];
         if ($this->view) {
             $view = $this->view;
             $paths[] = "$dir/templates/components/$name/$view.latte";

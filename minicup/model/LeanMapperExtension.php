@@ -24,11 +24,11 @@ class LeanMapperExtension extends CompilerExtension
             $config['flags'] = $flags;
         }
         $connection = $container->addDefinition($this->prefix('connection'))
-            ->setClass('LeanMapper\Connection', array($config));
+            ->setClass('LeanMapper\Connection', [$config]);
         if ($useProfiler) {
             $panel = $container->addDefinition($this->prefix('panel'))
                 ->setClass('Dibi\Bridges\Tracy\Panel');
-            $connection->addSetup(array($panel, 'register'), array($connection));
+            $connection->addSetup([$panel, 'register'], [$connection]);
         }
     }
 

@@ -55,7 +55,7 @@ class NewsFormComponent extends BaseComponent
         if ($this->news) {
             /** @var Form $form */
             $form = $this['newsForm'];
-            $form->setDefaults($this->news->getData(array('title', 'content', 'id', 'texy')));
+            $form->setDefaults($this->news->getData(['title', 'content', 'id', 'texy']));
             $form->setDefaults(['year' => $this->news->year->id]);
         }
         parent::render();
@@ -97,7 +97,7 @@ class NewsFormComponent extends BaseComponent
             $news->tag = NULL;
         }
         $news->year = $this->YR->get($values->year, FALSE);
-        $news->assign($values, array('title', 'content', 'texy'));
+        $news->assign($values, ['title', 'content', 'texy']);
         $news->updated = new DateTime();
 
         try {
@@ -107,7 +107,7 @@ class NewsFormComponent extends BaseComponent
             return;
         }
         $this->tagManager->getTag($news);
-        $form->setValues(array(), TRUE);
+        $form->setValues([], TRUE);
         $this->presenter->flashMessage($values->id ? 'Novinka upravena!' : 'Novinka přidána!', 'success');
     }
 

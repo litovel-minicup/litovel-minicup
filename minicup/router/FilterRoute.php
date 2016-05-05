@@ -14,7 +14,7 @@ class FilterRoute extends Route
     const WAY_OUT = 'out';
 
     /** @var array */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * @param IRequest $httpRequest
@@ -58,10 +58,10 @@ class FilterRoute extends Route
      */
     public function addFilter($param, $in, $out = NULL)
     {
-        $this->filters[$param] = array(
+        $this->filters[$param] = [
             self::WAY_IN => callback($in),
             self::WAY_OUT => $out ? callback($out) : NULL
-        );
+        ];
 
         return $this;
     }

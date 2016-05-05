@@ -72,7 +72,7 @@ class ReorderManager extends Object
      */
     private function orderByPoints()
     {
-        $this->teamPointsFromPoints = array();
+        $this->teamPointsFromPoints = [];
         foreach ($this->teams as $mainTeam) {
             $teamPoints = 0;
             foreach ($this->teams as $comparativeTeam) {
@@ -142,7 +142,7 @@ class ReorderManager extends Object
      */
     private function teamsToCompare($teamPoints, $compare = NULL)
     {
-        $teamsToCompare = array();
+        $teamsToCompare = [];
         foreach ($teamPoints as $key => $value) {
             if ($value == $compare OR $compare === NULL) {
                 $teamsToCompare[] = $this->teamsEntities[$key];
@@ -189,7 +189,7 @@ class ReorderManager extends Object
      */
     private function orderByScored($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
-        $teamsScored = array();
+        $teamsScored = [];
         foreach ($teamsToCompare as $key => $team) {
             $teamsScored[$key] = $team->scored;
         }
@@ -268,7 +268,7 @@ class ReorderManager extends Object
      */
     private function miniTableWithScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
-        $teamPointsFromScore = array();
+        $teamPointsFromScore = [];
         foreach ($teamsToCompare as $team) {
             $teamPointsFromScore[$team->id] = 0;
         }
@@ -300,7 +300,7 @@ class ReorderManager extends Object
      */
     private function miniTableWithScoreDifference($teamsToCompare, $countOfTeamWithSamePoints, $teamPosition)
     {
-        $teamPointsFromScore = array();
+        $teamPointsFromScore = [];
         foreach ($teamsToCompare as $mainTeam) {
             $teamPoints = 0;
             foreach ($teamsToCompare as $comparativeTeam) {
@@ -359,7 +359,7 @@ class ReorderManager extends Object
      */
     private function miniTableWithMutualMatch($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
     {
-        $teamPointsFromMiniTable = array();
+        $teamPointsFromMiniTable = [];
         foreach (array_keys($teamsToCompare) as $key) {
             $teamPointsFromMiniTable[$key] = 0;
         }

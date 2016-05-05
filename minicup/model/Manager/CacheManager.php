@@ -65,7 +65,7 @@ class CacheManager extends Object
         if ($entity instanceof TeamInfo && $entity->team) {
             $this->cleanByEntity($entity->team);
         }
-        $this->cache->clean(array(Cache::TAGS => array($entity->getCacheTag())));
+        $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()]]);
         $this->cache->remove($entity->getCacheTag());
     }
 

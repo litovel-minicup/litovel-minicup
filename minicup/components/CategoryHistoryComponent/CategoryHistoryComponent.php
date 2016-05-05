@@ -45,14 +45,14 @@ class CategoryHistoryComponent extends BaseComponent
                 return count($team->getPlayedMatches());
             }, $this->category->teams));
 
-        $data = array('labels' => range(1, $maxMatches), 'series' => array());
+        $data = ['labels' => range(1, $maxMatches), 'series' => []];
         $countOfTeams = count($this->category->teams);
         $n = 1;
         foreach ($this->category->teams as $team) {
-            $series = array();
+            $series = [];
             /** @var Team $historyTeam */
             $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach (array_slice(array_merge($historicalTeams, array($team)), 1) as $historyTeam) {
+            foreach (array_slice(array_merge($historicalTeams, [$team]), 1) as $historyTeam) {
                 $series[] = $countOfTeams - $historyTeam->order;
             }
             if (count($series) < $maxMatches) {
@@ -66,7 +66,7 @@ class CategoryHistoryComponent extends BaseComponent
                 }
 
             }
-            $data['series'][] = array('data' => $series, 'name' => $team->i->name);
+            $data['series'][] = ['data' => $series, 'name' => $team->i->name];
             $n++;
         }
         if ($this->presenter->isAjax()) {

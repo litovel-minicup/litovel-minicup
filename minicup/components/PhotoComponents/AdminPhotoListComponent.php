@@ -49,10 +49,10 @@ class AdminPhotoListComponent extends BaseComponent
     private $connection;
 
     /** @var Tag[] */
-    private $tags = array();
+    private $tags = [];
 
     /** @var Photo[] */
-    private $photos = array();
+    private $photos = [];
 
     /** @var string */
     private $id;
@@ -95,7 +95,7 @@ class AdminPhotoListComponent extends BaseComponent
         }
         $this->session->adminPhotoList = $this->id;
         $this->session->allPhotos = $this->allPhotos;
-        $this->session[$this->id] = $this->session[$this->id] ?: array();
+        $this->session[$this->id] = $this->session[$this->id] ?: [];
         $this->photos = $this->PR->findByTags($this->TR->findByIds($this->session[$this->id]));
         parent::__construct();
     }
@@ -177,7 +177,7 @@ class AdminPhotoListComponent extends BaseComponent
 
         $g->addColumnText('filename', 'Jméno souboru')->setFilterText();
 
-        $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', array('id' => 'id'));
+        $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', ['id' => 'id']);
 
         $g->addActionEvent('delete', 'Smazat z disku', function ($id) use ($PM, $PR) {
             $PM->delete($PR->get($id, FALSE), FALSE);
@@ -193,7 +193,7 @@ class AdminPhotoListComponent extends BaseComponent
         });
 
         $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (Row $row) use ($linkGenerator) {
-            return Html::el('img', array('src' => $linkGenerator->link('Media:mini', array($row->filename))));
+            return Html::el('img', ['src' => $linkGenerator->link('Media:mini', [$row->filename])]);
         });
 
         $g->addColumnDate('taken', 'Pořízena', Date::FORMAT_DATETIME);
@@ -204,10 +204,10 @@ class AdminPhotoListComponent extends BaseComponent
 
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
-            $active->setReplacement(array(
-                0 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-remove')),
-                1 => Html::el('i')->addAttributes(array('class' => 'glyphicon glyphicon-ok'))
-            ));
+            $active->setReplacement([
+                0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
+                1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
+            ]);
         } else {
             $model->where('[active] = 1');
         }
@@ -239,7 +239,7 @@ class AdminPhotoListComponent extends BaseComponent
             $photoEdit->onDelete[] = function (Photo $photo) use ($APLC, $PR) {
                 $APLC->photos = $APLC->PR->findByIds(array_diff(array_map(function (Photo $photo) {
                     return $photo->id;
-                }, $APLC->photos), array($photo->id)));
+                }, $APLC->photos), [$photo->id]));
                 $APLC->redrawControl('photo-list');
             };
             return $photoEdit;

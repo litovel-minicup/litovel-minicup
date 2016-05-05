@@ -23,13 +23,13 @@ class Team extends BaseEntity
     public static $CACHE_TAG = 'team';
 
     /** @var Match[] */
-    private $wins = array();
+    private $wins = [];
 
     /** @var Match[] */
-    private $draws = array();
+    private $draws = [];
 
     /** @var Match[] */
-    private $loses = array();
+    private $loses = [];
 
     /**
      * for abbr request for slug, name or matches
@@ -39,7 +39,7 @@ class Team extends BaseEntity
      */
     public function __get($name /*, array $filterArgs*/)
     {
-        if (in_array($name, array('slug', 'name', 'matches', 'staticContent', 'tag'), TRUE)) {
+        if (in_array($name, ['slug', 'name', 'matches', 'staticContent', 'tag'], TRUE)) {
             return $this->i->$name;
         }
         return parent::__get($name);

@@ -51,15 +51,15 @@ class FilterLoader extends Object
         $texy = $this->texy;
 
         $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->day->day, 'j. n.'));
+            return $latte->invokeFilter('date', [$matchTerm->day->day, 'j. n.']);
         });
 
         $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->start, 'G:i'));
+            return $latte->invokeFilter('date', [$matchTerm->start, 'G:i']);
         });
 
         $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->end, 'G:i'));
+            return $latte->invokeFilter('date', [$matchTerm->end, 'G:i']);
         });
 
         $template->addFilter('toJson', function (array $array) {
@@ -98,13 +98,13 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('dayName', function ($time, $len = 2) use ($latte) {
-            $name = $latte->invokeFilter('date', array($time, 'w'));
-            $names = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
+            $name = $latte->invokeFilter('date', [$time, 'w']);
+            $names = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
             return Strings::substring($names[$name], 0, $len);
         });
 
         $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
-            return $generator->link(":Media:$type", array($photo->filename));
+            return $generator->link(":Media:$type", [$photo->filename]);
         });
 
         $template->addFilter('texy', function ($string) use ($texy) {

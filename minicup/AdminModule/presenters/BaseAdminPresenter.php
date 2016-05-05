@@ -15,7 +15,7 @@ abstract class BaseAdminPresenter extends BasePresenter
         parent::startup();
         if (!$this->user->loggedIn) {
             $this->flashMessage('Pro vstup do administrace je nutné se přihlásit.', 'error');
-            $this->redirect(':Sign:in', array('backlink' => $this->storeRequest()));
+            $this->redirect(':Sign:in', ['backlink' => $this->storeRequest()]);
         }
     }
 
@@ -59,7 +59,7 @@ abstract class BaseAdminPresenter extends BasePresenter
         $presenter = $this;
         foreach ($grid->getComponents(TRUE) as $child) {
             if ($child instanceof Event) {
-                $child->getElementPrototype()->addAttributes(array('class' => 'ajax'));
+                $child->getElementPrototype()->addAttributes(['class' => 'ajax']);
                 $child->setOnClick(function ($id) use ($grid, $presenter, $child) {
                     $presenter->flashMessage("Akce '{$child->getLabel()}' s prvkem {$id} byl úspěšně provedena!", 'success');
                     $grid->reload();
