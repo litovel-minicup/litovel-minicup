@@ -5,7 +5,8 @@ namespace Minicup\Model\Repository;
 use Minicup\Model\Entity\Year;
 use Nette\InvalidStateException;
 
-class YearRepository extends BaseRepository {
+class YearRepository extends BaseRepository
+{
     /**
      * @var Year
      */
@@ -15,7 +16,8 @@ class YearRepository extends BaseRepository {
      * @return Year
      * @throws InvalidStateException
      */
-    public function getSelectedYear() {
+    public function getSelectedYear()
+    {
         if (!$this->selectedYear) {
             $row = $this->createFluent()->where('actual = 1')->fetch();
             if (!$row) {
@@ -30,11 +32,13 @@ class YearRepository extends BaseRepository {
      * @param Year $year
      * @return Year
      */
-    public function setSelectedYear(Year $year = NULL) {
+    public function setSelectedYear(Year $year = NULL)
+    {
         return $this->selectedYear = $year;
     }
 
-    public function getActualYear() {
+    public function getActualYear()
+    {
         $row = $this->createFluent()->where('actual = 1')->fetch();
         if (!$row) {
             throw new InvalidStateException('Table year has not actual year.');
@@ -46,7 +50,8 @@ class YearRepository extends BaseRepository {
      * @param string $slug
      * @return Year|NULL
      */
-    public function getBySlug($slug) {
+    public function getBySlug($slug)
+    {
         $row = $this->createFluent()
             ->where('slug = %s', $slug)
             ->fetch();
@@ -59,7 +64,8 @@ class YearRepository extends BaseRepository {
     /**
      * @return Year[]
      */
-    public function findArchiveYears() {
+    public function findArchiveYears()
+    {
         return $this->createEntities(
             $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
         );
@@ -68,8 +74,9 @@ class YearRepository extends BaseRepository {
     /**
      * @return array
      */
-    public function getYearChoices() {
-        $data = array();
+    public function getYearChoices()
+    {
+        $data = [];
         foreach ($this->findAll(FALSE) as $year) {
             $data[$year->id] = $year->slug;
         }

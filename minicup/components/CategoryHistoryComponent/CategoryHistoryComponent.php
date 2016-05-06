@@ -7,6 +7,16 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
 
+interface ICategoryHistoryComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryHistoryComponent
+     */
+    public function create(Category $category);
+
+}
+
 class CategoryHistoryComponent extends BaseComponent
 {
     /** @var Category $category */
@@ -15,10 +25,12 @@ class CategoryHistoryComponent extends BaseComponent
     /** @var TeamRepository */
     private $TR;
 
-    public function __construct(Category $category, TeamRepository $TR)
+    public function __construct(Category $category,
+                                TeamRepository $TR)
     {
         $this->category = $category;
         $this->TR = $TR;
+        parent::__construct();
     }
 
     public function render()
@@ -30,17 +42,17 @@ class CategoryHistoryComponent extends BaseComponent
     public function handleData()
     {
         $maxMatches = max(array_map(function (Team $team) {
-            return count($team->getPlayedMatches());
-        }, $this->category->teams)) + 1;
+                return count($team->getPlayedMatches());
+            }, $this->category->teams));
 
-        $data = array("labels" => range(1, $maxMatches+1), "series" => array());
+        $data = ['labels' => range(1, $maxMatches), 'series' => []];
         $countOfTeams = count($this->category->teams);
         $n = 1;
         foreach ($this->category->teams as $team) {
-            $series = array();
+            $series = [];
             /** @var Team $historyTeam */
             $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach (array_slice(array_merge($historicalTeams, array($team)), 1) as $historyTeam) {
+            foreach (array_slice(array_merge($historicalTeams, [$team]), 1) as $historyTeam) {
                 $series[] = $countOfTeams - $historyTeam->order;
             }
             if (count($series) < $maxMatches) {
@@ -50,25 +62,15 @@ class CategoryHistoryComponent extends BaseComponent
                     $lastOrder = $countOfTeams - $n;
                 }
                 foreach (range(0, $maxMatches - count($series)) as $_) {
-                    array_unshift($series, $lastOrder);
+                    array_unshift($series, $lastOrder - 2);
                 }
 
             }
-            $data['series'][] = array('data' => $series, 'name' => $team->i->name);
+            $data['series'][] = ['data' => $series, 'name' => $team->i->name];
             $n++;
         }
         if ($this->presenter->isAjax()) {
             $this->presenter->sendJson($data);
         }
     }
-}
-
-interface ICategoryHistoryComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryHistoryComponent
-     */
-    public function create(Category $category);
-
 }

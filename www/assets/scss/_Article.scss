@@ -1,63 +1,78 @@
 .Article {
 
-	// border-bottom: 2px solid $medium--grey;
+  // border-bottom: 2px solid $medium--grey;
 
-	&__head {
+  &__head {
 
-		background: $medium--grey;
+    background: $medium--grey;
 
-		&__text {
-			color: darken($medium--grey, 40%);
-		}
-	
-	}
+    &__text {
+      color: darken($medium--grey, 40%);
+    }
 
-	&__subhead {
-		background: $dark--grey;
-		
-		a:hover {
-			background: white;
-		}
-		
-	}
+  }
 
-	&__heading {
-		font-family: "Montserrat";
-		font-size: 34px;
-		letter-spacing: -1.5px;
-	}
+  &__subhead {
+    background: $dark--grey;
 
-	&__date {
-		font-family: "PTBoldItalic";	
-		padding-top: 10px;
+    a:hover {
+      background: white;
+    }
 
-	}
+  }
 
+  &__heading {
+    font-family: "Montserrat";
+    font-size: 34px;
+    letter-spacing: -1.5px;
+  }
 
-	&__content {
-		font-family: "PTRegular";
-		padding-top: 15px;
-		padding-bottom: 30px;
-		font-size: 16px;
+  &__date {
+    font-family: "PTBoldItalic";
+    padding-top: 10px;
 
-		p {
-			line-height: 1.5;
-		}
+  }
 
-		a {
-			border-bottom: 3px solid $light--blue;
-			color: $light--blue;
+  &__content {
+    font-family: "PTRegular";
+    padding-top: 15px;
+    padding-bottom: 30px;
+    font-size: 16px;
 
-			&:hover {
-				background: $light--blue;
-				color: white;
-			}
+    p {
+      line-height: 1.5;
+    }
 
-		}
+    a {
+      border-bottom: 3px solid $light--blue;
+      color: $light--blue;
 
-		strong  {
-			font-family: 'MontserratBold';
-		}
+      &:hover {
+        background: $light--blue;
+        color: white;
+      }
 
-	}
+    }
+
+    strong {
+      font-family: 'MontserratBold';
+    }
+
+  }
+
+  &__photos {
+    margin-top: -25px;
+    margin-left: -5px;
+    margin-right: -5px;
+    display: flex;
+
+    .photo {
+      flex: 1 1;
+      margin: 0 5px;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
 }

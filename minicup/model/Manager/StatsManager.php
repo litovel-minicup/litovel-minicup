@@ -3,6 +3,7 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\Row;
 use LeanMapper\Connection;
 use LeanMapper\Fluent;
 use Minicup\Model\Entity\Category;
@@ -19,7 +20,7 @@ class StatsManager extends Object
     private $TIR;
 
     /**
-     * @param Connection $connection
+     * @param Connection         $connection
      * @param TeamInfoRepository $TIR
      */
     public function __construct(Connection $connection, TeamInfoRepository $TIR)
@@ -30,7 +31,7 @@ class StatsManager extends Object
 
     /**
      * @param Category $category
-     * @return \DibiRow|FALSE
+     * @return Row|FALSE
      */
     public function getStats(Category $category)
     {

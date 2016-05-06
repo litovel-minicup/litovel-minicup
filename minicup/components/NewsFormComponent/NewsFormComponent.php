@@ -3,15 +3,18 @@
 namespace Minicup\Components;
 
 
+use Dibi\DateTime;
+use Dibi\DriverException;
 use Minicup\Model\Entity\News;
-use Minicup\Model\Entity\Year;
+use Minicup\Model\Manager\TagManager;
 use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
 
-interface INewsFormComponentFactory {
+interface INewsFormComponentFactory
+{
     /**
      * @param News $news
      * @return NewsFormComponent
@@ -19,7 +22,8 @@ interface INewsFormComponentFactory {
     public function create(News $news = NULL);
 }
 
-class NewsFormComponent extends BaseComponent {
+class NewsFormComponent extends BaseComponent
+{
     /** @var NewsRepository */
     private $NR;
 
@@ -29,20 +33,30 @@ class NewsFormComponent extends BaseComponent {
     /** @var News */
     private $news;
 
+    /** @var TagManager */
+    private $tagManager;
+
     public function __construct(News $news = NULL,
                                 NewsRepository $NR,
-                                YearRepository $yearRepository) {
+                                YearRepository $yearRepository,
+                                TagManager $tagManager)
+    {
         $this->news = $news;
         $this->NR = $NR;
         $this->YR = $yearRepository;
+
+        $this->tagManager = $tagManager;
+        parent::__construct();
     }
 
-    public function render() {
+    public function render()
+    {
         $this->template->news = $this->news;
         if ($this->news) {
             /** @var Form $form */
             $form = $this['newsForm'];
-            $form->setDefaults($this->news->getData(array('title', 'content', 'id', 'texy')));
+            $form->setDefaults($this->news->getData(['title', 'content', 'id', 'texy']));
+            $form->setDefaults(['year' => $this->news->year->id]);
         }
         parent::render();
     }
@@ -50,10 +64,11 @@ class NewsFormComponent extends BaseComponent {
     /**
      * @return Form
      */
-    public function createComponentNewsForm() {
+    public function createComponentNewsForm()
+    {
         $f = $this->formFactory->create();
         $f->addText('title', 'Titulek')->setRequired();
-        $f->addSelect('year', 'Rok', $this->YR->getYearChoices());
+        $f->addSelect('year', 'Rok', $this->YR->getYearChoices())->setDefaultValue($this->YR->getSelectedYear()->id);
         $f->addCheckbox('texy', 'Užít Texy')->setDefaultValue(TRUE);
         $f->addHidden('id');
         $content = $f->addTextArea('content', 'Obsah')->setRequired();
@@ -64,7 +79,7 @@ class NewsFormComponent extends BaseComponent {
         }
         $content->getControlPrototype()->attrs['rows'] = $rows;
         $f->addSubmit('submit', $this->news ? 'Upravit' : 'Přidat');
-        $f->onSuccess[] = $this->newsFormSubmitted;
+        $f->onSuccess[] = [$this, 'newsFormSubmitted'];
         return $f;
     }
 
@@ -72,25 +87,35 @@ class NewsFormComponent extends BaseComponent {
      * @param Form      $form
      * @param ArrayHash $values
      */
-    public function newsFormSubmitted(Form $form, ArrayHash $values) {
+    public function newsFormSubmitted(Form $form, ArrayHash $values)
+    {
         if ($this->news) {
             $news = $this->news;
         } else {
             $news = new News();
-            $news->added = new \DibiDateTime();
+            $news->added = new DateTime();
+            $news->tag = NULL;
         }
         $news->year = $this->YR->get($values->year, FALSE);
-        $news->assign($values, array('title', 'content', 'texy'));
-        $news->updated = new \DibiDateTime();
+        $news->assign($values, ['title', 'content', 'texy']);
+        $news->updated = new DateTime();
 
         try {
             $this->NR->persist($news);
-        } catch (\DibiDriverException $e) {
+        } catch (DriverException $e) {
             $this->presenter->flashMessage('Chyba při ukládání novinky!', 'warning');
             return;
         }
-        $form->setValues(array(), TRUE);
+        $this->tagManager->getTag($news);
+        $form->setValues([], TRUE);
         $this->presenter->flashMessage($values->id ? 'Novinka upravena!' : 'Novinka přidána!', 'success');
     }
 
+
+    public function handleCreateTag()
+    {
+        $tag= $this->tagManager->getTag($this->news);
+        $this->presenter->flashMessage("Tag k novince vytvořen tag {$tag->slug}.");
+        $this->presenter->redrawControl('content');
+    }
 }

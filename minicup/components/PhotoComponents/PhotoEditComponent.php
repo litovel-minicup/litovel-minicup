@@ -12,6 +12,15 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
+}
+
 /**
  * @method onDelete(Photo $photo)
  * @method onSave(Photo $photo)
@@ -43,12 +52,12 @@ class PhotoEditComponent extends BaseComponent
     private $request;
 
     /**
-     * @param Photo $photo
-     * @param TagRepository $TR
+     * @param Photo           $photo
+     * @param TagRepository   $TR
      * @param PhotoRepository $PR
-     * @param PhotoManager $PM
-     * @param Request $request
-     * @param CacheManager $CM
+     * @param PhotoManager    $PM
+     * @param Request         $request
+     * @param CacheManager    $CM
      */
     public function __construct(Photo $photo,
                                 TagRepository $TR,
@@ -96,7 +105,7 @@ class PhotoEditComponent extends BaseComponent
 
     public function handleToggle()
     {
-        $this->photo->active  = $this->photo->active ? 0 : 1;
+        $this->photo->active = $this->photo->active ? 0 : 1;
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
@@ -119,14 +128,4 @@ class PhotoEditComponent extends BaseComponent
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
-}
-
-
-interface IPhotoEditComponentFactory
-{
-    /**
-     * @param Photo $photo
-     * @return PhotoEditComponent
-     */
-    public function create(Photo $photo);
 }

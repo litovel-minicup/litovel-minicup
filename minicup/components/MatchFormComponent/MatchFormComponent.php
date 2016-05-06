@@ -13,6 +13,16 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 
+interface IMatchFormComponentFactory
+{
+    /**
+     * @param Category $category
+     * @param int      $count
+     * @return MatchFormComponent
+     */
+    public function create(Category $category, $count);
+}
+
 class MatchFormComponent extends BaseComponent
 {
     /** @var Category */
@@ -27,12 +37,16 @@ class MatchFormComponent extends BaseComponent
     /** @var MatchManager */
     private $MM;
 
-    public function __construct(Category $category, $count, MatchRepository $MR, MatchManager $MM)
+    public function __construct(Category $category,
+                                $count,
+                                MatchRepository $MR,
+                                MatchManager $MM)
     {
         $this->category = $category;
         $this->count = $count;
         $this->MR = $MR;
         $this->MM = $MM;
+        parent::__construct();
     }
 
     public function render()
@@ -41,53 +55,12 @@ class MatchFormComponent extends BaseComponent
         parent::render();
     }
 
-    /**
-     * @return Form
-     */
-    protected function createComponentMatchForm()
-    {
-        $me = $this;
-
-        $f = $this->formFactory->create();
-
-        /** @var EntitiesReplicatorContainer $matches */
-        $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
-            $container->currentGroup = $container->getForm()->addGroup('Zápas', FALSE);
-            $home = $container
-                ->addText('scoreHome', $match->homeTeam->name)
-                ->setType('number');
-            $home->addCondition(Form::INTEGER);
-            $container->addText('time')
-                ->setDisabled()
-                ->setDefaultValue($match->matchTerm->start->format('j. n.') . " " . $match->matchTerm->start->format('G:i'));
-            $away = $container
-                ->addText('scoreAway', $match->awayTeam->name)
-                ->setType('number');
-            $away->addCondition(Form::INTEGER);
-
-            $home->addConditionOn($away, Form::FILLED)->setRequired();
-            $away->addConditionOn($home, Form::FILLED)->setRequired();
-        },
-            $this->MR->findMatchesByCategory($this->category, MatchRepository::UNCONFIRMED),
-            $this->count);
-
-        /** @var SubmitButton $addSubmit */
-        $matches->addSubmit('addMatch', 'zobrazit další zápas')
-            ->setValidationScope(NULL)
-            ->setAttribute('class', 'ajax')
-            ->onClick[] = $this->addMatchClicked;
-        $f->addSubmit('submit', 'odeslat');
-        $f->onSuccess[] = $this->formSubmitted;
-        return $f;
-    }
-
     public function addMatchClicked(SubmitButton $button)
     {
         $button->parent->createOne();
         $this->redrawControl();
     }
 
-    /***/
     public function formSubmitted(Form $form, ArrayHash $values)
     {
         /** @var SubmitButton $submitButton */
@@ -105,14 +78,46 @@ class MatchFormComponent extends BaseComponent
             $this->redirect('this');
         }
     }
-}
 
-interface IMatchFormComponentFactory
-{
+    /***/
+
     /**
-     * @param Category $category
-     * @param int $count
-     * @return MatchFormComponent
+     * @return Form
      */
-    public function create(Category $category, $count);
+    protected function createComponentMatchForm()
+    {
+        $me = $this;
+
+        $f = $this->formFactory->create();
+
+        /** @var EntitiesReplicatorContainer $matches */
+        $matches = $f->addDynamic('matches', function (Container $container, Match $match) use ($me) {
+            $container->setCurrentGroup($container->getForm()->addGroup('Zápas', FALSE));
+            $home = $container
+                ->addText('scoreHome', $match->homeTeam->name)
+                ->setType('number');
+            $home->addCondition(Form::INTEGER);
+            $container->addText('time')
+                ->setDisabled()
+                ->setDefaultValue($match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i'));
+            $away = $container
+                ->addText('scoreAway', $match->awayTeam->name)
+                ->setType('number');
+            $away->addCondition(Form::INTEGER);
+
+            $home->addConditionOn($away, Form::FILLED)->setRequired();
+            $away->addConditionOn($home, Form::FILLED)->setRequired();
+        },
+            $this->MR->findMatchesByCategory($this->category, MatchRepository::UNCONFIRMED),
+            $this->count);
+
+        /** @var SubmitButton $addSubmit */
+        $matches->addSubmit('addMatch', 'zobrazit další zápas')
+            ->setValidationScope(NULL)
+            ->setAttribute('class', 'ajax')
+            ->onClick[] = [$this, 'addMatchClicked'];
+        $f->addSubmit('submit', 'odeslat');
+        $f->onSuccess[] = [$this, 'formSubmitted'];
+        return $f;
+    }
 }

@@ -20,7 +20,7 @@ class TeamDataRefresher extends Object
 
     /**
      * @param MatchRepository $MR
-     * @param TeamRepository $TR
+     * @param TeamRepository  $TR
      */
     public function __construct(MatchRepository $MR, TeamRepository $TR)
     {
@@ -34,7 +34,7 @@ class TeamDataRefresher extends Object
     public function refreshData(Category $category)
     {
         /** @var Team[] $teams */
-        $teams = array();
+        $teams = [];
         /** @var Team $team */
         foreach ($this->TR->getByCategory($category) as $team) {
             $team->points = 0;
@@ -56,7 +56,7 @@ class TeamDataRefresher extends Object
             if ($match->scoreHome > $match->scoreAway) {
                 $home->points += ReorderManager::POINTS_FOR_WINNER;
                 $away->points += ReorderManager::POINTS_FOR_LOSER;
-            } elseif($match->scoreHome < $match->scoreAway) {
+            } elseif ($match->scoreHome < $match->scoreAway) {
                 $home->points += ReorderManager::POINTS_FOR_LOSER;
                 $away->points += ReorderManager::POINTS_FOR_WINNER;
             } else {

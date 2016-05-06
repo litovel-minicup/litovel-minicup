@@ -11,6 +11,7 @@ use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
 use Nette\Object;
+use Nette\Utils\Html;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
 
@@ -25,9 +26,10 @@ class FilterLoader extends Object
 
     /**
      * @param LinkGenerator $linkGenerator
-     * @param Texy $texy
+     * @param Texy          $texy
      */
-    public function __construct(LinkGenerator $linkGenerator, Texy $texy)
+    public function __construct(LinkGenerator $linkGenerator,
+                                Texy $texy)
     {
         $this->linkGenerator = $linkGenerator;
         $this->texy = $texy;
@@ -35,7 +37,7 @@ class FilterLoader extends Object
 
 
     /**
-     * @param Template $template
+     * @param ITemplate|Template $template
      * @return Template
      */
     public function loadFilters(ITemplate $template)
@@ -50,15 +52,15 @@ class FilterLoader extends Object
         $texy = $this->texy;
 
         $template->addFilter('matchDate', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->day->day, 'j. n.'));
+            return $latte->invokeFilter('date', [$matchTerm->day->day, 'j. n.']);
         });
 
         $template->addFilter('matchStart', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->start, 'G:i'));
+            return $latte->invokeFilter('date', [$matchTerm->start, 'G:i']);
         });
 
         $template->addFilter('matchEnd', function (MatchTerm $matchTerm) use ($latte) {
-            return $latte->invokeFilter('date', array($matchTerm->end, 'G:i'));
+            return $latte->invokeFilter('date', [$matchTerm->end, 'G:i']);
         });
 
         $template->addFilter('toJson', function (array $array) {
@@ -97,17 +99,34 @@ class FilterLoader extends Object
         });
 
         $template->addFilter('dayName', function ($time, $len = 2) use ($latte) {
-            $name = $latte->invokeFilter('date', array($time, 'w'));
-            $names = array('neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota');
+            $name = $latte->invokeFilter('date', [$time, 'w']);
+            $names = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
             return Strings::substring($names[$name], 0, $len);
         });
 
         $template->addFilter('photo', function (Photo $photo, $type = PhotoManager::PHOTO_THUMB) use ($generator) {
-            return $generator->link(":Media:$type", array($photo->filename));
+            return $generator->link(":Media:$type", [$photo->filename]);
         });
 
         $template->addFilter('texy', function ($string) use ($texy) {
             return $texy->process($string);
+        });
+
+        $template->addFilter('ogImage', function (Photo $photo, $size = PhotoManager::PHOTO_MEDIUM) use ($generator) {
+            if (!isset(PhotoManager::$resolutions[$size])) {
+                throw new InvalidArgumentException('Unknown photo size.');
+            }
+            $el = Html::el();
+            $el->add(
+                Html::el('meta', ['property' => 'og:image', 'content' => $generator->link("Media:$size", [$photo->filename])])
+            );
+            $el->add(
+                Html::el('meta', ['property' => 'og:image:width', 'content' => PhotoManager::$resolutions[$size][0]])
+            );
+            $el->add(
+                Html::el('meta', ['property' => 'og:image:height', 'content' => PhotoManager::$resolutions[$size][1]])
+            );
+            return $el;
         });
 
         return $template;

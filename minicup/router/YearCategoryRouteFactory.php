@@ -3,19 +3,25 @@
 namespace Minicup\Router;
 
 
+use Dibi\DriverException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\Routers\Route;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
+use Nette\InvalidArgumentException;
+use Nette\InvalidStateException;
+use Nette\Neon\Exception;
 use Nette\Object;
 use Nette\Utils\Strings;
+use ProxyManagerTest\Functional\FatalPreventionFunctionalTest;
 
-class YearCategoryRouteFactory extends Object {
+class YearCategoryRouteFactory extends Object
+{
 
-    const DEFAULT_REQUIRED_PATTERN = '<category>';
-    const DEFAULT_OPTIONAL_PATTERN = '[!<category>]';
+    const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
+    const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
 
     const DEFAULT_KEY = 'category';
 
@@ -39,7 +45,8 @@ class YearCategoryRouteFactory extends Object {
      */
     public function __construct(CategoryRepository $categoryRepository,
                                 YearRepository $yearRepository,
-                                Session $session) {
+                                Session $session)
+    {
         $this->categoryRepository = $categoryRepository;
         $this->yearRepository = $yearRepository;
         $this->session = $session->getSection('minicup');
@@ -52,7 +59,8 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function __invoke($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
+    public function __invoke($mask, array $metadata = [], $flags = 0, $required = FALSE)
+    {
         return $this->route($mask, $metadata, $flags, $required);
     }
 
@@ -63,7 +71,8 @@ class YearCategoryRouteFactory extends Object {
      * @param bool|TRUE $required
      * @return Route
      */
-    public function route($mask, array $metadata = array(), $flags = 0, $required = FALSE) {
+    public function route($mask, array $metadata = [], $flags = 0, $required = FALSE)
+    {
         $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
         $mask .= ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
 
@@ -74,12 +83,14 @@ class YearCategoryRouteFactory extends Object {
      * @param bool $requiredCategory
      * @return array
      */
-    public function getMetadata($requiredCategory) {
+    public function getMetadata($requiredCategory)
+    {
         $CR = $this->categoryRepository;
         $YR = $this->yearRepository;
-        $metadata = array(
+        $metadata = [
             Route::FILTER_IN => function ($slug) use ($CR, $YR) {
                 // TEMPORARILY SOLUTION
+                // TODO: remove after search engines reindex old project
                 if ($category = $CR->getBySlug($slug, $YR->getBySlug('2014'))) {
                     return $category;
                 }
@@ -96,12 +107,24 @@ class YearCategoryRouteFactory extends Object {
                 if (!$category instanceof Category) {
                     $category = $CR->getBySlug($category, $YR->getBySlug('2014'));
                 }
-                return "{$category->year->year}-{$category->slug}";
+                $slug = "{$category->year->year}-{$category->slug}";
+                if (!Strings::match($slug, '#([0-9]{4})-([\w]*)#')) {
+                    throw new InvalidStateException;
+                }
+                return $slug;
             }
-        );
-        if (!$requiredCategory) {
-            $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
-            $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
+        ];
+        try {
+            if (!$requiredCategory) {
+                static $category;
+                if (!$category) {
+                    $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
+                }
+                $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
+            }
+
+        } catch (DriverException $e) {
+
         }
         return $metadata;
     }

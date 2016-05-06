@@ -56,10 +56,8 @@ final class MatchPresenter extends BaseAdminPresenter
     public function createComponentMatchesGridComponent($name)
     {
         $connection = $this->connection;
-        $presenter = $this;
         $MM = $this->MM;
         $MR = $this->MR;
-        $TIR = $this->TIR;
         $g = new Grid($this, $name);
         $f = $connection->select('[m.*]')
             ->from('[match] m')
@@ -88,10 +86,10 @@ final class MatchPresenter extends BaseAdminPresenter
                 return TRUE;
             });
 
-        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR){
+        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
-            return $match->matchTerm->start->format('j. n.') . " " . $match->matchTerm->start->format('G:i');
+            return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
         });
 
         $g->addColumnText('score_away', 'Skóre hostů')->setEditableCallback(

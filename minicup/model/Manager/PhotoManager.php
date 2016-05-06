@@ -2,6 +2,7 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\DateTime;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
 use Nette\FileNotFoundException;
@@ -29,23 +30,23 @@ class PhotoManager extends Object
      * type => (width, height, flags)
      * @var array
      */
-    public static $resolutions = array(
-        PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
-        PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
-        PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(750, 750, Image::FILL),
-        PhotoManager::PHOTO_LARGE => array(1200, 1200),
-        PhotoManager::PHOTO_FULL => array(2000, 2000),
-    );
+    public static $resolutions = [
+        PhotoManager::PHOTO_MINI => [50, 50, Image::FILL],
+        PhotoManager::PHOTO_SMALL => [100, 100, Image::FILL],
+        PhotoManager::PHOTO_THUMB => [300, 300, Image::FILL],
+        PhotoManager::PHOTO_MEDIUM => [750, 750, Image::FILL],
+        PhotoManager::PHOTO_LARGE => [1200, 1200],
+        PhotoManager::PHOTO_FULL => [2000, 2000],
+    ];
 
     /**
      * mime type => file extension
      * @var array
      */
-    public static $extensions = array(
+    public static $extensions = [
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
-    );
+    ];
 
     /** @var PhotoRepository */
     private $PR;
@@ -54,7 +55,7 @@ class PhotoManager extends Object
     private $wwwPath;
 
     /**
-     * @param string $wwwPath
+     * @param string          $wwwPath
      * @param PhotoRepository $PR
      */
     public function __construct($wwwPath, PhotoRepository $PR)
@@ -65,7 +66,7 @@ class PhotoManager extends Object
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL $prefix
+     * @param string|NULL  $prefix
      * @return Photo[]
      */
     public function save($files, $prefix = NULL)
@@ -73,7 +74,7 @@ class PhotoManager extends Object
         if (!$prefix) {
             $prefix = Random::generate(20);
         }
-        $photos = array();
+        $photos = [];
         foreach ($files as $file) {
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
@@ -85,10 +86,10 @@ class PhotoManager extends Object
             $file->move($path);
 
             $exif = exif_read_data($path);
-            $taken = new \DibiDateTime();
+            $taken = new DateTime();
             if (isset($exif['DateTimeOriginal'])) {
                 try {
-                    $taken = new \DibiDateTime($exif['DateTimeOriginal']);
+                    $taken = new DateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
                 }
             }
@@ -113,7 +114,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool $lazy
+     * @param bool  $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -135,7 +136,7 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo $photo
-     * @param string $format
+     * @param string       $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -170,8 +171,8 @@ class PhotoManager extends Object
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
         $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-                    ->resize($this::$resolutions[$format][0] / 6,$this::$resolutions[$format][1] / 6,
-                            Image::FIT | Image::SHRINK_ONLY);
+            ->resize($this::$resolutions[$format][0] / 6, $this::$resolutions[$format][1] / 6,
+                Image::FIT | Image::SHRINK_ONLY);
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);
@@ -183,12 +184,12 @@ class PhotoManager extends Object
      * @param array $formats
      * @return array
      */
-    public function cleanCachedPhotos(array $formats = array())
+    public function cleanCachedPhotos(array $formats = [])
     {
         if (!$formats) {
             $formats = array_keys($this::$resolutions);
         }
-        $failed = array();
+        $failed = [];
         /** @var Photo $photo */
         foreach ($this->PR->findAll() as $photo) {
             /** @var string $format */

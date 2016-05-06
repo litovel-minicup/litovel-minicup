@@ -17,5 +17,6 @@
     </div>
     <div class="form-group">
         {input submit class=>"form-control btn btn-primary"}
+        <a n:if="$news && !$news->tag" n:href="createTag!" class="ajax btn btn-warning btn-block">Vytvořit tag pro novinku</a>
     </div>
 {/form}

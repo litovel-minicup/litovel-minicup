@@ -5,5 +5,6 @@ namespace Minicup\AdminModule\Presenters;
 /**
  * Homepage presenter.
  */
-final class HomepagePresenter extends BaseAdminPresenter {
+final class HomepagePresenter extends BaseAdminPresenter
+{
 }

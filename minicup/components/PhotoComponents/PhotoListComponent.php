@@ -5,6 +5,17 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Photo;
 
+interface IPhotoListComponentFactory
+{
+    /**
+     * @param Photo[] $photos
+     * @param int     $initial
+     * @param int     $step
+     * @return PhotoListComponent
+     */
+    public function create(array $photos, $initial = 12, $step = 18);
+}
+
 class PhotoListComponent extends BaseComponent
 {
     /** @var Photo[] */
@@ -18,10 +29,12 @@ class PhotoListComponent extends BaseComponent
 
     /**
      * @param array $photos
-     * @param int $initial
-     * @param int $step
+     * @param int   $initial
+     * @param int   $step
      */
-    public function __construct(array $photos, $initial = 12, $step = 18)
+    public function __construct(array $photos,
+                                $initial = 12,
+                                $step = 18)
     {
         $this->photos = $photos;
         $this->actual = $initial;
@@ -47,28 +60,17 @@ class PhotoListComponent extends BaseComponent
 
     public function handleAll()
     {
-        $data = array();
+        $data = [];
         $count = count($this->photos);
         foreach ($this->photos as $i => $photo) {
             $i++;
-            $data[] = array(
+            $data[] = [
                 'href' => $this->presenter->link(':Media:medium', $photo->filename),
                 'title' => "Fotka {$i}. z {$count}"
-            );
+            ];
         }
         $this->presenter->sendJson($data);
     }
 
 
-}
-
-interface IPhotoListComponentFactory
-{
-    /**
-     * @param Photo[] $photos
-     * @param int $initial
-     * @param int $step
-     * @return PhotoListComponent
-     */
-    public function create(array $photos, $initial = 12, $step = 18);
 }

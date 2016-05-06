@@ -6,6 +6,15 @@ use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use Nette\Utils\ArrayHash;
 
+interface ILoginFormComponentFactory
+{
+    /**
+     * @return LoginFormComponent
+     */
+    public function create();
+
+}
+
 class LoginFormComponent extends BaseComponent
 {
     /**
@@ -17,18 +26,18 @@ class LoginFormComponent extends BaseComponent
         $form->setMethod(Form::POST);
         $form->addText('username', 'Uživatelské jméno')
             ->setRequired('Prosím, zadejte vaše uživatelské jméno.')
-            ->getControlPrototype()->addAttributes(array("placeholder" => "username"));
+            ->getControlPrototype()->addAttributes(['placeholder' => 'username']);
         $form->addPassword('password', 'Heslo')
             ->setRequired('Prosím vložte vaše heslo.')
-            ->getControlPrototype()->addAttributes(array("placeholder" => "password"));
+            ->getControlPrototype()->addAttributes(['placeholder' => 'password']);
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('submit', 'Přihlásit');
-        $form->onSuccess[] = $this->loginFormValidated;
+        $form->onSuccess[] = [$this, 'loginFormValidated'];
         return $form;
     }
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
     public function loginFormValidated(Form $form, ArrayHash $values)
@@ -47,13 +56,4 @@ class LoginFormComponent extends BaseComponent
         }
         $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
     }
-}
-
-interface ILoginFormComponentFactory
-{
-    /**
-     * @return LoginFormComponent
-     */
-    public function create();
-
 }

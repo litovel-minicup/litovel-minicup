@@ -4,7 +4,6 @@ namespace Minicup\Components;
 
 
 use Nette\Http\IRequest;
-use Nette\Http\Request;
 use Nette\Object;
 use Nette\Utils\Strings;
 use WebLoader\Compiler;
@@ -18,21 +17,21 @@ use WebLoader\Nette\CssLoader;
  */
 class CssComponentFactory extends Object
 {
+    /** @var IRequest */
+    public $request;
     /** @var  string */
     private $wwwPath;
-
     /** @var  bool */
     private $productionMode;
 
-    /** @var IRequest */
-    public $request;
-
     /**
-     * @param string $wwwPath
-     * @param bool $productionMode
-     * @param Request $request
+     * @param string   $wwwPath
+     * @param bool     $productionMode
+     * @param IRequest $request
      */
-    public function __construct($wwwPath, $productionMode, IRequest $request)
+    public function __construct($wwwPath,
+                                $productionMode,
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
@@ -51,7 +50,6 @@ class CssComponentFactory extends Object
         $files->addFile('assets/css/select2.css');
         $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
-            $files->addFile('assets/css/reset.css');
             $files->addFile('assets/css/index.css');
         } elseif ($module === 'admin') {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
@@ -65,7 +63,7 @@ class CssComponentFactory extends Object
 
         // TODO: Errrghh!!!
         $compiler->addFileFilter(function ($code, Compiler $loader, $file = null) use ($control) {
-            return Strings::replace($code, "#\.\./#", $control->request->url->scriptPath . "assets/");
+            return Strings::replace($code, "#\.\./#", $control->request->getUrl()->scriptPath . 'assets/');
         });
 
         if ($this->productionMode) {
@@ -73,7 +71,7 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
-        $control = new CssLoader($compiler, $this->request->url->scriptPath . 'webtemp');
+        $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }
 }

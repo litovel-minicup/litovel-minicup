@@ -14,7 +14,7 @@ class FilterRoute extends Route
     const WAY_OUT = 'out';
 
     /** @var array */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * @param IRequest $httpRequest
@@ -36,7 +36,7 @@ class FilterRoute extends Route
 
     /**
      * @param Request $appRequest
-     * @param Url $refUri
+     * @param Url     $refUri
      * @return string
      */
     public function constructUrl(Request $appRequest, Url $refUri)
@@ -51,17 +51,17 @@ class FilterRoute extends Route
     }
 
     /**
-     * @param string $param
+     * @param string   $param
      * @param callable $in
      * @param callable $out
      * @return self
      */
     public function addFilter($param, $in, $out = NULL)
     {
-        $this->filters[$param] = array(
+        $this->filters[$param] = [
             self::WAY_IN => callback($in),
             self::WAY_OUT => $out ? callback($out) : NULL
-        );
+        ];
 
         return $this;
     }
@@ -107,7 +107,7 @@ class FilterRoute extends Route
 
     /**
      * @param Request $appRequest
-     * @param array $params
+     * @param array   $params
      * @return Request
      * @throw InvalidStateException
      */
@@ -136,9 +136,9 @@ class FilterRoute extends Route
     }
 
     /**
-     * @param array $params
+     * @param array   $params
      * @param Request $request
-     * @param string $way
+     * @param string  $way
      * @return array
      */
     private function doFilterParams($params, Request $request, $way)

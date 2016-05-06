@@ -4,6 +4,7 @@ namespace Minicup\Model\Repository;
 
 
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Entity\Year;
 
 class TagRepository extends BaseRepository
 {
@@ -29,20 +30,31 @@ class TagRepository extends BaseRepository
 
     /**
      * @param string $term
+     * @param Year   $year
      * @return Tag[]
      */
-    public function findLikeTerm($term)
+    public function findLikeTerm($term = NULL, Year $year = NULL)
     {
-        $rows = $this->createFluent()->where('[slug] LIKE %~like~', $term)->fetchAll();
-        return $this->createEntities($rows);
+        $fluent = $this->createFluent();
+        if ($term) {
+            $fluent->where('[slug] LIKE %~like~', $term);
+        }
+        if ($year) {
+            $fluent->where('[year_id] = ', $year->id);
+        }
+        return $this->createEntities($fluent->fetchAll());
     }
 
     /**
+     * @param Year $year
      * @return Tag[]
      */
-    public function findMainTags()
+    public function findMainTags(Year $year = NULL)
     {
-        $rows = $this->createFluent()->where('[is_main] = 1')->fetchAll();
-        return $this->createEntities($rows);
+        $fluent = $this->createFluent()->where('[is_main] = 1');
+        if ($year) {
+            $fluent->where('[year_id] = ', $year->id);
+        }
+        return $this->createEntities($fluent->fetchAll());
     }
 }

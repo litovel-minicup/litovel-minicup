@@ -13,7 +13,7 @@ class Filters extends Object
 {
     /**
      * @param Fluent $fluent
-     * @param int $yearId
+     * @param int    $yearId
      */
     public function yearRestrict(Fluent $fluent, $yearId = 0)
     {
@@ -24,7 +24,7 @@ class Filters extends Object
 
     /**
      * @param Fluent $fluent
-     * @param Team $team
+     * @param Team   $team
      * @deprecated
      */
     public function joinAllMatches(Fluent $fluent, Team $team)
@@ -79,7 +79,7 @@ class Filters extends Object
      */
     public function orderMatches(Fluent $fluent, $order = BaseRepository::ORDER_ASC)
     {
-        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC), TRUE)) {
+        if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
         $fluent
@@ -105,7 +105,7 @@ class Filters extends Object
      */
     public function orderPhotos(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
     {
-        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC), TRUE)) {
+        if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
         $fluent->orderBy("[taken] $order");
@@ -118,9 +118,9 @@ class Filters extends Object
      */
     public function orderNews(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
     {
-        if (!in_array($order, array(BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC), TRUE)) {
+        if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[added]'.$order);
+        $fluent->orderBy('[added]' . $order);
     }
 }

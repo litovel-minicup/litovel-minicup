@@ -23,7 +23,7 @@ class CacheManager extends Object
 
     /**
      * @param BaseRepository[] $repositories
-     * @param IStorage $cache
+     * @param IStorage         $cache
      */
     public function __construct(array $repositories, IStorage $cache)
     {
@@ -62,10 +62,10 @@ class CacheManager extends Object
      */
     public function cleanByEntity(BaseEntity $entity)
     {
-        if ($entity instanceof TeamInfo) {
+        if ($entity instanceof TeamInfo && $entity->team) {
             $this->cleanByEntity($entity->team);
         }
-        $this->cache->clean(array(Cache::TAGS => array($entity->getCacheTag())));
+        $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()]]);
         $this->cache->remove($entity->getCacheTag());
     }
 

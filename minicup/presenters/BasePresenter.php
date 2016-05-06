@@ -19,7 +19,8 @@ use WebLoader\Nette\JavaScriptLoader;
 /**
  * Base presenter.
  */
-abstract class BasePresenter extends Presenter {
+abstract class BasePresenter extends Presenter
+{
     /** @var IFormFactory @inject */
     public $formFactory;
 
@@ -50,10 +51,12 @@ abstract class BasePresenter extends Presenter {
     /**
      * before render
      */
-    public function beforeRender() {
+    public function beforeRender()
+    {
         parent::beforeRender();
         $this->template->absoluteUrl = $this->getHttpRequest()->getUrl()->absoluteUrl;
         $this->template->productionMode = $this->context->parameters['productionMode'];
+        $this->template->category = $this->category;
     }
 
     /**
@@ -61,20 +64,21 @@ abstract class BasePresenter extends Presenter {
      *
      * @return array
      */
-    public function formatLayoutTemplateFiles() {
+    public function formatLayoutTemplateFiles()
+    {
         $layout = $this->layout ?: 'layout';
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = array(
+        $list = [
             "$dir/templates/$module/$presenter/@$layout.latte",
             "$dir/templates/$module/$presenter.@$layout.latte",
             "$dir/templates/$module.$presenter.@$layout.latte",
             "$dir/templates/$module/@$layout.latte",
             "$dir/templates/$module.@$layout.latte",
-        );
+        ];
         do {
             $list[] = "$dir/templates/@$layout.latte";
             $dir = dirname($dir);
@@ -87,17 +91,18 @@ abstract class BasePresenter extends Presenter {
      *
      * @return array
      */
-    public function formatTemplateFiles() {
+    public function formatTemplateFiles()
+    {
         $dir = $this->context->parameters['appDir'];
         $names = Strings::split($this->getName(), '(:)');
         $module = $names[0];
         $presenter = $names[1];
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
-        $list = array(
+        $list = [
             "$dir/templates/$module.$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter.$this->view.latte",
             "$dir/templates/$module/$presenter/$this->view.latte",
-        );
+        ];
         return $list;
     }
 
@@ -106,29 +111,39 @@ abstract class BasePresenter extends Presenter {
      *
      * @return ITemplate
      */
-    public function createTemplate() {
+    public function createTemplate()
+    {
         return $this->filterLoader->loadFilters(parent::createTemplate());
     }
 
     /**
      * set module property
      */
-    protected function startup() {
+    protected function startup()
+    {
         parent::startup();
         $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
         $this->CM->initEvents();
-        $this->category ? $this->YR->setSelectedYear($this->category->year) : NULL;
+
+        if (($this->category instanceof Category) && !$this->category->isDetached()) {
+            $this->YR->setSelectedYear($this->category->year);
+        } else {
+            $this->category = $this->CR->getDefaultCategory();
+            $this->YR->setSelectedYear($this->category->year);
+        }
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
     }
 
     /** @return CssLoader */
-    protected function createComponentCss() {
+    protected function createComponentCss()
+    {
         return $this->CSSCF->create($this->module);
     }
 
     /** @return JavaScriptLoader */
-    protected function createComponentJs() {
+    protected function createComponentJs()
+    {
         return $this->JSCF->create($this->module);
     }
 }

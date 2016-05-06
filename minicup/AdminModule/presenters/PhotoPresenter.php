@@ -2,6 +2,7 @@
 
 namespace Minicup\AdminModule\Presenters;
 
+use Dibi\Row;
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
@@ -19,6 +20,7 @@ use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
 use Minicup\Model\Repository\BaseRepository;
+use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\AbortException;
@@ -53,6 +55,9 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoEditComponentFactory @inject */
     public $PECF;
 
+    /** @var NewsRepository @inject */
+    public $NR;
+
     /** @var int @persistent */
     public $id = 0;
 
@@ -79,23 +84,19 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     /**
      * Provide data about tags for select2 by optional term in post parameters
-     *
+     * TODO: Extract to Trait!
      * @throws AbortException
      */
     public function handleTags()
     {
         $term = $this->request->getPost('term');
-        if ($term) {
-            $tags = $this->TR->findLikeTerm($term);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = array();
+        $tags = $this->TR->findLikeTerm($term, $this->category->year);
+        $results = [];
         /** @var Tag $tag */
         foreach ($tags as $tag) {
-            $results[] = array('id' => $tag->id, 'text' => $tag->name ? $tag->name : $tag->slug);
+            $results[] = ['id' => $tag->id, 'text' => $tag->name ?: $tag->slug];
         }
-        $this->presenter->sendJson(array('results' => $results));
+        $this->presenter->sendJson(['results' => $results]);
     }
 
     /**
@@ -106,6 +107,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     {
         $TR = $this->TR;
         $PR = $this->PR;
+        $NR = $this->NR;
         $presenter = $this;
         $g = new Grid($this, $name);
         $g->setFilterRenderType(Filter::RENDER_INNER);
@@ -118,24 +120,24 @@ final class PhotoPresenter extends BaseAdminPresenter
 
         $g->addColumnText('count_of_photos', 'Počet fotek');
 
-        $g->addColumnText('is_main', 'Hlavní')->setReplacement(array(
-            0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
-            1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
-        ))->setDefaultSort(BaseRepository::ORDER_DESC);
+        $g->addColumnText('is_main', 'Hlavní')->setReplacement([
+            0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
+            1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
+        ])->setDefaultSort(BaseRepository::ORDER_DESC);
 
-        $g->addColumnText('main_photo', 'Hlavní fotka')->setCustomRender(function (\DibiRow $row) use ($presenter, $PR) {
+        $g->addColumnText('main_photo', 'Hlavní fotka')->setCustomRender(function (Row $row) use ($presenter, $PR) {
             /** @var Photo $photo */
             $photo = $PR->get($row->main_photo_id, FALSE);
             if ($photo) {
-                $src = $presenter->link(":Media:mini", array($photo->filename));
-                return Html::el('img', array('src' => $src));
+                $src = $presenter->link(':Media:mini', [$photo->filename]);
+                return Html::el('img', ['src' => $src]);
             }
-            return " - ";
+            return ' - ';
         });
 
-        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', array('id' => 'id'));
+        $g->addActionHref('detail', 'Detail', 'Photo:tagDetail', ['id' => 'id']);
 
-        $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR) {
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($TR, $NR) {
             /** @var Tag $tag */
             $tag = $TR->get($id);
             $tag->removeAllPhotos();
@@ -147,12 +149,12 @@ final class PhotoPresenter extends BaseAdminPresenter
             $tag = $TR->get($id);
             $tag->isMain = $tag->isMain ? 0 : 1;
             $TR->persist($tag);
-        })->setCustomRender(function (\DibiRow $row, Html $element) {
+        })->setCustomRender(function (Row $row, Html $element) {
             return $element->setText(!$row->is_main ? 'Nastavit jako HLAVNÍ' : 'Nastavit jako VEDLEJŠÍ');
         });
 
         $g->setModel(
-            $model = $this->connection->select('*')->from('[tag]')->select(
+            $model = $this->connection->select('*')->from('[tag]')->where('[year_id] = ', $this->category->year->id)->select(
                 $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[tag_id] = [id]'), 'count_of_photos')
         );
         return $g;
@@ -171,8 +173,8 @@ final class PhotoPresenter extends BaseAdminPresenter
             $grid = $presenter['tagsGrid'];
             $grid->reload();
         };
-        if ($this->action === "tagDetail") {
-            $tagFormComponent->view = "full";
+        if ($this->action === 'tagDetail') {
+            $tagFormComponent->view = 'full';
         }
         return $tagFormComponent;
     }
@@ -191,7 +193,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     protected function createComponentPhotoEditComponent()
     {
         $photoEdit = $this->PECF->create($this->PR->get($this->getParameter('id'), FALSE));
-        if ($this->action === "photoDetail") {
+        if ($this->action === 'photoDetail') {
             $that = $this;
             $photoEdit->onDelete[] = function (Photo $photo) use ($that) {
                 $that->redirect('photos');

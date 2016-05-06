@@ -5,13 +5,14 @@ namespace Minicup\FrontModule\Presenters;
 use Minicup\Components\IListOfTeamsComponentFactory;
 use Minicup\Components\ITeamDetailComponentFactory;
 use Minicup\Model\Entity\Category;
-use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\TeamInfo;
 use Nette\Application\UI\Multiplier;
 
 /**
  * Team presenter.
  */
-final class TeamPresenter extends BaseFrontPresenter {
+final class TeamPresenter extends BaseFrontPresenter
+{
 
     /** @var IListOfTeamsComponentFactory @inject */
     public $LOTCFactory;
@@ -19,18 +20,17 @@ final class TeamPresenter extends BaseFrontPresenter {
     /** @var ITeamDetailComponentFactory @inject */
     public $TDCFactory;
 
-    public function renderDefault() {
-
-    }
-
-    public function renderList(Category $category) {
-    }
-
-    public function renderDetail(Category $category, Team $team) {
+    /**
+     * @param Category|string $category
+     * @param TeamInfo|string $team
+     */
+    public function renderDetail($category, $team)
+    {
         $this->template->team = $team;
     }
 
-    public function createComponentListOfTeamsComponent() {
+    public function createComponentListOfTeamsComponent()
+    {
         $CR = $this->CR;
         $me = $this;
         return new Multiplier(function ($categorySlug) use ($CR, $me) {
@@ -40,7 +40,10 @@ final class TeamPresenter extends BaseFrontPresenter {
     }
 
 
-    public function createComponentTeamDetailComponent() {
-        return $this->TDCFactory->create($this->getParameter('team'));
+    public function createComponentTeamDetailComponent()
+    {
+        $team = $this->getParameter('team');
+        /** @var TeamInfo $team */
+        return $this->TDCFactory->create($team->team);
     }
 }

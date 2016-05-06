@@ -14,7 +14,7 @@ class PhotoRepository extends BaseRepository
      */
     public function findByTags(array $tags)
     {
-        $photos = array();
+        $photos = [];
         foreach ($tags as $tag) {
             foreach ($tag->photos as $photo) {
                 $photos[$photo->id] = $photo;

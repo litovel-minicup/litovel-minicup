@@ -6,7 +6,8 @@ namespace Minicup\Components;
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\NewsRepository;
 
-interface IListOfNewsComponentFactory {
+interface IListOfNewsComponentFactory
+{
     /**
      * @return ListOfNewsComponent
      * @param Year $year
@@ -15,7 +16,8 @@ interface IListOfNewsComponentFactory {
 
 }
 
-class ListOfNewsComponent extends BaseComponent {
+class ListOfNewsComponent extends BaseComponent
+{
     /** @var NewsRepository */
     private $NR;
 
@@ -26,13 +28,16 @@ class ListOfNewsComponent extends BaseComponent {
      * @param Year           $year
      * @param NewsRepository $NR
      */
-    public function __construct(Year $year, NewsRepository $NR) {
+    public function __construct(Year $year,
+                                NewsRepository $NR)
+    {
         $this->NR = $NR;
         $this->year = $year;
         parent::__construct();
     }
 
-    public function render() {
+    public function render()
+    {
         $this->template->news = $this->NR->findLastNews($this->year);
         parent::render();
     }

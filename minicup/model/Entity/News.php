@@ -10,9 +10,11 @@ namespace Minicup\Model\Entity;
  * @property \DateTime $updated
  * @property \Datetime $added
  * @property Year      $year m:hasOne
+ * @property Tag|NULL  $tag m:hasOne
  * @property int       $texy
  */
-class News extends BaseEntity {
+class News extends BaseEntity
+{
     public static $CACHE_TAG = 'news';
 
 }

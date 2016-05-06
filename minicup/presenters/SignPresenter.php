@@ -32,7 +32,7 @@ class SignPresenter extends BasePresenter
         $form = $loginForm['loginForm'];
         $form->onSuccess[] = function () use ($presenter) {
             $presenter->restoreRequest($presenter->backlink);
-            $presenter->redirect(':Admin:Homepage:default');
+            $presenter->redirect(':Admin:Homepage:default', ['category' => $this->category]);
         };
         return $loginForm;
     }
@@ -46,7 +46,7 @@ class SignPresenter extends BasePresenter
     public function formatTemplateFiles()
     {
         $dir = $this->context->parameters['appDir'];
-        return array("$dir/templates/{$this->name}.{$this->action}.latte");
+        return ["$dir/templates/{$this->name}.{$this->action}.latte"];
     }
 
 }

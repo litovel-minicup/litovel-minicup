@@ -27,11 +27,13 @@ class JsComponentFactory extends Object
     private $request;
 
     /**
-     * @param string $wwwPath
-     * @param string $productionMode
+     * @param string   $wwwPath
+     * @param string   $productionMode
      * @param IRequest $request
      */
-    public function __construct($wwwPath, $productionMode, IRequest $request)
+    public function __construct($wwwPath,
+                                $productionMode,
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;

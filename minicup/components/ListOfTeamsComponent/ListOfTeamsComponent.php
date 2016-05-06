@@ -7,6 +7,16 @@ use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 
+interface IListOfTeamsComponentFactory
+{
+    /**
+     * @param $category
+     * @return ListOfTeamsComponent
+     */
+    public function create(Category $category);
+
+}
+
 class ListOfTeamsComponent extends BaseComponent
 {
     /** @var  TeamRepository */
@@ -21,7 +31,10 @@ class ListOfTeamsComponent extends BaseComponent
     /** @var  Category */
     private $category;
 
-    public function __construct(Category $category, TeamRepository $TR, TeamInfoRepository $TIR, CategoryRepository $CR)
+    public function __construct(Category $category,
+                                TeamRepository $TR,
+                                TeamInfoRepository $TIR,
+                                CategoryRepository $CR)
     {
         parent::__construct();
         $this->category = $category;
@@ -36,15 +49,5 @@ class ListOfTeamsComponent extends BaseComponent
         $this->template->teams = $this->category->teams;
         parent::render();
     }
-
-}
-
-interface IListOfTeamsComponentFactory
-{
-    /**
-     * @param $category
-     * @return ListOfTeamsComponent
-     */
-    public function create(Category $category);
 
 }

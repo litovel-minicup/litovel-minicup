@@ -17,10 +17,6 @@ application:
     mapping:
         *: Minicup\*Module\Presenters\*Presenter
 
-tracy:
-    bar:
-        - NetteExtras\XDebugHelper(PHPSTORM)
-
 session:
     expiration: 14 days
 
@@ -32,6 +28,8 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
+
+leanMapper: %connection%
 
 services:
     router: @Minicup\Router\RouterFactory::create
@@ -45,7 +43,6 @@ services:
 
     # application logic services
     - Minicup\Model\Manager\UserManager
-    - Minicup\Model\Manager\MigrationsManager
     - Minicup\Model\Manager\TeamReplicator
     - Minicup\Model\Manager\ReorderManager
     - Minicup\Model\Manager\TeamDataRefresher
@@ -64,6 +61,8 @@ services:
     # lean mapper
     - LeanMapper\DefaultEntityFactory
     - Minicup\Model\Mapper(%entityFQN%)
+    - Doctrine\DBAL\Connection(%connection%)
+    - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
 
     leanMapper.connection:
@@ -96,7 +95,6 @@ services:
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
-    - Minicup\Components\IMigrateFormComponentFactory
     - Minicup\Components\ICategoryToggleFormComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory
@@ -157,3 +155,18 @@ services:
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension
     replicator: Minicup\Misc\EntitiesReplicatorExtension
+    console: Kdyby\Console\DI\ConsoleExtension
+    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    - Symnedi\EventDispatcher\DI\EventDispatcherExtension
+
+migrations:
+    table: db_migrations
+    dirs:
+        - %appDir%/migrations
+    namespace: Minicup\Migrations
+    codingStandard: spaces
+
+console:
+    commands:
+        - Minicup\Commands\MatchesImportCommand
+        - Minicup\Commands\UserAddCommand

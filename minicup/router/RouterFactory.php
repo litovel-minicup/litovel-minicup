@@ -17,9 +17,9 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Object;
 use Nette\Utils\Strings;
-use Tracy\Debugger;
 
-class RouterFactory extends Object {
+class RouterFactory extends Object
+{
     /** @var CategoryRepository */
     private $CR;
 
@@ -51,7 +51,8 @@ class RouterFactory extends Object {
                                 YearRepository $YR,
                                 TagRepository $TagR,
                                 Session $session,
-                                YearCategoryRouteFactory $yearCategoryRouteFactory) {
+                                YearCategoryRouteFactory $yearCategoryRouteFactory)
+    {
         $this->CR = $CR;
         $this->TR = $TR;
         $this->YR = $YR;
@@ -63,7 +64,8 @@ class RouterFactory extends Object {
     /**
      * @return IRouter
      */
-    public function create() {
+    public function create()
+    {
         $CR = $this->CR;
         $YR = $this->YR;
         $TR = $this->TR;
@@ -72,10 +74,10 @@ class RouterFactory extends Object {
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
 
-        $front[] = $route('foto/tagy[/<tags .+>]/', array(
+        $front[] = $route('foto/tagy[/<tags .+>]/', [
             'presenter' => 'Gallery',
             'action' => 'tags',
-            'tags' => array(
+            'tags' => [
                 Route::FILTER_IN => function ($tags) use ($TagR) {
                     $tags = Strings::split($tags, '#/#');
                     $tagsEntities = $TagR->findBySlugs($tags);
@@ -91,13 +93,13 @@ class RouterFactory extends Object {
                     sort($tags);
                     return implode('/', $tags);
                 }
-            )
-        ));
+            ]
+        ]);
 
-        $front[] = $route('foto/detail/<tag>/', array(
+        $front[] = $route('foto/detail/<tag>/', [
             'presenter' => 'Gallery',
             'action' => 'detail',
-            'tag' => array(
+            'tag' => [
                 Route::FILTER_IN => function ($tag) use ($TagR) {
                     /** @var Tag $tag */
                     $tag = $TagR->getBySlug($tag);
@@ -118,63 +120,63 @@ class RouterFactory extends Object {
                     }
                     return $tag->slug;
                 }
-            )
-        ));
+            ]
+        ]);
 
-        $front[] = $route('foto/', array(
+        $front[] = $route('foto/', [
             'presenter' => 'Gallery',
             'action' => 'default'
-        ), 0, FALSE);
+        ], 0, FALSE);
 
-        $front[] = $route('foto/tagy/', array(
+        $front[] = $route('foto/tagy/', [
             'presenter' => 'Gallery',
             'action' => 'tags'
-        ));
+        ]);
 
-        $front[] = $route('zapasy/', array(
+        $front[] = $route('zapasy/', [
             'presenter' => 'Match',
             'action' => 'default'
-        ));
+        ]);
 
-        $front[] = $route('tymy/', array(
+        $front[] = $route('tymy/', [
             'presenter' => 'Team',
             'action' => 'list'
-        ));
+        ]);
 
-        $front[] = $route('statistiky/', array(
+        $front[] = $route('statistiky/', [
             'presenter' => 'Stats',
             'action' => 'default'
-        ));
+        ]);
 
-        $front[] = $route('informace/', array(
+        $front[] = $route('informace/', [
             'presenter' => 'Homepage',
             'action' => 'informations'
-        ));
+        ]);
 
-        $front[] = $route('sponzori/', array(
+        $front[] = $route('sponzori/', [
             'presenter' => 'Homepage',
             'action' => 'sponsors'
-        ));
+        ]);
 
-        $front[] = $route('<team>/', array(
+        $front[] = $route('<team>/', [
             'presenter' => 'Team',
             'action' => 'detail',
-            NULL => array(
+            NULL => [
                 Route::FILTER_IN => function ($params) use ($TR) {
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
                     }
-                    $params['team'] = $TR->getBySlug($params['team'], $params['category']);
-                    if (!$params['team']) {
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+                    if (!$team) {
                         return NULL;
                     }
+                    $params['team'] = $team->i;
                     return $params;
                 },
                 Route::FILTER_OUT => function ($params) use ($CR, $TR) {
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
                     }
-                    is_string($params['category']) ? Debugger::barDump($params) : NULL;
                     $params['category'] = $CR->getBySlug($params['category']);
                     $team = $TR->getBySlug($params['team'], $params['category']);
 
@@ -184,13 +186,13 @@ class RouterFactory extends Object {
                     $params['team'] = $team->slug;
                     return $params;
                 }
-            )
-        ));
+            ]
+        ]);
 
-        $front[] = new Route('<category>/<team>', array(
+        $front[] = new Route('<category>/<team>', [
             'presenter' => 'Team',
             'action' => 'detail',
-            NULL => array(
+            NULL => [
                 Route::FILTER_IN => function ($params) use ($TR, $CR, $YR) {
                     if (!isset($params['team'], $params['category'])) {
                         return NULL;
@@ -205,8 +207,8 @@ class RouterFactory extends Object {
                     }
                     return $params;
                 }
-            )
-        ), Route::ONE_WAY);
+            ]
+        ], Route::ONE_WAY);
 
         $router = new RouteList();
 
@@ -215,29 +217,29 @@ class RouterFactory extends Object {
         $router[] = new Route('login/', 'Sign:in');
         $router[] = new Route('logout/', 'Sign:out');
 
-        $router[] = new Route('admin/<presenter>/<action>/[<category>][/<id [0-9]*>]/', array(
+        $router[] = new Route('admin/<presenter>/<action>/[<category>][/<id [0-9]*>]/', [
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
             'category' => $route->getMetadata(FALSE)
-        ));
+        ]);
 
-        $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', array(
+        $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', [
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
             'category' => $route->getMetadata(TRUE)
-        ));
+        ]);
 
-        $router[] = new Route('media/<action>/<slug>', array(
+        $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
-        ));
+        ]);
 
-        $router[] = $route('', array(
+        $router[] = $route('', [
             'module' => 'Front',
             'presenter' => 'Homepage',
             'action' => 'default'
-        ));
+        ]);
 
         // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;
@@ -248,7 +250,8 @@ class RouterFactory extends Object {
      * @param Request $request
      * @return Team|NULL
      */
-    public function teamSlug2Team($teamSlug, Request $request) {
+    public function teamSlug2Team($teamSlug, Request $request)
+    {
         return $this->TR->getBySlug($teamSlug, $request->parameters['category']);
     }
 
@@ -257,7 +260,8 @@ class RouterFactory extends Object {
      * @param Request       $request
      * @return string
      */
-    public function team2TeamSlug($team, Request $request) {
+    public function team2TeamSlug($team, Request $request)
+    {
         if ($team instanceof Team) {
             return $team->slug;
         } else {
