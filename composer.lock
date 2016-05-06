@@ -867,16 +867,16 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.4.0-RC1",
+            "version": "v2.4.0-RC2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "2cd8460e436f46e5ec0a870a4a4bff72a2b6b0db"
+                "reference": "959c81ca6f378fe4fbcf44b6a0a8bc470186b989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/2cd8460e436f46e5ec0a870a4a4bff72a2b6b0db",
-                "reference": "2cd8460e436f46e5ec0a870a4a4bff72a2b6b0db",
+                "url": "https://api.github.com/repos/nette/latte/zipball/959c81ca6f378fe4fbcf44b6a0a8bc470186b989",
+                "reference": "959c81ca6f378fe4fbcf44b6a0a8bc470186b989",
                 "shasum": ""
             },
             "require": {
@@ -924,7 +924,7 @@
                 "templating",
                 "twig"
             ],
-            "time": "2016-05-03 14:41:49"
+            "time": "2016-05-06 16:34:54"
         },
         {
             "name": "natxet/CssMin",
@@ -1016,16 +1016,16 @@
         },
         {
             "name": "nette/application",
-            "version": "v2.4.0-RC1",
+            "version": "v2.4.0-RC2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/application.git",
-                "reference": "7ee132738228e8aa15d813b9fc60f1cb4f172700"
+                "reference": "99249bfec199babac1c60fda4141e36cffaba6c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/application/zipball/7ee132738228e8aa15d813b9fc60f1cb4f172700",
-                "reference": "7ee132738228e8aa15d813b9fc60f1cb4f172700",
+                "url": "https://api.github.com/repos/nette/application/zipball/99249bfec199babac1c60fda4141e36cffaba6c7",
+                "reference": "99249bfec199babac1c60fda4141e36cffaba6c7",
                 "shasum": ""
             },
             "require": {
@@ -1080,7 +1080,7 @@
             ],
             "description": "Nette Application MVC Component",
             "homepage": "https://nette.org",
-            "time": "2016-05-03 15:22:16"
+            "time": "2016-05-06 16:29:06"
         },
         {
             "name": "nette/bootstrap",
@@ -2211,12 +2211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thejoeejoee/grido.git",
-                "reference": "ee838c46d18ca321ba14d407e783341481931d7b"
+                "reference": "d3d92e98d85772dee8982e5470c16ef4033779ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thejoeejoee/grido/zipball/ee838c46d18ca321ba14d407e783341481931d7b",
-                "reference": "ee838c46d18ca321ba14d407e783341481931d7b",
+                "url": "https://api.github.com/repos/thejoeejoee/grido/zipball/d3d92e98d85772dee8982e5470c16ef4033779ad",
+                "reference": "d3d92e98d85772dee8982e5470c16ef4033779ad",
                 "shasum": ""
             },
             "require": {
@@ -2287,7 +2287,7 @@
                 "forum": "http://forum.nette.org/cs/13109-grido-datagrid-pro-nette/",
                 "source": "https://github.com/thejoeejoee/grido/tree/master"
             },
-            "time": "2016-05-04 15:34:09"
+            "time": "2016-05-06 17:50:37"
         },
         {
             "name": "ocramius/proxy-manager",
