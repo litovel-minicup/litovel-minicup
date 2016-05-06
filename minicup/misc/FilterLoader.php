@@ -11,6 +11,7 @@ use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
 use Nette\Object;
+use Nette\Utils\Html;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
 
@@ -109,6 +110,23 @@ class FilterLoader extends Object
 
         $template->addFilter('texy', function ($string) use ($texy) {
             return $texy->process($string);
+        });
+
+        $template->addFilter('ogImage', function (Photo $photo, $size = PhotoManager::PHOTO_MEDIUM) use ($generator) {
+            if (!isset(PhotoManager::$resolutions[$size])) {
+                throw new InvalidArgumentException('Unknown photo size.');
+            }
+            $el = Html::el();
+            $el->add(
+                Html::el('meta', ['property' => 'og:image', 'content' => $generator->link("Media:$size", [$photo->filename])])
+            );
+            $el->add(
+                Html::el('meta', ['property' => 'og:image:width', 'content' => PhotoManager::$resolutions[$size][0]])
+            );
+            $el->add(
+                Html::el('meta', ['property' => 'og:image:height', 'content' => PhotoManager::$resolutions[$size][1]])
+            );
+            return $el;
         });
 
         return $template;

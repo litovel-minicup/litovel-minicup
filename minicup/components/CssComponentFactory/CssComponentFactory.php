@@ -50,7 +50,6 @@ class CssComponentFactory extends Object
         $files->addFile('assets/css/select2.css');
         $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
-            $files->addFile('assets/css/reset.css');
             $files->addFile('assets/css/index.css');
         } elseif ($module === 'admin') {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');

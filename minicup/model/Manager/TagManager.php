@@ -65,7 +65,7 @@ class TagManager extends Object
                 return $arg->tag;
             }
             $tag = new Tag([
-                'name' => "Novinka - {$arg->title}",
+                'name' => "novinka - {$arg->title}",
                 'slug' => $arg::$CACHE_TAG . $this::PARTS_GLUE . Strings::webalize($arg->title),
                 'year' => $arg->year
             ]);

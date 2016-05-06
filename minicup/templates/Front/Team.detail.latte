@@ -4,7 +4,7 @@
 {block title}{$team->name} - {$team->category->name}{/block}
 {block og-image}
     {if $team->tag && $team->tag->mainPhoto}
-        <meta property="og:image" content="{plink //:Media:medium $team->tag->mainPhoto->filename}">
+        {$team->tag->mainPhoto|ogImage}
     {else}
         {include parent}
     {/if}

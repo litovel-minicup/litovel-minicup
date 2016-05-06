@@ -2211,12 +2211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thejoeejoee/grido.git",
-                "reference": "d3d92e98d85772dee8982e5470c16ef4033779ad"
+                "reference": "3ab3e53f467fb1a890ed02ce81f59b0d4bf67878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thejoeejoee/grido/zipball/d3d92e98d85772dee8982e5470c16ef4033779ad",
-                "reference": "d3d92e98d85772dee8982e5470c16ef4033779ad",
+                "url": "https://api.github.com/repos/thejoeejoee/grido/zipball/3ab3e53f467fb1a890ed02ce81f59b0d4bf67878",
+                "reference": "3ab3e53f467fb1a890ed02ce81f59b0d4bf67878",
                 "shasum": ""
             },
             "require": {
@@ -2287,7 +2287,7 @@
                 "forum": "http://forum.nette.org/cs/13109-grido-datagrid-pro-nette/",
                 "source": "https://github.com/thejoeejoee/grido/tree/master"
             },
-            "time": "2016-05-06 17:50:37"
+            "time": "2016-05-06 18:40:16"
         },
         {
             "name": "ocramius/proxy-manager",

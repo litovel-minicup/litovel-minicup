@@ -20,6 +20,8 @@
             <meta property="og:title" content="{ifset title}{block|striptags|trim}{include title|nocheck}{/block} | {/ifset}MINICUP {$category->year->slug}">
             {block og-image}
                 <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
+                <meta property="og:image:width" content="400">
+                <meta property="og:image:height" content="400">
             {/block}
         {/block}
     {/block}
