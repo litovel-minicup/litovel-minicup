@@ -43,7 +43,7 @@ class StaticContentManager extends Object
      * @param Year                      $year
      * @return StaticContent|NULL
      */
-    public function getContent($arg, Year $year)
+    public function getContent($arg, Year $year = NULL)
     {
         if ($arg instanceof Team) {
             $staticContent = $arg->i->staticContent;
@@ -57,6 +57,9 @@ class StaticContentManager extends Object
             }
             return $staticContent;
         } elseif (is_string($arg)) {
+            if (!$year) {
+                throw new InvalidArgumentException('Static content can be made only from slug and year.');
+            }
             $staticContent = $this->SCR->getBySlug($arg, $year);
             if (!$staticContent) {
                 $staticContent = new StaticContent();
