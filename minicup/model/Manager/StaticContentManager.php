@@ -11,6 +11,7 @@ namespace Minicup\Model\Manager;
 
 use Minicup\Model\Entity\StaticContent;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\StaticContentRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\InvalidArgumentException;
@@ -30,7 +31,8 @@ class StaticContentManager extends Object
      * @param TeamInfoRepository      $TIR
      * @param StaticContentRepository $SCR
      */
-    public function __construct(TeamInfoRepository $TIR, StaticContentRepository $SCR)
+    public function __construct(TeamInfoRepository $TIR,
+                                StaticContentRepository $SCR)
     {
         $this->TIR = $TIR;
         $this->SCR = $SCR;
@@ -38,9 +40,10 @@ class StaticContentManager extends Object
 
     /**
      * @param Team|string|StaticContent $arg
+     * @param Year                      $year
      * @return StaticContent|NULL
      */
-    public function getContent($arg)
+    public function getContent($arg, Year $year)
     {
         if ($arg instanceof Team) {
             $staticContent = $arg->i->staticContent;
@@ -53,15 +56,17 @@ class StaticContentManager extends Object
                 $this->TIR->persist($arg->i);
             }
             return $staticContent;
-        } else if (is_string($arg)) {
-            $staticContent = $this->SCR->getBySlug($arg);
+        } elseif (is_string($arg)) {
+            $staticContent = $this->SCR->getBySlug($arg, $year);
             if (!$staticContent) {
                 $staticContent = new StaticContent();
                 $staticContent->slug = $arg;
+                $staticContent->year = $year;
+                $staticContent->content = '';
                 $this->SCR->persist($staticContent);
             }
             return $staticContent;
-        } else if ($arg instanceof StaticContent) {
+        } elseif ($arg instanceof StaticContent) {
             return $arg;
         }
         throw new InvalidArgumentException('Unknown type "' . gettype($arg) . '"" given.');

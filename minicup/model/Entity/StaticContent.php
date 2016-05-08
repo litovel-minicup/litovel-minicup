@@ -8,6 +8,7 @@ use Dibi\DateTime;
  * @property string   $slug
  * @property string   $content
  * @property DateTime $updated
+ * @property Year $year m:hasOne
  */
 class StaticContent extends BaseEntity
 {

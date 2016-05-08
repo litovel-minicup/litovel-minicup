@@ -35,6 +35,6 @@ final class HomepagePresenter extends BaseFrontPresenter
      */
     protected function createComponentStaticContentComponent()
     {
-        return $this->SCCF->create($this->SCR->getBySlug($this->action));
+        return $this->SCCF->create($this->action, $this->category->year);
     }
 }
