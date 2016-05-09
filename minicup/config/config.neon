@@ -64,6 +64,7 @@ services:
     - Doctrine\DBAL\Connection(%connection%)
     - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
+    - WebLoader\Nette\Diagnostics\Panel
 
     leanMapper.connection:
         setup:
