@@ -16,6 +16,7 @@ application:
     errorPresenter: Error
     mapping:
         *: Minicup\*Module\Presenters\*Presenter
+    catchExceptions: true
 
 session:
     expiration: 14 days
