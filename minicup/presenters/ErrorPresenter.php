@@ -35,7 +35,7 @@ class ErrorPresenter implements IPresenter
         $e = $request->getParameter('exception');
 
         if ($e instanceof BadRequestException) {
-            // $this->logger->log("HTTP code {$e->getCode()}: {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", 'access');
+            $this->logger->log("HTTP code {$e->getCode()}: {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", 'access');
             list($module, , $sep) = Helpers::splitName($request->getPresenterName());
             return new ForwardResponse($request->setPresenterName($module . $sep . 'Error4xx'));
         }
