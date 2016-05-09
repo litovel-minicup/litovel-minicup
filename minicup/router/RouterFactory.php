@@ -235,11 +235,19 @@ class RouterFactory extends Object
             'presenter' => 'Media',
         ]);
 
-        $router[] = $route('', [
+        $router[] = $route->route('', [
             'module' => 'Front',
             'presenter' => 'Homepage',
             'action' => 'default'
-        ]);
+        ], 0, TRUE);
+
+        $category = $this->CR->get($this->session->offsetGet('category'), FALSE) ?: $this->CR->getDefaultCategory();
+        $router[] = new Route('', [
+            'module' => 'Front',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            $route::DEFAULT_KEY => $route->getMetadata(TRUE) + [Route::VALUE => $category],
+        ], Route::ONE_WAY);
 
         // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;

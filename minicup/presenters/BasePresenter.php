@@ -10,6 +10,7 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
+use Nette\Application\Helpers;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\Strings;
@@ -68,9 +69,7 @@ abstract class BasePresenter extends Presenter
     {
         $layout = $this->layout ?: 'layout';
         $dir = $this->context->parameters['appDir'];
-        $names = Strings::split($this->getName(), '(:)');
-        $module = $names[0];
-        $presenter = $names[1];
+        list($module, $presenter, $_) = Helpers::splitName($this->getName());
         $dir = is_dir("$dir/templates") ? $dir : dirname($dir);
         $list = [
             "$dir/templates/$module/$presenter/@$layout.latte",
