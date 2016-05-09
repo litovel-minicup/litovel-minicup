@@ -26,7 +26,6 @@ class ErrorPresenter implements IPresenter
         $this->logger = $logger;
     }
 
-
     /**
      * @param Request $request
      * @return Nette\Application\IResponse
@@ -43,7 +42,7 @@ class ErrorPresenter implements IPresenter
 
         $this->logger->log($e, ILogger::EXCEPTION);
         return new CallbackResponse(function () {
-            require __DIR__ . '../templates/Error/500.html';
+            require __DIR__ . '/../templates/Error/500.html';
         });
     }
 
