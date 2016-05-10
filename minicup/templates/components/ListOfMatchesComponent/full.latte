@@ -7,7 +7,7 @@
                                                                href="#{$timestamp}">{$timestamp|dayName}</a></li>
     </ul>
     <script>
-        $(function () {
+        jQuery(function () {
             if ($('ul.Article__head__select').find('.active').length === 0) {
                 $('ul.Article__head__select li:first-child').addClass('active');
             }
