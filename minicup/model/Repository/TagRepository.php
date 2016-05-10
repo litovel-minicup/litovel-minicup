@@ -31,9 +31,10 @@ class TagRepository extends BaseRepository
     /**
      * @param string $term
      * @param Year   $year
-     * @return Tag[]
+     * @param bool   $includeEmpty
+     * @return \Minicup\Model\Entity\Tag[]
      */
-    public function findLikeTerm($term = NULL, Year $year = NULL)
+    public function findLikeTerm($term = NULL, Year $year = NULL, $includeEmpty = TRUE)
     {
         $fluent = $this->createFluent();
         if ($term) {
@@ -41,6 +42,10 @@ class TagRepository extends BaseRepository
         }
         if ($year) {
             $fluent->where('[year_id] = ', $year->id);
+        }
+        if (!$includeEmpty) {
+            $fluent->leftJoin('[photo_tag]')->on('[tag.id] = [photo_tag.tag_id]')
+                ->groupBy('[tag.id]')->having('COUNT([photo_tag.photo_id]) > 0');
         }
         return $this->createEntities($fluent->fetchAll());
     }
