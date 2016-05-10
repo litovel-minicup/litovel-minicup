@@ -16,7 +16,6 @@ application:
     errorPresenter: Error
     mapping:
         *: Minicup\*Module\Presenters\*Presenter
-    catchExceptions: true
 
 session:
     expiration: 14 days
@@ -97,7 +96,7 @@ services:
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
-    - Minicup\Components\ICategoryToggleFormComponentFactory
+    - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
@@ -153,6 +152,7 @@ services:
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
+    - implement: Minicup\Components\IYearToggleComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

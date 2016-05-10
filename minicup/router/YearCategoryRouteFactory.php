@@ -10,12 +10,9 @@ use Minicup\Model\Repository\YearRepository;
 use Nette\Application\Routers\Route;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
-use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
-use Nette\Neon\Exception;
 use Nette\Object;
 use Nette\Utils\Strings;
-use ProxyManagerTest\Functional\FatalPreventionFunctionalTest;
 
 class YearCategoryRouteFactory extends Object
 {
@@ -23,7 +20,7 @@ class YearCategoryRouteFactory extends Object
     const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
     const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
 
-    const DEFAULT_KEY = 'category';
+    const DEFAULT_CATEGORY_KEY = 'category';
 
     /**
      * @var YearRepository
@@ -73,7 +70,7 @@ class YearCategoryRouteFactory extends Object
      */
     public function route($mask, array $metadata = [], $flags = 0, $required = FALSE)
     {
-        $metadata[static::DEFAULT_KEY] = $this->getMetadata($required);
+        $metadata[static::DEFAULT_CATEGORY_KEY] = $this->getCategoryMetadata($required);
         $mask .= ($required ? static::DEFAULT_REQUIRED_PATTERN : static::DEFAULT_OPTIONAL_PATTERN);
 
         return new Route($mask, $metadata, $flags);
@@ -83,29 +80,27 @@ class YearCategoryRouteFactory extends Object
      * @param bool $requiredCategory
      * @return array
      */
-    public function getMetadata($requiredCategory)
+    public function getCategoryMetadata($requiredCategory)
     {
-        $CR = $this->categoryRepository;
-        $YR = $this->yearRepository;
-        $metadata = [
-            Route::FILTER_IN => function ($slug) use ($CR, $YR) {
+        $categoryMetadata = [
+            Route::FILTER_IN => function ($slug) {
                 // TEMPORARILY SOLUTION
                 // TODO: remove after search engines reindex old project
-                if ($category = $CR->getBySlug($slug, $YR->getBySlug('2014'))) {
+                if ($category = $this->categoryRepository->getBySlug($slug, $this->yearRepository->getBySlug('2014'))) {
                     return $category;
                 }
                 if (!$m = Strings::matchAll($slug, '#([0-9]{4})-([\w]*)#')) {
                     return NULL;
                 }
                 list(, $yearSlug, $categorySlug) = $m[0];
-                $year = $YR->getBySlug($yearSlug);
-                $category = $CR->getBySlug($categorySlug, $year);
+                $year = $this->yearRepository->getBySlug($yearSlug);
+                $category = $this->categoryRepository->getBySlug($categorySlug, $year);
 
                 return ($year && $category) ? $category : NULL;
             },
-            Route::FILTER_OUT => function ($category) use ($CR, $YR) {
+            Route::FILTER_OUT => function ($category) {
                 if (!$category instanceof Category) {
-                    $category = $CR->getBySlug($category, $YR->getBySlug('2014'));
+                    $category = $this->categoryRepository->getBySlug($category, $this->yearRepository->getBySlug('2014'));
                 }
                 $slug = "{$category->year->year}-{$category->slug}";
                 if (!Strings::match($slug, '#([0-9]{4})-([\w]*)#')) {
@@ -120,12 +115,12 @@ class YearCategoryRouteFactory extends Object
                 if (!$category) {
                     $category = $this->categoryRepository->get($this->session->offsetGet('category'), FALSE);
                 }
-                $metadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
+                $categoryMetadata[Route::VALUE] = $category ?: $this->categoryRepository->getDefaultCategory();
             }
 
         } catch (DriverException $e) {
 
         }
-        return $metadata;
+        return $categoryMetadata;
     }
 }

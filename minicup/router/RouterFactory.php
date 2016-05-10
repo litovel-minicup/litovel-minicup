@@ -221,14 +221,14 @@ class RouterFactory extends Object
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
-            'category' => $route->getMetadata(FALSE)
+            'category' => $route->getCategoryMetadata(FALSE)
         ]);
 
         $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', [
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
-            'category' => $route->getMetadata(TRUE)
+            'category' => $route->getCategoryMetadata(TRUE)
         ]);
 
         $router[] = new Route('media/<action>/<slug>', [
@@ -246,7 +246,7 @@ class RouterFactory extends Object
             'module' => 'Front',
             'presenter' => 'Homepage',
             'action' => 'default',
-            $route::DEFAULT_KEY => $route->getMetadata(TRUE) + [Route::VALUE => $category],
+            $route::DEFAULT_CATEGORY_KEY => $route->getCategoryMetadata(TRUE) + [Route::VALUE => $category],
         ], Route::ONE_WAY);
 
         // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');

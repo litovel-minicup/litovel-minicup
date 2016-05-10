@@ -2,6 +2,7 @@
 
 namespace Minicup\AdminModule\Presenters;
 
+use Grido\Components\Actions\Action;
 use Grido\Components\Actions\Event;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
@@ -60,7 +61,9 @@ abstract class BaseAdminPresenter extends BasePresenter
         foreach ($grid->getComponents(TRUE) as $child) {
             if ($child instanceof Event) {
                 $child->getElementPrototype()->addAttributes(['class' => 'ajax']);
-                $child->setOnClick(function ($id) use ($grid, $presenter, $child) {
+                $onClick = $child->getOnClick();
+                $child->setOnClick(function ($id, Action $column) use ($grid, $presenter, $child, $onClick) {
+                    $onClick($id, $column);
                     $presenter->flashMessage("Akce '{$child->getLabel()}' s prvkem {$id} byl úspěšně provedena!", 'success');
                     $grid->reload();
                 });

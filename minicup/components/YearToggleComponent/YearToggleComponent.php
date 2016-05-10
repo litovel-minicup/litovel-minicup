@@ -3,7 +3,8 @@
 namespace Minicup\Components;
 
 
-use Minicup\FrontModule\Presenters\BaseFrontPresenter;
+use Latte;
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\IRouter;
@@ -12,13 +13,16 @@ use Nette\Http\Request;
 use Nette\Http\Session;
 use Nette\Http\UrlScript;
 
-interface ICategoryToggleFormComponentFactory
+interface IYearToggleComponentFactory
 {
-    /** @return CategoryToggleComponent */
-    public function create();
+    /**
+     * @param Category $category
+     * @return YearToggleComponent
+     */
+    public function create(Category $category);
 }
 
-class CategoryToggleComponent extends BaseComponent
+class YearToggleComponent extends BaseComponent
 {
     /** @var CategoryRepository */
     private $CR;
@@ -35,41 +39,49 @@ class CategoryToggleComponent extends BaseComponent
     /** @var IRequest */
     private $request;
 
+    /**@var Category */
+    private $category;
+
     /**
+     * @param Category           $category
      * @param CategoryRepository $CR
      * @param YearRepository     $YR
-     * @param Session            $session
      * @param IRouter            $router
      * @param IRequest           $request
+     * @param Session            $session
      */
-    public function __construct(CategoryRepository $CR,
+    public function __construct(Category $category,
+                                CategoryRepository $CR,
                                 YearRepository $YR,
-                                Session $session,
                                 IRouter $router,
-                                IRequest $request)
+                                IRequest $request,
+                                Session $session)
     {
         $this->CR = $CR;
         $this->YR = $YR;
         $this->router = $router;
-        $this->session = $session->getSection('minicup');
         $this->request = $request;
+        $this->category = $category;
+        $this->session = $session->getSection('minicup');
         parent::__construct();
     }
 
     public function render()
     {
-        $this->template->selectedCategory = $this->presenter->category;
-        $this->template->categories = $this->presenter->category->year->categories;
+        $this->template->years = $this->YR->findArchiveYears();
+        $this->template->actualYear = $this->YR->getActualYear();
+        $this->template->category = $this->category;
         parent::render();
     }
 
-    public function handleChangeCategory($id)
+    public function handleChangeYear($year)
     {
-        $category = $this->CR->get($id, FALSE);
+        $actualCategorySlug = $this->category->slug;
+        $year = $this->YR->get($year, FALSE);
+        $category = $this->CR->getBySlug($actualCategorySlug, $year);
         $this->session->offsetSet('category', $category->id);
-        /** @var BaseFrontPresenter $presenter */
-        $presenter = $this->presenter;
-        $presenter->category = $category;
+        $this->category = $this->getPresenter()->category = $category;
+
         $url = new UrlScript($this->presenter->link('//this', ['category' => $category]));
         $request = new Request($url);
         if ($this->router->match($request)) {

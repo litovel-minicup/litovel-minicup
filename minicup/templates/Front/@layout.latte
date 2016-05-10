@@ -13,16 +13,7 @@
         </a>
     </div>
     <![endif]-->
-    <div id="info" n:if="!$category->year->actual">
-        <a n:href=":Front:Homepage:default category => $actualYear->categories[0]">
-            <div class="iconBlock">!</div>
-            <div class="textBlock">
-                <h2>Upozornění</h2>
-
-                <h3>Zobrazena jsou archivní data, klikni pro zobrazení aktuálního ročníku!</h3>
-            </div>
-        </a>
-    </div>
+    {control actualYearToggleComponent:actualYear}
     <div class="Header animated">
         <!-- svg logo with fallback -->
         <div id="nav-mobile" class="Header__nav--mobile">
@@ -46,7 +37,7 @@
         </a>
 
         <div class="Header__toggle">
-            {control categoryToggleFormComponent}
+            {control categoryToggleComponent}
         </div>
 
         <div class="Header__nav">
@@ -116,9 +107,7 @@
         <div class="Footer__block">
             <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
             <div class="Box__content Footer__content">
-                <a n:foreach="$years as $_year"
-                   href="{plink :Front:Homepage:default category => $_year->categories[0]}">Litovel
-                    MINICUP {$_year->year}<br></a>
+                {control archiveYearsToggleComponent:archiveYears}
                 <br>
                 <a n:href=":Admin:Homepage:default">administrace</a>
                 <br>

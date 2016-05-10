@@ -5,7 +5,9 @@ namespace Minicup\FrontModule\Presenters;
 use Minicup\Components\AsideComponent;
 use Minicup\Components\CategoryToggleComponent;
 use Minicup\Components\IAsideComponentFactory;
-use Minicup\Components\ICategoryToggleFormComponentFactory;
+use Minicup\Components\ICategoryToggleComponentFactory;
+use Minicup\Components\IYearToggleComponentFactory;
+use Minicup\Components\YearToggleComponent;
 use Minicup\Presenters\BasePresenter;
 
 
@@ -14,8 +16,11 @@ use Minicup\Presenters\BasePresenter;
  */
 abstract class BaseFrontPresenter extends BasePresenter
 {
-    /** @var ICategoryToggleFormComponentFactory @inject */
+    /** @var ICategoryToggleComponentFactory @inject */
     public $CTCF;
+
+    /** @var IYearToggleComponentFactory @inject */
+    public $YTCF;
 
     /** @var IAsideComponentFactory @inject */
     public $ACF;
@@ -32,9 +37,25 @@ abstract class BaseFrontPresenter extends BasePresenter
     /**
      * @return CategoryToggleComponent
      */
-    protected function createComponentCategoryToggleFormComponent()
+    protected function createComponentCategoryToggleComponent()
     {
         return $this->CTCF->create();
+    }
+
+    /**
+     * @return YearToggleComponent
+     */
+    protected function createComponentActualYearToggleComponent()
+    {
+        return $this->YTCF->create($this->category);
+    }
+
+    /**
+     * @return YearToggleComponent
+     */
+    protected function createComponentArchiveYearsToggleComponent()
+    {
+        return $this->YTCF->create($this->category);
     }
 
     /**
@@ -61,6 +82,4 @@ abstract class BaseFrontPresenter extends BasePresenter
         parent::shutdown($response);
         $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
     }
-
-
 }
