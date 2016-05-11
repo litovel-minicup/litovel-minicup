@@ -83,14 +83,24 @@ class MatchManager extends Object
             /** @var Match[] $matchesAfter */
             $matchesAfter = $this->MR->findMatchesConfirmedAfterMatch($match);
             /** @var Match $match */
-            foreach ($matchesAfter as $match) {
+            foreach ($matchesAfter as $_match) {
                 /** @var Team $historyTeam */
-                foreach ($match->historyTeams as $historyTeam) {
+                foreach ($_match->historyTeams as $historyTeam) {
                     $this->TR->delete($historyTeam);
                 }
             }
-            foreach ($matchesAfter as $match) {
-                $this->confirmMatch($match, $match->category, $match->scoreHome, $match->scoreAway);
+            $matchBefore = $this->MR->getMatchConfirmedBeforeMatch(reset($matchesAfter));
+            if ($matchBefore) {
+                $actualTeams = $matchBefore->historyTeams;
+            } else {
+                $actualTeams = $this->TR->findInitTeams($match->category);
+            }
+            foreach ($actualTeams as $actualTeam) {
+                $actualTeam->actual = 1;
+                $this->TR->persist($actualTeam);
+            }
+            foreach ($matchesAfter as $_match) {
+                $this->confirmMatch($_match, $_match->scoreHome, $_match->scoreAway);
             }
         } catch (\Exception $e) {
             $this->connection->rollback();
@@ -105,14 +115,14 @@ class MatchManager extends Object
      * Whole in transaction.
      *
      * @param Match    $match
-     * @param Category $category
      * @param          $scoreHome
      * @param          $scoreAway
      * @throws Exception
      * @throws \Exception
      */
-    public function confirmMatch(Match $match, Category $category, $scoreHome, $scoreAway)
+    public function confirmMatch(Match $match, $scoreHome, $scoreAway)
     {
+        $category = $match->category;
         $this->connection->begin();
         try {
             $match->scoreHome = $scoreHome;

@@ -52,6 +52,7 @@ services:
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
+    - Minicup\Model\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling

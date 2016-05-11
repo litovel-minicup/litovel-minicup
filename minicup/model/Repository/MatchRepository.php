@@ -153,4 +153,18 @@ class MatchRepository extends BaseRepository
 
         return $this->createEntities($f->fetchAll());
     }
+
+    /**
+     * @param Match $match
+     * @return Match|NULL
+     */
+    public function getMatchConfirmedBeforeMatch(Match $match)
+    {
+        $row = $this->connection->select('*')
+            ->from($this->getTable())
+            ->where('[category_id] = ', $match->category->id)
+            ->where('[confirmed_as] = ', $match->confirmedAs - 1)->fetch();
+
+        return $row ? $this->createEntity($row) : NULL;
+    }
 }

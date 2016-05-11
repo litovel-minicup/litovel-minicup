@@ -50,9 +50,22 @@ class TeamRepository extends BaseRepository
      */
     public function getByCategory(Category $category)
     {
-        $rows = $this->createFluent()->applyFilter('actual')
-            ->where('[team.category_id] = %i', $category->id)
-            ->fetchAll();
-        return $this->createEntities($rows);
+        $fluent = $this->createFluent()
+            ->where('[team.category_id] = %i', $category->id);
+
+        return $this->createEntities($fluent->fetchAll());
+    }
+
+    /**
+     * @param Category $category
+     * @return Team[]
+     */
+    public function findInitTeams(Category $category)
+    {
+        $f = $this->connection->select('*')->from($this->getTable())
+            ->where('[category_id] = ', $category->id)
+            ->where('[after_match_id] IS NULL');
+
+        return $this->createEntities($f->fetchAll());
     }
 }

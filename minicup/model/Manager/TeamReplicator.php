@@ -45,7 +45,7 @@ class TeamReplicator extends Object
             $newTeam->actual = 1;
             $oldTeam->actual = 0;
             $newTeam->assign($data);
-            $oldTeam->afterMatch = $afterMatch;
+            $newTeam->afterMatch = $afterMatch;
             $this->TR->persist($oldTeam);
             $this->TR->persist($newTeam);
         }
