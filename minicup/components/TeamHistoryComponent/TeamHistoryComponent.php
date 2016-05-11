@@ -5,6 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\TeamHistoryManager;
+use Minicup\Model\TeamHistoryRecord;
 
 interface ITeamHistoryComponent
 {
@@ -24,11 +26,16 @@ class TeamHistoryComponent extends BaseComponent
     /** @var TeamRepository */
     private $TR;
 
+    /**  @var TeamHistoryManager */
+    private $teamHistoryManager;
+
     public function __construct(Team $team,
-                                TeamRepository $TR)
+                                TeamRepository $TR, TeamHistoryManager $teamHistoryManager)
     {
         $this->team = $team;
         $this->TR = $TR;
+
+        $this->teamHistoryManager = $teamHistoryManager;
         parent::__construct();
     }
 
@@ -41,10 +48,11 @@ class TeamHistoryComponent extends BaseComponent
     public function handleData()
     {
         $data = ['labels' => [], 'series' => [[]]];
-        /** @var Team $team */
-        foreach ($this->TR->findHistoricalTeams($this->team) as $team) {
-            $data['labels'][] = ($team->afterMatch->homeTeam->id === $this->team->i->id) ? $team->afterMatch->awayTeam->name : $team->afterMatch->homeTeam->name;
-            $data['series'][0][] = count($team->category->teams) - $team->order;
+        $history = $this->teamHistoryManager->getSingleHistoryForTeam($this->team->i);
+        foreach ($history as $record) {
+            /** @var TeamHistoryRecord $record */
+            $data['labels'][] = $record->againstTeam->name;
+            $data['series'][0][] = $record->team->order;
         }
         $this->presenter->sendJson($data);
     }

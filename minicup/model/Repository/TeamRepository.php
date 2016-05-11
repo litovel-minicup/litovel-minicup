@@ -34,13 +34,19 @@ class TeamRepository extends BaseRepository
     {
         // without using $this->createFluent(), because in createFluent is applied actual filter
         $id = $team->i->id;
-        $rows = $this->connection->query("
-          SELECT * FROM {$this->getTable()}
-            WHERE [team.team_info_id] = %i
-            AND ([team.after_match_id] = NULL
-              OR([team.after_match_id] IN
-                (SELECT [match.id] FROM [match] WHERE [match.home_team_info_id] = %i OR [match.away_team_info_id] = %i)))",
-            $id, $id, $id)->fetchAll();
+        $rows = $this->connection->query("SELECT [team.*] FROM {$this->getTable()}
+            WHERE
+              [team.team_info_id] = %i
+            AND
+              (
+
+                ([team.after_match_id] IN (
+                  SELECT [match.id] FROM [match]
+                  WHERE ([match.home_team_info_id] = %i OR [match.away_team_info_id] = %i)
+                  AND [match.confirmed] IS NOT NULL)
+                )
+              )", $id, $id, $id)->fetchAll();
+
         return $this->createEntities($rows);
     }
 

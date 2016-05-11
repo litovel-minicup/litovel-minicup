@@ -28,8 +28,11 @@ class TeamHistoryManager
         $data = [];
         /** @var Team $team */
         foreach ($this->teamRepository->findHistoricalTeams($teamInfo->team) as $team) {
-            $data[] = new TeamHistoryRecord($team,
-                ($team->afterMatch->homeTeam->id === $teamInfo->id) ? $team->afterMatch->awayTeam : $team->afterMatch->homeTeam);
+            $data[] = new TeamHistoryRecord(
+                $team,
+                $team->afterMatch->homeTeam->id === $teamInfo->id ?
+                    $team->afterMatch->awayTeam : $team->afterMatch->homeTeam
+            );
 
         }
         return $data;
@@ -41,7 +44,7 @@ class TeamHistoryRecord
 {
     use SmartObject;
     /** @var Team */
-    public $teamRecord;
+    public $team;
     /** @var int */
     public $order;
     /** @var TeamInfo */
@@ -54,7 +57,7 @@ class TeamHistoryRecord
      */
     public function __construct(Team $teamRecord, TeamInfo $againstTeam)
     {
-        $this->teamRecord = $teamRecord;
+        $this->team = $teamRecord;
         $this->againstTeam = $againstTeam;
         $this->order = $teamRecord->order;
     }

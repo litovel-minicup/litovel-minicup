@@ -3,18 +3,24 @@
         $.ajax({link data!}).success(function (response) {
             var chart = new Chartist.Line('.ct-chart', response, {
                         high: {$team->category->teams|length},
-                        low: -1,
+                        low: -3,
                         showArea: true,
                         showLine: true,
                         showPoint: false,
-                        areaBase: -2,
-                        lineSmooth: Chartist.Interpolation.simple({
-                            divisor: 5
+                        areaBase: -5,
+                        lineSmooth: Chartist.Interpolation.cardinal({
+                            tension: 1
                         }),
+                        padding: {
+                            top: 10,
+                            left: 10,
+                            right: 10,
+                            bottom: 200
+                        },
                         axisY: {
                             scaleMinSpace: 15,
                             labelInterpolationFnc: function (value) {
-                                return " ";
+                                return ' ';
                             },
                             labelOffset: {
                                 x: 0,
@@ -23,7 +29,7 @@
                         },
                         axisX: {
                             labelInterpolationFnc: function (value) {
-                                return "vs. " + value;
+                                return value;
                             }
                         }
                     }
@@ -45,3 +51,9 @@
     });
 </script>
 <div class="ct-chart ct-golden-section"></div>
+<style>
+    .ct-label.ct-horizontal {
+        transform: rotate(0deg) translate(0px, 0px);
+
+    }
+</style>

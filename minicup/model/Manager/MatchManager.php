@@ -89,7 +89,7 @@ class MatchManager extends Object
                     $this->TR->delete($historyTeam);
                 }
             }
-            $matchBefore = $this->MR->getMatchConfirmedBeforeMatch(reset($matchesAfter));
+            $matchBefore = $this->MR->getMatchConfirmedBeforeMatch($match);
             if ($matchBefore) {
                 $actualTeams = $matchBefore->historyTeams;
             } else {
