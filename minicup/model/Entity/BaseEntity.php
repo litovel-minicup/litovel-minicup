@@ -18,4 +18,10 @@ abstract class BaseEntity extends Entity
     {
         return $this::$CACHE_TAG . $this::CACHE_GLUE . $this->id;
     }
+
+    public function cleanCache()
+    {
+        $this->row->cleanReferencedRowsCache();
+        $this->row->cleanReferencingRowsCache();
+    }
 }

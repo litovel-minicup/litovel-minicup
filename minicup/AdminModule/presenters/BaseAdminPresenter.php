@@ -16,13 +16,11 @@ abstract class BaseAdminPresenter extends BasePresenter
         parent::startup();
         if (!$this->user->loggedIn) {
             $this->flashMessage('Pro vstup do administrace je nutné se přihlásit.', 'error');
-            $this->redirect(':Sign:in', ['backlink' => $this->storeRequest()]);
+            $this->redirect(':Sign:in', ['_backlink' => $this->storeRequest()]);
         }
     }
 
-    /**
-     * before render
-     */
+
     public function beforeRender()
     {
         parent::beforeRender();

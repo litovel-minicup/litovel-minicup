@@ -65,21 +65,4 @@ abstract class BaseFrontPresenter extends BasePresenter
     {
         return $this->ACF->create($this->category);
     }
-
-    protected function startup()
-    {
-        parent::startup();
-        if (!$this->category) {
-            $this->category = $this->CR->getDefaultCategory();
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function shutdown($response)
-    {
-        parent::shutdown($response);
-        $this->getSession()->getSection('minicup')->offsetSet('category', $this->category->id);
-    }
 }

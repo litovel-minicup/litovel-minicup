@@ -56,4 +56,16 @@ class CategoryStatsComponent extends BaseComponent
     {
         return $this->MM->isStarted($this->category);
     }
+
+    public function handleStatsGoals()
+    {
+        $data = ['labels' => [], 'series' => [[], []]];
+        foreach ($this->category->teams as $team) {
+            $data['labels'][] = "{$team->i->name}";
+            $data['series'][0][] = $team->scored;
+            $data['series'][1][] = -$team->received;
+        }
+
+        $this->presenter->sendJson($data);
+    }
 }

@@ -1,8 +1,8 @@
 <script n:syntax="double">
     jQuery(function ($) {
         $.ajax({{link data!}}).success(function (response) {
-            renderCategoryHistory(response, {{$category->teams|length}});
+            renderCategoryHistory(response, {{$category->teams|length}}, '.category-history-chart');
         });
     });
 </script>
-<div class="ct-chart ct-golden-section"></div>
+<div class="ct-chart category-history-chart ct-golden-section"></div>

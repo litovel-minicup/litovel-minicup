@@ -77,62 +77,49 @@ var initLinkLogging = function () {
     });
 };
 
-var renderCategoryHistory = function (data, teamsCount) {
-    var chart = new Chartist.Line('.ct-chart', data, {
-            high: teamsCount - 1,
-            chartPadding: {top: 5, right: 25, bottom: 5, left: 5},
-            low: -1,
+var renderCategoryHistory = function (data, teamsCount, selector) {
+    var chart = new Chartist.Line(selector,
+        data, {
+            high: teamsCount + 1,
+            low: 0,
             showArea: false,
             showLine: true,
-            showPoint: true,
-            lineSmooth: Chartist.Interpolation.none({
-                divisor: 2
-            }),
+            showPoint: false,
+            lineSmooth: Chartist.Interpolation.cardinal({tension: 0.5}),
             axisY: {
-                scaleMinSpace: 15,
-                labelInterpolationFnc: function (value) {
-                    return (teamsCount - parseInt(value)) + ". ";
-                },
-                labelOffset: {
-                    x: 0,
-                    y: 0
-                }
+                showLabel: false
             },
             axisX: {
                 labelInterpolationFnc: function (value) {
-                    return value;
+                    return value + '. kolo';
                 }
             }
         }
     );
 
-    var $chart = $('.ct-chart');
+    var $chart = $(selector);
 
     var $toolTip = $chart
         .append('<div class="tooltip"></div>')
         .find('.tooltip')
         .hide();
 
-    $chart.on('mouseenter', '.ct-point', function () {
-        var $point = $(this),
-            value = $point.attr('ct:value'),
-            seriesName = $point.parent().attr('ct:series-name');
-        $toolTip.html(seriesName + '<br>' + (teamsCount - parseInt(value)) + ". ").show();
-    });
-
     $chart.on('mouseenter', '.ct-series', function () {
         var $series = $(this);
+        var name = $series.attr('ct:series-name');
+        $toolTip.text(name).show();
+
         $series.insertAfter($series.parent().find('.ct-series:last'));
     });
 
-    $chart.on('mouseleave', '.ct-point', function () {
+    $chart.on('mouseleave', '.ct-series', function () {
         $toolTip.hide();
     });
 
     $chart.on('mousemove', function (event) {
         $toolTip.css({
-            left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2 - 10,
-            top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() - 40
+            left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2,
+            top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() / 2
         });
     });
 
@@ -148,7 +135,6 @@ var renderCategoryHistory = function (data, teamsCount) {
                 }
             });
         } else if (data.type === 'point') {
-            console.log(data);
             data.element.animate({
                 y1: {
                     begin: 200,
@@ -174,7 +160,79 @@ var renderCategoryHistory = function (data, teamsCount) {
             });
         }
     });
-}
+};
+
+var renderScoreChart = function (data, selector) {
+    new Chartist.Bar(selector, data, {
+        seriesBarDistance: 10,
+        chartPadding: {
+            left: 0,
+            right: 0
+        },
+        axisY: {
+            showLabel: true,
+            offset: 15,
+            onlyIntegers: true,
+            labelOffset: {
+                x: 18,
+                y: 7
+            }
+        },
+        axisX: {
+            offset: 50,
+            scaleMinSpace: 40
+        }
+    });
+};
+
+var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
+    var chart = new Chartist.Line(selector, data, {
+            high: teamsCount,
+            low: -3,
+            showArea: true,
+            showLine: true,
+            showPoint: false,
+            areaBase: -5,
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 1
+            }),
+            padding: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 200
+            },
+            axisY: {
+                scaleMinSpace: 15,
+                labelInterpolationFnc: function (value) {
+                    return ' ';
+                },
+                labelOffset: {
+                    x: 0,
+                    y: 10
+                }
+            },
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+        }
+    );
+    /*chart.on('draw', function (data) {
+     if (data.type === 'line' || data.type === 'area') {
+     data.element.animate({
+     d: {
+     begin: 2000 * data.index,
+     dur: 2000,
+     from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+     to: data.path.clone().stringify(),
+     easing: Chartist.Svg.Easing.easeOutQuint
+     }
+     });
+     }
+     });*/
+};
 
 jQuery(function ($) {
     $.nette.init();

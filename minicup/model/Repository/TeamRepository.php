@@ -27,13 +27,13 @@ class TeamRepository extends BaseRepository
     }
 
     /**
-     * @param Team $team
+     * @param TeamInfo $teamInfo
      * @return Team[]
      */
-    public function findHistoricalTeams(Team $team)
+    public function findHistoricalTeams(TeamInfo $teamInfo)
     {
         // without using $this->createFluent(), because in createFluent is applied actual filter
-        $id = $team->i->id;
+        $id = $teamInfo->id;
         $rows = $this->connection->query("SELECT [team.*] FROM {$this->getTable()}
             WHERE
               [team.team_info_id] = %i
@@ -52,12 +52,16 @@ class TeamRepository extends BaseRepository
 
     /**
      * @param Category $category
-     * @return Team[]
+     * @param bool     $onlyActual
+     * @return \Minicup\Model\Entity\Team[]
      */
-    public function getByCategory(Category $category)
+    public function getByCategory(Category $category, $onlyActual = TRUE)
     {
-        $fluent = $this->createFluent()
+        $fluent = $this->connection->select('[team.*]')->from($this->getTable())
             ->where('[team.category_id] = %i', $category->id);
+        if ($onlyActual) {
+            $fluent->where('[team.actual] = 1');
+        }
 
         return $this->createEntities($fluent->fetchAll());
     }

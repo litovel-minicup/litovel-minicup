@@ -86,4 +86,15 @@ class Match extends BaseEntity
         }
         return $this->scoreHome === $this->scoreAway;
     }
+
+    /**
+     * @param TeamInfo $teamInfo
+     * @return TeamInfo
+     */
+    public function getRival(TeamInfo $teamInfo)
+    {
+        return $this->homeTeam->id === $teamInfo->id ? $this->awayTeam : $this->homeTeam;
+    }
+
+
 }

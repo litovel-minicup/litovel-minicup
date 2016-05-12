@@ -124,6 +124,9 @@ abstract class BasePresenter extends Presenter
         $this->invalidLinkMode = static::INVALID_LINK_EXCEPTION;
         $this->CM->initEvents();
 
+        if (!$this->category) {
+            $this->category = $this->CR->getDefaultCategory();
+        }
         if (($this->category instanceof Category) && !$this->category->isDetached()) {
             $this->YR->setSelectedYear($this->category->year);
         } else {
@@ -132,6 +135,18 @@ abstract class BasePresenter extends Presenter
         }
         $splitName = Strings::split($this->getName(), '(:)');
         $this->module = Strings::lower($splitName[0]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function shutdown($response)
+    {
+        parent::shutdown($response);
+        $section = $this->getSession()->getSection('minicup');
+        if ($section->offsetGet('category') !== $this->category->id) {
+            $section->offsetSet('category', $this->category->id);
+        }
     }
 
     /** @return CssLoader */

@@ -74,11 +74,11 @@ class CssComponentFactory extends Object
             return Strings::replace($code, "#\.\./#", $control->request->getUrl()->scriptPath . 'assets/');
         });
 
-        if ($this->productionMode) {
-            $compiler->addFilter(function ($code) {
-                return \CssMin::minify($code);
-            });
-        }
+        //if ($this->productionMode) {
+        $compiler->addFilter(function ($code) {
+            return \CssMin::minify($code);
+        });
+        //}
 
         $this->tracyBar->addLoader('css', $compiler);
         $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');

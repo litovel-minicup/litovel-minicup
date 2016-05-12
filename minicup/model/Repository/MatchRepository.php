@@ -143,7 +143,7 @@ class MatchRepository extends BaseRepository
      * @param Match $match
      * @return Match[]
      */
-    public function findMatchesConfirmedAfterMatch(Match $match)
+    public function findMatchesConfirmedAfterMatchIncluded(Match $match)
     {
         $f = $this->connection->select('*')->from($this->getTable())
             ->where('[category_id] = ', $match->category->id)
@@ -158,7 +158,7 @@ class MatchRepository extends BaseRepository
      * @param Match $match
      * @return Match|NULL
      */
-    public function getMatchConfirmedBeforeMatch(Match $match)
+    public function getMatchConfirmedBeforeMatchExcluded(Match $match)
     {
         $row = $this->connection->select('*')
             ->from($this->getTable())

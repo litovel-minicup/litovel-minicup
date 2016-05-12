@@ -53,7 +53,7 @@ class ReorderManager extends Object
      */
     public function reorder(Category $category)
     {
-        $this->teams = $category->teams;
+        $this->teams = $this->TR->getByCategory($category);
         foreach ($this->teams as $team) {
             $this->teamsEntities[$team->id] = $team;
         }
@@ -65,6 +65,10 @@ class ReorderManager extends Object
         }
 
         $this->debug();
+
+        $this->teams = [];
+        $this->teamsEntities = [];
+        $this->teamPointsFromPoints = [];
     }
 
     /**

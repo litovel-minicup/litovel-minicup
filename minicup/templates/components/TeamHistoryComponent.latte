@@ -1,52 +1,7 @@
 <script>
     jQuery(function ($) {
         $.ajax({link data!}).success(function (response) {
-            var chart = new Chartist.Line('.ct-chart', response, {
-                        high: {$team->category->teams|length},
-                        low: -3,
-                        showArea: true,
-                        showLine: true,
-                        showPoint: false,
-                        areaBase: -5,
-                        lineSmooth: Chartist.Interpolation.cardinal({
-                            tension: 1
-                        }),
-                        padding: {
-                            top: 10,
-                            left: 10,
-                            right: 10,
-                            bottom: 200
-                        },
-                        axisY: {
-                            scaleMinSpace: 15,
-                            labelInterpolationFnc: function (value) {
-                                return ' ';
-                            },
-                            labelOffset: {
-                                x: 0,
-                                y: 10
-                            }
-                        },
-                        axisX: {
-                            labelInterpolationFnc: function (value) {
-                                return value;
-                            }
-                        }
-                    }
-            );
-            chart.on('draw', function (data) {
-                if (data.type === 'line' || data.type === 'area') {
-                    data.element.animate({
-                        d: {
-                            begin: 2000 * data.index,
-                            dur: 2000,
-                            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                            to: data.path.clone().stringify(),
-                            easing: Chartist.Svg.Easing.easeOutQuint
-                        }
-                    });
-                }
-            });
+            renderSingleTeamHistoryChart('.ct-chart', response, {$team->category->teams|length});
         });
     });
 </script>

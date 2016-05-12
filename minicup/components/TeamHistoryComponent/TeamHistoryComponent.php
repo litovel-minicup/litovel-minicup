@@ -34,7 +34,6 @@ class TeamHistoryComponent extends BaseComponent
     {
         $this->team = $team;
         $this->TR = $TR;
-
         $this->teamHistoryManager = $teamHistoryManager;
         parent::__construct();
     }

@@ -81,7 +81,7 @@ class JsComponentFactory extends Object
             $compiler->addFilter(function ($code) {
                 $remoteCompiler = new RemoteCompiler();
                 $remoteCompiler->addScript($code);
-                $remoteCompiler->setMode(RemoteCompiler::MODE_WHITESPACE_ONLY);
+                $remoteCompiler->setMode(RemoteCompiler::MODE_SIMPLE_OPTIMIZATIONS);
                 $compiled = $remoteCompiler->compile()->getCompiledCode();
                 return $compiled ?: $code;
             });

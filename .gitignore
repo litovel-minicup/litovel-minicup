@@ -14,7 +14,7 @@ vendor/
 config.local.neon
 
 # compiler cache
-www/assets/.sass-cache
+.sass-cache
 
 
 # media uploads

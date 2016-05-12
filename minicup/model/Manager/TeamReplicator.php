@@ -26,7 +26,8 @@ class TeamReplicator extends Object
      * @param TeamRepository     $TR
      * @param CategoryRepository $CR
      */
-    public function __construct(TeamRepository $TR, CategoryRepository $CR)
+    public function __construct(TeamRepository $TR,
+                                CategoryRepository $CR)
     {
         $this->TR = $TR;
         $this->CR = $CR;
@@ -36,17 +37,19 @@ class TeamReplicator extends Object
      * @param Category $category
      * @param Match    $afterMatch
      */
-    public function replicate(Category $category, Match $afterMatch = NULL)
+    public function replicate(Category $category, Match $afterMatch)
     {
-        foreach ($this->TR->getByCategory($category) as $oldTeam) {
+        foreach ($category->teams as $oldTeam) {
             $newTeam = new Team();
-            $data = $oldTeam->getData(['i', 'order', 'points', 'scored', 'received', 'category']);
             $newTeam->i = $oldTeam->i;
+            $newTeam->category = $oldTeam->category;
+            $newTeam->received = $newTeam->scored = $newTeam->order = $newTeam->points = 0;
             $newTeam->actual = 1;
-            $oldTeam->actual = 0;
-            $newTeam->assign($data);
             $newTeam->afterMatch = $afterMatch;
+
+            $oldTeam->actual = 0;
             $this->TR->persist($oldTeam);
+
             $this->TR->persist($newTeam);
         }
 

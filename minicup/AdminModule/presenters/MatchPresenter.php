@@ -73,37 +73,28 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnText('htiname', 'Domácí');
 
-        $g->addColumnText('score_home', 'Skóre domácích')->setEditableCallback(
-            function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
-                /** @var Match $match */
-                $match = $MR->get($id);
-                if ($match->confirmed === NULL) {
-                    return FALSE;
-                }
-                $match->scoreHome = $newValue;
-                $MR->persist($match);
-                $MM->regenerateFromMatch($match);
-                return TRUE;
-            });
+        $editCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
+            /** @var Match $match */
+            $match = $MR->get($id);
+            $match->{$column->getName()} = $newValue;
+            if ($match->confirmed === NULL) {
+                return FALSE;
+            }
+            $MR->persist($match);
+            $count = $MM->regenerateFromMatch($match);
+            $this->flashMessage("Skóre bylo úspěšně upraveno, historie byla přegenerována pro {$count} zápasů.");
+            return TRUE;
+        };
+
+        $g->addColumnText('scoreHome', 'Skóre domácích')->setEditableCallback($editCallback);
 
         $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
             return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
         });
+        $g->addColumnText('scoreAway', 'Skóre hostů')->setEditableCallback($editCallback);
 
-        $g->addColumnText('score_away', 'Skóre hostů')->setEditableCallback(
-            function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
-                /** @var Match $match */
-                $match = $MR->get($id);
-                $match->scoreAway = $newValue;
-                if ($match->confirmed === NULL) {
-                    return FALSE;
-                }
-                $MR->persist($match);
-                $MM->regenerateFromMatch($match);
-                return TRUE;
-            });
         $g->addColumnText('atiname', 'Hosté');
         return $g;
     }
