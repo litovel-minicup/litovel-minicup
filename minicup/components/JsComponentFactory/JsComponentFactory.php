@@ -3,7 +3,7 @@
 namespace Minicup\Components;
 
 
-use Closure\RemoteCompiler;
+use JShrink\Minifier;
 use Nette\Http\IRequest;
 use Nette\Object;
 use WebLoader\Compiler;
@@ -79,11 +79,7 @@ class JsComponentFactory extends Object
 
         if ($this->productionMode) {
             $compiler->addFilter(function ($code) {
-                $remoteCompiler = new RemoteCompiler();
-                $remoteCompiler->addScript($code);
-                $remoteCompiler->setMode(RemoteCompiler::MODE_SIMPLE_OPTIMIZATIONS);
-                $compiled = $remoteCompiler->compile()->getCompiledCode();
-                return $compiled ?: $code;
+                return Minifier::minify($code, ['flaggedComments' => false]);
             });
         }
 
