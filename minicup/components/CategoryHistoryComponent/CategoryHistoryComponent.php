@@ -48,16 +48,17 @@ class CategoryHistoryComponent extends BaseComponent
         $maxRecords = max(array_map(function ($line) {
             return count($line);
         }, $history));
+        $teamsInCategory = count($this->category->teams);
         $data = ['labels' => range(1, $maxRecords), 'series' => []];
         foreach ($history as $id => $teamLine) {
             $series = [];
             /** @var TeamHistoryRecord|NULL $record */
             foreach ($teamLine as $record) {
-                $series[] = $record instanceof TeamHistoryRecord ? $record->order : $record;
+                $series[] = $record instanceof TeamHistoryRecord ? ($teamsInCategory + 1 - $record->order) : $record;
             }
             $data['series'][] = [
                 'data' => $series,
-                'name' => reset($teamLine)->team->name
+                'name' => $teamLine ? reset($teamLine)->team->name : ''
             ];
         };
         $this->presenter->sendJson($data);

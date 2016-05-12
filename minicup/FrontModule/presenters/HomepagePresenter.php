@@ -6,6 +6,8 @@ use Minicup\Components\IListOfNewsComponentFactory;
 use Minicup\Components\IStaticContentComponentFactory;
 use Minicup\Components\ListOfNewsComponent;
 use Minicup\Components\StaticContentComponent;
+use Minicup\Model\Manager\MatchManager;
+use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\StaticContentRepository;
 
 /**
@@ -21,6 +23,17 @@ final class HomepagePresenter extends BaseFrontPresenter
 
     /** @var StaticContentRepository @inject */
     public $SCR;
+    /** @var MatchManager @inject */
+    public $MM;
+    /** @var MatchRepository @inject */
+    public $MR;
+
+    public function renderDefault()
+    {
+        foreach ($this->MR->findByIds([/*2843, 3098,3171, 3237 , 3303, 3369*/]) as $match) {
+            $this->MM->regenerateFromMatch($match);
+        }
+    }
 
     /**
      * @return ListOfNewsComponent

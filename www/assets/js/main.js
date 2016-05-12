@@ -80,19 +80,28 @@ var initLinkLogging = function () {
 var renderCategoryHistory = function (data, teamsCount, selector) {
     var chart = new Chartist.Line(selector,
         data, {
-            high: teamsCount + 1,
-            low: 0,
+            high: teamsCount,
+            low: 1,
             showArea: false,
             showLine: true,
             showPoint: false,
-            lineSmooth: Chartist.Interpolation.cardinal({tension: 0.5}),
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0.5
+            }),
+            chartPadding: {
+                right: -50,
+                top: 10,
+                left: 10,
+                bottom: 10
+            },
             axisY: {
-                showLabel: false
+                showLabel: false,
+                offset: 0,
+                showGrid: false
             },
             axisX: {
-                labelInterpolationFnc: function (value) {
-                    return value + '. kolo';
-                }
+                showLabel: false,
+                offset: 0
             }
         }
     );
@@ -188,7 +197,7 @@ var renderScoreChart = function (data, selector) {
 var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
     var chart = new Chartist.Line(selector, data, {
             high: teamsCount,
-            low: -3,
+            low: 1,
             showArea: true,
             showLine: true,
             showPoint: false,
@@ -196,21 +205,16 @@ var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 1
             }),
-            padding: {
+            chartPadding: {
                 top: 10,
                 left: 10,
                 right: 10,
-                bottom: 200
+                bottom: 25
             },
             axisY: {
-                scaleMinSpace: 15,
-                labelInterpolationFnc: function (value) {
-                    return ' ';
-                },
-                labelOffset: {
-                    x: 0,
-                    y: 10
-                }
+                showLabel: false,
+                offset: 0,
+                showGrid: false
             },
             axisX: {
                 labelInterpolationFnc: function (value) {

@@ -27,7 +27,7 @@ class Match extends BaseEntity
      */
     public function getScoreHome()
     {
-        return $this->get('scoreHome') ?: ' - ';
+        return !is_null($score = $this->get('scoreHome')) ? $score : ' - ';
     }
 
     /**
@@ -35,7 +35,7 @@ class Match extends BaseEntity
      */
     public function getScoreAway()
     {
-        return $this->get('scoreAway') ?: ' - ';
+        return !is_null($score = $this->get('scoreAway')) ? $score : ' - ';
     }
 
     /**

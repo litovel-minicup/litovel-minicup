@@ -86,14 +86,18 @@ final class MatchPresenter extends BaseAdminPresenter
             return TRUE;
         };
 
-        $g->addColumnText('scoreHome', 'Skóre domácích')->setEditableCallback($editCallback);
+        $g->addColumnText('scoreHome', 'Skóre domácích')
+            ->setEditableCallback($editCallback)
+            ->setColumn('score_home');
 
         $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
             return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
         });
-        $g->addColumnText('scoreAway', 'Skóre hostů')->setEditableCallback($editCallback);
+        $g->addColumnText('scoreAway', 'Skóre hostů')
+            ->setEditableCallback($editCallback)
+            ->setColumn('score_away');
 
         $g->addColumnText('atiname', 'Hosté');
         return $g;

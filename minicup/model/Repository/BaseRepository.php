@@ -77,7 +77,7 @@ abstract class BaseRepository extends Repository
             return [];
         }
         $entities = [];
-        foreach ($this->createEntities($this->createFluent()->where('[id] IN (%i)', $ids)->fetchAll()) as $entity) {
+        foreach ($this->createEntities($this->createFluent()->where("[{$this->getTable()}.id] IN (%i)", $ids)->fetchAll()) as $entity) {
             $entities[$entity->id] = $entity;
         }
         return $entities;

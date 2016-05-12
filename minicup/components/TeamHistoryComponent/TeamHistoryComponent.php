@@ -48,10 +48,11 @@ class TeamHistoryComponent extends BaseComponent
     {
         $data = ['labels' => [], 'series' => [[]]];
         $history = $this->teamHistoryManager->getSingleHistoryForTeam($this->team->i);
+        $teamsInCategory = count($this->team->category->teams);
         foreach ($history as $record) {
             /** @var TeamHistoryRecord $record */
             $data['labels'][] = $record->againstTeam->name;
-            $data['series'][0][] = $record->team->order;
+            $data['series'][0][] = $teamsInCategory + 1 - $record->team->order;
         }
         $this->presenter->sendJson($data);
     }
