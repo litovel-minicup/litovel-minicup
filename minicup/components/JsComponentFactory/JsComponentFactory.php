@@ -69,6 +69,7 @@ class JsComponentFactory extends Object
         if ($module === 'front') {
             $files->addFile('assets/js/chartist.js');
             $files->addFile('assets/js/chartist.legend.js');
+            $files->addFile('assets/js/chartist.barlabels.js');
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');

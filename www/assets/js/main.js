@@ -177,22 +177,32 @@ var renderScoreChart = function (data, selector) {
     new Chartist.Bar(selector, data, {
             seriesBarDistance: 10,
             chartPadding: {
-                left: 18,
-                right: 0
+                left: -5,
+                right: 15
             },
             axisY: {
-                showLabel: true,
-                offset: 15,
-                onlyIntegers: true,
-                labelOffset: {
-                    x: 8,
-                    y: 7
-                }
+                showLabel: false,
+                offset: 0
             },
             axisX: {
                 offset: 50,
                 scaleMinSpace: 40
-            }
+            },
+            plugins: [
+                Chartist.plugins.ctBarLabels({
+                    thresholdPercentage: 5,
+                    labelPositionFnc: function (data) {
+                        console.log(data);
+                        return {
+                            labelOffset: {
+                                x: 7.5,
+                                y: 15
+                            },
+                            textAnchor: 'start'
+                        }
+                    }
+                })
+            ]
         }
     );
 };
