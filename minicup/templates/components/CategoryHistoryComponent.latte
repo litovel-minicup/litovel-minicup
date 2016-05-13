@@ -6,3 +6,32 @@
     });
 </script>
 <div class="ct-chart category-history-chart ct-golden-section"></div>
+
+<style>
+    .category-history-chart {
+        margin-bottom: 90px;
+    }
+
+    .category-history-chart .ct-legend {
+        position: absolute;
+        top: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        color: white;
+        background-color: #929292;
+        padding: 10px 0 5px;
+    }
+
+    .category-history-chart .ct-legend li {
+        display: inline-block;
+        flex: 1 1 auto;
+        width: 25%;
+        padding-left: 18px;
+        cursor: pointer;
+    }
+
+    .category-history-chart .ct-legend li:nth-child(3n+1) {
+        margin-left: 4%;
+    }
+
+</style>

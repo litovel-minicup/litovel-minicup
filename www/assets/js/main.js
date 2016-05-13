@@ -78,8 +78,7 @@ var initLinkLogging = function () {
 };
 
 var renderCategoryHistory = function (data, teamsCount, selector) {
-    var chart = new Chartist.Line(selector,
-        data, {
+    new Chartist.Line(selector, data, {
             high: teamsCount,
             low: 1,
             showArea: false,
@@ -102,7 +101,10 @@ var renderCategoryHistory = function (data, teamsCount, selector) {
             axisX: {
                 showLabel: false,
                 offset: 0
-            }
+            },
+            plugins: [
+                Chartist.plugins.legend({})
+            ]
         }
     );
 
@@ -127,12 +129,12 @@ var renderCategoryHistory = function (data, teamsCount, selector) {
 
     $chart.on('mousemove', function (event) {
         $toolTip.css({
-            left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2,
-            top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() / 2
+            left: (event.offsetX || event.originalEvent.layerX),// - $toolTip.width() / 2,
+            top: (event.offsetY || event.originalEvent.layerY)// - $toolTip.height() / 2
         });
     });
 
-    chart.on('draw', function (data) {
+    $chart.on('draw', function (data) {
         if (data.type === 'line' || data.type === 'area') {
             data.element.animate({
                 d: {
@@ -173,25 +175,26 @@ var renderCategoryHistory = function (data, teamsCount, selector) {
 
 var renderScoreChart = function (data, selector) {
     new Chartist.Bar(selector, data, {
-        seriesBarDistance: 10,
-        chartPadding: {
-            left: 0,
-            right: 0
-        },
-        axisY: {
-            showLabel: true,
-            offset: 15,
-            onlyIntegers: true,
-            labelOffset: {
-                x: 18,
-                y: 7
+            seriesBarDistance: 10,
+            chartPadding: {
+                left: 18,
+                right: 0
+            },
+            axisY: {
+                showLabel: true,
+                offset: 15,
+                onlyIntegers: true,
+                labelOffset: {
+                    x: 8,
+                    y: 7
+                }
+            },
+            axisX: {
+                offset: 50,
+                scaleMinSpace: 40
             }
-        },
-        axisX: {
-            offset: 50,
-            scaleMinSpace: 40
         }
-    });
+    );
 };
 
 var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {

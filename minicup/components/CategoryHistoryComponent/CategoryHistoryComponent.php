@@ -50,6 +50,10 @@ class CategoryHistoryComponent extends BaseComponent
         }, $history));
         $teamsInCategory = count($this->category->teams);
         $data = ['labels' => range(1, $maxRecords), 'series' => []];
+        /**
+         * @var int                        $id team id
+         * @var TeamHistoryRecord[]|NULL[] $teamLine
+         */
         foreach ($history as $id => $teamLine) {
             $series = [];
             /** @var TeamHistoryRecord|NULL $record */
@@ -58,7 +62,7 @@ class CategoryHistoryComponent extends BaseComponent
             }
             $data['series'][] = [
                 'data' => $series,
-                'name' => $teamLine ? reset($teamLine)->team->name : ''
+                'name' => reset($teamLine)->team->name
             ];
         };
         $this->presenter->sendJson($data);
