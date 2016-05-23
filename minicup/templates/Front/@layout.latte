@@ -115,28 +115,7 @@
             </div>
         </div>
     </div>
-    <script n:syntax="off" n:if="$productionMode">
-        (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-        })
-        (window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-40772204-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-    <a href="http://www.toplist.cz/stat/1561645" n:syntax="off" n:if="$productionMode">
-        <script> document.write('<img src="https://toplist.cz/dot.asp?id=1561645&http=' + encodeURIComponent(document.referrer) + '&t=' + encodeURIComponent(document.title) +
-                    '&wi=' + encodeURIComponent(window.screen.width) + '&he=' + encodeURIComponent(window.screen.height) + '&cd=' + encodeURIComponent(window.screen.colorDepth) + '" width="1" height="1" border=0 alt="TOPlist" />');
-        </script>
-        <noscript>
-            <img src="https://toplist.cz/dot.asp?id=1561645" border="0" alt="TOPlist" width="1" height="1"/>
-        </noscript>
-    </a>
+    {include '../@tracking.latte'}
     {control css}
 {/block}
 
