@@ -1,5 +1,10 @@
 @import "settings";
 @import "legend";
+@import "tooltip";
+
+$ct-line-width: 2px;
+$ct-line-dasharray: true;
+$ct-point-size: 10px;
 
 @mixin ct-responsive-svg-container($width: 100%, $ratio: $ct-container-ratio) {
   display: block;
@@ -228,6 +233,22 @@
       .#{nth($ct-scales-names, $i + 1)} {
         @include ct-responsive-svg-container($ratio: nth($ct-scales, $i + 1));
       }
+    }
+  }
+}
+
+.#{$ct-class-series} {
+  .#{$ct-class-line}, .#{$ct-class-point} {
+    transition: stroke-width 200ms ease;
+  }
+  &:hover {
+    .#{$ct-class-line} {
+      stroke-width: 4px;
+      transition: stroke-width 200ms ease;
+    }
+    .#{$ct-class-point} {
+      stroke-width: 15px;
+      transition: stroke-width 200ms ease;
     }
   }
 }

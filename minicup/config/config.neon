@@ -28,6 +28,8 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
+			- injectFilterLoader(@filterLoader)
+			- injectFormFactory(@formFactory)
 
 leanMapper: %connection%
 
@@ -36,8 +38,8 @@ services:
     texy: @Minicup\Misc\TexyFactory::create
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
-    - Minicup\Misc\IFormFactory
-    - Minicup\Misc\FilterLoader
+    formFactory: Minicup\Misc\IFormFactory
+    filterLoader: Minicup\Misc\FilterLoader
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
     - Minicup\Router\YearCategoryRouteFactory
 

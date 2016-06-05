@@ -68,6 +68,7 @@ class JsComponentFactory extends Object
 
         if ($module === 'front') {
             $files->addFile('assets/js/chartist.js');
+            $files->addFile('assets/js/chartist.tooltip.js');
             $files->addFile('assets/js/chartist.legend.js');
             $files->addFile('assets/js/chartist.barlabels.js');
         } elseif ($module === 'admin') {

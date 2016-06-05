@@ -83,7 +83,7 @@ var renderCategoryHistory = function (data, teamsCount, selector) {
             low: 1,
             showArea: false,
             showLine: true,
-            showPoint: false,
+            showPoint: true,
             lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0.5
             }),
@@ -103,74 +103,11 @@ var renderCategoryHistory = function (data, teamsCount, selector) {
                 offset: 0
             },
             plugins: [
-                Chartist.plugins.legend({})
+                Chartist.plugins.legend({}),
+                Chartist.plugins.tooltip({})
             ]
         }
     );
-
-    var $chart = $(selector);
-
-    var $toolTip = $chart
-        .append('<div class="tooltip"></div>')
-        .find('.tooltip')
-        .hide();
-
-    $chart.on('mouseenter', '.ct-series', function () {
-        var $series = $(this);
-        var name = $series.attr('ct:series-name');
-        $toolTip.text(name).show();
-
-        $series.insertAfter($series.parent().find('.ct-series:last'));
-    });
-
-    $chart.on('mouseleave', '.ct-series', function () {
-        $toolTip.hide();
-    });
-
-    $chart.on('mousemove', function (event) {
-        $toolTip.css({
-            left: (event.offsetX || event.originalEvent.layerX),// - $toolTip.width() / 2,
-            top: (event.offsetY || event.originalEvent.layerY)// - $toolTip.height() / 2
-        });
-    });
-
-    $chart.on('draw', function (data) {
-        if (data.type === 'line' || data.type === 'area') {
-            data.element.animate({
-                d: {
-                    begin: 200 * data.index,
-                    dur: 200,
-                    from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                    to: data.path.clone().stringify(),
-                    easing: Chartist.Svg.Easing.easeOutQuint
-                }
-            });
-        } else if (data.type === 'point') {
-            data.element.animate({
-                y1: {
-                    begin: 200,
-                    dur: 200 * data.index,
-                    from: 0,
-                    to: data.y,
-                    easing: 'easeOutQuart'
-                },
-                y2: {
-                    begin: 200,
-                    dur: 200 * data.index,
-                    from: 0,
-                    to: data.y,
-                    easing: 'easeOutQuart'
-                },
-                opacity: {
-                    begin: 200,
-                    dur: 200 * data.index,
-                    from: 0,
-                    to: 1,
-                    easing: 'easeOutQuart'
-                }
-            });
-        }
-    });
 };
 
 var renderScoreChart = function (data, selector) {
@@ -192,7 +129,6 @@ var renderScoreChart = function (data, selector) {
                 Chartist.plugins.ctBarLabels({
                     thresholdPercentage: 5,
                     labelPositionFnc: function (data) {
-                        console.log(data);
                         return {
                             labelOffset: {
                                 x: 7.5,
