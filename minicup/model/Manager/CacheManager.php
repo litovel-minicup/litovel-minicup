@@ -67,6 +67,7 @@ class CacheManager extends Object
         }
         $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()]]);
         $this->cache->remove($entity->getCacheTag());
+        $this->cache->remove($entity::$CACHE_TAG);
     }
 
     public function cleanAllEntityCaches()

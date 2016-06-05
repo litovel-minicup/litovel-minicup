@@ -10,6 +10,7 @@ use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
 use WebLoader\Nette\CssLoader;
+use WebLoader\Nette\Diagnostics\Panel;
 
 /**
  * Factory for generating css component
@@ -23,19 +24,26 @@ class CssComponentFactory extends Object
     private $wwwPath;
     /** @var  bool */
     private $productionMode;
+    /**
+     * @var Panel
+     */
+    private $tracyBar;
 
     /**
      * @param string   $wwwPath
      * @param bool     $productionMode
      * @param IRequest $request
+     * @param Panel    $tracyBar
      */
     public function __construct($wwwPath,
                                 $productionMode,
-                                IRequest $request)
+                                IRequest $request,
+                                Panel $tracyBar)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
         $this->request = $request;
+        $this->tracyBar = $tracyBar;
     }
 
     /**
@@ -71,6 +79,8 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
+
+        $this->tracyBar->addLoader('css', $compiler);
         $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

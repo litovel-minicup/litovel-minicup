@@ -3,11 +3,11 @@
 namespace Minicup\Components;
 
 
+use Minicup\Misc\HandleTagsTrait;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
 
 interface IInteractiveGalleryComponentFactory
 {
@@ -20,6 +20,7 @@ interface IInteractiveGalleryComponentFactory
 
 class InteractiveGalleryComponent extends BaseComponent
 {
+    use HandleTagsTrait;
     /** @var PhotoRepository */
     private $PR;
 
@@ -62,29 +63,6 @@ class InteractiveGalleryComponent extends BaseComponent
         $this->template->tags = $this->TR->findAll();
         $this->template->photos = $photos;
         parent::render();
-    }
-
-    /**
-     * Provide data about tags for select2 by optional term in post parameters
-     *
-     * @throws AbortException
-     */
-    public function handleTags()
-    {
-        $params = $this->presenter->request->parameters;
-        if (isset($params['term'])) {
-            $tags = $this->TR->findLikeTerm($params['term']);
-        } else {
-            $tags = $this->TR->findAll();
-        }
-        $results = [];
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = ['id' => $tag->id, 'text' => $tag->name ?: $tag->slug];
-        }
-        $this->redrawControl('photo-list');
-        $this->presenter->payload->results = $results;
-        $this->presenter->sendPayload();
     }
 
     public function handleRefresh()

@@ -20,14 +20,11 @@
     "o5/grido": "dev-master",
     "janmarek/webloader": "~2.5",
     "natxet/CssMin": "@dev",
-    "neeckeloo/closure-compiler-php": "@dev",
     "texy/texy": "~2.6",
     "kdyby/forms-replicator": "@dev",
     "zenify/doctrine-migrations": "~2.3",
-    "kdyby/console": "^2.6"
-  },
-  "require-dev": {
-    "dg/ftp-deployment": "~2.5"
+    "kdyby/console": "^2.6",
+    "tedivm/jshrink": "~1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

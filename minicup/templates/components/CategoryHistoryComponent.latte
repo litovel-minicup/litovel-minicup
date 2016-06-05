@@ -1,103 +1,37 @@
 <script n:syntax="double">
     jQuery(function ($) {
         $.ajax({{link data!}}).success(function (response) {
-            var chart = new Chartist.Line('.ct-chart', response, {
-                        high: {{$category->teams|length}} -1,
-                        chartPadding: {top: 5, right: 25, bottom: 5, left: 5},
-                        low: -1,
-                        showArea: false,
-                        showLine: true,
-                        showPoint: true,
-                        lineSmooth: Chartist.Interpolation.none({
-                            divisor: 2
-                        }),
-                        axisY: {
-                            scaleMinSpace: 15,
-                            labelInterpolationFnc: function (value) {
-                                return ({{$category->teams|length}} -parseInt(value)) + ". ";
-                            },
-                            labelOffset: {
-                                x: 0,
-                                y: 0
-                            }
-                        },
-                        axisX: {
-                            labelInterpolationFnc: function (value) {
-                                return value;
-                            }
-                        }
-                    }
-            );
-
-            var $chart = $('.ct-chart');
-
-            var $toolTip = $chart
-                    .append('<div class="tooltip"></div>')
-                    .find('.tooltip')
-                    .hide();
-
-            $chart.on('mouseenter', '.ct-point', function () {
-                var $point = $(this),
-                        value = $point.attr('ct:value'),
-                        seriesName = $point.parent().attr('ct:series-name');
-                $toolTip.html(seriesName + '<br>' + ({{$category->teams|length}} -parseInt(value)) + ". ").show();
-            });
-
-            $chart.on('mouseenter', '.ct-series', function () {
-                var $series = $(this);
-                $series.insertAfter($series.parent().find('.ct-series:last'));
-            });
-
-            $chart.on('mouseleave', '.ct-point', function () {
-                $toolTip.hide();
-            });
-
-            $chart.on('mousemove', function (event) {
-                $toolTip.css({
-                    left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2 - 10,
-                    top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() - 40
-                });
-            });
-
-            chart.on('draw', function (data) {
-                if (data.type === 'line' || data.type === 'area') {
-                    data.element.animate({
-                        d: {
-                            begin: 200 * data.index,
-                            dur: 200,
-                            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                            to: data.path.clone().stringify(),
-                            easing: Chartist.Svg.Easing.easeOutQuint
-                        }
-                    });
-                } else if (data.type === 'point') {
-                    console.log(data);
-                    data.element.animate({
-                        y1: {
-                            begin: 200,
-                            dur: 200 * data.index,
-                            from: 0,
-                            to: data.y,
-                            easing: 'easeOutQuart'
-                        },
-                        y2: {
-                            begin: 200,
-                            dur: 200 * data.index,
-                            from: 0,
-                            to: data.y,
-                            easing: 'easeOutQuart'
-                        },
-                        opacity: {
-                            begin: 200,
-                            dur: 200 * data.index,
-                            from: 0,
-                            to: 1,
-                            easing: 'easeOutQuart'
-                        }
-                    });
-                }
-            });
+            renderCategoryHistory(response, {{$category->teams|length}}, '.category-history-chart');
         });
     });
 </script>
-<div class="ct-chart ct-golden-section"></div>
+<div class="ct-chart category-history-chart ct-golden-section"></div>
+
+<style>
+    .category-history-chart {
+        margin-bottom: 90px;
+    }
+
+    .category-history-chart .ct-legend {
+        position: absolute;
+        top: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        color: white;
+        background-color: #929292;
+        padding: 10px 0 5px;
+    }
+
+    .category-history-chart .ct-legend li {
+        display: inline-block;
+        flex: 1 1 auto;
+        width: 25%;
+        padding-left: 18px;
+        cursor: pointer;
+    }
+
+    .category-history-chart .ct-legend li:nth-child(3n+1) {
+        margin-left: 4%;
+    }
+
+</style>

@@ -64,7 +64,7 @@ abstract class BaseComponent extends Control
     {
         if ($name !== 'render' && substr($name, 0, 6) === 'render') {
             $this->tryCall($name, $args);
-            $view = Strings::lower(Strings::substring($name, 6));
+            $view = Strings::firstLower(Strings::substring($name, 6));
             $this->view = $view;
             return call_user_func_array([$this, 'render'], $args);
         } else {

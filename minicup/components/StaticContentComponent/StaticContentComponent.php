@@ -6,6 +6,8 @@ namespace Minicup\Components;
 use Dibi\DateTime;
 use Minicup\Misc\Texy;
 use Minicup\Model\Entity\StaticContent;
+use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Manager\StaticContentManager;
 use Minicup\Model\Repository\StaticContentRepository;
 use Nette\Application\UI\Form;
@@ -16,10 +18,11 @@ use Nette\Utils\Strings;
 interface IStaticContentComponentFactory
 {
     /**
-     * @param StaticContent|NULL $content
+     * @param StaticContent|string|Team $arg
+     * @param Year                      $year
      * @return StaticContentComponent
      */
-    public function create($arg);
+    public function create($arg, Year $year = NULL);
 }
 
 class StaticContentComponent extends BaseComponent
@@ -33,13 +36,18 @@ class StaticContentComponent extends BaseComponent
     /** @var StaticContent */
     private $content;
 
+    /** @var Year */
+    private $year;
+
     /**
      * @param                         $arg
+     * @param Year                    $year
      * @param StaticContentRepository $SCR
      * @param Texy                    $texy
      * @param StaticContentManager    $SCM
      */
     public function __construct($arg,
+                                Year $year = NULL,
                                 StaticContentRepository $SCR,
                                 Texy $texy,
                                 StaticContentManager $SCM)
@@ -47,7 +55,7 @@ class StaticContentComponent extends BaseComponent
         parent::__construct();
         $this->SCR = $SCR;
         $this->texy = $texy;
-        $this->content = $SCM->getContent($arg);
+        $this->content = $SCM->getContent($arg, $year);
     }
 
     public function render()
@@ -71,7 +79,6 @@ class StaticContentComponent extends BaseComponent
         }
     }
 
-    /***/
     public function createComponentEditForm()
     {
         $f = $this->formFactory->create();
@@ -79,7 +86,7 @@ class StaticContentComponent extends BaseComponent
         $f->addTextArea('content', NULL, NULL, $lines + 10);
         $f->addSubmit('submit', 'Uložit');
         $f->addSubmit('cancel', 'Zrušit editaci');
-        $f->onSuccess[] = $this->editFormSuccess;
+        $f->onSuccess[] = [$this, 'editFormSuccess'];
         return $f;
     }
 

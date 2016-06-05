@@ -17,7 +17,6 @@ class PhotoManager extends Object
 {
     /** @internal */
     const PHOTO_ORIGINAL = '_original';
-
     const PHOTO_MINI = 'mini';
     const PHOTO_SMALL = 'small';
     const PHOTO_THUMB = 'thumb';
@@ -25,7 +24,6 @@ class PhotoManager extends Object
     const PHOTO_LARGE = 'large';
     const PHOTO_FULL = 'full';
     const DEFAULT_FLAG = Image::FILL;
-
     /**
      * type => (width, height, flags)
      * @var array
@@ -38,7 +36,6 @@ class PhotoManager extends Object
         PhotoManager::PHOTO_LARGE => [1200, 1200],
         PhotoManager::PHOTO_FULL => [2000, 2000],
     ];
-
     /**
      * mime type => file extension
      * @var array
@@ -47,6 +44,9 @@ class PhotoManager extends Object
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
     ];
+
+    /** @var Image */
+    private $watermark;
 
     /** @var PhotoRepository */
     private $PR;
@@ -62,6 +62,7 @@ class PhotoManager extends Object
     {
         $this->PR = $PR;
         $this->wwwPath = $wwwPath;
+        $this->watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png');
     }
 
     /**
@@ -135,8 +136,8 @@ class PhotoManager extends Object
     }
 
     /**
-     * @param string|Photo $photo
-     * @param string       $format
+     * @param string|Photo|NULL $photo
+     * @param string            $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -170,9 +171,13 @@ class PhotoManager extends Object
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
-        $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-            ->resize($this::$resolutions[$format][0] / 6, $this::$resolutions[$format][1] / 6,
-                Image::FIT | Image::SHRINK_ONLY);
+        $watermark = clone $this->watermark;
+        $watermark = $watermark->resize(
+            $this::$resolutions[$format][0] / 6,
+            $this::$resolutions[$format][1] / 6,
+            Image::FIT | Image::SHRINK_ONLY
+        );
+
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);

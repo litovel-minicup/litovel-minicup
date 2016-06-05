@@ -27,7 +27,7 @@
     </div>
 </div>
 {if $team->order}
-    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag">
+    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="historie-poradi">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__news"></div>
@@ -39,7 +39,7 @@
 {/if}
 
 {if count($team->matches)}
-    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag">
+    <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="zapasy">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__matches">
@@ -64,7 +64,7 @@
 {/if}
 
 {if $team->tag && $team->tag->mainPhoto}
-    <div class="Section">
+    <div class="Section" id="foto">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__photo"></div>

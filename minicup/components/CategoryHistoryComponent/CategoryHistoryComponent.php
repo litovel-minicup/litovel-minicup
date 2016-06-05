@@ -5,7 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
-use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\TeamHistoryManager;
+use Minicup\Model\TeamHistoryRecord;
 
 interface ICategoryHistoryComponentFactory
 {
@@ -22,14 +23,14 @@ class CategoryHistoryComponent extends BaseComponent
     /** @var Category $category */
     private $category;
 
-    /** @var TeamRepository */
-    private $TR;
+    /** @var TeamHistoryManager */
+    private $teamHistoryManager;
 
     public function __construct(Category $category,
-                                TeamRepository $TR)
+                                TeamHistoryManager $teamHistoryManager)
     {
         $this->category = $category;
-        $this->TR = $TR;
+        $this->teamHistoryManager = $teamHistoryManager;
         parent::__construct();
     }
 
@@ -41,36 +42,29 @@ class CategoryHistoryComponent extends BaseComponent
 
     public function handleData()
     {
-        $maxMatches = max(array_map(function (Team $team) {
-                return count($team->getPlayedMatches());
-            }, $this->category->teams));
-
-        $data = ['labels' => range(1, $maxMatches), 'series' => []];
-        $countOfTeams = count($this->category->teams);
-        $n = 1;
-        foreach ($this->category->teams as $team) {
+        $history = $this->teamHistoryManager->getHistoryForTeams(array_map(function (Team $team) {
+            return $team->i;
+        }, $this->category->teams));
+        $maxRecords = max(array_map(function ($line) {
+            return count($line);
+        }, $history));
+        $teamsInCategory = count($this->category->teams);
+        $data = ['labels' => range(1, $maxRecords), 'series' => []];
+        /**
+         * @var int                        $id team id
+         * @var TeamHistoryRecord[]|NULL[] $teamLine
+         */
+        foreach ($history as $id => $teamLine) {
             $series = [];
-            /** @var Team $historyTeam */
-            $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach (array_slice(array_merge($historicalTeams, [$team]), 1) as $historyTeam) {
-                $series[] = $countOfTeams - $historyTeam->order;
+            /** @var TeamHistoryRecord|NULL $record */
+            foreach ($teamLine as $record) {
+                $series[] = $record instanceof TeamHistoryRecord ? ($teamsInCategory + 1 - $record->order) : $record;
             }
-            if (count($series) < $maxMatches) {
-                if (isset($lastOrder[0])) { // team has some order
-                    $lastOrder = $lastOrder[0];
-                } else {
-                    $lastOrder = $countOfTeams - $n;
-                }
-                foreach (range(0, $maxMatches - count($series)) as $_) {
-                    array_unshift($series, $lastOrder - 2);
-                }
-
-            }
-            $data['series'][] = ['data' => $series, 'name' => $team->i->name];
-            $n++;
-        }
-        if ($this->presenter->isAjax()) {
-            $this->presenter->sendJson($data);
-        }
+            $data['series'][] = [
+                'data' => $series,
+                'name' => reset($teamLine)->team->name
+            ];
+        };
+        $this->presenter->sendJson($data);
     }
 }

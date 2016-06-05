@@ -11,10 +11,14 @@
     {/form}
     <script>
         jQuery(function ($) {
-            $('form textarea').width('92%');
+            $('form textarea').width($('form').width() - 15);
         })
     </script>
-{else}
+{elseif $content}
     {$content|noescape}
+{else}
+    <div class="Article__subhead Box__subhead">
+        Omlouváme se, tato sekce není bohužel pro aktuálně zvolený ročník dostupná.
+    </div>
 {/if}
 {/snippet}

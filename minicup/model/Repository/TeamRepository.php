@@ -27,32 +27,55 @@ class TeamRepository extends BaseRepository
     }
 
     /**
-     * @param Team $team
+     * @param TeamInfo $teamInfo
      * @return Team[]
      */
-    public function findHistoricalTeams(Team $team)
+    public function findHistoricalTeams(TeamInfo $teamInfo)
     {
         // without using $this->createFluent(), because in createFluent is applied actual filter
-        $id = $team->i->id;
-        $rows = $this->connection->query("
-          SELECT * FROM {$this->getTable()}
-            WHERE [team.team_info_id] = %i
-            AND ([team.after_match_id] = NULL
-              OR([team.after_match_id] IN
-                (SELECT [match.id] FROM [match] WHERE [match.home_team_info_id] = %i OR [match.away_team_info_id] = %i)))",
-            $id, $id, $id)->fetchAll();
+        $id = $teamInfo->id;
+        $rows = $this->connection->query("SELECT [team.*] FROM {$this->getTable()}
+            WHERE
+              [team.team_info_id] = %i
+            AND
+              (
+
+                ([team.after_match_id] IN (
+                  SELECT [match.id] FROM [match]
+                  WHERE ([match.home_team_info_id] = %i OR [match.away_team_info_id] = %i)
+                  AND [match.confirmed] IS NOT NULL)
+                )
+              )", $id, $id, $id)->fetchAll();
+
         return $this->createEntities($rows);
+    }
+
+    /**
+     * @param Category $category
+     * @param bool     $onlyActual
+     * @return \Minicup\Model\Entity\Team[]
+     */
+    public function getByCategory(Category $category, $onlyActual = TRUE)
+    {
+        $fluent = $this->connection->select('[team.*]')->from($this->getTable())
+            ->where('[team.category_id] = %i', $category->id);
+        if ($onlyActual) {
+            $fluent->where('[team.actual] = 1');
+        }
+
+        return $this->createEntities($fluent->fetchAll());
     }
 
     /**
      * @param Category $category
      * @return Team[]
      */
-    public function getByCategory(Category $category)
+    public function findInitTeams(Category $category)
     {
-        $rows = $this->createFluent()->applyFilter('actual')
-            ->where('[team.category_id] = %i', $category->id)
-            ->fetchAll();
-        return $this->createEntities($rows);
+        $f = $this->connection->select('*')->from($this->getTable())
+            ->where('[category_id] = ', $category->id)
+            ->where('[after_match_id] IS NULL');
+
+        return $this->createEntities($f->fetchAll());
     }
 }

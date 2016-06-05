@@ -16,6 +16,7 @@ use Minicup\Components\PhotoEditComponent;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoUploadComponent;
 use Minicup\Components\TagFormComponent;
+use Minicup\Misc\HandleTagsTrait;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\ReorderManager;
@@ -23,11 +24,12 @@ use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
-use Nette\Application\AbortException;
 use Nette\Utils\Html;
 
 final class PhotoPresenter extends BaseAdminPresenter
 {
+    use HandleTagsTrait;
+
     /** @var ReorderManager @inject */
     public $reorder;
 
@@ -80,23 +82,6 @@ final class PhotoPresenter extends BaseAdminPresenter
     public function createComponentAdminPhotoListComponent()
     {
         return $this->APLCF->create();
-    }
-
-    /**
-     * Provide data about tags for select2 by optional term in post parameters
-     * TODO: Extract to Trait!
-     * @throws AbortException
-     */
-    public function handleTags()
-    {
-        $term = $this->request->getPost('term');
-        $tags = $this->TR->findLikeTerm($term, $this->category->year);
-        $results = [];
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            $results[] = ['id' => $tag->id, 'text' => $tag->name ?: $tag->slug];
-        }
-        $this->presenter->sendJson(['results' => $results]);
     }
 
     /**

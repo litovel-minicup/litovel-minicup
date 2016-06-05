@@ -112,12 +112,13 @@ class PhotoEditComponent extends BaseComponent
 
     public function handleSaveTags()
     {
-        if (!$this->request->post['tags']) {
+        $tags = $this->request->getPost('tags');
+        if (is_null($tags)) {
             $this->PR->persist($this->photo);
             return;
         }
         $this->photo->removeAllTags();
-        foreach ($this->request->post['tags'] as $id) {
+        foreach (($tags ?: []) as $id) {
             /** @var Tag $tag */
             $tag = $this->TR->get($id);
             if ($tag->teamInfo) {

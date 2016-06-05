@@ -221,25 +221,33 @@ class RouterFactory extends Object
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
-            'category' => $route->getMetadata(FALSE)
+            'category' => $route->getCategoryMetadata(FALSE)
         ]);
 
         $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', [
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
-            'category' => $route->getMetadata(TRUE)
+            'category' => $route->getCategoryMetadata(TRUE)
         ]);
 
         $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
         ]);
 
-        $router[] = $route('', [
+        $router[] = $route->route('', [
             'module' => 'Front',
             'presenter' => 'Homepage',
             'action' => 'default'
-        ]);
+        ], 0, TRUE);
+
+        $category = $this->CR->get($this->session->offsetGet('category'), FALSE) ?: $this->CR->getDefaultCategory();
+        $router[] = new Route('', [
+            'module' => 'Front',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            $route::DEFAULT_CATEGORY_KEY => $route->getCategoryMetadata(TRUE) + [Route::VALUE => $category],
+        ], Route::ONE_WAY);
 
         // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;

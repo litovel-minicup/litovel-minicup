@@ -72,7 +72,7 @@ class MatchFormComponent extends BaseComponent
                 }
                 /** @var Match $match */
                 $match = $this->MR->get((int)$matchId);
-                $this->MM->confirmMatch($match, $match->category, $matchData['scoreHome'], $matchData['scoreAway']);
+                $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
                 $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
             }
             $this->redirect('this');

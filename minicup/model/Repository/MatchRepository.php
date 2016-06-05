@@ -143,7 +143,7 @@ class MatchRepository extends BaseRepository
      * @param Match $match
      * @return Match[]
      */
-    public function findMatchesConfirmedAfterMatch(Match $match)
+    public function findMatchesConfirmedAfterMatchIncluded(Match $match)
     {
         $f = $this->connection->select('*')->from($this->getTable())
             ->where('[category_id] = ', $match->category->id)
@@ -152,5 +152,19 @@ class MatchRepository extends BaseRepository
             ->orderBy('[confirmed_as] ', BaseRepository::ORDER_ASC);
 
         return $this->createEntities($f->fetchAll());
+    }
+
+    /**
+     * @param Match $match
+     * @return Match|NULL
+     */
+    public function getMatchConfirmedBeforeMatchExcluded(Match $match)
+    {
+        $row = $this->connection->select('*')
+            ->from($this->getTable())
+            ->where('[category_id] = ', $match->category->id)
+            ->where('[confirmed_as] = ', $match->confirmedAs - 1)->fetch();
+
+        return $row ? $this->createEntity($row) : NULL;
     }
 }

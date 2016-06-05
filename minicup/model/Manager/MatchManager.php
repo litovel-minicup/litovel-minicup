@@ -5,10 +5,9 @@ namespace Minicup\Model\Manager;
 
 use Dibi\DateTime;
 use Dibi\Exception;
-use LeanMapper\Connection;
+use Minicup\Model\Connection;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
-use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\MatchTermRepository;
 use Minicup\Model\Repository\TeamRepository;
@@ -78,55 +77,67 @@ class MatchManager extends Object
             throw new InvalidArgumentException('Invalid given match, must be confirmed');
         }
         $this->MR->persist($match);
-        $this->connection->begin();
-        try {
+        $this->connection->transactional(function (Connection $connection) use ($match, & $count) {
             /** @var Match[] $matchesAfter */
-            $matchesAfter = $this->MR->findMatchesConfirmedAfterMatch($match);
+            $matchesAfter = $this->MR->findMatchesConfirmedAfterMatchIncluded($match);
             /** @var Match $match */
-            foreach ($matchesAfter as $match) {
-                /** @var Team $historyTeam */
-                foreach ($match->historyTeams as $historyTeam) {
-                    $this->TR->delete($historyTeam);
-                }
+            foreach ($matchesAfter as $_match) {
+                $_match->cleanCache();
+                $_match->historyTeams ? $this->TR->delete($_match->historyTeams) : NULL;
+                $_match->confirmed = NULL;
+                $this->MR->persist($_match);
             }
-            foreach ($matchesAfter as $match) {
-                $this->confirmMatch($match, $match->category, $match->scoreHome, $match->scoreAway);
-            }
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-            throw $e;
-        }
-        $this->connection->commit();
 
+            $matchBefore = $this->MR->getMatchConfirmedBeforeMatchExcluded($match);
+
+            if ($matchBefore) {
+                $actualTeams = $matchBefore->historyTeams;
+            } else {
+                $actualTeams = $this->TR->findInitTeams($match->category);
+            }
+            foreach ($actualTeams as $actualTeam) {
+                $actualTeam->actual = 1;
+                $this->TR->persist($actualTeam);
+            }
+            $match->category->cleanCache();
+            foreach ($matchesAfter as $_match) {
+                $_match->cleanCache();
+                $_match->category->cleanCache();
+                $this->confirmMatch($_match, $_match->scoreHome, $_match->scoreAway);
+            }
+            $count = count($matchesAfter);
+        });
+        return $count;
     }
 
     /**
      * Set scores to match, replicate history table, refresh points in actual teams and reorder teams.
      * Whole in transaction.
      *
-     * @param Match    $match
-     * @param Category $category
-     * @param          $scoreHome
-     * @param          $scoreAway
+     * @param Match $match
+     * @param int   $scoreHome
+     * @param int   $scoreAway
+     * @return Match
      * @throws Exception
      * @throws \Exception
      */
-    public function confirmMatch(Match $match, Category $category, $scoreHome, $scoreAway)
+    public function confirmMatch(Match $match, $scoreHome, $scoreAway)
     {
-        $this->connection->begin();
-        try {
-            $match->scoreHome = $scoreHome;
-            $match->scoreAway = $scoreAway;
+        $category = $match->category;
+        $match->scoreHome = $scoreHome;
+        $match->scoreAway = $scoreAway;
+        $this->connection->transactional(function (Connection $connection) use ($match, $scoreHome, $scoreAway, $category) {
             $match->confirmed = new DateTime();
             $this->MR->persist($match);
+            $connection->commit();
             $this->replicator->replicate($category, $match);
+            $connection->commit();
             $this->TDR->refreshData($category);
+            $connection->commit();
             $this->RM->reorder($category);
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-            throw $e;
-        }
-        $this->connection->commit();
+        });
+
+        return $match;
     }
 
     /**

@@ -28,6 +28,8 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
+			- injectFilterLoader(@filterLoader)
+			- injectFormFactory(@formFactory)
 
 leanMapper: %connection%
 
@@ -36,8 +38,8 @@ services:
     texy: @Minicup\Misc\TexyFactory::create
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
-    - Minicup\Misc\IFormFactory
-    - Minicup\Misc\FilterLoader
+    formFactory: Minicup\Misc\IFormFactory
+    filterLoader: Minicup\Misc\FilterLoader
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
     - Minicup\Router\YearCategoryRouteFactory
 
@@ -52,6 +54,7 @@ services:
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
+    - Minicup\Model\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling
@@ -64,6 +67,7 @@ services:
     - Doctrine\DBAL\Connection(%connection%)
     - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
+    - WebLoader\Nette\Diagnostics\Panel
 
     leanMapper.connection:
         setup:
@@ -95,7 +99,7 @@ services:
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
-    - Minicup\Components\ICategoryToggleFormComponentFactory
+    - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
@@ -136,8 +140,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category, count]
       arguments: [%category%, %count%]
     - implement: Minicup\Components\IStaticContentComponentFactory
-      parameters: [arg]
-      arguments: [%arg%]
+      parameters: [arg, Minicup\Model\Entity\Year year = NULL]
+      arguments: [%arg%, %year%]
     - implement: Minicup\Components\IListOfTeamsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
@@ -151,6 +155,7 @@ services:
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
+    - implement: Minicup\Components\IYearToggleComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

@@ -1,7 +1,7 @@
 <div class="Article">
     <div n:foreach="$news as $new" class="Box__content">
         <div class="Article__heading">{$new->title}</div>
-        <div class="Article__date">{$new->added|relDate}</div>
+        <div class="Article__date" title="{$new->added|date:"j. n. Y G:i"}">{$new->added|relDate}</div>
         <div n:if="$new->texy" class="Article__content">{$new->content|texy|noescape}</div>
         <div n:if="!$new->texy" class="Article__content">{$new->content|noescape}</div>
         <div n:if="$new->tag && $new->tag->photos" class="Article__photos">

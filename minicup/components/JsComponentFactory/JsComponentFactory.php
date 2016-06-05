@@ -3,12 +3,13 @@
 namespace Minicup\Components;
 
 
-use Closure\RemoteCompiler;
+use JShrink\Minifier;
 use Nette\Http\IRequest;
 use Nette\Object;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
+use WebLoader\Nette\Diagnostics\Panel;
 use WebLoader\Nette\JavaScriptLoader;
 
 /**
@@ -25,19 +26,26 @@ class JsComponentFactory extends Object
 
     /** @var IRequest */
     private $request;
+    /**
+     * @var Panel
+     */
+    private $tracyPanel;
 
     /**
      * @param string   $wwwPath
      * @param string   $productionMode
      * @param IRequest $request
+     * @param Panel    $panel
      */
     public function __construct($wwwPath,
                                 $productionMode,
-                                IRequest $request)
+                                IRequest $request,
+                                Panel $panel)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
         $this->request = $request;
+        $this->tracyPanel = $panel;
     }
 
     /**
@@ -60,6 +68,9 @@ class JsComponentFactory extends Object
 
         if ($module === 'front') {
             $files->addFile('assets/js/chartist.js');
+            $files->addFile('assets/js/chartist.tooltip.js');
+            $files->addFile('assets/js/chartist.legend.js');
+            $files->addFile('assets/js/chartist.barlabels.js');
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
@@ -69,16 +80,13 @@ class JsComponentFactory extends Object
 
         $compiler = Compiler::createJsCompiler($files, $this->wwwPath . '/webtemp');
 
-        if (FALSE) {
+        if ($this->productionMode) {
             $compiler->addFilter(function ($code) {
-                $remoteCompiler = new RemoteCompiler();
-                $remoteCompiler->addScript($code);
-                $remoteCompiler->setMode(RemoteCompiler::MODE_WHITESPACE_ONLY);
-                return $code;
-                // TODO on production not work
-                $code = $remoteCompiler->compile()->getCompiledCode();
+                return Minifier::minify($code, ['flaggedComments' => false]);
             });
         }
+
+        $this->tracyPanel->addLoader('js', $compiler);
         $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

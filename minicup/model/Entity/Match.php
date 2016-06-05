@@ -27,7 +27,7 @@ class Match extends BaseEntity
      */
     public function getScoreHome()
     {
-        return $this->get('scoreHome') ?: ' - ';
+        return !is_null($score = $this->get('scoreHome')) ? $score : ' - ';
     }
 
     /**
@@ -35,7 +35,7 @@ class Match extends BaseEntity
      */
     public function getScoreAway()
     {
-        return $this->get('scoreAway') ?: ' - ';
+        return !is_null($score = $this->get('scoreAway')) ? $score : ' - ';
     }
 
     /**
@@ -86,4 +86,15 @@ class Match extends BaseEntity
         }
         return $this->scoreHome === $this->scoreAway;
     }
+
+    /**
+     * @param TeamInfo $teamInfo
+     * @return TeamInfo
+     */
+    public function getRival(TeamInfo $teamInfo)
+    {
+        return $this->homeTeam->id === $teamInfo->id ? $this->awayTeam : $this->homeTeam;
+    }
+
+
 }

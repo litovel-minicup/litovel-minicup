@@ -26,20 +26,37 @@
             </div>
         </div>
     </div>
+    <div class="Section" id="branky">
+        <div class="Article">
+            <div class="Article__head Box__head">
+                <div class="Article__head__icon Box__head__icon icon__teams">
+                </div>
+                <div class="Article__head__text Box__head__text">Vstřelené a obdržené branky</div>
+            </div>
+            <div class="ct-chart goals-chart ct-golden-section"></div>
+        </div>
+    </div>
+    <script n:syntax="double">
+        jQuery(function ($) {
+            $.ajax({{link statsGoals!}}).success(function (response) {
+                renderScoreChart(response, '.goals-chart');
+            });
+        });
+    </script>
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__teams">
                 </div>
-                <div class="Article__head__text Box__head__text">Nejvyšší skóre</div>
+                <div class="Article__head__text Box__head__text">Nejvíce branek</div>
             </div>
             <div class="Box__content Table__content Team__content">
                 <table class="Table Table__detail">
                     <thead class="Box__subhead Article__subhead">
                     <tr>
-                        <th>Nejvyšší skóre domácích</th>
-                        <th>Nejvyšší skóre v zápase</th>
-                        <th>Nejvyšší skóre hostů</th>
+                        <th>Nejvíce branek domácích</th>
+                        <th>Nejvíce branek v zápase</th>
+                        <th>Nejvíce branek hostů</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,15 +75,15 @@
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__teams">
                 </div>
-                <div class="Article__head__text Box__head__text">Nejnižší skóre</div>
+                <div class="Article__head__text Box__head__text">Nejméně branek</div>
             </div>
             <div class="Box__content Table__content Team__content">
                 <table class="Table Table__detail">
                     <thead class="Box__subhead Article__subhead">
                     <tr>
-                        <th>Nejnižší skóre domácích</th>
-                        <th>Nejnižší skóre v zápase</th>
-                        <th>Nejnižší skóre hostů</th>
+                        <th>Nejméně branek domácích</th>
+                        <th>Nejméně branek v zápase</th>
+                        <th>Nejméně branek hostů</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -91,9 +108,9 @@
                 <table class="Table Table__detail">
                     <thead class="Box__subhead Article__subhead">
                     <tr>
-                        <th>Nejlépe útočící tým</th>
-                        <th>Nejlepší brankový rozdíl</th>
-                        <th>Nejlépe bránící tým</th>
+                        <th>Nejvíce vstřelených branek</th>
+                        <th>Nejvyšší brankový rozdíl</th>
+                        <th>Nejméně obdržených branek</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -124,9 +141,9 @@
                 <table class="Table Table__detail">
                     <thead class="Box__subhead Article__subhead">
                     <tr>
-                        <th>Nejhůře útočící tým</th>
-                        <th>Nejhorší brankový rozdíl</th>
-                        <th>Nejhůře bránící tým</th>
+                        <th>Nejméně vstřelených branek</th>
+                        <th>Nejslabší brankový rozdíl</th>
+                        <th>Nejvíce obdržených branek</th>
                     </tr>
                     </thead>
                     <tbody>
