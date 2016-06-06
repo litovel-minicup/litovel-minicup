@@ -31,7 +31,7 @@ class PhotoManager extends Object
     public static $resolutions = [
         PhotoManager::PHOTO_MINI => [50, 50, Image::FILL],
         PhotoManager::PHOTO_SMALL => [100, 100, Image::FILL],
-        PhotoManager::PHOTO_THUMB => [300, 300, Image::FILL],
+        PhotoManager::PHOTO_THUMB => [300, 300, Image::FIT | Image::EXACT],
         PhotoManager::PHOTO_MEDIUM => [750, 750, Image::FILL],
         PhotoManager::PHOTO_LARGE => [1200, 1200],
         PhotoManager::PHOTO_FULL => [2000, 2000],
