@@ -3,7 +3,7 @@
 <head n:inner-block="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title n:snippet="title">{ifset title}{include title|striptags|trim} | {/ifset}
+    <title n:snippet="title">{ifset title}{include title|stripHtml} | {/ifset}
         MINICUP {$category->year->slug}</title>
 
     {block seo}
@@ -21,7 +21,7 @@
                   content="Informační portál pro litovelský turnaj v miniházené MINICUP{if $category->year->actual} 2016 konaný ve dnech 10. - 12. června 2016{else} {$category->year->slug}{/if}. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek, zápas trenérů, rozhodčích a všech s turnajem spojených a spousta dalších zajímavých aktivit.">
             <meta property="og:url" content="{$absoluteUrl}">
             <meta property="og:title"
-                  content="{ifset title}{include title|striptags|trim} | {/ifset}MINICUP {$category->year->slug}">
+                  content="{ifset title}{include title|stripHtml} | {/ifset}MINICUP {$category->year->slug}">
             {block og-image}
                 <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
                 <meta property="og:image:width" content="400">

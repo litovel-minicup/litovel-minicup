@@ -37,17 +37,12 @@ class SignPresenter extends BasePresenter
     protected function createComponentLoginFormComponent()
     {
         $presenter = $this;
-        /** @var LoginFormComponent $loginForm */
-        $loginForm = $this->LFCF->create();
-        /** @var Form $form */
-        $form = $loginForm['loginForm'];
-        $form->addHidden('backlink', $this->getParameter('_backlink'));
-        $form->onSuccess[] = function (Form $form, ArrayHash $values) use ($presenter) {
-            $backlink = $values->offsetGet('backlink');
-            // $presenter->restoreRequest($backlink);
+        /** @var LoginFormComponent $loginFormComponent */
+        $loginFormComponent = $this->LFCF->create(function (Form $form, ArrayHash $values) use ($presenter) {
             $presenter->redirect(':Admin:Homepage:default', ['category' => $this->category]);
-        };
-        return $loginForm;
+        });
+
+        return $loginFormComponent;
     }
 
 }

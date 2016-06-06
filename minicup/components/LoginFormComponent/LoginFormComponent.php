@@ -9,14 +9,28 @@ use Nette\Utils\ArrayHash;
 interface ILoginFormComponentFactory
 {
     /**
+     * @param callable $onSuccess
      * @return LoginFormComponent
      */
-    public function create();
+    public function create(callable $onSuccess);
 
 }
 
 class LoginFormComponent extends BaseComponent
 {
+    /** @var callable */
+    private $onSuccess;
+
+    /**
+     * LoginFormComponent constructor.
+     * @param callable $onSuccess
+     */
+    public function __construct(callable $onSuccess)
+    {
+        $this->onSuccess = $onSuccess;
+        parent::__construct();
+    }
+
     /**
      * @return Form
      */
@@ -32,28 +46,21 @@ class LoginFormComponent extends BaseComponent
             ->getControlPrototype()->addAttributes(['placeholder' => 'password']);
         $form->addCheckbox('remember', 'Zůstat přihlášen');
         $form->addSubmit('submit', 'Přihlásit');
-        $form->onSuccess[] = [$this, 'loginFormValidated'];
-        return $form;
-    }
 
-    /**
-     * @param Form      $form
-     * @param ArrayHash $values
-     */
-    public function loginFormValidated(Form $form, ArrayHash $values)
-    {
-        $user = $this->presenter->user;
-        try {
-            $user->login($values->username, $values->password);
-        } catch (AuthenticationException $e) {
-            $form->addError($e->getMessage());
-            $this->redrawControl();
-        }
-        if ($values->remember || in_array('admin', $user->roles, TRUE)) {
-            $user->setExpiration('14 days', FALSE);
-        } else {
-            $user->setExpiration('20 minutes', TRUE);
-        }
-        $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
+        $form->onSuccess[] = function (Form $form, ArrayHash $values) {
+            $user = $this->presenter->user;
+            try {
+                $user->setExpiration($values->remember ? '14 days' : '60 minutes');
+                $user->login($values->username, $values->password);
+            } catch (AuthenticationException $e) {
+                $form->addError($e->getMessage());
+                $this->redrawControl();
+                return;
+            }
+            $this->presenter->flashMessage('Přihlášení proběhlo úspěšně.', 'success');
+            $onSuccess = $this->onSuccess;
+            $onSuccess($form, $values);
+        };
+        return $form;
     }
 }

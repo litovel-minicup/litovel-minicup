@@ -170,6 +170,7 @@ class AdminPhotoListComponent extends BaseComponent
             ->rightJoin('[tag]')->on('[photo_tag.tag_id] = [tag.id]')
             ->where('[tag.year_id] =', $this->year->id)
             ->where('[photo.id] IS NOT NULL')
+            ->groupBy('id')
             ->select($this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [photo.id]'), 'count_of_tags');
         $g = new Grid($this, $name);
 

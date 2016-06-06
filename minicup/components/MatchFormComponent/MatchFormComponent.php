@@ -61,25 +61,6 @@ class MatchFormComponent extends BaseComponent
         $this->redrawControl();
     }
 
-    public function formSubmitted(Form $form, ArrayHash $values)
-    {
-        /** @var SubmitButton $submitButton */
-        $submitButton = $form['submit'];
-        if ($submitButton->isSubmittedBy()) {
-            foreach ($values['matches'] as $matchId => $matchData) {
-                if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
-                    continue;
-                }
-                /** @var Match $match */
-                $match = $this->MR->get((int)$matchId);
-                $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
-                $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
-            }
-            $this->redirect('this');
-        }
-    }
-
-    /***/
 
     /**
      * @return Form
@@ -117,7 +98,23 @@ class MatchFormComponent extends BaseComponent
             ->setAttribute('class', 'ajax')
             ->onClick[] = [$this, 'addMatchClicked'];
         $f->addSubmit('submit', 'odeslat');
-        $f->onSuccess[] = [$this, 'formSubmitted'];
+
+        $f->onSuccess[] = function (Form $form, ArrayHash $values) {
+            /** @var SubmitButton $submitButton */
+            $submitButton = $form['submit'];
+            if ($submitButton->isSubmittedBy()) {
+                foreach ($values['matches'] as $matchId => $matchData) {
+                    if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
+                        continue;
+                    }
+                    /** @var Match $match */
+                    $match = $this->MR->get((int)$matchId);
+                    $this->MM->confirmMatch($match, $matchData['scoreHome'], $matchData['scoreAway']);
+                    $this->presenter->flashMessage('Zápas ' . $match->homeTeam->name . ' vs. ' . $match->awayTeam->name . ' byl úspěšně zpracován.');
+                }
+                $this->redirect('this');
+            }
+        };
         return $f;
     }
 }

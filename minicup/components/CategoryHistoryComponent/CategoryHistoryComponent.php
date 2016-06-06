@@ -55,6 +55,9 @@ class CategoryHistoryComponent extends BaseComponent
          * @var TeamHistoryRecord[]|NULL[] $teamLine
          */
         foreach ($history as $id => $teamLine) {
+            if (!reset($teamLine)) {
+                continue;
+            }
             $series = [];
             /** @var TeamHistoryRecord|NULL $record */
             foreach ($teamLine as $record) {
@@ -62,7 +65,7 @@ class CategoryHistoryComponent extends BaseComponent
             }
             $data['series'][] = [
                 'data' => $series,
-                'name' => reset($teamLine)->team->name
+                'name' => reset($teamLine) ? reset($teamLine)->team->name : ' '
             ];
         };
         $this->presenter->sendJson($data);
