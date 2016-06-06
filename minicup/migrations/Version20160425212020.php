@@ -15,7 +15,7 @@ class Version20160425212020 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $sql = file_get_contents(__DIR__ . '/../../utils/minicup_migrations-init.sql');
+        $sql = file_get_contents(__DIR__ . '/../../utils/migrations/minicup_migrations-init.sql');
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
 
