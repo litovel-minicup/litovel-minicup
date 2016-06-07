@@ -27,17 +27,6 @@
                 });
                 e.preventDefault();
             });
-
-            $(".Photo__rows img").each(function () {
-                var width = $(this).width();
-                var height = $(this).height();
-
-                if (height > width) {
-                    $(this).addClass("Photo__rows--portrait");
-                } else {
-                    $(this).css("height", 150 + "px");
-                }
-            });
         });
     </script>
 </div>
