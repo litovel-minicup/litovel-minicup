@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4b6029306064d25d283d26e3090483d",
-    "content-hash": "14296ca4204d3d7662ecc94b36fe01d8",
+    "hash": "bff634367ecbdccb944ef66d1538db2d",
+    "content-hash": "e71089937984fcf98d15c164bd3a0735",
     "packages": [
         {
             "name": "dg/dibi",
@@ -844,12 +844,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "2c2b8238bcaec92f7a5fdcb89f1a8c4455575dfd"
+                "reference": "35d1f36e74e7abaee357ce4a9f53cd4dced66cbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/2c2b8238bcaec92f7a5fdcb89f1a8c4455575dfd",
-                "reference": "2c2b8238bcaec92f7a5fdcb89f1a8c4455575dfd",
+                "url": "https://api.github.com/repos/nette/latte/zipball/35d1f36e74e7abaee357ce4a9f53cd4dced66cbe",
+                "reference": "35d1f36e74e7abaee357ce4a9f53cd4dced66cbe",
                 "shasum": ""
             },
             "require": {
@@ -897,7 +897,7 @@
                 "templating",
                 "twig"
             ],
-            "time": "2016-06-07 16:11:16"
+            "time": "2016-06-08 15:03:09"
         },
         {
             "name": "natxet/CssMin",
@@ -1318,7 +1318,7 @@
         },
         {
             "name": "nette/di",
-            "version": "v2.4.0-RC2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/di.git",
@@ -3163,6 +3163,7 @@
     "stability-flags": {
         "nette/application": 20,
         "nette/caching": 20,
+        "nette/di": 20,
         "nette/forms": 20,
         "latte/latte": 20,
         "o5/grido": 20,

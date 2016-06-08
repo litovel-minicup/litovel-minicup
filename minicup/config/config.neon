@@ -29,8 +29,6 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
-			- injectFilterLoader(@filterLoader)
-			- injectFormFactory(@formFactory)
 
 leanMapper: %connection%
 

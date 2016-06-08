@@ -5,7 +5,7 @@
     "nette/bootstrap": "~2.4",
     "nette/caching": "dev-master",
     "nette/database": "~2.4",
-    "nette/di": "~2.4",
+    "nette/di": "dev-master",
     "nette/finder": "~2.4",
     "nette/forms": "dev-master",
     "nette/http": "~2.4",
