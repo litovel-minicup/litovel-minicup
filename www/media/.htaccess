@@ -1,3 +1,0 @@
-ExpiresActive on
-
-ExpiresByType image/jpeg "access plus 1 month"
