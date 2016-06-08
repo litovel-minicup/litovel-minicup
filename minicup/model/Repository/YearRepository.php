@@ -39,11 +39,15 @@ class YearRepository extends BaseRepository
 
     public function getActualYear()
     {
-        $row = $this->createFluent()->where('actual = 1')->fetch();
-        if (!$row) {
-            throw new InvalidStateException('Table year has not actual year.');
+        static $actual;
+        if (!$actual) {
+            $row = $this->createFluent()->where('actual = 1')->fetch();
+            if (!$row) {
+                throw new InvalidStateException('Table year has not actual year.');
+            }
+            $actual = $this->createEntity($row);
         }
-        return $this->createEntity($row);
+        return $actual;
     }
 
     /**
@@ -66,9 +70,13 @@ class YearRepository extends BaseRepository
      */
     public function findArchiveYears()
     {
-        return $this->createEntities(
-            $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
-        );
+        static $archiveYears;
+        if (NULL === $archiveYears) {
+            $archiveYears = $this->createEntities(
+                $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
+            );
+        }
+        return $archiveYears;
     }
 
     /**

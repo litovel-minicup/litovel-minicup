@@ -54,7 +54,7 @@ class TeamHistoryComponent extends BaseComponent
 
     public function handleData()
     {
-        $this->presenter->sendJson($this->cache->load($this->team->i->getCacheTag(), function (& $depends) {
+        $this->presenter->sendJson($this->cache->load($this->team->i->getCacheTag(static::class), function (& $depends) {
             $depends[Cache::TAGS] = [$this->team->getCacheTag()];
 
             $data = ['labels' => [], 'series' => [[]]];

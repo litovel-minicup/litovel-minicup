@@ -8,6 +8,7 @@ use Minicup\Model\Entity\BaseEntity;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\TeamInfo;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\BaseRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
@@ -43,6 +44,10 @@ class CacheManager extends Object
 
                 if (isset($entity->category) && $entity->category instanceof Category) {
                     $that->cleanByEntity($entity->category);
+                }
+
+                if (isset($entity->year) && $entity->year instanceof Year) {
+                    $that->cleanByEntity($entity->year);
                 }
 
                 if ($entity instanceof Photo) {

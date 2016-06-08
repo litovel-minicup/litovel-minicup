@@ -1,5 +1,7 @@
 {block outerContent}
+    {cache $team->cacheTag, tags => $team->cacheTag}
     {control teamDetailComponent}
+    {/cache}
 {/block}
 {block title}{$team->name} - {$team->category->name}{/block}
 {block og-image}

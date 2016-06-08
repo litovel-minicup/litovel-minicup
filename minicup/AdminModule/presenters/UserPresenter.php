@@ -50,10 +50,8 @@ class UserPresenter extends BaseAdminPresenter
     protected function createComponentUserGrid($name)
     {
         $g = new Grid($this, $name);
-        $g->setFilterRenderType(Filter::RENDER_INNER);
         $fluent = $this->DC->select('*')->from('[user]');
         $g->model = $fluent;
-        $g->setFilterRenderType(Filter::RENDER_INNER);
         $g->perPage = 100;
         $g->addColumnNumber('id', 'id');
         $g->addColumnText('username', 'Username')
