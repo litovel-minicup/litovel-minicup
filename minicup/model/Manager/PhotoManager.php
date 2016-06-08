@@ -68,9 +68,10 @@ class PhotoManager extends Object
     /**
      * @param FileUpload[] $files
      * @param string|NULL  $prefix
-     * @return Photo[]
+     * @param string|NULL  $author
+     * @return \Minicup\Model\Entity\Photo[]
      */
-    public function save($files, $prefix = NULL)
+    public function save($files, $prefix = NULL, $author = NULL)
     {
         if (!$prefix) {
             $prefix = Random::generate(20);
@@ -95,6 +96,7 @@ class PhotoManager extends Object
                 }
             }
             $photo->taken = $taken;
+            $photo->author = $author;
             $this->PR->persist($photo);
             $photos[] = $photo;
         }

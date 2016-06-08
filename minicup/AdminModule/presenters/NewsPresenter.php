@@ -8,6 +8,7 @@ use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\INewsFormComponentFactory;
 use Minicup\Components\NewsFormComponent;
+use Minicup\Misc\GridHelpers;
 use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\NewsRepository;
 use Nette\Utils\ArrayHash;
@@ -63,7 +64,7 @@ class NewsPresenter extends BaseAdminPresenter
     {
         $g = new Grid($this, $name);
         $g->addColumnNumber('id', '#');
-        $g->addColumnText('title', 'Titulek');
+        $g->addColumnText('title', 'Titulek')->setEditableCallback(GridHelpers::getEditableCallback('title', $this->NR));
         $g->addColumnText('content', 'Obsah');
         $g->addColumnNumber('texy', 'Texy?')->setReplacement([
             0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),

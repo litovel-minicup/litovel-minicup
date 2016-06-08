@@ -30,7 +30,23 @@
     <div>
         <div class="photo-list panel panel-default row">
             <div class="panel-heading">
-                <h3 class="panel-title">Nahrané fotky</h3>
+                <h3 class="panel-title">Nahrané fotky
+                    <span class="pull-right">
+                        <label class="radio-inline">
+                            <input type="radio" name="author" id="author" value="" checked="checked"> <i
+                                    class="glyphicon glyphicon-remove"></i>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="author" id="author" value="Tomáš Mrázek"> Tomáš Mrázek
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="author" id="author" value="Pavel Štěpánek"> Pavel Štěpánek
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="author" id="author" value="Vojtěch Vysoudil"> Vojtěch Vysoudil
+                        </label>
+                    </span>
+                </h3>
             </div>
             <div n:class="$photos?row, panel-body" n:snippet="photos-list" n:inner-foreach="$photos as $photo">
                 {first 3}
@@ -136,7 +152,7 @@
             var $dropperList = $('#upload-list'),
                     itemTemplate = $("#uploadTemplate").html(),
                     $dropper = $('#upload-dropper');
-            initDropper($dropper, $dropperList, itemTemplate);
+            initDropper($dropper, $dropperList, itemTemplate, 'author');
 
             $('#delete-all').on('click', function (e) {
                 e.preventDefault();

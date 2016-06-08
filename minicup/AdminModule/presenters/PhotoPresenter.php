@@ -16,6 +16,7 @@ use Minicup\Components\PhotoEditComponent;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoUploadComponent;
 use Minicup\Components\TagFormComponent;
+use Minicup\Misc\GridHelpers;
 use Minicup\Misc\HandleTagsTrait;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
@@ -95,13 +96,12 @@ final class PhotoPresenter extends BaseAdminPresenter
         $NR = $this->NR;
         $presenter = $this;
         $g = new Grid($this, $name);
-        $g->setFilterRenderType(Filter::RENDER_INNER);
 
         $g->addColumnNumber('id', '#');
 
-        $g->addColumnText('name', 'Název')->setFilterText();
+        $g->addColumnText('name', 'Název')->setEditableCallback(GridHelpers::getEditableCallback('name', $this->TR))->setFilterText();
 
-        $g->addColumnText('slug', 'Slug')->setFilterText();
+        $g->addColumnText('slug', 'Slug')->setEditableCallback(GridHelpers::getEditableCallback('slug', $this->TR))->setFilterText();
 
         $g->addColumnText('count_of_photos', 'Počet fotek');
 

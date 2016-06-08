@@ -66,7 +66,7 @@ class PhotoListComponent extends BaseComponent
             $i++;
             $data[] = [
                 'href' => $this->presenter->link(':Media:medium', $photo->filename),
-                'title' => "Fotka {$i}. z {$count}"
+                'title' => "Fotka {$i}. z {$count}" . ($photo->author ? " - {$photo->author}" : '')
             ];
         }
         $this->presenter->sendJson($data);

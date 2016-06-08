@@ -4,8 +4,10 @@ namespace Minicup\Components;
 
 use Dibi\Row;
 use Grido\Components\Columns\Date;
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
+use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Year;
@@ -174,9 +176,10 @@ class AdminPhotoListComponent extends BaseComponent
             ->select($this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [photo.id]'), 'count_of_tags');
         $g = new Grid($this, $name);
 
-        $g->addColumnNumber('id', '#');
+        $g->addColumnNumber('id', '#')
+            ->setFilterNumber();
 
-        $g->addColumnText('filename', 'Jméno souboru')->setFilterText();
+        $g->addColumnText('filename', 'Jméno souboru');
 
         $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', ['id' => 'id']);
 
@@ -199,9 +202,14 @@ class AdminPhotoListComponent extends BaseComponent
 
         $g->addColumnDate('taken', 'Pořízena', Date::FORMAT_DATETIME);
 
-        $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
+        $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)
+            ->setDefaultSort(BaseRepository::ORDER_DESC);
 
-        $g->addColumnText('count_of_tags', 'Počet tagů')->setSortable();
+        $g->addColumnText('count_of_tags', 'Počet tagů')
+            ->setSortable();
+
+        $g->addColumnText('author', 'Autor')
+            ->setEditableCallback(GridHelpers::getEditableCallback('author', $this->TR))->setFilterText();
 
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
@@ -213,6 +221,7 @@ class AdminPhotoListComponent extends BaseComponent
             $model->where('[active] = 1');
         }
         $g->setModel($model);
+        $g->setFilterRenderType(Filter::RENDER_OUTER);
         return $g;
     }
 
