@@ -1,11 +1,33 @@
 <div class="photo-presentation-component">
     <img class="image-1 active" alt="">
     <img class="image-2" alt="">
+
+    <span class="url">minicup.tatranlitovel.cz</span>
 </div>
+
 
 <style>
     body {
         background-color: black;
+    }
+
+    .photo-presentation-component {
+        position: relative;
+    }
+
+    .photo-presentation-component .url {
+        position: fixed;
+        top: 0;
+        padding: 5px 0;
+        font-family: "Montserrat";
+        font-size: 48px;
+        color: black;
+        text-decoration: underline;
+        display: block;
+        text-align: center;
+        left: 0;
+        right: 0;
+        background-color: #FFE033;
     }
 
     .photo-presentation-component img {
@@ -15,7 +37,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-
 
         transition: opacity .5s ease;
         opacity: 0;
@@ -28,10 +49,10 @@
 
 <script>
     $(document).ready(function () {
-        var data = [], fade = 500, pause = 2000;
+        var data = [], pause = 2000;
         jQuery.getJSON({link data!}, function (response, status) {
             data = response;
-            setInterval(flipImage, pause*2);
+            setInterval(flipImage, pause * 2);
         });
         var randomPhoto = function () {
             return data[Math.floor(Math.random() * data.length)];
