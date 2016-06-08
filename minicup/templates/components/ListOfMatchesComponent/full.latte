@@ -1,7 +1,7 @@
 <div class="Article__head Box__head--toggle">
     <div class="Article__head__icon Box__head--toggle__icon icon__matches">
     </div>
-    <div class="Article__head__text Box__head--toggle__text">Zápasy</div>
+    <h1 class="Article__head__text Box__head--toggle__text">Zápasy</h1>
     <ul class="Article__head__select Box__head--toggle__select" n:inner-foreach="array_keys($days) as $timestamp">
         <li n:class="$control->isToday($timestamp) ?active"><a data-toggle="tab"
                                                                href="#{$timestamp}">{$timestamp|dayName}</a></li>

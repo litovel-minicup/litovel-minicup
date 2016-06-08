@@ -2,7 +2,7 @@
     <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams"></div>
-            <div class="Article__head__text Box__head__text">{$team->name} ({$team->category->name})</div>
+            <h1 class="Article__head__text Box__head__text">Tým {$team->name} ({$team->category->name})</h1>
         </div>
         <div class="Box__content Table__content Team__content">
             <table class="Table Table__detail">
@@ -31,7 +31,7 @@
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__news"></div>
-                <div class="Article__head__text Box__head__text">Historie pořadí</div>
+                <h2 class="Article__head__text Box__head__text">Historie pořadí</h2>
             </div>
             {control teamHistoryComponent}
         </div>
@@ -44,7 +44,7 @@
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__matches">
                 </div>
-                <div class="Article__head__text Box__head__text">Zápasy</div>
+                <h2 class="Article__head__text Box__head__text">Zápasy</h2>
             </div>
             {control listOfMatchesComponent}
         </div>
@@ -56,7 +56,7 @@
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__news"></div>
-                <div class="Article__head__text Box__head__text">Informace</div>
+                <h2 class="Article__head__text Box__head__text">Informace</h2>
             </div>
             {control staticContentComponent}
         </div>
@@ -68,7 +68,7 @@
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__photo"></div>
-                <div class="Article__head__text Box__head__text">Foto týmu</div>
+                <h2 class="Article__head__text Box__head__text">Foto týmu</h2>
             </div>
             <img style="width: 100%;" src="{plink :Media:medium $team->tag->mainPhoto->filename}"
                  title="Foto týmu {$team->name}" alt="Foto týmu {$team->name}"/>
@@ -81,7 +81,7 @@
         <div class="Article">
             <div class="Article__head Box__head">
                 <div class="Article__head__icon Box__head__icon icon__photo"></div>
-                <div class="Article__head__text Box__head__text">Fotografie</div>
+                <h2 class="Article__head__text Box__head__text">Fotografie</h2>
             </div>
             {control photoListComponent}
         </div>
