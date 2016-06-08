@@ -141,7 +141,7 @@ services:
       parameters: [Minicup\Model\Entity\Category category, count]
       arguments: [%category%, %count%]
     - implement: Minicup\Components\IStaticContentComponentFactory
-      parameters: [arg, Minicup\Model\Entity\Year year = NULL]
+      parameters: [arg, Minicup\Model\Entity\Year year]
       arguments: [%arg%, %year%]
     - implement: Minicup\Components\IListOfTeamsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]

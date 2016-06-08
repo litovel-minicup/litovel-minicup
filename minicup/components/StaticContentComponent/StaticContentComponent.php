@@ -22,7 +22,7 @@ interface IStaticContentComponentFactory
      * @param Year                      $year
      * @return StaticContentComponent
      */
-    public function create($arg, Year $year = NULL);
+    public function create($arg, Year $year);
 }
 
 class StaticContentComponent extends BaseComponent
@@ -47,7 +47,7 @@ class StaticContentComponent extends BaseComponent
      * @param StaticContentManager    $SCM
      */
     public function __construct($arg,
-                                Year $year = NULL,
+                                Year $year,
                                 StaticContentRepository $SCR,
                                 Texy $texy,
                                 StaticContentManager $SCM)

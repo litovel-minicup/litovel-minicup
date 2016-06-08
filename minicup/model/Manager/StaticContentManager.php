@@ -43,13 +43,14 @@ class StaticContentManager extends Object
      * @param Year                      $year
      * @return StaticContent|NULL
      */
-    public function getContent($arg, Year $year = NULL)
+    public function getContent($arg, Year $year)
     {
         if ($arg instanceof Team) {
             $staticContent = $arg->i->staticContent;
             if (!$staticContent instanceof StaticContent) {
                 $staticContent = new StaticContent();
                 $staticContent->content = '';
+                $staticContent->year = $year;
                 $staticContent->slug = $arg->category->slug . $this::PARTS_GLUE . $arg->i->slug;
                 $this->SCR->persist($staticContent);
                 $arg->i->staticContent = $staticContent;

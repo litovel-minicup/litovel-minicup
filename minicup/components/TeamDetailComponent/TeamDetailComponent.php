@@ -76,7 +76,7 @@ class TeamDetailComponent extends BaseComponent
      */
     public function createComponentStaticContentComponent()
     {
-        return $this->SCCF->create($this->team);
+        return $this->SCCF->create($this->team, $this->team->category->year);
     }
 
     /**
