@@ -19,3 +19,4 @@ config.local.neon
 
 # media uploads
 www/media/*
+!www/media/.htaccess
