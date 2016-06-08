@@ -33,8 +33,8 @@ class UserPresenter extends BaseAdminPresenter
             $this->UM->add(
                 $values->username,
                 $values->password,
-                $values->fullname,
-                $values->role);
+                $values->fullname
+            );
         } catch (InvalidArgumentException $ex) {
             $form->addError($ex->getMessage());
             return;
@@ -57,10 +57,6 @@ class UserPresenter extends BaseAdminPresenter
         $g->addColumnText('username', 'Username')
             ->setFilterText()
             ->setSuggestion();
-        $g->addColumnText('role', 'Role')
-            ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
         return $g;
     }
 
@@ -81,7 +77,6 @@ class UserPresenter extends BaseAdminPresenter
             ->addConditionOn($f['password'], Form::FILLED)
             ->addRule(Form::FILLED, 'Zadejte prosím heslo znovu pro ověření.')
             ->addRule(Form::EQUAL, 'Zřejmě došlo k překlepu, zkuste prosím hesla zadat znovu.', $f['password']);
-        $f->addSelect('role', 'role uživatele', ['admin' => 'administrátor', 'moderator' => 'moderátor']);
         $f->addSubmit('submit', 'vytvořit');
         $f->onSuccess[] = [$this, 'userFormSuccess'];
         return $f;

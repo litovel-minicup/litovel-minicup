@@ -80,7 +80,7 @@ class AsideComponent extends BaseComponent
      */
     public function isFinished()
     {
-        return $this->MM->isStarted($this->category);
+        return $this->MM->isFinished($this->category);
     }
 
     /**

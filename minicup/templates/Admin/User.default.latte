@@ -2,23 +2,11 @@
     <div class="row">
         <div class="col-md-8">
             <h2>Uživatelé</h2>
-            {if $user->isAllowed('user', 'view')}
-                {control userGrid}
-            {else}
-                <div class="alert alert-danger">
-                    Bohužel si nemůžete zobrazit seznam uživatelů.
-                </div>
-            {/if}
+            {control userGrid}
         </div>
         <div class="col-md-4">
-            {if $user->isAllowed('user', 'add')}
-                <h2>Přidat uživatele</h2>
-                {control userForm}
-            {else}
-                <div class="alert alert-danger">
-                    Přidávat uživatele bohužel nemůžete.
-                </div>
-            {/if}
+            <h2>Přidat uživatele</h2>
+            {control userForm}
         </div>
     </div>
 {/block}

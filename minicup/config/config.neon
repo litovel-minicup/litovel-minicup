@@ -21,9 +21,6 @@ application:
 session:
     expiration: 14 days
 
-includes:
-    - config.ACL.neon
-
 decorator:
 	Minicup\Components\BaseComponent:
 		inject: yes

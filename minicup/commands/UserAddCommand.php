@@ -23,8 +23,7 @@ class UserAddCommand extends Command
     {
         $this
             ->setName('app:add-user')
-            ->addArgument('username', InputArgument::REQUIRED, 'Username to add')
-            ->addArgument('role', InputArgument::OPTIONAL, 'Username to add', 'guest');
+            ->addArgument('username', InputArgument::REQUIRED, 'Username to add');
     }
 
     /**
@@ -36,7 +35,6 @@ class UserAddCommand extends Command
         /** @var QuestionHelper $dialog */
         $dialog = $this->getHelper('question');
         $username = $input->getArgument('username');
-        $role = $input->getArgument('role');
 
         $question = (new Question('Password please: '))->setHidden(TRUE);
         $questionCheck = (new Question('Retype password please: '))->setHidden(TRUE);
@@ -46,7 +44,7 @@ class UserAddCommand extends Command
             return 1;
         }
         try {
-            $this->userManager->add($username, $password, $username, $role);
+            $this->userManager->add($username, $password, $username);
             $output->writeln("<info>Successfully added user {$username}.</info>");
             return 0;
         } catch (\Exception $e) {

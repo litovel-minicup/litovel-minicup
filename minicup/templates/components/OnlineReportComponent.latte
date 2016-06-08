@@ -16,13 +16,13 @@
         {/foreach}
     </div>
     <div n:snippet="form">
-        {if $user->isAllowed('online-report', 'write')}
+        {if $user->isLoggedIn()}
             {form newReportForm}
-            {input message}
-            {input info}
-            {input goal}
-            {input penalty}
-            {input action}
+                {input message}
+                {input info}
+                {input goal}
+                {input penalty}
+                {input action}
             {/form}
         {/if}
     </div>

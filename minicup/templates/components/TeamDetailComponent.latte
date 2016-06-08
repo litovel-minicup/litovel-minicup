@@ -51,7 +51,7 @@
     </div>
 {/if}
 
-{if ($team->staticContent && $team->staticContent->content) || $user->isAllowed('static-content', 'edit')}
+{if ($team->staticContent && $team->staticContent->content) || $user->isLoggedIn()}
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
