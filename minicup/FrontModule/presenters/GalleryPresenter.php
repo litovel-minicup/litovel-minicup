@@ -12,7 +12,9 @@ namespace Minicup\FrontModule\Presenters;
 use Minicup\Components\IInteractiveGalleryComponentFactory;
 use Minicup\Components\InteractiveGalleryComponent;
 use Minicup\Components\IPhotoListComponentFactory;
+use Minicup\Components\IPhotoPresentationComponentFactory;
 use Minicup\Components\PhotoListComponent;
+use Minicup\Components\PhotoPresentationComponent;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Repository\TagRepository;
 
@@ -27,6 +29,9 @@ class GalleryPresenter extends BaseFrontPresenter
     /** @var TagRepository @inject */
     public $TR;
 
+    /** @var IPhotoPresentationComponentFactory @inject */
+    public $PPF;
+
     public function renderDefault()
     {
         $this->template->tags = $this->TR->findMainTags($this->category->year);
@@ -36,6 +41,17 @@ class GalleryPresenter extends BaseFrontPresenter
     {
         $this->template->tag = $tag;
     }
+
+    /**
+     * @return PhotoPresentationComponent
+     */
+    protected function createComponentPhotoPresentationComponent()
+    {
+        return $this->PPF->create(
+            $this->category->year
+        );
+    }
+
 
     /**
      * @return InteractiveGalleryComponent

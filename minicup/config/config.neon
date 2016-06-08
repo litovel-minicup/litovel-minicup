@@ -97,6 +97,7 @@ services:
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
+    - Minicup\Components\IPhotoPresentationComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

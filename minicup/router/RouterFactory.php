@@ -128,6 +128,11 @@ class RouterFactory extends Object
             'action' => 'default'
         ], 0, FALSE);
 
+        $front[] = $route('foto/prezentace/', [
+            'presenter' => 'Gallery',
+            'action' => 'presentation'
+        ]);
+
         $front[] = $route('foto/tagy/', [
             'presenter' => 'Gallery',
             'action' => 'tags'

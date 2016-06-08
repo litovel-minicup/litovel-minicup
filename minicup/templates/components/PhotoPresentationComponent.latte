@@ -1,0 +1,48 @@
+<div class="photo-presentation-component">
+    <img class="image-1 active" alt="">
+    <img class="image-2" alt="">
+</div>
+
+<style>
+    body {
+        background-color: black;
+    }
+
+    .photo-presentation-component img {
+        max-width: 100%;
+        max-height: 100%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+
+        transition: opacity .5s ease;
+        opacity: 0;
+    }
+
+    .photo-presentation-component img.active {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        var data = [], fade = 500, pause = 2000;
+        jQuery.getJSON({link data!}, function (response, status) {
+            data = response;
+            setInterval(flipImage, pause*2);
+        });
+        var randomPhoto = function () {
+            return data[Math.floor(Math.random() * data.length)];
+        };
+
+        function flipImage() {
+            $('.photo-presentation-component img:not(.active)').attr('src', randomPhoto()).delay(pause).queue(function () {
+
+                $('.photo-presentation-component img').toggleClass('active');
+                $(this).dequeue();
+            })
+        }
+    });
+</script>
