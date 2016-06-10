@@ -12,9 +12,14 @@ class TagRepository extends BaseRepository
      * @param $slug
      * @return Tag
      */
-    public function getBySlug($slug)
+    public function getBySlug($slug, Year $year = NULL)
     {
-        $row = $this->createFluent()->where('[slug] = %s', $slug)->fetch();
+        $fluent = $this->createFluent()->where('[slug] = %s', $slug);
+
+        if ($year) {
+            $fluent->where('[year_id] = ', $year->id);
+        }
+        $row = $fluent->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
 

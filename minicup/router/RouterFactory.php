@@ -100,14 +100,6 @@ class RouterFactory extends Object
             'presenter' => 'Gallery',
             'action' => 'detail',
             'tag' => [
-                Route::FILTER_IN => function ($tag) use ($TagR) {
-                    /** @var Tag $tag */
-                    $tag = $TagR->getBySlug($tag);
-                    if (!$tag || !$tag->isMain) {
-                        return NULL;
-                    }
-                    return $tag;
-                },
                 Route::FILTER_OUT => function ($tag) use ($TagR) {
                     if (is_string($tag)) {
                         $tag = $TagR->getBySlug($tag);
@@ -119,6 +111,17 @@ class RouterFactory extends Object
                         return NULL;
                     }
                     return $tag->slug;
+                }
+            ],
+            NULL => [
+                Route::FILTER_IN => function ($params) use ($TagR) {
+                    /** @var Tag $tag */
+                    $tag = $TagR->getBySlug($params['tag'], $params['category']->year);
+                    if (!$tag || !$tag->isMain) {
+                        return NULL;
+                    }
+                    $params['tag'] = $tag;
+                    return $params;
                 }
             ]
         ]);
