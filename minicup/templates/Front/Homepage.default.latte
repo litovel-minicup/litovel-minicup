@@ -1,12 +1,10 @@
 {block content}
-    {cache $category->year->cacheTag, tags => $category->year->cacheTag}
-        <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__news">
-            </div>
-            <h1 class="Article__head__text Box__head__text" n:block="title">Novinky</h1>
+    <div class="Article__head Box__head">
+        <div class="Article__head__icon Box__head__icon icon__news">
         </div>
+        <h1 class="Article__head__text Box__head__text" n:block="title">Novinky</h1>
+    </div>
     {control newsListComponent}
-    {/cache}
 {/block}
 
 

@@ -5,6 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\NewsRepository;
+use Nette\Caching\Cache;
+use Nette\Caching\IStorage;
 
 interface IListOfNewsComponentFactory
 {
@@ -24,21 +26,29 @@ class ListOfNewsComponent extends BaseComponent
     /** @var Year */
     private $year;
 
+    /** @var Cache */
+    private $cache;
+
     /**
      * @param Year           $year
      * @param NewsRepository $NR
      */
     public function __construct(Year $year,
-                                NewsRepository $NR)
+                                NewsRepository $NR,
+                                IStorage $storage)
     {
         $this->NR = $NR;
         $this->year = $year;
+        $this->cache = new Cache($storage);
         parent::__construct();
     }
 
     public function render()
     {
-        $this->template->news = $this->NR->findLastNews($this->year);
+        $this->template->news = $this->cache->load($this->year->getCacheTag(static::class), function (& $dependencies) {
+            $dependencies[Cache::TAGS] = [$this->year->getCacheTag()];
+            return $this->NR->findLastNews($this->year);
+        });
         parent::render();
     }
 }
