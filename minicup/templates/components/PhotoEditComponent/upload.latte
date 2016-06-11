@@ -2,7 +2,7 @@
     <img class="img-thumbnail" src="{plink :Media:thumb $photo->filename}" alt="Náhled fotky {$photo->id}">
 
     <div class="caption">
-        <h4>{$photo->id} <span class="pull-right"><small>{$photo->author}</small></span></h4>
+        <h4>{$photo->id} <span class="pull-right">{$photo->author} {$photo->taken|date:'G:i - j. n. Y'}</span></h4>
 
         <form>
             <div class="form-group">

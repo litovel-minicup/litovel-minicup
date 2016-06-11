@@ -45,10 +45,7 @@ class ListOfNewsComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->news = $this->cache->load($this->year->getCacheTag(static::class), function (& $dependencies) {
-            $dependencies[Cache::TAGS] = [$this->year->getCacheTag()];
-            return $this->NR->findLastNews($this->year);
-        });
+        $this->template->news = $this->NR->findLastNews($this->year);
         parent::render();
     }
 }
