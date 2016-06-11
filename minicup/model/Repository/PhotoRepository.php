@@ -65,4 +65,21 @@ class PhotoRepository extends BaseRepository
             )->fetchAll()
         );
     }
+
+    /**
+     * @param Tag    $tag
+     * @param string $order
+     * @return Photo[]
+     */
+    public function findByTag(Tag $tag, $order = BaseRepository::ORDER_ASC)
+    {
+        return $this->createEntities(
+            $this->connection
+                ->select('[photo.*]')->from('photo')
+                ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo_id]')
+                ->where('[photo_tag.tag_id] = ', $tag->id)
+                ->orderBy("[photo.taken] $order")
+                ->fetchAll()
+        );
+    }
 }

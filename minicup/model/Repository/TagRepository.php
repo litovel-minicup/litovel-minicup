@@ -9,7 +9,8 @@ use Minicup\Model\Entity\Year;
 class TagRepository extends BaseRepository
 {
     /**
-     * @param $slug
+     * @param string $slug
+     * @param Year   $year
      * @return Tag
      */
     public function getBySlug($slug, Year $year = NULL)

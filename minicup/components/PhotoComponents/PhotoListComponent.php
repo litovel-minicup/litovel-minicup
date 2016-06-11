@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Latte\Runtime\Filters;
 use Minicup\Model\Entity\Photo;
 
 interface IPhotoListComponentFactory
@@ -66,7 +67,7 @@ class PhotoListComponent extends BaseComponent
             $i++;
             $data[] = [
                 'href' => $this->presenter->link(':Media:medium', $photo->filename),
-                'title' => "Fotka {$i}. z {$count}" . ($photo->author ? " - {$photo->author}" : '')
+                'title' => "Fotka {$i}. z {$count}" . ($photo->author ? " - {$photo->author}" : '') . ' - ' . Filters::date($photo->taken, 'G:i j. n. Y')
             ];
         }
         $this->presenter->sendJson($data);

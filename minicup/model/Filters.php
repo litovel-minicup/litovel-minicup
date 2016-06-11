@@ -15,9 +15,9 @@ class Filters extends Object
      * @param Fluent $fluent
      * @param int    $yearId
      */
-    public function yearRestrict(Fluent $fluent, $yearId = 0)
+    public function yearRestrict(Fluent $fluent, $yearId = NULL)
     {
-        if ($yearId) {
+        if ($yearId !== NULL && $yearId !== 0) {
             $fluent->where('[year_id] = %i', $yearId);
         }
     }

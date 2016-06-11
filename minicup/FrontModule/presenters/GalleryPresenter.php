@@ -16,6 +16,8 @@ use Minicup\Components\IPhotoPresentationComponentFactory;
 use Minicup\Components\PhotoListComponent;
 use Minicup\Components\PhotoPresentationComponent;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Repository\BaseRepository;
+use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 
 class GalleryPresenter extends BaseFrontPresenter
@@ -31,6 +33,9 @@ class GalleryPresenter extends BaseFrontPresenter
 
     /** @var IPhotoPresentationComponentFactory @inject */
     public $PPF;
+
+    /** @var PhotoRepository @inject */
+    public $PR;
 
     public function renderDefault()
     {
@@ -66,6 +71,8 @@ class GalleryPresenter extends BaseFrontPresenter
      */
     protected function createComponentPhotoListComponent()
     {
-        return $this->PLCF->create($this->getParameter('tag')->photos);
+        /** @var Tag $tag */
+        $tag = $this->getParameter('tag');
+        return $this->PLCF->create($this->PR->findByTag($tag));
     }
 }

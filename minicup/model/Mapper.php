@@ -69,14 +69,14 @@ class Mapper extends DefaultMapper
                 return new ImplicitFilters(['info', 'orderTeams']);
             }
             return new ImplicitFilters(['info', 'actual', 'orderTeams']);
-        } elseif (in_array($entityName, ['Category', 'Day', 'Photo', 'Tag'], TRUE)) {
+        } elseif (in_array($entityName, ['Category', 'Day', 'Tag'], TRUE)) {
             return new ImplicitFilters(['year']);
         } elseif ($entityName === 'Match') {
             return new ImplicitFilters(['orderMatches']);
         } elseif ($entityName === 'News') {
             return new ImplicitFilters(['orderNews']);
         } elseif ($entityName === 'Photo') {
-            return new ImplicitFilters(['orderPhotos']);
+            return new ImplicitFilters(['orderPhotos', 'year']);
         }
         return [];
     }
