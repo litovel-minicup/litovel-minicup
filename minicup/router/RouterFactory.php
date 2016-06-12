@@ -209,10 +209,11 @@ class RouterFactory extends Object
                     if ($params['category'] === NULL) {
                         return NULL;
                     }
-                    $params['team'] = $TR->getBySlug($params['team'], $params['category']);
-                    if (!$params['team']) {
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+                    if (!$team) {
                         return NULL;
                     }
+                    $params['team'] = $team->i;
                     return $params;
                 }
             ]

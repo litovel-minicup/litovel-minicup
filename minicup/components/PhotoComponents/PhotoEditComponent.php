@@ -121,6 +121,9 @@ class PhotoEditComponent extends BaseComponent
         foreach (($tags ?: []) as $id) {
             /** @var Tag $tag */
             $tag = $this->TR->get($id);
+            if (!$tag) {
+                continue;
+            }
             if ($tag->teamInfo) {
                 $this->CM->cleanByEntity($tag->teamInfo->team);
             }
