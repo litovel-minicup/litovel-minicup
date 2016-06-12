@@ -109,8 +109,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
     - implement: Minicup\Components\ITagFormComponentFactory
-      parameters: [Minicup\Model\Entity\Tag tag = NULL]
-      arguments: [%tag%]
+      parameters: [Minicup\Model\Entity\Tag tag = NULL, Minicup\Model\Entity\Year year]
+      arguments: [%tag%, %year%]
     - implement: Minicup\Components\INewsFormComponentFactory
       parameters: [Minicup\Model\Entity\News news = NULL]
       arguments: [%news%]

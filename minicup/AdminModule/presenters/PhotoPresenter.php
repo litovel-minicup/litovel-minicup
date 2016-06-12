@@ -152,7 +152,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     {
         $presenter = $this;
         /** @var TagFormComponent $tagFormComponent */
-        $tagFormComponent = $this->TFCF->create($this->TR->get($this->getParameter('id')));
+        $tagFormComponent = $this->TFCF->create($this->TR->get($this->getParameter('id')), $this->category->year);
         $tagFormComponent['tagForm']->onSuccess[] = function () use ($presenter) {
             /** @var Grid $grid */
             $grid = $presenter['tagsGrid'];

@@ -6,6 +6,7 @@ namespace Minicup\Components;
 use Dibi\DriverException;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Application\UI\Form;
@@ -16,10 +17,11 @@ use Nette\Utils\Strings;
 interface ITagFormComponentFactory
 {
     /**
-     * @param Tag $tag
+     * @param Tag  $tag
+     * @param Year $year
      * @return TagFormComponent
      */
-    public function create(Tag $tag = NULL);
+    public function create(Tag $tag = NULL, Year $year);
 }
 
 class TagFormComponent extends BaseComponent
@@ -33,12 +35,17 @@ class TagFormComponent extends BaseComponent
     /** @var Tag|NULL */
     private $tag;
 
+    /** @var Year */
+    private $year;
+
     /**
      * @param Tag             $tag
+     * @param Year            $year
      * @param TagRepository   $TR
      * @param PhotoRepository $PR
      */
     public function __construct(Tag $tag = NULL,
+                                Year $year,
                                 TagRepository $TR,
                                 PhotoRepository $PR)
     {
@@ -46,6 +53,7 @@ class TagFormComponent extends BaseComponent
         $this->tag = $tag;
         $this->PR = $PR;
         parent::__construct();
+        $this->year = $year;
     }
 
     public function render()
@@ -92,6 +100,7 @@ class TagFormComponent extends BaseComponent
             $tag->isMain = $values->is_main;
         } else {
             $tag = new Tag();
+            $tag->year = $this->year;
             $tag->name = $values->name;
             $tag->slug = Strings::webalize($values->name);
             $tag->isMain = $values->is_main;

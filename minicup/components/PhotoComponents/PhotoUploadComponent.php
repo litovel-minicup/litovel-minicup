@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Minicup\AdminModule\Presenters\BaseAdminPresenter;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\CacheManager;
@@ -137,6 +138,7 @@ class PhotoUploadComponent extends BaseComponent
         $PR = $this->PR;
         $PUC = $this;
         return new Multiplier(function ($id) use ($PECF, $PR, $PUC) {
+            /** @var Photo $photo */
             $photo = $PR->get($id);
             $PEC = $PECF->create($photo);
             $PEC->onDelete[] = function (Photo $photo) use ($PUC, $PR) {
@@ -156,7 +158,9 @@ class PhotoUploadComponent extends BaseComponent
      */
     protected function createComponentTagFormComponent()
     {
-        $tagForm = $this->TFCF->create(NULL);
+        /** @var BaseAdminPresenter $presenter */
+        $presenter = $this->getPresenter();
+        $tagForm = $this->TFCF->create(NULL, $presenter->category->year);
         $tagForm->view = 'small';
         return $tagForm;
     }
