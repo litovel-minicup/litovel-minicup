@@ -76,7 +76,7 @@ class PhotoRepository extends BaseRepository
         return $this->createEntities(
             $this->connection
                 ->select('[photo.*]')->from('photo')
-                ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo_id]')
+                ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
                 ->where('[photo_tag.tag_id] = ', $tag->id)
                 ->orderBy("[photo.taken] $order")
                 ->fetchAll()
