@@ -7,5 +7,4 @@ namespace Minicup\AdminModule\Presenters;
  */
 final class HomepagePresenter extends BaseAdminPresenter
 {
-
 }

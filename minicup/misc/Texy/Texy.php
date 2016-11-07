@@ -5,7 +5,7 @@ namespace Minicup\Misc;
 use Nette\Application\LinkGenerator;
 use Nette\Utils\Strings;
 
-class Texy extends \Texy
+class Texy extends \Texy\Texy
 {
     /** @var LinkGenerator */
     public $linkGenerator;
@@ -14,8 +14,8 @@ class Texy extends \Texy
     public $destinationPrefix;
 
     /**
-     * @param $destinationPrefix
-     * @param LinkFactory $linkGenerator
+     * @param               $destinationPrefix
+     * @param LinkGenerator $linkGenerator
      */
     public function __construct($destinationPrefix, LinkGenerator $linkGenerator)
     {
@@ -26,7 +26,7 @@ class Texy extends \Texy
 
     /**
      * @param string $text
-     * @param bool $singleLine
+     * @param bool   $singleLine
      * @return string
      */
     public function process($text, $singleLine = FALSE)
@@ -44,8 +44,8 @@ class Texy extends \Texy
     {
         $me = $this;
         return Strings::replace($text, '#\[([A-z]*:[A-z]*)( [A-z-, ]*)?\]#', function ($matches) use ($me) {
-            $destination = $me->destinationPrefix .$matches[1];
-            $args = array();
+            $destination = $me->destinationPrefix . $matches[1];
+            $args = [];
             if (count($matches) > 2) {
                 $args = Strings::trim($matches[2]);
                 $args = Strings::replace($args, '# *#');
@@ -55,5 +55,4 @@ class Texy extends \Texy
             return "[{$link}]";
         });
     }
-
 }

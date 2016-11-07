@@ -12,9 +12,18 @@ use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Http\Request;
 
+interface IPhotoEditComponentFactory
+{
+    /**
+     * @param Photo $photo
+     * @return PhotoEditComponent
+     */
+    public function create(Photo $photo);
+}
+
 /**
- * @method onDelete
- * @method onSave
+ * @method onDelete(Photo $photo)
+ * @method onSave(Photo $photo)
  */
 class PhotoEditComponent extends BaseComponent
 {
@@ -43,12 +52,12 @@ class PhotoEditComponent extends BaseComponent
     private $request;
 
     /**
-     * @param Photo $photo
-     * @param TagRepository $TR
+     * @param Photo           $photo
+     * @param TagRepository   $TR
      * @param PhotoRepository $PR
-     * @param PhotoManager $PM
-     * @param Request $request
-     * @param CacheManager $CM
+     * @param PhotoManager    $PM
+     * @param Request         $request
+     * @param CacheManager    $CM
      */
     public function __construct(Photo $photo,
                                 TagRepository $TR,
@@ -70,11 +79,11 @@ class PhotoEditComponent extends BaseComponent
     {
         $parent = $this->getParent()->getParent();
         if ($parent instanceof AdminPhotoListComponent) {
-            $this->view = "edit";
+            $this->view = 'edit';
         } else if ($parent instanceof PhotoUploadComponent) {
-            $this->view = "upload";
+            $this->view = 'upload';
         } else if ($this->getParent() instanceof PhotoPresenter) {
-            $this->view = "edit";
+            $this->view = 'edit';
         }
         $this->template->photo = $this->photo;
         parent::render();
@@ -96,21 +105,25 @@ class PhotoEditComponent extends BaseComponent
 
     public function handleToggle()
     {
-        $this->photo->active  = $this->photo->active ? 0 : 1;
+        $this->photo->active = $this->photo->active ? 0 : 1;
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
 
     public function handleSaveTags()
     {
-        if (!$this->request->post['tags']) {
+        $tags = $this->request->getPost('tags');
+        if (is_null($tags)) {
             $this->PR->persist($this->photo);
             return;
         }
         $this->photo->removeAllTags();
-        foreach ($this->request->post['tags'] as $id) {
+        foreach (($tags ?: []) as $id) {
             /** @var Tag $tag */
             $tag = $this->TR->get($id);
+            if (!$tag) {
+                continue;
+            }
             if ($tag->teamInfo) {
                 $this->CM->cleanByEntity($tag->teamInfo->team);
             }
@@ -119,14 +132,4 @@ class PhotoEditComponent extends BaseComponent
         $this->PR->persist($this->photo);
         $this->redrawControl();
     }
-}
-
-
-interface IPhotoEditComponentFactory
-{
-    /**
-     * @param Photo $photo
-     * @return PhotoEditComponent
-     */
-    public function create(Photo $photo);
 }

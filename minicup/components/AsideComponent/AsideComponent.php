@@ -6,6 +6,20 @@ namespace Minicup\Components;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\MatchManager;
 
+interface IAsideComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return AsideComponent
+     */
+    public function create(Category $category);
+}
+
+/**
+ * @property bool $playingTime
+ * @property bool $started
+ * @property bool $finished
+ */
 class AsideComponent extends BaseComponent
 {
     /** @var ICategoryTableComponentFactory */
@@ -21,17 +35,21 @@ class AsideComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
+     * @param Category                       $category
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param ICategoryTableComponentFactory $CTCF
-     * @param MatchManager $MM
+     * @param MatchManager                   $MM
      */
-    public function __construct(Category $category, IListOfMatchesComponentFactory $LOMCF, ICategoryTableComponentFactory $CTCF, MatchManager $MM)
+    public function __construct(Category $category,
+                                IListOfMatchesComponentFactory $LOMCF,
+                                ICategoryTableComponentFactory $CTCF,
+                                MatchManager $MM)
     {
         $this->category = $category;
         $this->LOMCF = $LOMCF;
         $this->CTCF = $CTCF;
         $this->MM = $MM;
+        parent::__construct();
     }
 
     public function render()
@@ -62,7 +80,7 @@ class AsideComponent extends BaseComponent
      */
     public function isFinished()
     {
-        return $this->MM->isStarted($this->category);
+        return $this->MM->isFinished($this->category);
     }
 
     /**
@@ -81,13 +99,4 @@ class AsideComponent extends BaseComponent
         return $this->CTCF->create($this->category);
     }
 
-}
-
-interface IAsideComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return AsideComponent
-     */
-    public function create(Category $category);
 }

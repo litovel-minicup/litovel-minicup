@@ -2,6 +2,7 @@
 
 namespace Minicup\AdminModule\Presenters;
 
+use Grido\Components\Actions\Action;
 use Grido\Components\Actions\Event;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
@@ -13,11 +14,20 @@ abstract class BaseAdminPresenter extends BasePresenter
     public function startup()
     {
         parent::startup();
-        if (!$this->user->loggedIn) {
+        if (!$this->user->isLoggedIn()) {
             $this->flashMessage('Pro vstup do administrace je nutné se přihlásit.', 'error');
-            $this->redirect(":Sign:in", array('backlink' => $this->storeRequest()));
+            $this->redirect(':Sign:in');
         }
     }
+
+
+    public function beforeRender()
+    {
+        parent::beforeRender();
+        $this->template->categories = $this->CR->findAll(FALSE);
+        $this->template->years = $this->YR->findAll(FALSE);
+    }
+
 
     protected function afterRender()
     {
@@ -44,16 +54,19 @@ abstract class BaseAdminPresenter extends BasePresenter
     {
         $grid->defaultPerPage = 100;
         $grid->setFilterRenderType(Filter::RENDER_INNER);
+        $grid->customization->useTemplateBootstrap();
         $presenter = $this;
         foreach ($grid->getComponents(TRUE) as $child) {
             if ($child instanceof Event) {
-                $child->getElementPrototype()->addAttributes(array('class' => 'ajax'));
-                $child->onClick[] = function ($id) use ($grid, $presenter, $child) {
+                $child->getElementPrototype()->addAttributes(['class' => 'ajax']);
+                $onClick = $child->getOnClick();
+                $child->setOnClick(function ($id, Action $column) use ($grid, $presenter, $child, $onClick) {
+                    $onClick($id, $column);
                     $presenter->flashMessage("Akce '{$child->getLabel()}' s prvkem {$id} byl úspěšně provedena!", 'success');
                     $grid->reload();
-                };
-            } elseif ($child instanceof Column){
-                if (!$child->customRender instanceof \Closure) {
+                });
+            } elseif ($child instanceof Column) {
+                if (!$child->getCustomRender() instanceof \Closure) {
                     $child->setSortable();
                 }
             }

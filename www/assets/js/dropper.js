@@ -243,7 +243,7 @@
 			data.uploading = true;
 		}
 
-		data.$dropper.trigger("start.dropper", [ newFiles ]);
+		data.$dropper.trigger("start.dropper", [ newFiles, data]);
 
 		_checkQueue(data);
 	}

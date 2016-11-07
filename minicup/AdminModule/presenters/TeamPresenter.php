@@ -8,6 +8,7 @@ use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
+use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\TeamInfoRepository;
 
@@ -54,20 +55,10 @@ class TeamPresenter extends BaseAdminPresenter
         $g->addColumnNumber('id', '#');
         $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
             $category = $CR->get($row->category_id, FALSE);
-            return $that->link(':Front:Team:detail', array('team' => $row->slug, 'category' => $category));
+            return $that->link(':Front:Team:detail', ['team' => $row->slug, 'category' => $category]);
         });
-        $g->addColumnText('name', 'Název')->setEditableCallback(function ($id, $newValue, $oldValue, Column $column) use ($TIR, $g) {
-            $homeTeam = $TIR->get($id);
-            $homeTeam->name = $newValue;
-            $TIR->persist($homeTeam);
-            return TRUE;
-        });
-        $g->addColumnText('slug', 'Slug')->setEditableCallback(function ($id, $newValue, $oldValue, Column $column) use ($TIR, $g) {
-            $homeTeam = $TIR->get($id);
-            $homeTeam->slug = $newValue;
-            $TIR->persist($homeTeam);
-            return TRUE;
-        });
+        $g->addColumnText('name', 'Název')->setEditableCallback(GridHelpers::getEditableCallback('name', $this->TIR));
+        $g->addColumnText('slug', 'Slug')->setEditableCallback(GridHelpers::getEditableCallback('slug', $this->TIR));
         return $g;
     }
 

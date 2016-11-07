@@ -14,10 +14,11 @@ class TexyFactory extends Object
     private $modulePrefix;
 
     /**
-     * @param LinkFactory $linkGenerator
-     * @param string $modulePrefix
+     * @param string        $modulePrefix
+     * @param LinkGenerator $linkGenerator
      */
-    public function __construct($modulePrefix, LinkGenerator $linkGenerator)
+    public function __construct($modulePrefix,
+                                LinkGenerator $linkGenerator)
     {
         $this->linkGenerator = $linkGenerator;
         $this->modulePrefix = $modulePrefix;

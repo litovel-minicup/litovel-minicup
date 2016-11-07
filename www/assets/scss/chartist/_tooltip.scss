@@ -1,0 +1,32 @@
+.ct-tooltip {
+  position: absolute;
+  display: inline-block;
+  min-width: 5em;
+  padding: 8px 10px;
+  background: #383838;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  z-index: 100;
+  transition: opacity .2s linear;
+
+  // Arrow
+  &:before {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    content: ' ';
+    height: 0;
+    width: 0;
+    pointer-events: none;
+    border: 7px solid rgba(251, 249, 228, 0);
+    border-top-color: #383838;
+    margin-left: -8px;
+  }
+
+  &.hide {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+  }
+}

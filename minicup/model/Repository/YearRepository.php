@@ -28,14 +28,26 @@ class YearRepository extends BaseRepository
         return $this->selectedYear;
     }
 
-
     /**
      * @param Year $year
      * @return Year
      */
-    public function setSelectedYear(Year $year)
+    public function setSelectedYear(Year $year = NULL)
     {
         return $this->selectedYear = $year;
+    }
+
+    public function getActualYear()
+    {
+        static $actual;
+        if (!$actual) {
+            $row = $this->createFluent()->where('actual = 1')->fetch();
+            if (!$row) {
+                throw new InvalidStateException('Table year has not actual year.');
+            }
+            $actual = $this->createEntity($row);
+        }
+        return $actual;
     }
 
     /**
@@ -51,5 +63,31 @@ class YearRepository extends BaseRepository
             return $this->createEntity($row);
         }
         return NULL;
+    }
+
+    /**
+     * @return Year[]
+     */
+    public function findArchiveYears()
+    {
+        static $archiveYears;
+        if (NULL === $archiveYears) {
+            $archiveYears = $this->createEntities(
+                $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year')->fetchAll()
+            );
+        }
+        return $archiveYears;
+    }
+
+    /**
+     * @return array
+     */
+    public function getYearChoices()
+    {
+        $data = [];
+        foreach ($this->findAll(FALSE) as $year) {
+            $data[$year->id] = $year->slug;
+        }
+        return $data;
     }
 }

@@ -17,10 +17,12 @@
             </div>
             <div class="form-group main-photo">
                 <label>Hlavní fotka tagu</label><br/>
-                <img style="width: 100%;" {if $tag && $tag->mainPhoto}src="{plink :Media:thumb $tag->mainPhoto->filename}"{/if}
+                <img style="width: 100%;"
+                     {if $tag && $tag->mainPhoto}src="{plink :Media:thumb $tag->mainPhoto->filename}"{/if}
                      alt="Bez hlavní fotky."/>
                 {input main_photo_id class=>"form-control"}
-                <button n:class="btn,btn-danger,btn-remove-main-photo,!($tag && $tag->mainPhoto)?hidden">Odebrat fotku</button>
+                <button n:class="btn,btn-danger,btn-remove-main-photo,!($tag && $tag->mainPhoto)?hidden">Odebrat fotku
+                </button>
             </div>
             <div class="form-group">
                 {input submit class=>"form-control btn btn-primary"}

@@ -3,7 +3,7 @@
         <div class="Photo__rows">
             <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
                href={plink :Media:medium $photo->filename}>
-                <img src="{plink :Media:thumb $photo->filename}" alt="image">
+                <img src="{plink :Media:thumb $photo->filename}" alt="Foto {$photo->id}">
             </a>
         </div>
     {/foreach}
@@ -14,29 +14,18 @@
         </div>
     {elseif $actual && $actual < $max}
         <div class="Article__content">
-            <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
+            <a class="show-more ajax" n:href="show! $step+$actual" style="clear: both;">Zobrazit více!</a>
         </div>
     {/if}
 
-    <script>
+    <script n:syntax="double">
         jQuery(function ($) {
             $('a.swipebox').click(function (e) {
                 var i = $('.Photo__rows').children().index(this);
-                $.ajax({link all!}).then(function (data) {
-                    $.swipebox(data, { initialIndexOnArray: i});
+                $.ajax({{link all!}}).then(function (data) {
+                    $.swipebox(data, {initialIndexOnArray: i});
                 });
                 e.preventDefault();
-            });
-
-            $(".Photo__rows img").each(function () {
-                var width = $(this).width();
-                var height = $(this).height();
-
-                if (height > width) {
-                    $(this).addClass("Photo__rows--portrait");
-                } else {
-                    $(this).css("height", 150 + "px");
-                }
             });
         });
     </script>

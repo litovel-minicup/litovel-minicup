@@ -1,9 +1,9 @@
 {block content}
-    <div class="Article">
+    <div class="Article" n:cache="$category->cacheTag, tags => $category->cacheTag">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
             </div>
-            <div class="Article__head__text Box__head__text" n:block="title">Týmy {$category->name}</div>
+            <h1 class="Article__head__text Box__head__text" n:block="title">Týmy {$category->name}</h1>
         </div>
         <div class="Box__content Team__content">
             {control listOfTeamsComponent-$category->slug}

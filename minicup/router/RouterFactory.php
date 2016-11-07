@@ -2,11 +2,9 @@
 
 namespace Minicup\Router;
 
-use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\TeamInfo;
-use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\TagRepository;
 use Minicup\Model\Repository\TeamRepository;
@@ -37,24 +35,30 @@ class RouterFactory extends Object
     /** @var TagRepository */
     private $TagR;
 
+    /** @var YearCategoryRouteFactory */
+    private $yearCategoryRouteFactory;
+
     /**
-     * @param CategoryRepository $CR
-     * @param TeamRepository $TR
-     * @param YearRepository $YR
-     * @param TagRepository $TagR
-     * @param Session $session
+     * @param CategoryRepository       $CR
+     * @param TeamRepository           $TR
+     * @param YearRepository           $YR
+     * @param TagRepository            $TagR
+     * @param Session                  $session
+     * @param YearCategoryRouteFactory $yearCategoryRouteFactory
      */
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
                                 YearRepository $YR,
                                 TagRepository $TagR,
-                                Session $session)
+                                Session $session,
+                                YearCategoryRouteFactory $yearCategoryRouteFactory)
     {
         $this->CR = $CR;
         $this->TR = $TR;
         $this->YR = $YR;
         $this->TagR = $TagR;
         $this->session = $session->getSection('minicup');
+        $this->yearCategoryRouteFactory = $yearCategoryRouteFactory;
     }
 
     /**
@@ -64,121 +68,38 @@ class RouterFactory extends Object
     {
         $CR = $this->CR;
         $YR = $this->YR;
+        $TR = $this->TR;
         $TagR = $this->TagR;
         $session = $this->session;
-        if (isset($this->session['category'])) {
-            $category = $CR->getBySlug($this->session['category']);
-        } else {
-            $category = $CR->getDefaultCategory();
-        }
-        $categoryFilter = array(
-            Route::FILTER_IN => function ($slug) use ($CR, $session) {
-                $category = $CR->getBySlug($slug);
-                if ($category) {
-                    $session['category'] = $category->slug;
-                    return $category;
-                }
-                return NULL;
-            },
-            Route::FILTER_OUT => function ($category) use ($CR) {
-                if ($category instanceof Category) {
-                    return $category->slug;
-                } else {
-                    return $CR->getBySlug($category)->slug;
-                }
-            }
-        );
-
-        $categoryAdvFilter = array_merge($categoryFilter, array(Route::VALUE => $category));
-
-        // TODO: think about custom year selecting
-        $yearFilter = array(
-            Route::FILTER_IN => function ($slug) use ($YR) {
-                $year = $YR->getBySlug($slug);
-                if ($year) {
-                    return $YR->setSelectedYear($year);
-                }
-                return NULL;
-            },
-            Route::FILTER_OUT => function (Year $year) {
-                return $year->slug;
-            },
-            Route::VALUE => $YR->getSelectedYear()
-        );
-
+        $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
 
-        /**  HOMEPAGE ROUTES */
-        $front[] = new Route('informace/<category>', array(
-            'presenter' => 'Homepage',
-            'action' => 'informations',
-            'category' => $categoryAdvFilter
-        ));
-
-        $front[] = new Route('sponzori/<category>', array(
-            'presenter' => 'Homepage',
-            'action' => 'sponsors',
-            'category' => $categoryAdvFilter,
-        ));
-
-        $front[] = new Route('zapasy/<category>', array(
-            'presenter' => 'Match',
-            'action' => 'default',
-            'category' => $categoryFilter
-        ));
-
-        $front[] = new Route('tymy/<category>', array(
-            'presenter' => 'Team',
-            'action' => 'list',
-            'category' => $categoryFilter,
-        ));
-
-        $front[] = new Route('zapasy/<category>', array(
-            'presenter' => 'Match',
-            'action' => 'list',
-            'category' => $categoryFilter,
-        ));
-
-        $front[] = new Route('statistiky/<category>', array(
-            'presenter' => 'Stats',
-            'action' => 'default',
-            'category' => $categoryFilter,
-        ));
-
-        $front[] = new Route('foto/tagy/[<category>/][/<tags .+>]', array(
+        $front[] = $route('foto/tagy[/<tags .+>]/', [
             'presenter' => 'Gallery',
             'action' => 'tags',
-            'category' => $categoryAdvFilter,
-            'tags' => array(
+            'tags' => [
                 Route::FILTER_IN => function ($tags) use ($TagR) {
                     $tags = Strings::split($tags, '#/#');
                     $tagsEntities = $TagR->findBySlugs($tags);
-                    if (count($tagsEntities) != count($tags)) {
+                    if (count($tagsEntities) !== count($tags)) {
                         return NULL;
                     }
                     return $tagsEntities;
                 },
                 Route::FILTER_OUT => function (array $tags) {
-                    $tags = array_map(function (Tag $tag) { return $tag->slug; }, $tags);
+                    $tags = array_map(function (Tag $tag) {
+                        return $tag->slug;
+                    }, $tags);
                     sort($tags);
-                    return join('/', $tags);
+                    return implode('/', $tags);
                 }
-            )
-        ));
+            ]
+        ]);
 
-        $front[] = new Route('foto/[<category>/]detail/<tag>', array(
+        $front[] = $route('foto/detail/<tag>/', [
             'presenter' => 'Gallery',
             'action' => 'detail',
-            'category' => $categoryAdvFilter,
-            'tag' => array(
-                Route::FILTER_IN => function ($tag) use ($TagR) {
-                    /** @var Tag $tag */
-                    $tag = $TagR->getBySlug($tag);
-                    if (!$tag || !$tag->isMain) {
-                        return NULL;
-                    }
-                    return $tag;
-                },
+            'tag' => [
                 Route::FILTER_OUT => function ($tag) use ($TagR) {
                     if (is_string($tag)) {
                         $tag = $TagR->getBySlug($tag);
@@ -191,51 +112,159 @@ class RouterFactory extends Object
                     }
                     return $tag->slug;
                 }
-            )
-        ));
+            ],
+            NULL => [
+                Route::FILTER_IN => function ($params) use ($TagR) {
+                    /** @var Tag $tag */
+                    $tag = $TagR->getBySlug($params['tag'], $params['category']->year);
+                    if (!$tag || !$tag->isMain) {
+                        return NULL;
+                    }
+                    $params['tag'] = $tag;
+                    return $params;
+                }
+            ]
+        ]);
 
-        $front[] = new Route('foto/<category>', array(
+        $front[] = $route('foto/', [
             'presenter' => 'Gallery',
-            'action' => 'default',
-            'category' => $categoryAdvFilter,
-        ));
+            'action' => 'default'
+        ], 0, FALSE);
 
-        $front[] = new Route('<category>/', array(
+        $front[] = $route('foto/prezentace/', [
+            'presenter' => 'Gallery',
+            'action' => 'presentation'
+        ]);
+
+        $front[] = $route('foto/tagy/', [
+            'presenter' => 'Gallery',
+            'action' => 'tags'
+        ]);
+
+        $front[] = $route('zapasy/', [
+            'presenter' => 'Match',
+            'action' => 'default'
+        ]);
+
+        $front[] = $route('tymy/', [
+            'presenter' => 'Team',
+            'action' => 'list'
+        ]);
+
+        $front[] = $route('statistiky/', [
+            'presenter' => 'Stats',
+            'action' => 'default'
+        ]);
+
+        $front[] = $route('informace/', [
             'presenter' => 'Homepage',
-            'action' => 'default',
-            'category' => $categoryAdvFilter,
-        ));
+            'action' => 'informations'
+        ]);
 
-        $route = new FilterRoute('<category>/<team>', array(
+        $front[] = $route('sponzori/', [
+            'presenter' => 'Homepage',
+            'action' => 'sponsors'
+        ]);
+
+        $front[] = $route('<team>/', [
             'presenter' => 'Team',
             'action' => 'detail',
-            'category' => $categoryFilter
-        ));
-        $route->addFilter('team', $this->teamSlug2Team, $this->team2TeamSlug);
-        $front[] = $route;
+            NULL => [
+                Route::FILTER_IN => function ($params) use ($TR) {
+                    if (!isset($params['team'], $params['category'])) {
+                        return NULL;
+                    }
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+                    if (!$team) {
+                        return NULL;
+                    }
+                    $params['team'] = $team->i;
+                    return $params;
+                },
+                Route::FILTER_OUT => function ($params) use ($CR, $TR) {
+                    if (!isset($params['team'], $params['category'])) {
+                        return NULL;
+                    }
+                    $params['category'] = $CR->getBySlug($params['category']);
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+
+                    if (!$team) {
+                        return NULL;
+                    }
+                    $params['team'] = $team->slug;
+                    return $params;
+                }
+            ]
+        ]);
+
+        $front[] = new Route('<category>/<team>', [
+            'presenter' => 'Team',
+            'action' => 'detail',
+            NULL => [
+                Route::FILTER_IN => function ($params) use ($TR, $CR, $YR) {
+                    if (!isset($params['team'], $params['category'])) {
+                        return NULL;
+                    }
+                    $params['category'] = $CR->getBySlug($params['category'], $CR->getBySlug('2014'));
+                    if ($params['category'] === NULL) {
+                        return NULL;
+                    }
+                    $team = $TR->getBySlug($params['team'], $params['category']);
+                    if (!$team) {
+                        return NULL;
+                    }
+                    $params['team'] = $team->i;
+                    return $params;
+                }
+            ]
+        ], Route::ONE_WAY);
 
         $router = new RouteList();
-        $router[] = new Route('admin/<presenter>/<action>[/<id [0-9]*>][/<category>]', array(
+
+        $router[] = $front;
+
+        $router[] = new Route('login/', 'Sign:in');
+        $router[] = new Route('logout/', 'Sign:out');
+
+        $router[] = new Route('admin/<presenter>/<action>/[<category>][/<id [0-9]*>]/', [
             'module' => 'Admin',
             'presenter' => 'Homepage',
             'action' => 'default',
-            'category' => $categoryFilter
-        ));
+            'category' => $route->getCategoryMetadata(FALSE)
+        ]);
 
-        $router[] = new Route('media/<action>/<slug>', array(
+        $router[] = new Route('admin/<presenter>/<action>/<category>[/<id [0-9]*>]/', [
+            'module' => 'Admin',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'category' => $route->getCategoryMetadata(TRUE)
+        ]);
+
+        $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
-        ));
+        ]);
 
-        $router[] = new Route('login/', "Sign:in");
-        $router[] = new Route('logout/', "Sign:out");
+        $router[] = $route->route('', [
+            'module' => 'Front',
+            'presenter' => 'Homepage',
+            'action' => 'default'
+        ], 0, TRUE);
 
-        $router[] = $front;
+        $category = $this->CR->get($this->session->offsetGet('category'), FALSE) ?: $this->CR->getDefaultCategory();
+        $router[] = new Route('', [
+            'module' => 'Front',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            $route::DEFAULT_CATEGORY_KEY => $route->getCategoryMetadata(TRUE) + [Route::VALUE => $category],
+        ], Route::ONE_WAY);
+
+        // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;
     }
 
     /**
-     * @param string    $teamSlug
-     * @param Request   $request
+     * @param string  $teamSlug
+     * @param Request $request
      * @return Team|NULL
      */
     public function teamSlug2Team($teamSlug, Request $request)
@@ -244,8 +273,8 @@ class RouterFactory extends Object
     }
 
     /**
-     * @param TeamInfo|Team     $team
-     * @param Request           $request
+     * @param TeamInfo|Team $team
+     * @param Request       $request
      * @return string
      */
     public function team2TeamSlug($team, Request $request)

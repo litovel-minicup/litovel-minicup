@@ -4,6 +4,7 @@
         {control newsFormComponent}
     </div>
     <div class="col-md-6">
+        <a href="https://texy.info/cs/syntax-podrobne" class="btn btn-primary btn-block">Texy syntaxe</a>
         <p>Do textu novinky lze zadávat i dynamické odkazy, například <code>"informace":[Homepage:informations]</code>,
             možnosti níže v tabulce.</p>
         <button class="btn-primary btn">Vložit!</button>
@@ -23,7 +24,9 @@
                 {else}
                     <td><a n:href=":Front:{$option->link}">{$option->name}</a></td>
                 {/if}
-                <td><button class="btn btn-success btn-sm" data-link="{$option->link}">vložit</button></td>
+                <td>
+                    <button class="btn btn-success btn-sm" data-link="{$option->link}">vložit</button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -42,15 +45,15 @@
                     var startPos = myField.selectionStart;
                     var endPos = myField.selectionEnd;
                     myField.value = myField.value.substring(0, startPos)
-                    + myValue
-                    + myField.value.substring(endPos, myField.value.length);
+                            + myValue
+                            + myField.value.substring(endPos, myField.value.length);
                 } else {
                     myField.value += myValue;
                 }
             }
 
             $('button[data-link]').click(function () {
-                insertAtCursor($('.news-form-component textarea').get(0), ' "text odkazu":[' + $(this).data('link') +'] ');
+                insertAtCursor($('.news-form-component textarea').get(0), ' "text odkazu":[' + $(this).data('link') + '] ');
             });
         });
     </script>

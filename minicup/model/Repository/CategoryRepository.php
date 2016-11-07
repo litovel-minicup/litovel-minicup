@@ -6,19 +6,20 @@ use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Year;
 use Nette\InvalidStateException;
 
 class CategoryRepository extends BaseRepository
 {
-    /** @var  YearRepository */
+    /** @var YearRepository */
     private $YR;
 
-    /** @var  Category[] categories indexed by slug */
-    private $categories;
+    /** @var Category */
+    private $defaultCategory;
 
     /**
-     * @param Connection $connection
-     * @param IMapper $mapper
+     * @param Connection     $connection
+     * @param IMapper        $mapper
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */
@@ -28,43 +29,51 @@ class CategoryRepository extends BaseRepository
         parent::__construct($connection, $mapper, $entityFactory);
     }
 
-    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
-    {
-        $year = $this->YR->getSelectedYear();
-        return parent::createFluent(array_merge(array($year->id), func_get_args()));
-    }
-
     /**
-     * @param $arg string|Category
-     * @return Category|NULL
+     * @param           $arg
+     * @param Year|NULL $year
+     * @return Category|null
      */
-    public function getBySlug($arg)
+    public function getBySlug($arg, Year $year = NULL)
     {
         if ($arg instanceof Category) {
             return $arg;
         }
-        if (isset($this->categories[$arg])) {
-            return $this->categories[$arg];
+        if ($year) {
+            $row = $this->connection->select('*')->from($this->getTable())->where('[slug] = %s', $arg)->where('[year_id] = %i', $year->id)->fetch();
+        } else {
+            $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         }
-        $row = $this->createFluent()->where('[slug] = %s', $arg)->fetch();
         if ($row) {
             /** @var Category $category */
             $category = $this->createEntity($row);
-            $this->categories[$category->slug] = $category;
             return $category;
         }
         return NULL;
     }
 
+    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
+    {
+        $year = $this->YR->getSelectedYear();
+        return parent::createFluent(array_merge([$year->id], func_get_args()));
+    }
+
     /**
-     * @return Category|NULL
+     * @return Category
      */
     public function getDefaultCategory()
     {
-        $row = $this->createFluent()->where('[default] = 1')->fetch();
-        if ($row) {
-            return $this->createEntity($row);
+        static $defaultCategory;
+        if (!$defaultCategory) {
+            $row = $this->connection->select('[category.*]')->from('[category]')
+                ->leftJoin('year')->on('[year.id] = [category.year_id]')
+                ->where('[category.default] = 1')
+                ->where('[year.actual] = 1')->fetch();
+            if (!$row) {
+                throw new InvalidStateException('Default category not found.');
+            }
+            $defaultCategory = $this->createEntity($row);
         }
-        throw new InvalidStateException('Default category not found.');
+        return $defaultCategory;
     }
 } 

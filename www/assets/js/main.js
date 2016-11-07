@@ -64,6 +64,129 @@ var initEasterEgg = function ($el, pattern) {
     });
 };
 
+var initLinkLogging = function () {
+    $(document).on('click', 'a.log', function (e) {
+        var $link = $(this);
+        var category = 'link',
+            action = 'click',
+            value = $(this).attr('data-value') || $(this).attr('href');
+        try {
+            ga("send", "event", category, action, value);
+        } catch (e) {
+        }
+    });
+};
+
+var renderCategoryHistory = function (data, teamsCount, selector) {
+    new Chartist.Line(selector, data, {
+            high: teamsCount,
+            low: 1,
+            showArea: false,
+            showLine: true,
+            showPoint: true,
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0.5
+            }),
+            chartPadding: {
+                right: -50,
+                top: 10,
+                left: 10,
+                bottom: 10
+            },
+            axisY: {
+                showLabel: false,
+                offset: 0,
+                showGrid: false
+            },
+            axisX: {
+                showLabel: false,
+                offset: 0
+            },
+            plugins: [
+                Chartist.plugins.legend({}),
+                Chartist.plugins.tooltip({})
+            ]
+        }
+    );
+};
+
+var renderScoreChart = function (data, selector) {
+    new Chartist.Bar(selector, data, {
+            seriesBarDistance: 10,
+            chartPadding: {
+                left: -5,
+                right: 15
+            },
+            axisY: {
+                showLabel: false,
+                offset: 0
+            },
+            axisX: {
+                offset: 50,
+                scaleMinSpace: 40
+            },
+            plugins: [
+                Chartist.plugins.ctBarLabels({
+                    thresholdPercentage: 5,
+                    labelPositionFnc: function (data) {
+                        return {
+                            labelOffset: {
+                                x: 7.5,
+                                y: 15
+                            },
+                            textAnchor: 'start'
+                        }
+                    }
+                })
+            ]
+        }
+    );
+};
+
+var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
+    var chart = new Chartist.Line(selector, data, {
+            high: teamsCount,
+            low: 1,
+            showArea: true,
+            showLine: true,
+            showPoint: false,
+            areaBase: -5,
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 1
+            }),
+            chartPadding: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 25
+            },
+            axisY: {
+                showLabel: false,
+                offset: 0,
+                showGrid: false
+            },
+            axisX: {
+                labelInterpolationFnc: function (value) {
+                    return value;
+                }
+            }
+        }
+    );
+    /*chart.on('draw', function (data) {
+     if (data.type === 'line' || data.type === 'area') {
+     data.element.animate({
+     d: {
+     begin: 2000 * data.index,
+     dur: 2000,
+     from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+     to: data.path.clone().stringify(),
+     easing: Chartist.Svg.Easing.easeOutQuint
+     }
+     });
+     }
+     });*/
+};
+
 jQuery(function ($) {
     $.nette.init();
     $.nette.ext({
@@ -74,4 +197,5 @@ jQuery(function ($) {
 
     initMobileNav($('#nav-mobile'));
     initEasterEgg($(document), 'do a barrel roll');
+    initLinkLogging();
 });

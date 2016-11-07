@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Minicup\AdminModule\Presenters\BaseAdminPresenter;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Manager\CacheManager;
@@ -24,7 +25,7 @@ interface IPhotoUploadComponentFactory
 class PhotoUploadComponent extends BaseComponent
 {
     /** @var int[] */
-    public $photos = array();
+    public $photos = [];
     /** @var Request */
     private $request;
     /** @var SessionSection */
@@ -45,15 +46,15 @@ class PhotoUploadComponent extends BaseComponent
     private $CM;
 
     /**
-     * @param string $wwwPath
-     * @param Session $session
-     * @param Request $request
-     * @param PhotoRepository $PR
-     * @param TagRepository $TR
-     * @param PhotoManager $PM
+     * @param string                     $wwwPath
+     * @param Session                    $session
+     * @param Request                    $request
+     * @param PhotoRepository            $PR
+     * @param TagRepository              $TR
+     * @param PhotoManager               $PM
      * @param IPhotoEditComponentFactory $PECF
-     * @param ITagFormComponentFactory $TFCF
-     * @param CacheManager $CM
+     * @param ITagFormComponentFactory   $TFCF
+     * @param CacheManager               $CM
      */
     public function __construct($wwwPath,
                                 Session $session,
@@ -81,6 +82,7 @@ class PhotoUploadComponent extends BaseComponent
         }
         $this->session['uploadId'] = $this->uploadId;
         $this->photos = (array)$this->session[$this->uploadId];
+        parent::__construct();
 
     }
 
@@ -95,7 +97,7 @@ class PhotoUploadComponent extends BaseComponent
 
     public function handleUpload()
     {
-        $photos = $this->PM->save($this->request->files, $this->uploadId);
+        $photos = $this->PM->save($this->request->files, $this->uploadId, $this->request->getPost('author'));
         foreach ($photos as $photo) {
             $this->photos[] = $photo->id;
         }
@@ -115,7 +117,7 @@ class PhotoUploadComponent extends BaseComponent
         $photos = $this->PR->findByIds($this->photos);
         foreach ($photos as $photo) {
             foreach ($tags as $tag) {
-                if (!in_array($tag, $photo->tags)) {
+                if (!in_array($tag, $photo->tags, TRUE)) {
                     $photo->addToTags($tag);
                 }
                 if ($tag->teamInfo) {
@@ -136,14 +138,15 @@ class PhotoUploadComponent extends BaseComponent
         $PR = $this->PR;
         $PUC = $this;
         return new Multiplier(function ($id) use ($PECF, $PR, $PUC) {
+            /** @var Photo $photo */
             $photo = $PR->get($id);
             $PEC = $PECF->create($photo);
             $PEC->onDelete[] = function (Photo $photo) use ($PUC, $PR) {
-                $PUC->photos = array_diff($PUC->photos, array($photo->id));
+                $PUC->photos = array_diff($PUC->photos, [$photo->id]);
                 $PUC->redrawControl('photos-list');
             };
             $PEC->onSave[] = function (Photo $photo) use ($PUC) {
-                $PUC->photos = array_diff($PUC->photos, array($photo->id));
+                $PUC->photos = array_diff($PUC->photos, [$photo->id]);
                 $PUC->redrawControl('photos-list');
             };
             return $PEC;
@@ -155,8 +158,10 @@ class PhotoUploadComponent extends BaseComponent
      */
     protected function createComponentTagFormComponent()
     {
-        $tagForm = $this->TFCF->create(NULL);
-        $tagForm->view = "small";
+        /** @var BaseAdminPresenter $presenter */
+        $presenter = $this->getPresenter();
+        $tagForm = $this->TFCF->create(NULL, $presenter->category->year);
+        $tagForm->view = 'small';
         return $tagForm;
     }
 }

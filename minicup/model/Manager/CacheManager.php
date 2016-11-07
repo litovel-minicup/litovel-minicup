@@ -8,6 +8,7 @@ use Minicup\Model\Entity\BaseEntity;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\TeamInfo;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\BaseRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
@@ -23,7 +24,7 @@ class CacheManager extends Object
 
     /**
      * @param BaseRepository[] $repositories
-     * @param IStorage $cache
+     * @param IStorage         $cache
      */
     public function __construct(array $repositories, IStorage $cache)
     {
@@ -45,6 +46,10 @@ class CacheManager extends Object
                     $that->cleanByEntity($entity->category);
                 }
 
+                if (isset($entity->year) && $entity->year instanceof Year) {
+                    $that->cleanByEntity($entity->year);
+                }
+
                 if ($entity instanceof Photo) {
                     foreach ($entity->tags as $tag) {
                         if ($tag->teamInfo) {
@@ -62,11 +67,12 @@ class CacheManager extends Object
      */
     public function cleanByEntity(BaseEntity $entity)
     {
-        if ($entity instanceof TeamInfo) {
+        if ($entity instanceof TeamInfo && $entity->team) {
             $this->cleanByEntity($entity->team);
         }
-        $this->cache->clean(array(Cache::TAGS => array($entity->getCacheTag())));
+        $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()]]);
         $this->cache->remove($entity->getCacheTag());
+        $this->cache->remove($entity::$CACHE_TAG);
     }
 
     public function cleanAllEntityCaches()

@@ -2,6 +2,7 @@
 namespace Minicup\Model\Manager;
 
 
+use Dibi\DateTime;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Repository\PhotoRepository;
 use Nette\FileNotFoundException;
@@ -15,37 +16,37 @@ use Nette\Utils\Random;
 class PhotoManager extends Object
 {
     /** @internal */
-    const PHOTO_ORIGINAL = "_original";
-
-    const PHOTO_MINI = "mini";
-    const PHOTO_SMALL = "small";
-    const PHOTO_THUMB = "thumb";
-    const PHOTO_MEDIUM = "medium";
-    const PHOTO_LARGE = "large";
-    const PHOTO_FULL = "full";
+    const PHOTO_ORIGINAL = '_original';
+    const PHOTO_MINI = 'mini';
+    const PHOTO_SMALL = 'small';
+    const PHOTO_THUMB = 'thumb';
+    const PHOTO_MEDIUM = 'medium';
+    const PHOTO_LARGE = 'large';
+    const PHOTO_FULL = 'full';
     const DEFAULT_FLAG = Image::FILL;
-
     /**
      * type => (width, height, flags)
      * @var array
      */
-    public static $resolutions = array(
-        PhotoManager::PHOTO_MINI => array(50, 50, Image::FILL),
-        PhotoManager::PHOTO_SMALL => array(100, 100, Image::FILL),
-        PhotoManager::PHOTO_THUMB => array(300, 300, Image::FILL),
-        PhotoManager::PHOTO_MEDIUM => array(750, 750, Image::FILL),
-        PhotoManager::PHOTO_LARGE => array(1200, 1200),
-        PhotoManager::PHOTO_FULL => array(2000, 2000),
-    );
-
+    public static $resolutions = [
+        PhotoManager::PHOTO_MINI => [50, 50, Image::FILL],
+        PhotoManager::PHOTO_SMALL => [100, 100, Image::FILL],
+        PhotoManager::PHOTO_THUMB => [300, 300, Image::FIT | Image::EXACT],
+        PhotoManager::PHOTO_MEDIUM => [750, 750, Image::FILL],
+        PhotoManager::PHOTO_LARGE => [1200, 1200],
+        PhotoManager::PHOTO_FULL => [2000, 2000],
+    ];
     /**
      * mime type => file extension
      * @var array
      */
-    public static $extensions = array(
+    public static $extensions = [
         'image/png' => 'png',
         'image/jpeg' => 'jpg'
-    );
+    ];
+
+    /** @var Image */
+    private $watermark;
 
     /** @var PhotoRepository */
     private $PR;
@@ -54,26 +55,28 @@ class PhotoManager extends Object
     private $wwwPath;
 
     /**
-     * @param string $wwwPath
+     * @param string          $wwwPath
      * @param PhotoRepository $PR
      */
     public function __construct($wwwPath, PhotoRepository $PR)
     {
         $this->PR = $PR;
         $this->wwwPath = $wwwPath;
+        $this->watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png');
     }
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL $prefix
-     * @return Photo[]
+     * @param string|NULL  $prefix
+     * @param string|NULL  $author
+     * @return \Minicup\Model\Entity\Photo[]
      */
-    public function save($files, $prefix = NULL)
+    public function save($files, $prefix = NULL, $author = NULL)
     {
         if (!$prefix) {
             $prefix = Random::generate(20);
         }
-        $photos = array();
+        $photos = [];
         foreach ($files as $file) {
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
@@ -85,14 +88,15 @@ class PhotoManager extends Object
             $file->move($path);
 
             $exif = exif_read_data($path);
-            $taken = new \DibiDateTime();
-            if (isset($exif["DateTimeOriginal"])) {
+            $taken = new DateTime();
+            if (isset($exif['DateTimeOriginal'])) {
                 try {
-                    $taken = new \DibiDateTime($exif["DateTimeOriginal"]);
+                    $taken = new DateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
                 }
             }
             $photo->taken = $taken;
+            $photo->author = $author;
             $this->PR->persist($photo);
             $photos[] = $photo;
         }
@@ -107,13 +111,13 @@ class PhotoManager extends Object
      */
     public function formatPhotoPath($format, $filename)
     {
-        @mkdir("$this->wwwPath/media/" . $format . "/");
+        @mkdir("$this->wwwPath/media/" . $format . '/');
         return "$this->wwwPath/media/" . $format . "/$filename";
     }
 
     /**
      * @param Photo $photo
-     * @param bool $lazy
+     * @param bool  $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -122,7 +126,7 @@ class PhotoManager extends Object
             $photo->active = 0;
             $this->PR->persist($photo);
         } else {
-            foreach (array_keys($this::$resolutions) as $format) {
+            foreach ($this::$resolutions as $format => $val) {
                 $path = $this->formatPhotoPath($format, $photo->filename);
                 if (file_exists($path)) {
                     unlink($path);
@@ -134,8 +138,8 @@ class PhotoManager extends Object
     }
 
     /**
-     * @param string|Photo $photo
-     * @param string $format
+     * @param string|Photo|NULL $photo
+     * @param string            $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -143,7 +147,7 @@ class PhotoManager extends Object
      */
     public function getInFormat($photo, $format)
     {
-        if (!in_array($format, array_keys($this::$resolutions))) {
+        if (!in_array($format, array_keys($this::$resolutions), TRUE)) {
             throw new InvalidArgumentException('Unknown photo format!');
         }
 
@@ -169,9 +173,13 @@ class PhotoManager extends Object
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
         $image->sharpen();
-        $watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png')
-                    ->resize($this::$resolutions[$format][0] / 6,$this::$resolutions[$format][1] / 6,
-                            Image::FIT | Image::SHRINK_ONLY);
+        $watermark = clone $this->watermark;
+        $watermark = $watermark->resize(
+            $this::$resolutions[$format][0] / 6,
+            $this::$resolutions[$format][1] / 6,
+            Image::FIT | Image::SHRINK_ONLY
+        );
+
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);
@@ -183,12 +191,12 @@ class PhotoManager extends Object
      * @param array $formats
      * @return array
      */
-    public function cleanCachedPhotos($formats = array())
+    public function cleanCachedPhotos(array $formats = [])
     {
         if (!$formats) {
             $formats = array_keys($this::$resolutions);
         }
-        $failed = array();
+        $failed = [];
         /** @var Photo $photo */
         foreach ($this->PR->findAll() as $photo) {
             /** @var string $format */

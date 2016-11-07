@@ -10,6 +10,8 @@ namespace Minicup\Model\Entity;
  * @property int         $actual                     flag for actual year
  * @property Day[]       $days m:belongsToMany       game days
  * @property Category[]  $categories m:belongsToMany year categories
+ * @property News[]      $news m:belongsToMany year news
+ * @property Tag[]       $tags m:belongsToMany year photo tags
  */
 class Year extends BaseEntity
 {

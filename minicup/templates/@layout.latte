@@ -3,23 +3,55 @@
 <head n:inner-block="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title n:snippet="title">{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015</title>
+    <title n:snippet="title">{ifset title}{include title|stripHtml} | {/ifset}
+        MINICUP {$category->year->slug}</title>
 
     {block seo}
-    <!-- SEO -->
-    <meta property="description" content="Informační portál pro litovelský turnaj v miniházené MINICUP 2015 konaný ve dnech 22. - 24. května 2015. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek, zápas trenérů, rozhodčích a všech s turnajem spojených a spousta dalších zajímavých aktivit.">
-    <meta property="keywords" content="litovel,hanacke,benatky,minihazena,hazena,tatran,extraliga,minicup">
-    <meta property="author" content="Josef Kolář, Matěj Mitaš">
-    {block og}
-    <!-- OG -->
-    <meta property="og:site_name" content="MINICUP 2015">
-    <meta property="og:description" content="Informační portál pro litovelský turnaj v miniházené MINICUP 2015 konaný ve dnech 22. - 24. května 2015. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva Litovle s hráči jako je David Juříček, Matěj Konšel nebo Michal Baránek, zápas trenérů, rozhodčích a všech s turnajem spojených a spousta dalších zajímavých aktivit.">
-    <meta property="og:url" content="{$absoluteUrl}">
-    <meta property="og:title" content="{ifset title}{include title|striptags|trim} | {/ifset}MINICUP 2015">
-    {block og-image}
-        <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
+        <!-- SEO -->
+        <meta property="description"
+              content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2016 konaný ve dnech 10. - 12. června 2016{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+        <meta property="keywords" content="litovel,hanacke,benatky,minihazena,hazena,tatran,extraliga,minicup">
+        <meta property="author" content="Josef Kolář, Matěj Mitaš">
+        {block og}
+            <!-- OG -->
+            <meta property="fb:app_id" content="1709323006015727">
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="Litovel MINICUP">
+            <meta property="og:description"
+                  content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2016 konaný ve dnech 10. - 12. června 2016{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+            <meta property="og:url" content="{$absoluteUrl}">
+            <meta property="og:title"
+                  content="{ifset title}{include title|stripHtml} | {/ifset}MINICUP {$category->year->slug}">
+            {block ogImage}
+                <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
+                <meta property="og:image:width" content="400">
+                <meta property="og:image:height" content="400">
+            {/block}
+        {/block}
     {/block}
-    {/block}
+
+    {block favicon}
+        <link rel="apple-touch-icon" sizes="57x57" href="{$basePath}/assets/favicon/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="{$basePath}/assets/favicon/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="{$basePath}/assets/favicon/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="{$basePath}/assets/favicon/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="{$basePath}/assets/favicon/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="{$basePath}/assets/favicon/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="{$basePath}/assets/favicon/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="{$basePath}/assets/favicon/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/assets/favicon/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-194x194.png" sizes="194x194">
+        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/android-chrome-192x192.png" sizes="192x192">
+        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="{$basePath}/assets/favicon/manifest.json">
+        <link rel="mask-icon" href="{$basePath}/assets/favicon/safari-pinned-tab.svg" color="#4180ff">
+        <link rel="shortcut icon" href="{$basePath}/assets/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="msapplication-TileImage" content="{$basePath}/assets/favicon/mstile-144x144.png">
+        <meta name="msapplication-config" content="{$basePath}/assets/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#0040c1">
     {/block}
 
 </head>

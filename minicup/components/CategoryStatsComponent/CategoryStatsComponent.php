@@ -8,6 +8,15 @@ use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Manager\StatsManager;
 use Nette\Utils\ArrayHash;
 
+interface ICategoryStatsComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryStatsComponent
+     */
+    public function create(Category $category);
+}
+
 class CategoryStatsComponent extends BaseComponent
 {
     /** @var Category */
@@ -20,12 +29,15 @@ class CategoryStatsComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
+     * @param Category     $category
      * @param StatsManager $SM
      * @param MatchManager $MM
      */
-    public function __construct(Category $category, StatsManager $SM, MatchManager $MM)
+    public function __construct(Category $category,
+                                StatsManager $SM,
+                                MatchManager $MM)
     {
+        parent::__construct();
         $this->category = $category;
         $this->SM = $SM;
         $this->MM = $MM;
@@ -44,13 +56,16 @@ class CategoryStatsComponent extends BaseComponent
     {
         return $this->MM->isStarted($this->category);
     }
-}
 
-interface ICategoryStatsComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryStatsComponent
-     */
-    public function create(Category $category);
+    public function handleStatsGoals()
+    {
+        $data = ['labels' => [], 'series' => [[], []]];
+        foreach ($this->category->teams as $team) {
+            $data['labels'][] = "{$team->i->name}";
+            $data['series'][0][] = $team->scored;
+            $data['series'][1][] = -$team->received;
+        }
+
+        $this->presenter->sendJson($data);
+    }
 }

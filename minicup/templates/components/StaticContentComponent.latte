@@ -1,6 +1,8 @@
 {snippet component}
-{if $user->isAllowed('static-content', 'edit') && !$edit}
-    <a class="ajax" n:href="edit!"><button>{ifset $staticContent}Editovat (poslední editace {$staticContent->updated|date:"Y-m-d H:i:s"}){else}Vytvořit{/ifset}</button></a>
+{if $user->isLoggedIn() && !$edit}
+    <a class="ajax" n:href="edit!">
+        <button>{ifset $staticContent}Editovat (poslední editace {$staticContent->updated|date:"Y-m-d H:i:s"}){else}Vytvořit{/ifset}</button>
+    </a>
 {/if}
 {if $edit}
     {form editForm class=>ajax}
@@ -9,10 +11,14 @@
     {/form}
     <script>
         jQuery(function ($) {
-            $('form textarea').width('92%');
+            $('form textarea').width($('form').width() - 15);
         })
     </script>
-{else}
+{elseif $content}
     {$content|noescape}
+{else}
+    <div class="Article__subhead Box__subhead">
+        Omlouváme se, tato sekce není bohužel pro aktuálně zvolený ročník dostupná.
+    </div>
 {/if}
 {/snippet}

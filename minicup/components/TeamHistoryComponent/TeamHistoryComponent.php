@@ -5,6 +5,20 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\TeamHistoryManager;
+use Minicup\Model\TeamHistoryRecord;
+use Nette\Caching\Cache;
+use Nette\Caching\IStorage;
+
+interface ITeamHistoryComponent
+{
+    /**
+     * @param Team $team
+     * @return TeamHistoryComponent
+     */
+    public function create(Team $team);
+
+}
 
 class TeamHistoryComponent extends BaseComponent
 {
@@ -14,10 +28,22 @@ class TeamHistoryComponent extends BaseComponent
     /** @var TeamRepository */
     private $TR;
 
-    public function __construct(Team $team, TeamRepository $TR)
+    /**  @var TeamHistoryManager */
+    private $teamHistoryManager;
+
+    /** @var Cache */
+    private $cache;
+
+    public function __construct(Team $team,
+                                TeamRepository $TR,
+                                TeamHistoryManager $teamHistoryManager,
+                                IStorage $storage)
     {
         $this->team = $team;
         $this->TR = $TR;
+        $this->teamHistoryManager = $teamHistoryManager;
+        $this->cache = new Cache($storage);
+        parent::__construct();
     }
 
     public function render()
@@ -28,22 +54,19 @@ class TeamHistoryComponent extends BaseComponent
 
     public function handleData()
     {
-        $data = array("labels" => array(), "series" => array(array()));
-        /** @var Team $team */
-        foreach ($this->TR->findHistoricalTeams($this->team) as $team) {
-            $data["labels"][] = ($team->afterMatch->homeTeam->id === $this->team->i->id) ? $team->afterMatch->awayTeam->name : $team->afterMatch->homeTeam->name;
-            $data["series"][0][] = count($team->category->teams) - $team->order;
-        }
-        $this->presenter->sendJson($data);
+        $this->presenter->sendJson($this->cache->load($this->team->i->getCacheTag(static::class), function (& $depends) {
+            $depends[Cache::TAGS] = [$this->team->getCacheTag()];
+
+            $data = ['labels' => [], 'series' => [[]]];
+            $history = $this->teamHistoryManager->getSingleHistoryForTeam($this->team->i);
+            $teamsInCategory = count($this->team->category->teams);
+            foreach ($history as $record) {
+                /** @var TeamHistoryRecord $record */
+                $data['labels'][] = $record->againstTeam->name;
+                $data['series'][0][] = $teamsInCategory + 1 - $record->team->order;
+            }
+            return $data;
+        }));
+
     }
-}
-
-interface ITeamHistoryComponent
-{
-    /**
-     * @param Team $team
-     * @return TeamHistoryComponent
-     */
-    public function create(Team $team);
-
 }

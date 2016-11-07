@@ -14,40 +14,42 @@ class DayRepository extends BaseRepository
     private $YR;
 
     /**
-     * @param Connection $connection
-     * @param IMapper $mapper
+     * @param Connection     $connection
+     * @param IMapper        $mapper
      * @param IEntityFactory $entityFactory
      * @param YearRepository $YR
      */
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, YearRepository $YR)
+    public function __construct(Connection $connection,
+                                IMapper $mapper,
+                                IEntityFactory $entityFactory,
+                                YearRepository $YR)
     {
         $this->YR = $YR;
         parent::__construct($connection, $mapper, $entityFactory);
     }
 
-    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
-    {
-        $year = $this->YR->getSelectedYear();
-        return parent::createFluent(array_merge(array($year->id), func_get_args()));
-    }
-
     /**
-     * @param \DibiDateTime $dt
+     * @param \DateTime $dt
      * @return MatchTerm|null
      */
-    public function getByDatetime(\DibiDateTime $dt)
+    public function getByDatetime(\DateTime $dt)
     {
         $row = $this->createFluent()->where('[day] = %s', $dt->format('Y-m-d'))->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
 
+    protected function createFluent(/*$filterArg1, $filterArg2, ...*/)
+    {
+        $year = $this->YR->getSelectedYear();
+        return parent::createFluent(array_merge([$year->id], func_get_args()));
+    }
+
     /**
+     * @param bool|TRUE $withFilters
      * @return Day[]
      */
-    public function findAll()
+    public function findAll($withFilters = TRUE)
     {
         return $this->YR->getSelectedYear()->days;
     }
-
-
 }

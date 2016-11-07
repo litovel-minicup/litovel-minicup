@@ -2,30 +2,48 @@
 
 namespace Minicup\Presenters;
 
+use Nette;
 use Nette\Application\BadRequestException;
-use Nette\Application\UI\Presenter;
-use Tracy\Debugger;
+use Nette\Application\Helpers;
+use Nette\Application\IPresenter;
+use Nette\Application\Request;
+use Nette\Application\Responses;
+use Nette\Application\Responses\CallbackResponse;
+use Nette\Application\Responses\ForwardResponse;
+use Tracy\ILogger;
 
-class ErrorPresenter extends Presenter
+
+class ErrorPresenter implements IPresenter
 {
-    /**
-     * @param  Exception
-     * @return void
-     */
-    public function renderDefault($exception)
+    use Nette\SmartObject;
+
+    /** @var ILogger */
+    private $logger;
+
+
+    public function __construct(ILogger $logger)
     {
-        if ($exception instanceof BadRequestException) {
-            $code = $exception->getCode();
-            $this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx');
-            Debugger::log("HTTP code $code: {$exception->getMessage()} in {$exception->getFile()}:{$exception->getLine()}", 'access');
-        } else {
-            $this->setView('500');
-            Debugger::log($exception, Debugger::EXCEPTION);
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param Request $request
+     * @return Nette\Application\IResponse
+     */
+    public function run(Request $request)
+    {
+        $e = $request->getParameter('exception');
+
+        if ($e instanceof BadRequestException) {
+            $this->logger->log("HTTP code {$e->getCode()}: {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", 'access');
+            list($module, , $sep) = Helpers::splitName($request->getPresenterName());
+            return new ForwardResponse($request->setPresenterName($module . $sep . 'Error4xx'));
         }
-        if ($this->isAjax()) {
-            $this->payload->error = TRUE;
-            $this->terminate();
-        }
+
+        $this->logger->log($e, ILogger::EXCEPTION);
+        return new CallbackResponse(function () {
+            require __DIR__ . '/../templates/Error/500.html';
+        });
     }
 
 }

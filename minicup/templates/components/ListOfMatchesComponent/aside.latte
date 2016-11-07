@@ -1,17 +1,17 @@
 <div class="component">
     <table class="Aside__table Aside__table--upcoming">
         <tbody n:inner-foreach="$matches as $match">
-            <tr>
-                <td><a href={plink Team:detail $match->category, $match->homeTeam}>{$match->homeTeam->name}</a></td>
-                <td>
-                    {if $match->confirmed}
-                        {$match->scoreHome}:{$match->scoreAway}
-                    {else}
-                        {$match->matchTerm|matchStart}
-                    {/if}
-                </td>
-                <td><a href={plink Team:detail $match->category, $match->awayTeam}>{$match->awayTeam->name}</a></td>
-            </tr>
-        </tbody>    
+        <tr>
+            <td><a href={plink Team:detail $match->category, $match->homeTeam}>{$match->homeTeam->name}</a></td>
+            <td>
+                {if $match->confirmed}
+                    {$match->scoreHome}:{$match->scoreAway}
+                {else}
+                    {$match->matchTerm|matchStart}
+                {/if}
+            </td>
+            <td><a href={plink Team:detail $match->category, $match->awayTeam}>{$match->awayTeam->name}</a></td>
+        </tr>
+        </tbody>
     </table>
 </div>

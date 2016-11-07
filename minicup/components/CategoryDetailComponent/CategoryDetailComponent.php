@@ -6,6 +6,15 @@ namespace Minicup\Components;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\MatchManager;
 
+interface ICategoryDetailComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryDetailComponent
+     */
+    public function create(Category $category);
+}
+
 class CategoryDetailComponent extends BaseComponent
 {
     /** @var Category */
@@ -24,11 +33,11 @@ class CategoryDetailComponent extends BaseComponent
     private $MM;
 
     /**
-     * @param Category $category
-     * @param ICategoryTableComponentFactory $CTCF
-     * @param ICategoryStatsComponentFactory $CSCF
+     * @param Category                         $category
+     * @param ICategoryTableComponentFactory   $CTCF
+     * @param ICategoryStatsComponentFactory   $CSCF
      * @param ICategoryHistoryComponentFactory $CHCF
-     * @param MatchManager $MM
+     * @param MatchManager                     $MM
      */
     public function __construct(Category $category,
                                 ICategoryTableComponentFactory $CTCF,
@@ -36,6 +45,7 @@ class CategoryDetailComponent extends BaseComponent
                                 ICategoryHistoryComponentFactory $CHCF,
                                 MatchManager $MM)
     {
+        parent::__construct();
         $this->category = $category;
         $this->CTCF = $CTCF;
         $this->CSCF = $CSCF;
@@ -71,13 +81,4 @@ class CategoryDetailComponent extends BaseComponent
     {
         return $this->CHCF->create($this->category);
     }
-}
-
-interface ICategoryDetailComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryDetailComponent
-     */
-    public function create(Category $category);
 }

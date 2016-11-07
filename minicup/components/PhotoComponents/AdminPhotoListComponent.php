@@ -2,21 +2,36 @@
 
 namespace Minicup\Components;
 
+use Dibi\Row;
 use Grido\Components\Columns\Date;
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use LeanMapper\Connection;
+use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
+use Minicup\Presenters\BasePresenter;
 use Nette\Application\LinkGenerator;
 use Nette\Application\UI\Multiplier;
+use Nette\ComponentModel\IComponent;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Html;
 use Nette\Utils\Random;
+
+interface IAdminPhotoListComponentFactory
+{
+    /**
+     * @return AdminPhotoListComponent
+     */
+    public function create();
+
+}
 
 class AdminPhotoListComponent extends BaseComponent
 {
@@ -36,10 +51,10 @@ class AdminPhotoListComponent extends BaseComponent
     private $connection;
 
     /** @var Tag[] */
-    private $tags = array();
+    private $tags = [];
 
     /** @var Photo[] */
-    private $photos = array();
+    private $photos = [];
 
     /** @var string */
     private $id;
@@ -52,6 +67,9 @@ class AdminPhotoListComponent extends BaseComponent
 
     /** @var PhotoManager */
     private $PM;
+
+    /** @var Year */
+    private $year;
 
     public function __construct(Session $session,
                                 IPhotoEditComponentFactory $PECF,
@@ -73,23 +91,22 @@ class AdminPhotoListComponent extends BaseComponent
         } else {
             $this->id = Random::generate(10);
         }
+        $this->allPhotos = FALSE;
         if (isset($this->session->allPhotos)) {
             $this->allPhotos = $this->session->allPhotos;
-        } else {
-            $this->allPhotos = FALSE;
         }
         $this->session->adminPhotoList = $this->id;
         $this->session->allPhotos = $this->allPhotos;
-        $this->session[$this->id] = $this->session[$this->id] ? $this->session[$this->id] : array();
+        $this->session[$this->id] = $this->session[$this->id] ?: [];
         $this->photos = $this->PR->findByTags($this->TR->findByIds($this->session[$this->id]));
+        parent::__construct();
     }
 
     public function render()
     {
+        $this->view = 'list';
         if (!$this->photos && !$this->session[$this->id]) {
-            $this->view = "default";
-        } else {
-            $this->view = "list";
+            $this->view = 'default';
         }
         $this->template->tags = $this->TR->findAll();
         $this->template->selectedTags = (array)$this->session[$this->id];
@@ -113,8 +130,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleActivePhotos()
     {
-        unset($this->session->adminPhotoList);
-        unset($this->session[$this->id]);
+        unset($this->session->adminPhotoList, $this->session[$this->id]);
         $this->session->allPhotos = FALSE;
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
@@ -125,8 +141,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleAllPhotos()
     {
-        unset($this->session->adminPhotoList);
-        unset($this->session[$this->id]);
+        unset($this->session->adminPhotoList, $this->session[$this->id]);
         $this->session->allPhotos = TRUE;
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
@@ -151,15 +166,22 @@ class AdminPhotoListComponent extends BaseComponent
         $PR = $this->PR;
         $PM = $this->PM;
         $linkGenerator = $this->linkGenerator;
-        $model = $this->connection->select('*')->from('[photo]')->select(
-            $this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [id]'), 'count_of_tags');
+        $model = $this->connection->select('[photo.*]')
+            ->from('[photo]')
+            ->rightJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
+            ->rightJoin('[tag]')->on('[photo_tag.tag_id] = [tag.id]')
+            ->where('[tag.year_id] =', $this->year->id)
+            ->where('[photo.id] IS NOT NULL')
+            ->groupBy('id')
+            ->select($this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [photo.id]'), 'count_of_tags');
         $g = new Grid($this, $name);
 
-        $g->addColumnNumber('id', '#');
+        $g->addColumnNumber('id', '#')
+            ->setFilterNumber();
 
-        $g->addColumnText('filename', 'Jméno souboru')->setFilterText();
+        $g->addColumnText('filename', 'Jméno souboru');
 
-        $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', array('id' => 'id'));
+        $g->addActionHref('detail', 'Detail fotky', 'Photo:photoDetail', ['id' => 'id']);
 
         $g->addActionEvent('delete', 'Smazat z disku', function ($id) use ($PM, $PR) {
             $PM->delete($PR->get($id, FALSE), FALSE);
@@ -170,31 +192,47 @@ class AdminPhotoListComponent extends BaseComponent
             $photo = $PR->get($id);
             $photo->active = $photo->active ? 0 : 1;
             $PR->persist($photo);
-        })->setCustomRender(function (\DibiRow $row, Html $element) {
+        })->setCustomRender(function (Row $row, Html $element) {
             return $element->setText($row['active'] ? 'Skrýt' : 'Zobrazit');
         });
 
-        $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (\DibiRow $row) use ($linkGenerator) {
-            return Html::el('img', array("src" => $linkGenerator->link("Media:mini", array($row->filename))));
+        $g->addColumnText('thumb', 'Náhled')->setCustomRender(function (Row $row) use ($linkGenerator) {
+            return Html::el('img', ['src' => $linkGenerator->link('Media:mini', [$row->filename])]);
         });
 
-        $g->addColumnDate('taken', "Pořízena", Date::FORMAT_DATETIME);
+        $g->addColumnDate('taken', 'Pořízena', Date::FORMAT_DATETIME);
 
-        $g->addColumnDate('added', "Přidána", Date::FORMAT_DATETIME)->setDefaultSort(BaseRepository::ORDER_DESC);
+        $g->addColumnDate('added', 'Přidána', Date::FORMAT_DATETIME)
+            ->setDefaultSort(BaseRepository::ORDER_DESC);
 
-        $g->addColumnText('count_of_tags', 'Počet tagů')->setSortable();
+        $g->addColumnText('count_of_tags', 'Počet tagů')
+            ->setSortable();
+
+        $g->addColumnText('author', 'Autor')
+            ->setEditableCallback(GridHelpers::getEditableCallback('author', $this->TR))->setFilterText();
 
         if ($this->allPhotos) {
             $active = $g->addColumnNumber('active', 'Aktivní');
-            $active->setReplacement(array(
-                0 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-remove")),
-                1 => Html::el('i')->addAttributes(array('class' => "glyphicon glyphicon-ok"))
-            ));
+            $active->setReplacement([
+                0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
+                1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
+            ]);
         } else {
             $model->where('[active] = 1');
         }
         $g->setModel($model);
+        $g->setFilterRenderType(Filter::RENDER_OUTER);
         return $g;
+    }
+
+    /**
+     * @param IComponent $presenter
+     */
+    protected function attached($presenter)
+    {
+        /** @var BasePresenter $presenter */
+        parent::attached($presenter);
+        $this->year = $presenter->category->year;
     }
 
     /**
@@ -211,20 +249,10 @@ class AdminPhotoListComponent extends BaseComponent
             $photoEdit->onDelete[] = function (Photo $photo) use ($APLC, $PR) {
                 $APLC->photos = $APLC->PR->findByIds(array_diff(array_map(function (Photo $photo) {
                     return $photo->id;
-                }, $APLC->photos), array($photo->id)));
+                }, $APLC->photos), [$photo->id]));
                 $APLC->redrawControl('photo-list');
             };
             return $photoEdit;
         });
     }
-}
-
-
-interface IAdminPhotoListComponentFactory
-{
-    /**
-     * @return AdminPhotoListComponent
-     */
-    public function create();
-
 }

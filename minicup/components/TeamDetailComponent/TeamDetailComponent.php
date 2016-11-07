@@ -30,13 +30,13 @@ class TeamDetailComponent extends BaseComponent
     private $THCF;
 
     /**
-     * @param Team $team
-     * @param TeamRepository $TR
-     * @param TagManager $TM
+     * @param Team                           $team
+     * @param TeamRepository                 $TR
+     * @param TagManager                     $TM
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param IStaticContentComponentFactory $SCCF
-     * @param IPhotoListComponentFactory $PLCF
-     * @param ITeamHistoryComponent $THCF
+     * @param IPhotoListComponentFactory     $PLCF
+     * @param ITeamHistoryComponent          $THCF
      */
     public function __construct(Team $team,
                                 TeamRepository $TR,
@@ -76,7 +76,7 @@ class TeamDetailComponent extends BaseComponent
      */
     public function createComponentStaticContentComponent()
     {
-        return $this->SCCF->create($this->team);
+        return $this->SCCF->create($this->team, $this->team->category->year);
     }
 
     /**

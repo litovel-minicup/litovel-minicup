@@ -1,12 +1,13 @@
 <div class="Article__head Box__head--toggle">
     <div class="Article__head__icon Box__head--toggle__icon icon__matches">
     </div>
-    <div class="Article__head__text Box__head--toggle__text">Zápasy</div>
+    <h1 class="Article__head__text Box__head--toggle__text">Zápasy</h1>
     <ul class="Article__head__select Box__head--toggle__select" n:inner-foreach="array_keys($days) as $timestamp">
-        <li n:class="$control->isToday($timestamp) ?active"><a data-toggle="tab" href="#{$timestamp}">{$timestamp|dayName}</a></li>
+        <li n:class="$control->isToday($timestamp) ?active"><a data-toggle="tab"
+                                                               href="#{$timestamp}">{$timestamp|dayName}</a></li>
     </ul>
     <script>
-        $(function () {
+        jQuery(function () {
             if ($('ul.Article__head__select').find('.active').length === 0) {
                 $('ul.Article__head__select li:first-child').addClass('active');
             }
@@ -17,7 +18,7 @@
     </script>
 </div>
 <div class="tab-content">
-    <div n:foreach="$days as $timestamp => $matches"
+    <div n:foreach="$days as $timestamp => $_matches"
          n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">
         <table class="Table Table__matches">
             <thead class="Box__subhead Article__subhead">
@@ -30,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr n:foreach="$matches as $match">
+            <tr n:foreach="$_matches as $match">
                 <td><a href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
                 <td>{$match->scoreHome} : {$match->scoreAway}</td>
                 <td><a href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>

@@ -3,7 +3,7 @@
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
             </div>
-            <div class="Article__head__text Box__head__text">Tabulka</div>
+            <h1 class="Article__head__text Box__head__text">Statistiky kategorie {$category->name}</h1>
         </div>
         {control categoryTableComponent}
     </div>
@@ -11,12 +11,12 @@
 
 {control categoryStatsComponent}
 
-<div class="Section">
+<div class="Section" n:if="$control->isStarted()" id="historie-poradi">
     <div class="Article">
         <div class="Article__head Box__head">
             <div class="Article__head__icon Box__head__icon icon__teams">
             </div>
-            <div class="Article__head__text Box__head__text">Vývoj pořadí</div>
+            <h2 class="Article__head__text Box__head__text">Vývoj pořadí</h2>
         </div>
         {control categoryHistoryComponent}
     </div>

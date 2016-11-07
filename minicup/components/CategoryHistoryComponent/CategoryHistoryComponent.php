@@ -5,20 +5,40 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
-use Minicup\Model\Repository\TeamRepository;
+use Minicup\Model\TeamHistoryManager;
+use Minicup\Model\TeamHistoryRecord;
+use Nette\Caching\Cache;
+use Nette\Caching\IStorage;
+
+interface ICategoryHistoryComponentFactory
+{
+    /**
+     * @param Category $category
+     * @return CategoryHistoryComponent
+     */
+    public function create(Category $category);
+
+}
 
 class CategoryHistoryComponent extends BaseComponent
 {
     /** @var Category $category */
     private $category;
 
-    /** @var TeamRepository */
-    private $TR;
+    /** @var TeamHistoryManager */
+    private $teamHistoryManager;
 
-    public function __construct(Category $category, TeamRepository $TR)
+    /** @var Cache */
+    private $cache;
+
+    public function __construct(Category $category,
+                                TeamHistoryManager $teamHistoryManager,
+                                IStorage $storage)
     {
         $this->category = $category;
-        $this->TR = $TR;
+        $this->teamHistoryManager = $teamHistoryManager;
+        $this->cache = new Cache($storage);
+        parent::__construct();
     }
 
     public function render()
@@ -29,46 +49,36 @@ class CategoryHistoryComponent extends BaseComponent
 
     public function handleData()
     {
-        $maxMatches = max(array_map(function (Team $team) {
-            return count($team->getPlayedMatches());
-        }, $this->category->teams)) + 1;
+        $this->presenter->sendJson($this->cache->load($this->category->getCacheTag(static::class), function (& $depends) {
+            $depends[Cache::TAGS] = [$this->category->getCacheTag()];
 
-        $data = array("labels" => range(1, $maxMatches+1), "series" => array());
-        $countOfTeams = count($this->category->teams);
-        $n = 1;
-        foreach ($this->category->teams as $team) {
-            $series = array();
-            /** @var Team $historyTeam */
-            $historicalTeams = $this->TR->findHistoricalTeams($team);
-            foreach (array_slice(array_merge($historicalTeams, array($team)), 1) as $historyTeam) {
-                $series[] = $countOfTeams - $historyTeam->order;
-            }
-            if (count($series) < $maxMatches) {
-                if (isset($lastOrder[0])) { // team has some order
-                    $lastOrder = $lastOrder[0];
-                } else {
-                    $lastOrder = $countOfTeams - $n;
+            $history = $this->teamHistoryManager->getHistoryForTeams(array_map(function (Team $team) {
+                return $team->i;
+            }, $this->category->teams));
+            $maxRecords = max(array_map(function ($line) {
+                return count($line);
+            }, $history));
+            $teamsInCategory = count($this->category->teams);
+            $data = ['labels' => range(1, $maxRecords), 'series' => []];
+            /**
+             * @var int                        $id team id
+             * @var TeamHistoryRecord[]|NULL[] $teamLine
+             */
+            foreach ($history as $id => $teamLine) {
+                if (!reset($teamLine)) {
+                    continue;
                 }
-                foreach (range(0, $maxMatches - count($series)) as $_) {
-                    array_unshift($series, $lastOrder);
+                $series = [];
+                /** @var TeamHistoryRecord|NULL $record */
+                foreach ($teamLine as $record) {
+                    $series[] = $record instanceof TeamHistoryRecord ? ($teamsInCategory + 1 - $record->order) : $record;
                 }
-
-            }
-            $data['series'][] = array('data' => $series, 'name' => $team->i->name);
-            $n++;
-        }
-        if ($this->presenter->isAjax()) {
-            $this->presenter->sendJson($data);
-        }
+                $data['series'][] = [
+                    'data' => $series,
+                    'name' => reset($teamLine) ? reset($teamLine)->team->name : ' '
+                ];
+            };
+            return $data;
+        }));
     }
-}
-
-interface ICategoryHistoryComponentFactory
-{
-    /**
-     * @param Category $category
-     * @return CategoryHistoryComponent
-     */
-    public function create(Category $category);
-
 }

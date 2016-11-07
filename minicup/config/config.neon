@@ -7,7 +7,8 @@ parameters:
     	@Minicup\Model\Repository\TeamRepository,
     	@Minicup\Model\Repository\PhotoRepository,
     	@Minicup\Model\Repository\MatchRepository,
-    	@Minicup\Model\Repository\StaticContentRepository]
+    	@Minicup\Model\Repository\StaticContentRepository,
+    	@Minicup\Model\Repository\NewsRepository]
 
 php:
     date.timezone: Europe/Prague
@@ -17,15 +18,8 @@ application:
     mapping:
         *: Minicup\*Module\Presenters\*Presenter
 
-tracy:
-    bar:
-        - NetteExtras\XDebugHelper(PHPSTORM)
-
 session:
     expiration: 14 days
-
-includes:
-    - config.ACL.neon
 
 decorator:
 	Minicup\Components\BaseComponent:
@@ -33,18 +27,20 @@ decorator:
 		setup:
 			- injectProductionMode(%productionMode%)
 
+leanMapper: %connection%
+
 services:
     router: @Minicup\Router\RouterFactory::create
     texy: @Minicup\Misc\TexyFactory::create
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
-    - Minicup\Misc\IFormFactory
-    - Minicup\Misc\FilterLoader
+    formFactory: Minicup\Misc\IFormFactory
+    filterLoader: Minicup\Misc\FilterLoader
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
+    - Minicup\Router\YearCategoryRouteFactory
 
     # application logic services
     - Minicup\Model\Manager\UserManager
-    - Minicup\Model\Manager\MigrationsManager
     - Minicup\Model\Manager\TeamReplicator
     - Minicup\Model\Manager\ReorderManager
     - Minicup\Model\Manager\TeamDataRefresher
@@ -54,6 +50,7 @@ services:
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
+    - Minicup\Model\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling
@@ -63,7 +60,10 @@ services:
     # lean mapper
     - LeanMapper\DefaultEntityFactory
     - Minicup\Model\Mapper(%entityFQN%)
+    - Doctrine\DBAL\Connection(%connection%)
+    - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
+    - WebLoader\Nette\Diagnostics\Panel
 
     leanMapper.connection:
         setup:
@@ -77,6 +77,7 @@ services:
             - registerFilter(orderMatches, [@filters, orderMatches])
             - registerFilter(activePhotos, [@filters, activePhotos])
             - registerFilter(orderNews, [@filters, orderNews])
+            - registerFilter(orderPhotos, [@filters, orderPhotos])
 
     # repositories
     - Minicup\Model\Repository\MatchRepository
@@ -95,9 +96,9 @@ services:
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
-    - Minicup\Components\IMigrateFormComponentFactory
-    - Minicup\Components\ICategoryToggleFormComponentFactory
+    - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
+    - Minicup\Components\IPhotoPresentationComponentFactory
     - implement: Minicup\Components\ICategoryDetailComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
@@ -108,8 +109,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
     - implement: Minicup\Components\ITagFormComponentFactory
-      parameters: [Minicup\Model\Entity\Tag tag = NULL]
-      arguments: [%tag%]
+      parameters: [Minicup\Model\Entity\Tag tag = NULL, Minicup\Model\Entity\Year year]
+      arguments: [%tag%, %year%]
     - implement: Minicup\Components\INewsFormComponentFactory
       parameters: [Minicup\Model\Entity\News news = NULL]
       arguments: [%news%]
@@ -137,8 +138,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category, count]
       arguments: [%category%, %count%]
     - implement: Minicup\Components\IStaticContentComponentFactory
-      parameters: [arg]
-      arguments: [%arg%]
+      parameters: [arg, Minicup\Model\Entity\Year year]
+      arguments: [%arg%, %year%]
     - implement: Minicup\Components\IListOfTeamsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
@@ -152,7 +153,23 @@ services:
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
+    - implement: Minicup\Components\IYearToggleComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension
     replicator: Minicup\Misc\EntitiesReplicatorExtension
+    console: Kdyby\Console\DI\ConsoleExtension
+    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    - Symnedi\EventDispatcher\DI\EventDispatcherExtension
+
+migrations:
+    table: db_migrations
+    dirs:
+        - %appDir%/migrations
+    namespace: Minicup\Migrations
+    codingStandard: spaces
+
+console:
+    commands:
+        - Minicup\Commands\MatchesImportCommand
+        - Minicup\Commands\UserAddCommand

@@ -8,6 +8,7 @@ use Nette\Forms\Container as FContainer;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\MemberAccessException;
 use Nette\Utils\Callback;
+use Nette\Utils\ObjectMixin;
 
 class EntitiesReplicatorContainer extends RContainer
 {
@@ -15,12 +16,12 @@ class EntitiesReplicatorContainer extends RContainer
     protected $entities;
 
     /** @var array */
-    protected $created = array();
+    protected $created = [];
 
     /**
      * @param callable $factory
-     * @param int $createDefault
-     * @param array $entities
+     * @param int      $createDefault
+     * @param array    $entities
      */
     public function __construct($factory, $createDefault, array $entities)
     {
@@ -60,7 +61,7 @@ class EntitiesReplicatorContainer extends RContainer
         $_entity = NULL;
         /** @var Entity $entity */
         foreach ($this->entities as $entity) {
-            if ((int)$name == $entity->id) {
+            if ((int)$name === $entity->id) {
                 $_entity = $entity;
             }
         }
@@ -78,7 +79,7 @@ class EntitiesReplicatorContainer extends RContainer
     }
 
 
-    /** @var bool  */
+    /** @var bool */
     private static $registered = FALSE;
 
     /**
@@ -93,7 +94,7 @@ class EntitiesReplicatorContainer extends RContainer
             });
         }
 
-        FContainer::extensionMethod($methodName, function (FContainer $_this, $name, $factory, array $entities, $createDefault = 0) {
+        ObjectMixin::setExtensionMethod(FContainer::class, $methodName, function (FContainer $_this, $name, $factory, array $entities, $createDefault = 0) {
             $control = new EntitiesReplicatorContainer($factory, $createDefault, $entities);
             $control->currentGroup = $_this->currentGroup;
             return $_this[$name] = $control;
@@ -103,7 +104,7 @@ class EntitiesReplicatorContainer extends RContainer
             return;
         }
 
-        SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
+        ObjectMixin::setExtensionMethod(SubmitButton::class, 'addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
             $_this->setValidationScope(FALSE);
             $_this->onClick[] = function (SubmitButton $button) use ($callback) {
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
@@ -113,14 +114,14 @@ class EntitiesReplicatorContainer extends RContainer
                 }
                 $form = $button->getForm(FALSE);
                 if ($form) {
-                    $form->onSuccess = array();
+                    $form->onSuccess = [];
                 }
                 $replicator->remove($button->parent);
             };
             return $_this;
         });
 
-        SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
+        ObjectMixin::setExtensionMethod(SubmitButton::class, 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
             $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
                 /** @var EntitiesReplicatorContainer $replicator */
@@ -134,7 +135,7 @@ class EntitiesReplicatorContainer extends RContainer
                         Callback::invoke($callback, $replicator, $newContainer);
                     }
                 }
-                $button->getForm()->onSuccess = array();
+                $button->getForm()->onSuccess = [];
             };
             return $_this;
         });

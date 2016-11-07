@@ -54,7 +54,7 @@ class Mapper extends DefaultMapper
 
     public function getTableByRepositoryClass($repositoryClass)
     {
-        $matches = array();
+        $matches = [];
         if (preg_match('#([a-z0-9]+)repository$#i', $repositoryClass, $matches)) {
             return self::toUnderScore($matches[1]);
         }
@@ -64,21 +64,21 @@ class Mapper extends DefaultMapper
     public function getImplicitFilters($entityClass, Caller $caller = null)
     {
         $entityName = $this->trimNamespace($entityClass);
-        if ($entityName === "Team") {
-            if ($caller->getComplement() instanceof Property && $caller->getComplement()->getName() == "historyTeams") {
-                return new ImplicitFilters(array('info', 'orderTeams'));
+        if ($entityName === 'Team') {
+            if ($caller->getComplement() instanceof Property && $caller->getComplement()->getName() === 'historyTeams') {
+                return new ImplicitFilters(['info', 'orderTeams']);
             }
-            return new ImplicitFilters(array('info', 'actual', 'orderTeams'));
-        } elseif (in_array($entityName, array('Category', 'Day', 'Photo'))) {
-            return new ImplicitFilters(array('year'));
-        } elseif ($entityName === "Match") {
-            return new ImplicitFilters(array('orderMatches'));
-        } elseif ($entityName === "News") {
-            return new ImplicitFilters(array("orderNews"));
-        } elseif ($entityName === "Photo") {
-            return new ImplicitFilters(array("orderPhotos"));
+            return new ImplicitFilters(['info', 'actual', 'orderTeams']);
+        } elseif (in_array($entityName, ['Category', 'Day', 'Tag'], TRUE)) {
+            return new ImplicitFilters(['year']);
+        } elseif ($entityName === 'Match') {
+            return new ImplicitFilters(['orderMatches']);
+        } elseif ($entityName === 'News') {
+            return new ImplicitFilters(['orderNews']);
+        } elseif ($entityName === 'Photo') {
+            return new ImplicitFilters(['orderPhotos', 'year']);
         }
-        return array();
+        return [];
     }
 
 

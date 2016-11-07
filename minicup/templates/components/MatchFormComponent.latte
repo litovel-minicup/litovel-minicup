@@ -1,29 +1,29 @@
 <div class="component" n:snippet>
     {form matchForm}
-    {foreach $form['matches']->containers as $id => $match}
+    {foreach $form['matches']->getContainers() as $id => $_match}
         {formContainer $match}
             <div class="row">
                 <div class="col-md-3 col-md-push-2 col-md-pull-1 text-right">
-                    D: {label $match['scoreHome'] class=>"input-label"/}
+                    {label $_match['scoreHome'] class=>"input-label"/}
                 </div>
                 <div class="col-md-3 col-md-push-4">
-                    H: {label $match['scoreAway'] class=>"input-label"/}
+                    {label $_match['scoreAway'] class=>"input-label"/}
                 </div>
             </div>
             <div class="row" style="margin-bottom: 25px;">
                 <div class="col-md-3 col-md-push-2">
-                    {input $match['scoreHome'] class=>"form-control text-right"}
+                    {input $_match['scoreHome'] class=>"form-control text-right"}
                 </div>
                 <div class="col-md-2 col-md-push-2">
-                    {input $match['time'] class=>"form-control text-center"}
+                    {input $_match['time'] class=>"form-control text-center"}
                 </div>
                 <div class="col-md-3 col-md-push-2">
-                    {input $match['scoreAway'] class=>"form-control"}
+                    {input $_match['scoreAway'] class=>"form-control"}
                 </div>
             </div>
         {/formContainer}
     {/foreach}
-        <div class="row" n:if="!$control[matchForm][matches]->empty">
+        <div class="row" n:if="!$control[matchForm][matches]->isEmpty()">
             <div class="col-md-3 col-md-push-9">
                 <input type="submit" class="btn btn-primary btn-success btn-lg" value="odeslat" n:name=submit>
                 {input $form['matches']['addMatch'] class => "btn btn-info ajax"}

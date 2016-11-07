@@ -1,12 +1,14 @@
 <?php
 
 namespace Minicup\Model\Entity;
+use Dibi\DateTime;
 
 /**
- * @property int            $id
- * @property string         $slug
- * @property string         $content
- * @property \DibiDateTime  $updated
+ * @property int      $id
+ * @property string   $slug
+ * @property string   $content
+ * @property DateTime $updated
+ * @property Year $year m:hasOne
  */
 class StaticContent extends BaseEntity
 {
@@ -15,7 +17,7 @@ class StaticContent extends BaseEntity
     protected function initDefaults()
     {
         parent::initDefaults();
-        $this->updated = new \DibiDateTime();
+        $this->updated = new DateTime();
     }
 
 

@@ -3,7 +3,6 @@
 namespace Minicup\Model\Manager;
 
 
-use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\User;
 use Minicup\Model\Repository\UserRepository;
 use Nette\InvalidArgumentException;
@@ -50,7 +49,8 @@ class UserManager extends Object implements IAuthenticator
             $user->password_hash = Passwords::hash($password);
             $this->UR->persist($user);
         }
-        return new Identity($user->id, $user->role, array('fullname' => $user->fullname));
+        return new Identity($user->id, NULL, ['fullname' => $user->fullname]);
+
     }
 
     /**
@@ -58,11 +58,9 @@ class UserManager extends Object implements IAuthenticator
      * @param $username string
      * @param $password string
      * @param $fullname string
-     * @param $role string
-     * @throws InvalidValueException
      * @return int
      */
-    public function add($username, $password, $fullname, $role = 'guest')
+    public function add($username, $password, $fullname)
     {
         if ($this->UR->existsUsername($username)) {
             throw new InvalidArgumentException('Zadané uživatelské jméno již existuje.');
@@ -70,10 +68,8 @@ class UserManager extends Object implements IAuthenticator
         $user = new User;
         $user->username = $username;
         $user->password_hash = Passwords::hash($password);
-        $user->role = $role;
         $user->fullname = $fullname;
         $id = $this->UR->persist($user);
         return $id;
     }
 }
-
