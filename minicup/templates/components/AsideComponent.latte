@@ -1,3 +1,10 @@
+<div class="Aside" n:if="!$control->started">
+    <div class="Box__head Aside__head">
+        <div class="Aside__head__icon Box__head__icon icon__upcoming"></div>
+        <div class="Aside__head__text Box__head__text">{control countdownComponent}</div>
+    </div>
+</div>
+
 <div class="Aside" n:if="$control->playingTime">
     <a href="{plink Match:default}">
         <div class="Box__head Aside__head">

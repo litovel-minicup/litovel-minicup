@@ -5,6 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Manager\MatchManager;
+use Minicup\Model\Repository\MatchRepository;
+use Nette\Utils\DateTime;
 
 interface IAsideComponentFactory
 {
@@ -28,27 +30,39 @@ class AsideComponent extends BaseComponent
     /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
 
+    /** @var ICountdownComponentFactory */
+    private $CCF;
+
     /** @var Category */
     private $category;
 
     /** @var MatchManager */
     private $MM;
 
+    /** @var MatchManager */
+    private $MR;
+
     /**
      * @param Category                       $category
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param ICategoryTableComponentFactory $CTCF
+     * @param ICountdownComponentFactory     $CCF
      * @param MatchManager                   $MM
+     * @param MatchRepository                $MR
      */
     public function __construct(Category $category,
                                 IListOfMatchesComponentFactory $LOMCF,
                                 ICategoryTableComponentFactory $CTCF,
-                                MatchManager $MM)
+                                ICountdownComponentFactory $CCF,
+                                MatchManager $MM,
+                                MatchRepository $MR)
     {
         $this->category = $category;
         $this->LOMCF = $LOMCF;
+        $this->CCF = $CCF;
         $this->CTCF = $CTCF;
         $this->MM = $MM;
+        $this->MR = $MR;
         parent::__construct();
     }
 
@@ -97,6 +111,19 @@ class AsideComponent extends BaseComponent
     protected function createComponentCategoryTableComponent()
     {
         return $this->CTCF->create($this->category);
+    }
+
+    /**
+     * @return CountdownComponent
+     */
+    protected function createComponentCountdownComponent()
+    {
+        $firstMatch = $this->MR->getFirstMatchInCategory($this->category);
+        $countdown = DateTime::createFromFormat(
+            'Y-m-d H:m:s',
+            $firstMatch->matchTerm->day->day->format('Y-m-d') . ' ' . $firstMatch->matchTerm->start->format('H:m:s')
+        );
+        return $this->CCF->create($countdown);
     }
 
 }

@@ -152,6 +152,9 @@ services:
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
+    - implement: Minicup\Components\ICountdownComponentFactory
+      parameters: [\DateTime toDate]
+      arguments: [%toDate%]
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
     - implement: Minicup\Components\IYearToggleComponentFactory
 

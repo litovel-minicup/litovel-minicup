@@ -57,6 +57,7 @@ class JsComponentFactory extends Object
     {
         $files = new FileCollection($this->wwwPath);
         $files->addFile('assets/js/jquery.js');
+        $files->addFile('assets/js/jquery.plugin.js');
         $files->addFile('assets/js/dropper.js');
         $files->addFile('assets/js/select2.js');
         $files->addFile('assets/js/nette.ajax.js');
@@ -71,6 +72,8 @@ class JsComponentFactory extends Object
             $files->addFile('assets/js/chartist.tooltip.js');
             $files->addFile('assets/js/chartist.legend.js');
             $files->addFile('assets/js/chartist.barlabels.js');
+            $files->addFile('assets/js/jquery.countdown.js');
+            $files->addFile('assets/js/jquery.countdown.cs.js');
         } elseif ($module === 'admin') {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');

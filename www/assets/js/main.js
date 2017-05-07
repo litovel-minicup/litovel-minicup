@@ -16,7 +16,7 @@ var initTagsSelect2 = function ($el) {
 };
 
 var redrawSnippets = function (response) {
-    if (response.snippets == undefined) {
+    if (response.snippets === undefined) {
         return;
     }
     for (var key in response.snippets) {
@@ -27,7 +27,7 @@ var redrawSnippets = function (response) {
 };
 
 var attachCover = function ($el) {
-    if ($el.find('.Cover').length == 0) {
+    if ($el.find('.Cover').length === 0) {
         if (!$el.is('body')) {
             $el.css('position', 'relative');
         }

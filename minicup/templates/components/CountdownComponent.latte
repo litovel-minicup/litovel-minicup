@@ -1,0 +1,9 @@
+<div id="countdown"></div>
+<script type="text/javascript" n:syntax="double">
+    $("#countdown").countdown({
+        until: new Date({{strtotime($toDate) * 1000}}),
+        format: 'O D H M S',
+        compact: false,
+        layout: '{dn} {dl}, {hn} {hl}, {mn} {ml} a {sn} {sl}'
+    })
+</script>
