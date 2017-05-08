@@ -5,7 +5,13 @@
             </div>
             <h1 class="Article__head__text Box__head__text">Statistiky kategorie {$category->name}</h1>
         </div>
-        {control categoryTableComponent}
+        {if $control->isStarted()}
+            {control categoryTableComponent}
+        {else}
+            <div class="Article__subhead Box__subhead">
+                Omlouváme se, tato sekce není zatím pro aktuálně zvolený ročník dostupná.
+            </div>
+        {/if}
     </div>
 </div>
 
@@ -21,3 +27,4 @@
         {control categoryHistoryComponent}
     </div>
 </div>
+
