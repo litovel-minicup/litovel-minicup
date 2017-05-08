@@ -187,6 +187,15 @@ var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
      });*/
 };
 
+var initTabs = function () {
+    if ($('ul.Article__head__select').find('.active').length === 0) {
+        $('ul.Article__head__select li:first-child').addClass('active');
+    }
+    if ($('.tab-content').find('.active').length === 0) {
+        $('.tab-content .tab-pane:first-child').addClass('active');
+    }
+};
+
 jQuery(function ($) {
     $.nette.init();
     $.nette.ext({
@@ -198,4 +207,5 @@ jQuery(function ($) {
     initMobileNav($('#nav-mobile'));
     initEasterEgg($(document), 'do a barrel roll');
     initLinkLogging();
+    initTabs();
 });
