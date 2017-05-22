@@ -70,7 +70,6 @@ class RouterFactory extends Object
         $YR = $this->YR;
         $TR = $this->TR;
         $TagR = $this->TagR;
-        $session = $this->session;
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
 

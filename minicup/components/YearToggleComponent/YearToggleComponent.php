@@ -3,15 +3,12 @@
 namespace Minicup\Components;
 
 
-use Latte;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\IRouter;
 use Nette\Http\IRequest;
-use Nette\Http\Request;
 use Nette\Http\Session;
-use Nette\Http\UrlScript;
 
 interface IYearToggleComponentFactory
 {
@@ -80,15 +77,8 @@ class YearToggleComponent extends BaseComponent
         $year = $this->YR->get($year, FALSE);
         $category = $this->CR->getBySlug($actualCategorySlug, $year);
         $this->session->offsetSet('category', $category->id);
-        $this->category = $this->getPresenter()->category = $category;
 
-        $url = new UrlScript($this->presenter->link('//this', ['category' => $category]));
-        $request = new Request($url);
-        if ($this->router->match($request)) {
-            $this->presenter->redirectUrl($url);
-        } else {
-            $this->presenter->redirect(':Front:Homepage:default', ['category' => $category]);
-        }
+        $this->presenter->redirect(':Front:Homepage:default', ['category' => $category]);
     }
 
 }

@@ -85,8 +85,8 @@ class MatchesImportCommand extends Command
         try {
             $count = $this->importer->import($category, getcwd() . '/' . $fileArg);
             $output->writeln("<info>Successfully imported {$count} matches into category {$category->slug}.</info>");
-            $this->reorder->reorder($category);
-            $output->writeln("<info>Successfully reordered category {$category->slug}.</info>");
+            // $this->reorder->reorder($category);
+            // $output->writeln("<info>Successfully reordered category {$category->slug}.</info>");
             return 0;
         } catch (\Exception $e) {
             $output->writeln("<info>Importing failed: {$e->getMessage()}.</info>");
