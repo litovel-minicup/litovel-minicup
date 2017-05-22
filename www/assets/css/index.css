@@ -3653,7 +3653,7 @@ Copyright (c) 2015 Daniel Eden
     .Aside__table--upcoming tr:nth-of-type(1) td {
       height: 40px;
       vertical-align: bottom; }
-    .Aside__table--upcoming tr:nth-of-type(4) td {
+    .Aside__table--upcoming tr:last-of-type td {
       height: 40px;
       vertical-align: top; }
     .Aside__table--upcoming td {

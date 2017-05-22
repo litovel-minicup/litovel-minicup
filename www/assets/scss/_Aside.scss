@@ -78,7 +78,7 @@
 
 
 	&__table {
-		
+
 		width: 100%;
 
 		&--upcoming {
@@ -88,7 +88,7 @@
 					vertical-align: bottom;
 				}
 
-				&:nth-of-type(4) td {
+				&:last-of-type td {
 					height: 40px;
 					vertical-align: top;
 				}
@@ -116,7 +116,7 @@
 				}
 			}
 		}
-	
+
 		&--standings {
 
 			th {
@@ -143,7 +143,7 @@
 				padding: 3px 0!important;
 				vertical-align: middle;
 			}
-			
+
 			th:nth-of-type(1),td:nth-of-type(1) {
 				width: 15%;
 			}
