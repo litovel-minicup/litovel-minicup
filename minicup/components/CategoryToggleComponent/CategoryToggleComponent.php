@@ -71,13 +71,7 @@ class CategoryToggleComponent extends BaseComponent
         $presenter = $this->presenter;
         $presenter->category = $category;
 
-        $url = new UrlScript($this->presenter->link('//this', ['category' => $category]));
-        $request = new Request($url);
-        if ($this->router->match($request)) {
-            $this->presenter->redirectUrl($url);
-        } else {
-            $this->presenter->redirect(':Front:Homepage:default', ['category' => $category]);
-        }
+		$this->presenter->redirect(':Front:Homepage:default', ['category' => $category]);
     }
 
 }
