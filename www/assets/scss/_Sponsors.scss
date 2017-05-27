@@ -5,100 +5,65 @@
 		background: white;
 		background: url("../img/sprites.png") no-repeat;
 
+		&:hover {
+			background: url("../img/sprites.png") no-repeat;
+		}
+
 		&:nth-of-type(1) {
-background-position: -1199px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(2) {
-background-position: -1048px -150px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(3) {
-background-position: -1198px -149px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(4) {
-background-position: -1048px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(5) {
-background-position: -1048px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(6) {
-background-position: -748px -150px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(7) {
-background-position: -598px -150px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(8) {
-background-position: -448px -151px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(9) {
-background-position: -297px -151px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(10) {
-background-position: -150px -151px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(11) {
-background-position: 0 -150px ;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(12) {
-background-position: -899px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(13) {
-background-position: -750px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(14) {
-background-position: -600px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(15) {
-background-position: -450px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(16) {
-background-position: -301px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(17) {
-background-position: -150px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(18) {
 background-position: 0 0;
 	width: 150px;
 	height: 150px;
 		}
-
+		&:nth-of-type(2) {
+background-position: -150px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(3) {
+background-position: -300px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(4) {
+background-position: -450px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(5) {
+background-position: -600px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(6) {
+background-position: -750px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(7) {
+background-position: -900px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(8) {
+background-position: -1050px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(9) {
+background-position: -1200px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(10) {
+background-position: -1350px 0;
+	width: 150px;
+	height: 150px;
+		}
+		&:nth-of-type(11) {
+background-position: -1500px 0;
+	width: 150px;
+	height: 150px;
+		}
 	}
-
-
-
 } 
 
