@@ -1,10 +1,3 @@
-<div id="info" n:if="!$category->year->actual">
-    <a n:href="changeYear! year => $actualYear->id">
-        <div class="iconBlock">!</div>
-        <div class="textBlock">
-            <h2>Upozornění</h2>
-
-            <h3>Zobrazena jsou archivní data pro ročník {$category->year->slug}, klikni pro zobrazení aktuálního ročníku!</h3>
-        </div>
-    </a>
-</div>
+<a class="header__top__text" n:href="changeYear! year => $actualYear->id">
+    <p><strong>Zobrazena jsou archivní data pro ročník 2013, klikni pro zobrazení aktuálního ročníku!</strong></p>
+</a>

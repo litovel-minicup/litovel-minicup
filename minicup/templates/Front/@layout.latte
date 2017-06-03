@@ -24,25 +24,24 @@
         </a>
     </div>
     <![endif]-->
-    <!--{control actualYearToggleComponent:actualYear}-->
 
     <!-- header class -->
     <header class="header">
         <!-- logo class -->
         <section class="header__top">
             <div class="inner">
-                {*                 <a href="#" class="header__top__text">
-                                    <p>Zobrazena jsou archivní data pro ročník 2013, klikni pro zobrazení aktuálního ročníku!</p>
-                                </a> *}
-
-                <div class="header__top__text">
-                    <h3>9.–11. 6. 2017</h3>
-                    <p>5. ročník turnaje v miniházené</p>
-                </div>
-
+                {if $category->year->actual}
+                    <div class="header__top__text">
+                        <h3>9.–11. 6. 2017</h3>
+                        <p>5. ročník turnaje v miniházené</p>
+                    </div>
+                {else}
+                    {control actualYearToggleComponent:actualYear}
+                {/if}
                 <a class="header__top__logo" n:href="Homepage:default">
-                    <img class="" src="{$basePath}/assets/img/logo.png" srcset="{$basePath}/assets/img/logo.png 1x,
-                                {$basePath}/assets/img/logo@2x.png 2x" alt="Litovel MINICUP 2017">
+                    <img class="" src="{$basePath}/assets/img/logo.png"
+                         srcset="{$basePath}/assets/img/logo.png 1x, {$basePath}/assets/img/logo@2x.png 2x"
+                         alt="Litovel MINICUP 2017">
                 </a>
 
                 <div class="header__top__toggle">
@@ -61,7 +60,6 @@
             <a n:href="Homepage:sponsors">sponzoři</a>
         </nav>
     </header>
-
     <!-- main class -->
     <main>
         <div class="Main__wrapper animated fadeInUp">
@@ -98,7 +96,6 @@
             </style>
         </div>
     </main>
-
     <div class="Footer__wrapper">
         <div class="Footer animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
             <div class="Footer__block">
