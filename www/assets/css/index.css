@@ -3623,7 +3623,7 @@ Header module
     .Aside__table--standings tr:nth-of-type(1) td {
       height: 40px;
       vertical-align: bottom; }
-    .Aside__table--standings tr:nth-of-type(12) td {
+    .Aside__table--standings tr:last-of-type td {
       height: 40px;
       vertical-align: top; }
     .Aside__table--standings td {
