@@ -41,6 +41,11 @@ final class MatchPresenter extends BaseAdminPresenter
         $this->template->category = $category;
     }
 
+    public function renderCategory(Category $category)
+    {
+        $this->template->year = $category->year;
+    }
+
     /**
      * @return MatchFormComponent
      */
