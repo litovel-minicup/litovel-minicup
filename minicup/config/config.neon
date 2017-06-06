@@ -138,8 +138,8 @@ services:
       parameters: [Minicup\Model\Entity\Category category, count]
       arguments: [%category%, %count%]
     - implement: Minicup\Components\IStaticContentComponentFactory
-      parameters: [arg, Minicup\Model\Entity\Year year]
-      arguments: [%arg%, %year%]
+      parameters: [arg, Minicup\Model\Entity\Year year, showPlaceholder = TRUE]
+      arguments: [%arg%, %year%, %showPlaceholder%]
     - implement: Minicup\Components\IListOfTeamsComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
