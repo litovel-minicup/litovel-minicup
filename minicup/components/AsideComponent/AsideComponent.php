@@ -120,7 +120,7 @@ class AsideComponent extends BaseComponent
     {
         $firstMatch = $this->MR->getFirstMatchInCategory($this->category);
         $countdown = $firstMatch ? DateTime::createFromFormat(
-            'Y-m-d H:m:s',
+            'Y-m-d H:i:s',
             $firstMatch->matchTerm->day->day->format('Y-m-d') . ' ' . $firstMatch->matchTerm->start->format('H:i:s')
         ) : DateTime::createFromFormat('Y-m-d H:i:s', '2017-06-09 13:00:00');
         return $this->CCF->create($countdown);
