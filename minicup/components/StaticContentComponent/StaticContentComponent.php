@@ -40,6 +40,9 @@ class StaticContentComponent extends BaseComponent
     /** @var bool */
     private $showPlaceholder;
 
+    /** @var callable[] */
+    public $onChange = [];
+
     /**
      * @param                         $arg
      * @param Year                    $year
@@ -108,6 +111,9 @@ class StaticContentComponent extends BaseComponent
             $this->content->content = $values->content;
             $this->content->updated = new DateTime();
             $this->SCR->persist($this->content);
+            foreach ($this->onChange as $callback) {
+                $callback($this->content);
+            }
         }
 
         if ($this->presenter->isAjax()) {
