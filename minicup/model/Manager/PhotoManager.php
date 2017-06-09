@@ -175,6 +175,7 @@ class PhotoManager extends Object
 		dump($image);
 		$exif = exif_read_data($original);
 		dump($exif);
+		dump($exif['Orientation']);
 		if (isset($exif['Orientation'] )) {
 			try {
 				$orientation = $exif['Orientation'];

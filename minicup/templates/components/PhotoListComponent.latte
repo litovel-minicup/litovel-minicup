@@ -2,8 +2,8 @@
     {foreach $photos as $photo}
         <div class="Photo__rows">
             <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
-               href={plink :Media:medium $photo->filename}>
-                <img src="{plink :Media:thumb $photo->filename}" alt="Foto {$photo->id}">
+               href={plink :Media:medium $photo->filename}?2017>
+                <img src="{plink :Media:thumb $photo->filename}?2017" alt="Foto {$photo->id}">
             </a>
         </div>
     {/foreach}
@@ -23,7 +23,7 @@
             $('a.swipebox').click(function (e) {
                 var i = $('.Photo__rows').children().index(this);
                 $.ajax({{link all!}}).then(function (data) {
-                    $.swipebox(data, {initialIndexOnArray: i});
+                    $.swipebox(data, { initialIndexOnArray: i});
                 });
                 e.preventDefault();
             });
