@@ -172,10 +172,12 @@ class PhotoManager extends Object
         }
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
+		dump($image);
 		$exif = exif_read_data($original);
-		if (isset($exif['COMPUTED']) && isset($exif['COMPUTED'] ['Orientation'] )) {
+		dump($exif);
+		if (isset($exif['Orientation'] )) {
 			try {
-				$orientation = $exif['COMPUTED'] ['Orientation'];
+				$orientation = $exif['Orientation'];
 				dump($orientation);
 				switch($orientation){
 					case 3:
