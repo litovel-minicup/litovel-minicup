@@ -176,6 +176,7 @@ class PhotoManager extends Object
 		if (isset($exif['COMPUTED']) && isset($exif['COMPUTED'] ['Orientation'] )) {
 			try {
 				$orientation = $exif['COMPUTED'] ['Orientation'];
+				dump($orientation);
 				switch($orientation){
 					case 3:
 						$image->rotate(180, Image::rgb(0,0,0));
@@ -188,8 +189,10 @@ class PhotoManager extends Object
 						break;
 				}
 			} catch (\Exception $e) {
+				dump($e);
 			}
 		}
+		dump($image);
         $image->sharpen();
         $watermark = clone $this->watermark;
         $watermark = $watermark->resize(
