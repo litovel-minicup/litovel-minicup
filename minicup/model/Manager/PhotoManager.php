@@ -172,6 +172,24 @@ class PhotoManager extends Object
         }
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
+		$exif = exif_read_data($original);
+		if (isset($exif['COMPUTED']) && isset($exif['COMPUTED'] ['Orientation'] )) {
+			try {
+				$orientation = $exif['COMPUTED'] ['Orientation'];
+				switch($orientation){
+					case 3:
+						$image->rotate(180, Image::rgb(0,0,0));
+						break;
+					case 6:
+						$image->rotate(-90, Image::rgb(0,0,0));
+						break;
+					case 8:
+						$image->rotate(90, Image::rgb(0,0,0));
+						break;
+				}
+			} catch (\Exception $e) {
+			}
+		}
         $image->sharpen();
         $watermark = clone $this->watermark;
         $watermark = $watermark->resize(

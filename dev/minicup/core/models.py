@@ -155,6 +155,9 @@ class Tag(models.Model):
         db_table = 'tag'
         unique_together = (('name', 'year'), ('slug', 'year'),)
 
+    def __str__(self):
+        return _('Tag {}:{}').format(self.year, self.name)
+
 
 class Team(models.Model):
     category = models.ForeignKey(Category, models.DO_NOTHING)

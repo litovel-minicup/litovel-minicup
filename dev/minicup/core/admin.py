@@ -67,6 +67,10 @@ class TeamInfoAdmin(admin.ModelAdmin):
         'category__year',
         'category__name',
     )
+    list_display = (
+        '__str__',
+        'tag',
+    )
 
 
 @admin.register(MatchTerm)
