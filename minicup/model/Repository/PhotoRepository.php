@@ -78,6 +78,7 @@ class PhotoRepository extends BaseRepository
                 ->select('[photo.*]')->from('photo')
                 ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
                 ->where('[photo_tag.tag_id] = ', $tag->id)
+				->where('[photo.active] = 1')
                 ->orderBy("[photo.taken] $order")
                 ->fetchAll()
         );
