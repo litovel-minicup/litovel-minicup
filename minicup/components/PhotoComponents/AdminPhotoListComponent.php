@@ -54,7 +54,7 @@ class AdminPhotoListComponent extends BaseComponent
     private $tags = [];
 
     /** @var Photo[] */
-    private $photos = [];
+    private $photos;
 
     /** @var string */
     private $id;
@@ -152,8 +152,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleUntaggedPhotos()
     {
-        // TODO sessions?
-        $this->photos = $this->PR->findUntaggedPhotos();
+        $this->photos = $this->PR->findUntaggedPhotos($this->year);
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
         } else {
