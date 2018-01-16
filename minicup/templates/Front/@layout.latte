@@ -1,14 +1,16 @@
 {extends '../@layout.latte'}
 {block body}
     <div id="fb-root"></div>
-    <script>(function (d, s, id) {
+    <script>
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
             js.src = "//connect.facebook.net/cs_CZ/sdk.js#xfbml=1&version=v2.6&appId=1709323006015727";
             fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!--[if lt IE 9]>
     <div id="warning">
         <a href="http://www.browser-update.org/cs/update.html" target="_blank">
@@ -22,126 +24,116 @@
         </a>
     </div>
     <![endif]-->
-    {control actualYearToggleComponent:actualYear}
-    <div class="Header animated">
-        <!-- svg logo with fallback -->
-        <div id="nav-mobile" class="Header__nav--mobile">
-            <label>
-                <select>
-                    <option value={plink Homepage:default} selected="selected">novinky</option>
-                    <option value={plink Homepage:informations}>infromace</option>
-                    <option value={plink Team:list}>týmy</option>
-                    <option value={plink Match:default}>zápasy</option>
-                    <option value={plink Stats:default}>statistiky</option>
-                    <option value={plink Gallery:default}>foto</option>
-                    <option value={plink Homepage:sponsors}>sponzoři</option>
-                </select>
-            </label>
-        </div>
 
-        <a n:href="Homepage:default">
-            <div class="Header__logo">
-                <img src="{$basePath}/assets/img/logo.png" class="Header__logo__image" alt="Logo turnaje MINICUP">
+    <!-- header class -->
+    <header class="header">
+        <!-- logo class -->
+        <section class="header__top">
+            <div class="inner">
+                {if $category->year->actual}
+                    <div class="header__top__text">
+                        <h3>9.–11. 6. 2017</h3>
+                        <p>5. ročník turnaje v miniházené</p>
+                    </div>
+                {else}
+                    {control actualYearToggleComponent:actualYear}
+                {/if}
+                <a class="header__top__logo" n:href="Homepage:default">
+                    <img class="" src="{$basePath}/assets/img/logo.png"
+                         srcset="{$basePath}/assets/img/logo.png 1x, {$basePath}/assets/img/logo@2x.png 2x"
+                         alt="Litovel MINICUP 2017">
+                </a>
+
+                <div class="header__top__toggle">
+                    {control categoryToggleComponent}
+                </div>
             </div>
-        </a>
-
-        <div class="Header__toggle">
-            {control categoryToggleComponent}
+        </section>
+        <!-- nav class -->
+        <nav class="header__nav">
+            <a n:href="Homepage:default">novinky</a>
+            <a n:href="Homepage:informations">informace</a>
+            <a n:href="Team:list">týmy</a>
+            <a n:href="Match:default">zápasy</a>
+            <a n:href="Stats:default">statistiky</a>
+            <a n:href="Gallery:default">foto</a>
+            <a n:href="Homepage:sponsors">sponzoři</a>
+        </nav>
+    </header>
+    <!-- main class -->
+    <main>
+        <div class="Main__wrapper animated fadeInUp">
+            {block outerContent}
+                <div class="Section">
+                    {block content}
+                    {/block}
+                </div>
+            {/block}
         </div>
+        <div class="Side__wrapper animated fadeInUp"">
+            {control asideComponent}
 
-        <div class="Header__nav">
-            <ul>
-                <a n:href="Homepage:default">
-                    <li>novinky</li>
-                </a>
-                <a n:href="Homepage:informations">
-                    <li>informace</li>
-                </a>
-                <a n:href="Team:list">
-                    <li>Týmy</li>
-                </a>
-                <a n:href="Match:default">
-                    <li>Zápasy</li>
-                </a>
-                <a n:href="Stats:default">
-                    <li>Statistiky</li>
-                </a>
-                <a n:href="Gallery:default">
-                    <li>foto</li>
-                </a>
-                <a n:href="Homepage:sponsors">
-                    <li>sponzoři</li>
-                </a>
-            </ul>
-        </div>
-    </div>
-    <div class="Main__wrapper animated fadeInUp">
-        {block outerContent}
-            <div class="Section">
-                {block content}
-                {/block}
+            <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline"
+                 data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                 data-show-facepile="true" data-width="472" style="margin-top: 8px;">
+                <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
+                </blockquote>
             </div>
-        {/block}
-    </div>
-    <div class="Side__wrapper animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
-        {control asideComponent}
-
-        <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline"
-             data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
-             data-show-facepile="true" data-width="472" style="margin-top: 8px;">
-            <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore"><a
-                        href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a></blockquote>
-        </div>
-        <style>
-            @media (max-width: 472px) {
-                .fb-page {
-                    display: none;
+            <style>
+                @media (max-width: 472px) {
+                    .fb-page {
+                        display: none;
+                    }
                 }
-            }
 
-            @media (max-width: 768px) {
-                .fb-page {
-                    text-align: center;
-                    width: 100%;
+                @media (max-width: 768px) {
+                    .fb-page {
+                        text-align: center;
+                        width: 100%;
+                    }
                 }
-            }
-        </style>
-    </div>
-    <div class="Footer animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
-        <div class="Footer__block">
-            <div class="Box__subhead Footer__subhead">Kontakt</div>
-            <div class="Box__content Footer__content">
-                TJ Tatran Litovel – oddíl házené <br>
-                Nám. Přemysla Otakara 770, Litovel 784 01 <br>
-                <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
-                <a href="mailto:hazena@tatranlitovel.cz">Email</a>
-            </div>
+            </style>
         </div>
-
-        <div class="Footer__block">
-            <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
-            <div class="Box__content Footer__content">Martin Zifčák<br>
-                <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
-                +420 603 934 479
+    </main>
+    <div class="Footer__wrapper">
+        <div class="Footer animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">Kontakt</div>
+                <div class="Box__content Footer__content">
+                    TJ Tatran Litovel – oddíl házené <br>
+                    Nám. Přemysla Otakara 770, Litovel 784 01 <br>
+                    <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
+                    <a href="mailto:hazena@tatranlitovel.cz">Email</a>
+                </div>
             </div>
-        </div>
 
-        <div class="Footer__block">
-            <div class="Box__subhead Footer__subhead">Facebook</div>
-            <div class="Box__content Footer__content">
-                <a href="https://www.facebook.com/litovel.minicup/" target="_blank">Facebook stránka turnaje Litovel
-                    MINICUP</a>
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
+                <div class="Box__content Footer__content">Martin Zifčák<br>
+                    <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
+                    +420 603 934 479
+                </div>
             </div>
-        </div>
 
-        <div class="Footer__block">
-            <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
-            <div class="Box__content Footer__content">
-                {control archiveYearsToggleComponent:archiveYears}
-                <br>
-                <a n:href=":Admin:Homepage:default">administrace</a>
-                <br>
-                Josef Kolář, Matěj Mitaš © 2016
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">Facebook</div>
+                <div class="Box__content Footer__content">
+                    <a href="https://www.facebook.com/litovel.minicup/" target="_blank">
+                        Facebook stránka turnaje Litovel MINICUP
+                    </a>
+                </div>
+            </div>
+
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
+                <div class="Box__content Footer__content">
+                    {control archiveYearsToggleComponent:archiveYears}
+                    <br>
+                    <a n:href=":Admin:Homepage:default">administrace</a>
+                    <br>
+                    Josef Kolář, Matěj Mitaš <br> © 2015 - {date("Y")}
+                </div>
             </div>
         </div>
     </div>

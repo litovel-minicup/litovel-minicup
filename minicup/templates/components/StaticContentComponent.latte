@@ -16,9 +16,9 @@
     </script>
 {elseif $content}
     {$content|noescape}
-{else}
+{elseif $showPlaceholder}
     <div class="Article__subhead Box__subhead">
-        Omlouváme se, tato sekce není bohužel pro aktuálně zvolený ročník dostupná.
+        Omlouváme se, tato sekce není zatím pro aktuálně zvolený ročník dostupná.
     </div>
 {/if}
 {/snippet}

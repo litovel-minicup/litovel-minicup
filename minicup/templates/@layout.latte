@@ -3,13 +3,11 @@
 <head n:inner-block="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title n:snippet="title">{ifset title}{include title|stripHtml} | {/ifset}
-        MINICUP {$category->year->slug}</title>
+    <title n:snippet="title">{ifset title}{include title|stripHtml} | {/ifset} MINICUP {$category->year->slug}</title>
 
     {block seo}
         <!-- SEO -->
-        <meta property="description"
-              content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2016 konaný ve dnech 10. - 12. června 2016{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+        <meta property="description" content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2017 konaný ve dnech 9. - 11. června 2017{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
         <meta property="keywords" content="litovel,hanacke,benatky,minihazena,hazena,tatran,extraliga,minicup">
         <meta property="author" content="Josef Kolář, Matěj Mitaš">
         {block og}
@@ -17,11 +15,9 @@
             <meta property="fb:app_id" content="1709323006015727">
             <meta property="og:type" content="website">
             <meta property="og:site_name" content="Litovel MINICUP">
-            <meta property="og:description"
-                  content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2016 konaný ve dnech 10. - 12. června 2016{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+            <meta property="og:description" content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2017 konaný ve dnech 9. - 11. června 2017{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, autogramiáda extraligového družstva TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
             <meta property="og:url" content="{$absoluteUrl}">
-            <meta property="og:title"
-                  content="{ifset title}{include title|stripHtml} | {/ifset}MINICUP {$category->year->slug}">
+            <meta property="og:title" content="{ifset title}{include title|stripHtml} | {/ifset}MINICUP {$category->year->slug}">
             {block ogImage}
                 <meta property="og:image" content="{$baseUri}/assets/img/og_image.png">
                 <meta property="og:image:width" content="400">

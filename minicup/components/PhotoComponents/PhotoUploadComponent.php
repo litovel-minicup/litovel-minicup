@@ -111,10 +111,15 @@ class PhotoUploadComponent extends BaseComponent
         if (!$tags) {
             return;
         }
+
+        $photos = isset($this->request->post['photos']) ? $this->request->post['photos'] : [];
+        if (!$photos) {
+			$photos = $this->photos;
+		}
         /** @var Tag[] $tags */
         $tags = $this->TR->findByIds($tags);
         /** @var Photo[] $photos */
-        $photos = $this->PR->findByIds($this->photos);
+        $photos = $this->PR->findByIds($photos);
         foreach ($photos as $photo) {
             foreach ($tags as $tag) {
                 if (!in_array($tag, $photo->tags, TRUE)) {

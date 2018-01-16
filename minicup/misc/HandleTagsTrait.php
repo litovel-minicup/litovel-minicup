@@ -28,7 +28,7 @@ trait HandleTagsTrait
         $tags = $this->tagRepository->findLikeTerm(
             $presenter->getRequest()->getPost('term'),
             $presenter->category->year,
-            ($presenter instanceof BaseAdminPresenter)
+            $presenter instanceof BaseAdminPresenter
         );
         $results = [];
         /** @var Tag $tag */

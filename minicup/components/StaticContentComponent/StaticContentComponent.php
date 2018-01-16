@@ -20,9 +20,10 @@ interface IStaticContentComponentFactory
     /**
      * @param StaticContent|string|Team $arg
      * @param Year                      $year
+     * @param bool                      $showPlaceholder
      * @return StaticContentComponent
      */
-    public function create($arg, Year $year);
+    public function create($arg, Year $year, $showPlaceholder = TRUE);
 }
 
 class StaticContentComponent extends BaseComponent
@@ -36,23 +37,29 @@ class StaticContentComponent extends BaseComponent
     /** @var StaticContent */
     private $content;
 
-    /** @var Year */
-    private $year;
+    /** @var bool */
+    private $showPlaceholder;
+
+    /** @var callable[] */
+    public $onChange = [];
 
     /**
      * @param                         $arg
      * @param Year                    $year
+     * @param                         $showPlaceholder
      * @param StaticContentRepository $SCR
      * @param Texy                    $texy
      * @param StaticContentManager    $SCM
      */
     public function __construct($arg,
                                 Year $year,
+                                $showPlaceholder,
                                 StaticContentRepository $SCR,
                                 Texy $texy,
                                 StaticContentManager $SCM)
     {
         parent::__construct();
+        $this->showPlaceholder = $showPlaceholder;
         $this->SCR = $SCR;
         $this->texy = $texy;
         $this->content = $SCM->getContent($arg, $year);
@@ -63,9 +70,15 @@ class StaticContentComponent extends BaseComponent
         if (!isset($this->template->edit)) {
             $this->template->edit = FALSE;
         }
+        $this->template->showPlaceholder = $this->showPlaceholder;
         $this->template->content = $this->texy->process($this->content->content);
         $this->template->staticContent = $this->content;
         parent::render();
+    }
+
+    public function hasContent()
+    {
+        return (bool)Strings::trim($this->content->content);
     }
 
     public function handleEdit()
@@ -98,6 +111,9 @@ class StaticContentComponent extends BaseComponent
             $this->content->content = $values->content;
             $this->content->updated = new DateTime();
             $this->SCR->persist($this->content);
+            foreach ($this->onChange as $callback) {
+                $callback($this->content);
+            }
         }
 
         if ($this->presenter->isAjax()) {

@@ -167,4 +167,18 @@ class MatchRepository extends BaseRepository
 
         return $row ? $this->createEntity($row) : NULL;
     }
+
+    /**
+     * @param Category $category
+     * @return Match|NULL
+     */
+    public function getFirstMatchInCategory(Category $category)
+    {
+        $row = $this->createCategoryFluent($category)
+            ->leftJoin('[match_term] ON [match_term].[id] = [match].[id]')
+            ->leftJoin('[day] ON [match_term].[day_id] = [day].[id]')
+            ->orderBy('[match_term].[start] ASC')->limit(1)->fetch();
+
+        return $row ? $this->createEntity($row) : NULL;
+    }
 }

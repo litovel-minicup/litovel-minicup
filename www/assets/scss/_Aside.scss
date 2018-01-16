@@ -1,181 +1,189 @@
 .Side__wrapper {
-	@include span-columns(5);
-	@include omega();
+  @include span-columns(5);
+  @include omega();
 }
 
-
 .Aside {
-	@include span-columns(5 of 5);
-	margin-top: $universal-dis;
-	background: $light--yellow;
+  @include span-columns(5 of 5);
+  margin-top: $universal-dis;
+  background: $light--yellow;
 
-	border-bottom: 2px solid $dark--yellow;
+  border-bottom: 2px solid $dark--yellow;
 
-	a:hover {
-		background: black;
-		color: white;
-	}
+  a:hover {
+    background: black;
+    color: white;
+  }
 
-	&__head {
-		letter-spacing: -1.5px;
+  &__head {
+    letter-spacing: -1.5px;
 
-		&__icon {
-			background: $dark--yellow;
-		}
+    &__icon {
+      background: $dark--yellow;
+    }
 
-		&__text {
-			background: $dark--yellow;
-			color: darken($dark--yellow, 20%);
-		}
-	}
+    &__text {
+      background: $dark--yellow;
+      color: darken($dark--yellow, 20%);
+    }
+  }
 
+  &__subhead {
+    background: $medium--yellow;
+  }
 
-	&__subhead {
-		background: $medium--yellow;
-	}
+  &__content {
+    padding: 0px;
 
-	&__content {
-		padding: 0px;
+    ul {
+      padding: 15px 0px;
+    }
 
-		ul {
-			padding: 15px 0px;
-		}
+    li {
+      padding: 2px 15px;
+    }
 
-		li {
-			padding: 2px 15px;
-		}
+    &--split--left {
+      background: $light--yellow;
 
-		&--split--left {
-			background: $light--yellow;
+    }
 
-		}
+    &--split--right {
+      background: $light--yellow;
+      text-align: right;
+    }
 
-		&--split--right {
-			background: $light--yellow;
-			text-align: right;
-		}
+    &--split--middle {
+      background: $medium--yellow;
+      color: white;
+      text-align: center;
+      font-family: "Montserrat";
+    }
 
-		&--split--middle {
-			background: $medium--yellow;
-			color: white;
-			text-align: center;
-			font-family: "Montserrat";
-		}
+    &__vs {
+      text-align: center;
+      margin-top: 60px;
+      height: 70px;
+    }
 
-		&__vs {
-			text-align: center;
-			margin-top: 60px;
-			height: 70px;
-		}
+  }
 
-	}
+  &__list--rank {
+    @include span-columns(0.50 of 5);
+  }
+  &__list--team {
+    @include span-columns(2.25 of 5);
+  }
+  &__list--matches {
+    @include span-columns(0.75 of 5);
+  }
+  &__list--score {
+    @include span-columns(0.75 of 5);
+    text-align: center;
+  }
+  &__list--points {
+    @include span-columns(0.75 of 5);
+    text-align: right;
+  }
 
-	&__list--rank {@include span-columns(0.50 of 5);}
-	&__list--team {@include span-columns(2.25 of 5);}
-    &__list--matches {@include span-columns(0.75 of 5);}
-	&__list--score {@include span-columns(0.75 of 5);text-align: center;}
-	&__list--points {@include span-columns(0.75 of 5);text-align: right;}
+  &__table {
 
+    width: 100%;
 
-	&__table {
-		
-		width: 100%;
+    &--upcoming {
+      tr {
+        &:nth-of-type(1) td {
+          height: 40px;
+          vertical-align: bottom;
+        }
 
-		&--upcoming {
-			tr {
-				&:nth-of-type(1) td {
-					height: 40px;
-					vertical-align: bottom;
-				}
+        &:last-of-type td {
+          height: 40px;
+          vertical-align: top;
+        }
+      }
 
-				&:nth-of-type(4) td {
-					height: 40px;
-					vertical-align: top;
-				}
-			}
+      td {
+        padding: 3px 15px !important;
+        vertical-align: middle;
 
-			td {
-				padding: 3px 15px!important;
-				vertical-align: middle;
+        &:nth-of-type(1) {
+          width: 40%;
+        }
 
-				&:nth-of-type(1) {
-					width: 40%;
-				}
+        &:nth-of-type(3) {
+          width: 40%;
+          text-align: right;
+        }
 
-				&:nth-of-type(3) {
-					width: 40%;
-					text-align: right;
-				}
+        &:nth-of-type(2) {
+          width: 20%;
+          background: $medium--yellow;
+          color: white;
+          text-align: center;
+          font-family: "Montserrat";
+        }
+      }
+    }
 
-				&:nth-of-type(2) {
-					width: 20%;
-					background: $medium--yellow;
-					color: white;
-					text-align: center;
-					font-family: "Montserrat";
-				}
-			}
-		}
-	
-		&--standings {
+    &--standings {
 
-			th {
-				padding: 20px 0;
-			}
+      th {
+        padding: 20px 0;
+      }
 
-			td, th {
-				text-align: center;
-			}
+      td, th {
+        text-align: center;
+      }
 
-			tr {
-				&:nth-of-type(1) td {
-					height: 40px;
-					vertical-align: bottom;
-				}
+      tr {
+        &:nth-of-type(1) td {
+          height: 40px;
+          vertical-align: bottom;
+        }
 
-				&:nth-of-type(12) td {
-					height: 40px;
-					vertical-align: top;
-				}
-			}
+        &:last-of-type td {
+          height: 40px;
+          vertical-align: top;
+        }
+      }
 
-			td {
-				padding: 3px 0!important;
-				vertical-align: middle;
-			}
-			
-			th:nth-of-type(1),td:nth-of-type(1) {
-				width: 15%;
-			}
+      td {
+        padding: 3px 0 !important;
+        vertical-align: middle;
+      }
 
-			th:nth-of-type(2),td:nth-of-type(2) {
-				width: 40%;
-				text-align: left;
-			}
+      th:nth-of-type(1), td:nth-of-type(1) {
+        width: 15%;
+      }
 
-			th:nth-of-type(3),td:nth-of-type(3) {
-				width: 10%;
-			}
+      th:nth-of-type(2), td:nth-of-type(2) {
+        width: 40%;
+        text-align: left;
+      }
 
-			th:nth-of-type(4),td:nth-of-type(4) {
-				width: 20%;
-			}
+      th:nth-of-type(3), td:nth-of-type(3) {
+        width: 10%;
+      }
 
-			th:nth-of-type(5),td:nth-of-type(5) {
-				width: 15%;
-			}
+      th:nth-of-type(4), td:nth-of-type(4) {
+        width: 20%;
+      }
 
+      th:nth-of-type(5), td:nth-of-type(5) {
+        width: 15%;
+      }
 
-		}
-	}
+    }
+  }
 
 }
 
 @media screen and (max-width: 768px) {
-    .Side__wrapper {
-        @include span-columns(12);
-    }
-	.Aside {
-		@include span-columns(12);
-	}
+  .Side__wrapper {
+    @include span-columns(12);
+  }
+  .Aside {
+    @include span-columns(12);
+  }
 }

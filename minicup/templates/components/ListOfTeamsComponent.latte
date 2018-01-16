@@ -1,3 +1,20 @@
-<ul n:inner-foreach="$teams as $team">
-    <li class="Box__rows Team__rows"><a href="{plink Team:detail $category, $team->i}">{$team->name}</a></li>
-</ul>
+<div class="Article" n:cache="$category->cacheTag, tags => $category->cacheTag">
+    <div class="Article__head Box__head">
+        <div class="Article__head__icon Box__head__icon icon__teams">
+        </div>
+        <h1 class="Article__head__text Box__head__text" n:block="title">Týmy {$category->name}</h1>
+    </div>
+    <div n:if="$teams" class="Box__content Team__content">
+        <ul n:inner-foreach="$teams as $team">
+            <li class="Box__rows Team__rows"><a href="{plink Team:detail $category, $team->i}">{$team->name}</a></li>
+        </ul>
+    </div>
+
+    <div n:if="!$teams" class="Article__subhead Box__subhead">
+        Omlouváme se, tato sekce není zatím pro aktuálně zvolený ročník dostupná.
+    </div>
+</div>
+
+
+
+

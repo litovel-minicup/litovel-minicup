@@ -14,6 +14,8 @@ class StaticContent extends BaseEntity
 {
     public static $CACHE_TAG = 'staticContent';
 
+    const STREAM = 'stream';
+
     protected function initDefaults()
     {
         parent::initDefaults();

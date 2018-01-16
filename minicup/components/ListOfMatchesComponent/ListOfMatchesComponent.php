@@ -50,6 +50,7 @@ class ListOfMatchesComponent extends BaseComponent
         if ($this->arg instanceof Team) {
             $matches = $this->arg->i->matches;
             $this->template->team = $this->arg->i;
+            $this->template->category = $this->arg->category;
         } elseif ($this->arg instanceof Category) {
             if ($mode === 'current') {
                 $matches = $this->MR->getCurrentMatches($this->arg, $limit);
@@ -64,6 +65,7 @@ class ListOfMatchesComponent extends BaseComponent
             } else {
                 throw new InvalidArgumentException("Unknown render mode: '{$mode}'.");
             }
+            $this->template->category = $this->arg;
         }
         $this->template->matches = $matches;
         parent::render();

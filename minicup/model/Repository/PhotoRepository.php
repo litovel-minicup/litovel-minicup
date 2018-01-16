@@ -37,11 +37,12 @@ class PhotoRepository extends BaseRepository
     /**
      * @return Photo[]
      */
-    public function findUntaggedPhotos()
+    public function findUntaggedPhotos(Year $year)
     {
         return $this->createEntities($this->connection
             ->select('*')
             ->from($this->getTable())
+            ->where('EXTRACT(YEAR FROM [taken]) = ', $year->year)
             ->where('[id] NOT IN',
                 $this->connection->select('[photo_id]')
                     ->from('[photo_tag]')
@@ -78,6 +79,7 @@ class PhotoRepository extends BaseRepository
                 ->select('[photo.*]')->from('photo')
                 ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
                 ->where('[photo_tag.tag_id] = ', $tag->id)
+				->where('[photo.active] = 1')
                 ->orderBy("[photo.taken] $order")
                 ->fetchAll()
         );

@@ -1,49 +1,57 @@
-<div class="Aside" n:if="$control->playingTime">
-    <a href="{plink Match:default}">
-        <div class="Box__head Aside__head">
-            <div class="Aside__head__icon Box__head__icon icon__live"></div>
-            <div class="Aside__head__text Box__head__text">Aktuální utkání</div>
-        </div>
-    </a>
-
-    <div class="Box__content Aside__content">
-        {control listOfMatchesAsideComponent:aside current, 4}
+<div class="Aside" n:if="!$control->started">
+    <div class="Box__head Aside__head">
+        <div class="Aside__head__icon Box__head__icon icon__upcoming"></div>
+        <div class="Aside__head__text Box__head__text">{control countdownComponent}</div>
     </div>
 </div>
 
-<div class="Aside" n:if="!$control->finished">
-    <a href="{plink Match:default}">
-        <div class="Box__head Aside__head">
-            <div class="Aside__head__icon Box__head__icon icon__upcoming"></div>
-            <div class="Aside__head__text Box__head__text">Nejbližší utkání</div>
-        </div>
-    </a>
+{control streamComponent}
 
-    <div class="Box__content Aside__content">
-        {control listOfMatchesAsideComponent:aside next, 6}
+{cache $category->cacheTag, tags => $category->cacheTag}
+    <div class="Aside" n:if="$control->playingTime">
+        <a href="{plink Match:default}">
+            <div class="Box__head Aside__head">
+                <div class="Aside__head__icon Box__head__icon icon__live"></div>
+                <div class="Aside__head__text Box__head__text">Aktuální utkání</div>
+            </div>
+        </a>
+
+        <div class="Box__content Aside__content">
+            {control listOfMatchesAsideComponent:aside current, 4}
+        </div>
     </div>
-</div>
+    <div class="Aside" n:if="!$control->finished">
+        <a href="{plink Match:default}">
+            <div class="Box__head Aside__head">
+                <div class="Aside__head__icon Box__head__icon icon__upcoming"></div>
+                <div class="Aside__head__text Box__head__text">Nejbližší utkání</div>
+            </div>
+        </a>
 
-<div class="Aside" n:if="$category->teams">
-    <a href="{plink Stats:default}">
-        <div class="Box__head Aside__head">
-            <div class="Aside__head__icon Box__head__icon icon__score"></div>
-            <div class="Box__head__text Aside__head__text">Pořadí kategorie {$category->name}</div>
+        <div class="Box__content Aside__content">
+            {control listOfMatchesAsideComponent:aside next, 6}
         </div>
-    </a>
-
-    {control categoryTableComponent:aside}
-</div>
-
-<div class="Aside" n:if="$control->started">
-    <a href="{plink Match:default}">
-        <div class="Box__head Aside__head">
-            <div class="Aside__head__icon Box__head__icon icon__matches"></div>
-            <div class="Aside__head__text Box__head__text">Poslední odehraná utkání</div>
-        </div>
-    </a>
-
-    <div class="Box__content Aside__content">
-        {control listOfMatchesAsideComponent:aside last, 4}
     </div>
-</div>
+    <div class="Aside" n:if="$category->teams">
+        <a href="{plink Stats:default}">
+            <div class="Box__head Aside__head">
+                <div class="Aside__head__icon Box__head__icon icon__score"></div>
+                <div class="Box__head__text Aside__head__text">Pořadí kategorie {$category->name}</div>
+            </div>
+        </a>
+
+        {control categoryTableComponent:aside}
+    </div>
+    <div class="Aside" n:if="$control->started">
+        <a href="{plink Match:default}">
+            <div class="Box__head Aside__head">
+                <div class="Aside__head__icon Box__head__icon icon__matches"></div>
+                <div class="Aside__head__text Box__head__text">Poslední odehraná utkání</div>
+            </div>
+        </a>
+
+        <div class="Box__content Aside__content">
+            {control listOfMatchesAsideComponent:aside last, 4}
+        </div>
+    </div>
+{/cache}

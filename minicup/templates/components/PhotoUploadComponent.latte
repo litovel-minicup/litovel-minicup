@@ -93,6 +93,8 @@
                 <div class="form-group btn-group">
                     <div class="btn btn-info" id="tag-all"><i class="glyphicon glyphicon-tags"></i> Otagovat všechny
                     </div>
+                    <div class="btn btn-info" id="tag-selected"><i class="glyphicon glyphicon-tags"></i> Otagovat vybrané
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
@@ -176,8 +178,19 @@
 
             var $select2all = initTagsSelect2($('#select2-all'));
             $('#tag-all').on('click', function (e) {
-                $.post({{link tagsAll!}}, {tags: $select2all.val()}, function (response, textStatus, xhr) {
+                $.post({{link tagsAll!}}, { tags: $select2all.val()}, function (response, textStatus, xhr) {
                     toastr.success('Otagovány všechny fotky!', 'Výborně!');
+                    redrawSnippets(response);
+                });
+            });
+            $('#tag-selected').on('click', function (e) {
+                $.post({{link tagsAll!}}, {
+                    tags: $select2all.val(),
+                    photos: $('.selected').map(function() {
+                        return $(this).data('id')
+                    }).get()
+                }, function (response, textStatus, xhr) {
+                    toastr.success('Otagovány vybrané fotky!', 'Výborně!');
                     redrawSnippets(response);
                 });
             });

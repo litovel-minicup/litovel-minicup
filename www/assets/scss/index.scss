@@ -28,10 +28,13 @@
 @import "Photo";
 
 body {
-  @include outer-container();
   height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    @include outer-container();
 }
 
 // TODO: move to right partials file

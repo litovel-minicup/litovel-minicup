@@ -56,6 +56,8 @@ class MatchImporter
     }
 
     /**
+     * Import matches to category from given file in format:
+     * j. n. Y <tab> H:i <tab> team A <tab> team B <end line>
      * @param Category $category
      * @param string   $file
      * @return int count of imported matches

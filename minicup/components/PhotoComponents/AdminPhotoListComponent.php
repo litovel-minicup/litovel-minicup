@@ -54,7 +54,7 @@ class AdminPhotoListComponent extends BaseComponent
     private $tags = [];
 
     /** @var Photo[] */
-    private $photos = [];
+    private $photos;
 
     /** @var string */
     private $id;
@@ -152,8 +152,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleUntaggedPhotos()
     {
-        // TODO sessions?
-        $this->photos = $this->PR->findUntaggedPhotos();
+        $this->photos = $this->PR->findUntaggedPhotos($this->year);
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
         } else {
@@ -168,8 +167,8 @@ class AdminPhotoListComponent extends BaseComponent
         $linkGenerator = $this->linkGenerator;
         $model = $this->connection->select('[photo.*]')
             ->from('[photo]')
-            ->rightJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
-            ->rightJoin('[tag]')->on('[photo_tag.tag_id] = [tag.id]')
+            ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
+            ->leftJoin('[tag]')->on('[photo_tag.tag_id] = [tag.id]')
             ->where('[tag.year_id] =', $this->year->id)
             ->where('[photo.id] IS NOT NULL')
             ->groupBy('id')

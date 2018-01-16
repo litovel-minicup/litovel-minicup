@@ -1,4 +1,4 @@
-<div class="Article">
+<div class="Article" n:snippet="news">
     <div n:foreach="$news as $new" class="Box__content">
         <h2 class="Article__heading">{$new->title}</h2>
         <div class="Article__date" title="{$new->added|date:"j. n. Y G:i"}">{$new->added|relDate}</div>
@@ -8,11 +8,25 @@
             {php $size = count($new->tag->photos) == 1 ? "medium": "thumb"}
             {foreach $new->tag->photos as $photo}
                 <div class="photo">
-                    <img src="{plink :Media:$size $photo->filename}" alt="Fotka k novince {$new->title}">
+                    <img src="{plink :Media:$size $photo->filename}" alt="{$new->title} - foto č. {$iterator->counter}">
                 </div>
             {/foreach}
         </div>
     </div>
+    {if !$news}
+        <div class="Box__content">
+            <div class="Article__content">
+                Žádné novinky k zobrazení.
+            </div>
+        </div>
+    {elseif $actual && $actual < $max}
+        <div class="Box__content">
+            <div class="Article__content">
+                <a class="show-more ajax" n:href="show! $step+$actual"
+                   style="float: right; clear: both;">Zobrazit více!</a>
+            </div>
+        </div>
+    {/if}
     <script>
         FB.XFBML.parse();
     </script>

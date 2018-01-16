@@ -4,7 +4,11 @@ namespace Minicup\Components;
 
 
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\StaticContent;
+use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Manager\MatchManager;
+use Minicup\Model\Repository\MatchRepository;
+use Nette\Utils\DateTime;
 
 interface IAsideComponentFactory
 {
@@ -28,27 +32,51 @@ class AsideComponent extends BaseComponent
     /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
 
+    /** @var ICountdownComponentFactory */
+    private $CCF;
+
     /** @var Category */
     private $category;
 
     /** @var MatchManager */
     private $MM;
 
+    /** @var MatchManager */
+    private $MR;
+
+    /** @var IStaticContentComponentFactory */
+    private $ISCCF;
+
+    /** @var CacheManager */
+    private $cacheManager;
+
     /**
      * @param Category                       $category
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param ICategoryTableComponentFactory $CTCF
+     * @param ICountdownComponentFactory     $CCF
      * @param MatchManager                   $MM
+     * @param MatchRepository                $MR
+     * @param IStaticContentComponentFactory $ISCCF
+     * @param CacheManager                   $cacheManager
      */
     public function __construct(Category $category,
                                 IListOfMatchesComponentFactory $LOMCF,
                                 ICategoryTableComponentFactory $CTCF,
-                                MatchManager $MM)
+                                ICountdownComponentFactory $CCF,
+                                MatchManager $MM,
+                                MatchRepository $MR,
+                                IStaticContentComponentFactory $ISCCF,
+                                CacheManager $cacheManager)
     {
         $this->category = $category;
         $this->LOMCF = $LOMCF;
+        $this->CCF = $CCF;
         $this->CTCF = $CTCF;
         $this->MM = $MM;
+        $this->MR = $MR;
+        $this->ISCCF = $ISCCF;
+        $this->cacheManager = $cacheManager;
         parent::__construct();
     }
 
@@ -97,6 +125,32 @@ class AsideComponent extends BaseComponent
     protected function createComponentCategoryTableComponent()
     {
         return $this->CTCF->create($this->category);
+    }
+
+    /**
+     * @return CountdownComponent
+     */
+    protected function createComponentCountdownComponent()
+    {
+        $firstMatch = $this->MR->getFirstMatchInCategory($this->category);
+        $countdown = $firstMatch ? DateTime::createFromFormat(
+            'Y-m-d H:i:s',
+            $firstMatch->matchTerm->day->day->format('Y-m-d') . ' ' . $firstMatch->matchTerm->start->format('H:i:s')
+        ) : DateTime::createFromFormat('Y-m-d H:i:s', '2017-06-09 13:00:00');
+        return $this->CCF->create($countdown);
+    }
+
+
+    /**
+     * @return StaticContentComponent
+     */
+    protected function createComponentStreamComponent()
+    {
+        $staticContentComponent = $this->ISCCF->create(StaticContent::STREAM, $this->category->year, FALSE);
+        $staticContentComponent->onChange[] = function (StaticContent $content) {
+            $this->cacheManager->cleanByEntity($this->category);
+        };
+        return $staticContentComponent;
     }
 
 }

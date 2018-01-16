@@ -29,9 +29,16 @@ class ListOfNewsComponent extends BaseComponent
     /** @var Cache */
     private $cache;
 
+    /** @var int */
+    private $actual = NewsRepository::DEFAULT_LIMIT;
+
+    /** @var int */
+    private $step = NewsRepository::DEFAULT_LIMIT;
+
     /**
      * @param Year           $year
      * @param NewsRepository $NR
+     * @param IStorage       $storage
      */
     public function __construct(Year $year,
                                 NewsRepository $NR,
@@ -45,7 +52,17 @@ class ListOfNewsComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->news = $this->NR->findLastNews($this->year);
+        $this->template->news = $this->NR->findLastNews($this->year, $this->actual);
+        $this->template->step = $this->step;
+        $this->template->actual = $this->actual;
+        $this->template->max = $this->NR->getNewsCountInYear($this->year);
+
         parent::render();
+    }
+
+    public function handleShow($count)
+    {
+        $this->actual = $count;
+        $this->redrawControl('news');
     }
 }
