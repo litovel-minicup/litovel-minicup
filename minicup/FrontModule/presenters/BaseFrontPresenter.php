@@ -63,6 +63,6 @@ abstract class BaseFrontPresenter extends BasePresenter
      */
     protected function createComponentAsideComponent()
     {
-        return $this->ACF->create($this->category);
+        return $this->ACF->create($this->category, $this->context->getParameters()['tournamentStart']);
     }
 }

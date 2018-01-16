@@ -1,6 +1,7 @@
 parameters:
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
+    tournamentStart: "2018-06-08 13:00:00"
     cachedRepositories: [
     	@Minicup\Model\Repository\CategoryRepository,
     	@Minicup\Model\Repository\TeamInfoRepository,
@@ -129,8 +130,8 @@ services:
       parameters: [array tags = NULL]
       arguments: [%tags%]
     - implement: Minicup\Components\IAsideComponentFactory
-      parameters: [Minicup\Model\Entity\Category category]
-      arguments: [%category%]
+      parameters: [Minicup\Model\Entity\Category category, tournamentStart]
+      arguments: [%category%, %tournamentStart%]
     - implement: Minicup\Components\ICategoryTableComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

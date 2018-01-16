@@ -14,9 +14,10 @@ interface IAsideComponentFactory
 {
     /**
      * @param Category $category
+     * @param string $tournamentStart
      * @return AsideComponent
      */
-    public function create(Category $category);
+    public function create(Category $category, $tournamentStart);
 }
 
 /**
@@ -50,17 +51,21 @@ class AsideComponent extends BaseComponent
     /** @var CacheManager */
     private $cacheManager;
 
+    private $tournamentStart;
+
     /**
-     * @param Category                       $category
+     * @param Category $category
+     * @param string $tournamentStart
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param ICategoryTableComponentFactory $CTCF
-     * @param ICountdownComponentFactory     $CCF
-     * @param MatchManager                   $MM
-     * @param MatchRepository                $MR
+     * @param ICountdownComponentFactory $CCF
+     * @param MatchManager $MM
+     * @param MatchRepository $MR
      * @param IStaticContentComponentFactory $ISCCF
-     * @param CacheManager                   $cacheManager
+     * @param CacheManager $cacheManager
      */
     public function __construct(Category $category,
+                                $tournamentStart,
                                 IListOfMatchesComponentFactory $LOMCF,
                                 ICategoryTableComponentFactory $CTCF,
                                 ICountdownComponentFactory $CCF,
@@ -77,6 +82,7 @@ class AsideComponent extends BaseComponent
         $this->MR = $MR;
         $this->ISCCF = $ISCCF;
         $this->cacheManager = $cacheManager;
+        $this->tournamentStart = $tournamentStart;
         parent::__construct();
     }
 
@@ -136,7 +142,7 @@ class AsideComponent extends BaseComponent
         $countdown = $firstMatch ? DateTime::createFromFormat(
             'Y-m-d H:i:s',
             $firstMatch->matchTerm->day->day->format('Y-m-d') . ' ' . $firstMatch->matchTerm->start->format('H:i:s')
-        ) : DateTime::createFromFormat('Y-m-d H:i:s', '2017-06-09 13:00:00');
+        ) : DateTime::createFromFormat('Y-m-d H:i:s', $this->tournamentStart);
         return $this->CCF->create($countdown);
     }
 

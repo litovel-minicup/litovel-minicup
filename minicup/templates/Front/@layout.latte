@@ -1,5 +1,7 @@
 {extends '../@layout.latte'}
 {block body}
+    {control css}
+
     <div id="fb-root"></div>
     <script>
         (function (d, s, id) {
@@ -32,8 +34,8 @@
             <div class="inner">
                 {if $category->year->actual}
                     <div class="header__top__text">
-                        <h3>9.–11. 6. 2017</h3>
-                        <p>5. ročník turnaje v miniházené</p>
+                        <h3>8.–10. 6. 2018</h3>
+                        <p>6. ročník turnaje v miniházené</p>
                     </div>
                 {else}
                     {control actualYearToggleComponent:actualYear}
@@ -73,8 +75,8 @@
         <div class="Side__wrapper animated fadeInUp"">
             {control asideComponent}
 
-            <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline"
-                 data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+            <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
+                 data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
                  data-show-facepile="true" data-width="472" style="margin-top: 8px;">
                 <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
                     <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
@@ -138,7 +140,6 @@
         </div>
     </div>
     {include '../@tracking.latte'}
-    {control css}
 {/block}
 
 {block head}
