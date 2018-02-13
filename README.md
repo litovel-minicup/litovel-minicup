@@ -1,4 +1,4 @@
-# Minicup-2015
+# Litovel MINICUP
 Sport web application for handball tournament written in Nette
 
 
