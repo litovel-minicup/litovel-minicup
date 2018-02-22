@@ -1,6 +1,6 @@
 {
   "require": {
-    "php": ">= 5.5",
+    "php": ">= 5.6",
     "nette/application": "dev-master",
     "nette/bootstrap": "~2.4",
     "nette/caching": "dev-master",
