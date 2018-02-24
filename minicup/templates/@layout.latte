@@ -49,7 +49,9 @@
         <meta name="msapplication-config" content="{$basePath}/assets/favicon/browserconfig.xml">
         <meta name="theme-color" content="#0040c1">
     {/block}
-
+    {if !isset($productionMode) || (isset($productionMode) && $productionMode)}
+        <script src="{$basePath}/assets/js/hotjar.js"></script>
+    {/if}
 </head>
 <body>
 {block body}{/block}
