@@ -1,17 +1,22 @@
 <?php
+
 namespace Minicup\Model\Manager;
 
 
 use Dibi\DateTime;
 use Minicup\Model\Entity\Photo;
+use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\PhotoRepository;
+use Minicup\Model\Repository\YearRepository;
 use Nette\FileNotFoundException;
 use Nette\Http\FileUpload;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
 use Nette\Object;
 use Nette\Utils\Image;
+use Nette\Utils\ImageException;
 use Nette\Utils\Random;
+use Tracy\Debugger;
 
 class PhotoManager extends Object
 {
@@ -45,31 +50,47 @@ class PhotoManager extends Object
         'image/jpeg' => 'jpg'
     ];
 
-    /** @var Image */
-    private $watermark;
+    /** @var Image[] */
+    private $watermarks;
 
     /** @var PhotoRepository */
     private $PR;
+
+    /** @var YearRepository */
+    private $YR;
 
     /** @var string */
     private $wwwPath;
 
     /**
-     * @param string          $wwwPath
+     * @param string $wwwPath
      * @param PhotoRepository $PR
+     * @param YearRepository $YR
+     * @throws \Nette\Utils\UnknownImageFileException
      */
-    public function __construct($wwwPath, PhotoRepository $PR)
+    public function __construct($wwwPath, PhotoRepository $PR, YearRepository $YR)
     {
         $this->PR = $PR;
+        $this->YR = $YR;
         $this->wwwPath = $wwwPath;
-        $this->watermark = Image::fromFile($this->wwwPath . '/assets/img/watermark.png');
+        /** @var Year $year */
+        foreach ($YR->findAll(FALSE) as $year) {
+            try {
+                $this->watermarks[$year->id] = Image::fromFile(
+                    $this->wwwPath . "/assets/img/watermarks/{$year->slug}.png"
+                );
+            } catch (ImageException $e) {
+                Debugger::log($e);
+            }
+        }
     }
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL  $prefix
-     * @param string|NULL  $author
+     * @param string|NULL $prefix
+     * @param string|NULL $author
      * @return \Minicup\Model\Entity\Photo[]
+     * @throws \LeanMapper\Exception\InvalidArgumentException
      */
     public function save($files, $prefix = NULL, $author = NULL)
     {
@@ -117,7 +138,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool  $lazy
+     * @param bool $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -139,11 +160,12 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo|NULL $photo
-     * @param string            $format
+     * @param string $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
      * @return string
+     * @throws \Nette\Utils\UnknownImageFileException
      */
     public function getInFormat($photo, $format)
     {
@@ -153,8 +175,10 @@ class PhotoManager extends Object
 
         $filename = $photo;
         if (is_string($photo)) {
+            /** @var Photo $photo */
             $photo = $this->PR->getByFilename($photo);
         }
+
 
         if (!$photo) {
             throw new FileNotFoundException("Photo {$filename} not found!");
@@ -172,43 +196,63 @@ class PhotoManager extends Object
         }
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
-		// dump($image);
-		$exif = exif_read_data($original);
-		// dump($exif);
-		// dump($exif['Orientation']);
-		if (isset($exif['Orientation'] )) {
-			try {
-				$orientation = $exif['Orientation'];
-				dump($orientation);
-				switch($orientation){
-					case 3:
-						$image->rotate(180, Image::rgb(0,0,0));
-						break;
-					case 6:
-						$image->rotate(-90, Image::rgb(0,0,0));
-						break;
-					case 8:
-						$image->rotate(90, Image::rgb(0,0,0));
-						break;
-				}
-			} catch (\Exception $e) {
-				dump($e);
-			}
-		}
-		// dump($image);
+        // dump($image);
+        $exif = exif_read_data($original);
+        // dump($exif);
+        // dump($exif['Orientation']);
+        if (isset($exif['Orientation'])) {
+            try {
+                $orientation = $exif['Orientation'];
+                dump($orientation);
+                switch ($orientation) {
+                    case 3:
+                        $image->rotate(180, Image::rgb(0, 0, 0));
+                        break;
+                    case 6:
+                        $image->rotate(-90, Image::rgb(0, 0, 0));
+                        break;
+                    case 8:
+                        $image->rotate(90, Image::rgb(0, 0, 0));
+                        break;
+                }
+            } catch (\Exception $e) {
+                dump($e);
+            }
+        }
+        // dump($image);
         $image->sharpen();
-        $watermark = clone $this->watermark;
+        if ($this->placeWatermark($photo, $image, $format)) {
+            $image->save($requested);
+        }
+        return $requested;
+    }
+
+
+    /**
+     * @param Photo $photo
+     * @param Image $image
+     * @param string $format
+     * @return bool
+     */
+    protected function placeWatermark(Photo $photo, Image $image, $format)
+    {
+        if (!count($photo->tags))
+            return FALSE;
+        $year = $photo->tags[0]->year;
+        if (!$this->watermarks[$year->id])
+            return FALSE;
+
+        $watermark = clone $this->watermarks[$year->id];
         $watermark = $watermark->resize(
-            $this::$resolutions[$format][0] / 6,
-            $this::$resolutions[$format][1] / 6,
+            self::$resolutions[$format][0] / 6,
+            self::$resolutions[$format][1] / 6,
             Image::FIT | Image::SHRINK_ONLY
         );
 
         $placeTop = $image->getHeight() - $watermark->getHeight() - $image->getHeight() / 40;
         $placeLeft = $image->getWidth() - $watermark->getWidth() - $image->getWidth() / 40;
         $image->place($watermark, $placeLeft, $placeTop);
-        $image->save($requested);
-        return $requested;
+        return TRUE;
     }
 
     /**
