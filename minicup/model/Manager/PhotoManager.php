@@ -111,8 +111,8 @@ class PhotoManager extends Object
      */
     public function formatPhotoPath($format, $filename)
     {
-        @mkdir("$this->wwwPath/media/" . $format . '/');
-        return "$this->wwwPath/media/" . $format . "/$filename";
+        @mkdir("$this->wwwPath/media/$format/");
+        return "$this->wwwPath/media/$format/$filename";
     }
 
     /**
@@ -172,10 +172,10 @@ class PhotoManager extends Object
         }
 
         $image = Image::fromFile($original)->resize($this::$resolutions[$format][0], $this::$resolutions[$format][1], $flag);
-		dump($image);
+		// dump($image);
 		$exif = exif_read_data($original);
-		dump($exif);
-		dump($exif['Orientation']);
+		// dump($exif);
+		// dump($exif['Orientation']);
 		if (isset($exif['Orientation'] )) {
 			try {
 				$orientation = $exif['Orientation'];
@@ -195,7 +195,7 @@ class PhotoManager extends Object
 				dump($e);
 			}
 		}
-		dump($image);
+		// dump($image);
         $image->sharpen();
         $watermark = clone $this->watermark;
         $watermark = $watermark->resize(
