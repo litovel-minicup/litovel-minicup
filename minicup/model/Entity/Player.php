@@ -14,8 +14,8 @@ namespace Minicup\Model\Entity;
  * @property string      $name                          Name of player
  * @property string      $surname                       Surname of player
  * @property int         $number                        Ordinal number of player in team
- * @property int         $secondary_number              Secondary Ordinal number of player in team
- * @property TeamInfo    $team_info_id m:hasOne         Info about player team
+ * @property int         $secondaryNumber               Secondary Ordinal number of player in team
+ * @property TeamInfo    $teamInfoId m:hasOne           Info about player team
  */
 class Player extends BaseEntity
 {

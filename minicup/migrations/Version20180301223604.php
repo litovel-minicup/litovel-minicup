@@ -4,6 +4,7 @@ namespace Minicup\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * Extension for models:
@@ -14,44 +15,47 @@ use Doctrine\DBAL\Schema\Schema;
 class Version20180301223604 extends AbstractMigration
 {
 
-    const TEAM_INFO_TABLE = "team_info";
+    const TABLE_TEAM_INFO = "team_info";
 
-    const PLAYER_TABLE = "player";
+    const TABLE_PLAYER = "player";
 
-    const COLUMNS =  [
+    const TABLE_TEAM_INFO_COLUMNS =  [
         [
             "name" => "dress_color",
-            "type" => "char(6)",
+            "type" => Type::STRING,
+            "length" => 6,
             "notnull" => false
         ],
         [
-            "name" => "dress_color_secundary",
-            "type" => "char(6)",
+            "name" => "dress_color_secondary",
+            "type" => Type::STRING,
+            "length" => 6,
             "notnull" => true
         ],
         [
             "name" => "trainer_name",
-            "type" => "varchar(50)",
+            "type" => Type::STRING,
+            "length" => 50,
             "notnull" => false
         ],
         [
-            "name" => "text_info",
-            "type" => "text",
+            "name" => "description",
+            "type" => Type::TEXT,
             "notnull" => true
         ],
         [
             "name" => "password",
-            "type" => "text",
+            "type" => Type::TEXT,
             "notnull" => false
         ],
         [
-            "name" => "administration_flag",
-            "type" => "BIT(1)",
+            "name" => "updated",
+            "type" => Type::DATETIME,
             "notnull" => false
         ],
         [
             "name" => "auth_token",
-            "type" => "text",
+            "type" => Type::STRING,
             "notnull" => true
         ]
 
@@ -68,12 +72,12 @@ class Version20180301223604 extends AbstractMigration
         // Add table for player model Player
         $this->addSql(
 
-            "CREATE TABLE `".$this::TEAM_INFO_TABLE."` (
+            "CREATE TABLE `".$this::TABLE_PLAYER."` (
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                   `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
                   `surname` varchar(50) COLLATE utf8_czech_ci NOT NULL,
                   `number` int(11) NOT NULL,
-                  `secundary_number` int(11) NOT NULL,
+                  `secondary_number` int(11) NOT NULL,
                   `team_info_id` int(11) NOT NULL,
                   PRIMARY KEY (`id`),
                   KEY `team_info_id` (`team_info_id`),
@@ -82,11 +86,19 @@ class Version20180301223604 extends AbstractMigration
         );
 
         // Update TeamIfo model
-        foreach($this::COLUMNS as $column) {
+        foreach($this::TABLE_TEAM_INFO_COLUMNS as $column) {
 
-            $schema->getTable($this::TEAM_INFO_TABLE)
-                ->addColumn($column['name'], $column['type'])
-                ->setNotnull($column['notnull']);
+            if(!isset($column['length'])) {
+                $schema->getTable($this::TABLE_TEAM_INFO)
+                    ->addColumn($column['name'], $column['type'])
+                    ->setNotnull($column['notnull']);
+            }
+            else {
+                $schema->getTable($this::TABLE_TEAM_INFO)
+                    ->addColumn($column['name'], $column['type'])
+                    ->setLength($column['length'])
+                    ->setNotnull($column['notnull']);
+            }
 
         }
 
@@ -100,12 +112,12 @@ class Version20180301223604 extends AbstractMigration
     public function down(Schema $schema)
     {
 
-        $schema->dropTable($this::TEAM_INFO_TABLE);
+        $schema->dropTable($this::TABLE_PLAYER);
 
         // Update TeamIfo model
-        foreach($this::COLUMNS as $column) {
+        foreach($this::TABLE_TEAM_INFO_COLUMNS as $column) {
 
-            $schema->getTable($this::TEAM_INFO_TABLE)
+            $schema->getTable($this::TABLE_TEAM_INFO)
                 ->dropColumn($column['name']);
 
         }

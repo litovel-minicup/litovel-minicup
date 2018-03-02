@@ -13,13 +13,13 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        Team|NULL          $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL           $tag m:hasOne
- * @property        string             $dress_color            Color of team dress
- * @property        string|NULL        $dress_color_secundary  Secundary color of team dress
- * @property        string             $trainer_name           Name of team trainer
- * @property        string|NULL        $text_info              Description edited by team
+ * @property        string             $dressColor             Color of team dress
+ * @property        string|NULL        $dressColorSecondary    Secondary color of team dress
+ * @property        string             $trainerName            Name of team trainer
+ * @property        string|NULL        $description            Description edited by team
  * @property        string             $password               Password for access to administration
- * @property        string             $administration_flag    Flag of administration usage
- * @property        string|NULL        $auth_token             Auth token for REST API
+ * @property        datetime           $updated                Last time update
+ * @property        string|NULL        $authToken              Auth token for REST API
  */
 class TeamInfo extends BaseEntity
 {
