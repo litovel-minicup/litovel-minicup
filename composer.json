@@ -33,5 +33,9 @@
       "type": "vcs",
       "url": "https://github.com/thejoeejoee/grido"
     }
-  ]
+  ],
+  "require-dev": {
+    "deployer/deployer": "^6.1",
+    "deployer/recipes": "^6.0"
+  }
 }
