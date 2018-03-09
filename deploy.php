@@ -132,6 +132,11 @@ task('deploy_local', [
     'success'
 ]);
 
+after('rollback', 'deploy:update_nginx');
+after('rollback', 'deploy:update_php-fpm');
+after('rollback', 'reload:php-fpm');
+after('rollback', 'reload:nginx');
+
 after('deploy', 'reload:php-fpm');
 after('deploy', 'reload:nginx');
 after('deploy_local', 'reload:php-fpm');
