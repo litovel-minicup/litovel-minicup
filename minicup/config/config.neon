@@ -86,7 +86,6 @@ services:
     - Minicup\Model\Repository\TeamRepository
     - Minicup\Model\Repository\TeamInfoRepository
     - Minicup\Model\Repository\TagRepository
-    - Minicup\Model\Repository\OnlineReportRepository
     - Minicup\Model\Repository\MatchTermRepository
     - Minicup\Model\Repository\YearRepository
     - Minicup\Model\Repository\PhotoRepository
@@ -147,9 +146,6 @@ services:
     - implement: Minicup\Components\IListOfMatchesComponentFactory
       parameters: [arg]
       arguments: [%arg%]
-    - implement: Minicup\Components\IOnlineReportComponentFactory
-      parameters: [Minicup\Model\Entity\Match match]
-      arguments: [%match%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]

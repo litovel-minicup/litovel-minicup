@@ -15,7 +15,6 @@ use Nette\InvalidArgumentException;
  * @property DateTime|NULL  $confirmed                                      datetime of confirming or NULL if unconfirmed
  * @property int|NULL       $confirmedAs                                    order of confirming in category or NULL if unconfirmed
  * @property MatchTerm      $matchTerm                                      m:hasOne(match_term_id:match_term)   term for this match
- * @property OnlineReport[] $onlineReports                                  m:belongsToMany(:online_report)  reports
  * @property Team[]         $historyTeams                                   m:belongsToMany(after_match_id)   history teams
  */
 class Match extends BaseEntity
