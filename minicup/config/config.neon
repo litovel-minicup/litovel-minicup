@@ -79,6 +79,7 @@ services:
             - registerFilter(activePhotos, [@filters, activePhotos])
             - registerFilter(orderNews, [@filters, orderNews])
             - registerFilter(orderPhotos, [@filters, orderPhotos])
+            - registerFilter(orderMatchEvents, [@filters, orderMatchEvents])
 
     # repositories
     - Minicup\Model\Repository\MatchRepository
@@ -93,6 +94,7 @@ services:
     - Minicup\Model\Repository\CategoryRepository
     - Minicup\Model\Repository\DayRepository
     - Minicup\Model\Repository\NewsRepository
+    - Minicup\Model\Repository\MatchEventRepository
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory

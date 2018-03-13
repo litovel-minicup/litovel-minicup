@@ -61,6 +61,12 @@ class Mapper extends DefaultMapper
         throw new InvalidStateException('Cannot determine table name.');
     }
 
+    /**
+     * @param             $entityClass
+     * @param Caller|null $caller
+     * @return array|ImplicitFilters
+     * @throws \LeanMapper\Exception\InvalidArgumentException
+     */
     public function getImplicitFilters($entityClass, Caller $caller = null)
     {
         $entityName = $this->trimNamespace($entityClass);
@@ -77,6 +83,8 @@ class Mapper extends DefaultMapper
             return new ImplicitFilters(['orderNews']);
         } elseif ($entityName === 'Photo') {
             return new ImplicitFilters(['orderPhotos', 'year']);
+        } elseif ($entityName === 'MatchEvent') {
+            return new ImplicitFilters(['orderMatchEvents']);
         }
         return [];
     }

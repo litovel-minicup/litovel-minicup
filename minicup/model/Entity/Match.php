@@ -6,23 +6,32 @@ use Dibi\DateTime;
 use Nette\InvalidArgumentException;
 
 /**
- * @property int            $id
- * @property Category       $category                                       m:hasOne                              category
- * @property TeamInfo       $homeTeam                                       m:hasOne(home_team_info_id:team_info) home team
- * @property TeamInfo       $awayTeam                                       m:hasOne(away_team_info_id:team_info) away team
- * @property int|NULL       $scoreHome                                      score of home team
- * @property int|NULL       $scoreAway                                      score of away team
- * @property DateTime|NULL  $confirmed                                      datetime of confirming or NULL if unconfirmed
- * @property int|NULL       $confirmedAs                                    order of confirming in category or NULL if unconfirmed
- * @property MatchTerm      $matchTerm                                      m:hasOne(match_term_id:match_term)   term for this match
- * @property Team[]         $historyTeams                                   m:belongsToMany(after_match_id)   history teams
+ * @property int           $id
+ * @property Category      $category        m:hasOne                              category
+ * @property TeamInfo      $homeTeam        m:hasOne(home_team_info_id:team_info) home team
+ * @property TeamInfo      $awayTeam        m:hasOne(away_team_info_id:team_info) away team
+ * @property int|NULL      $scoreHome       score of home team
+ * @property int|NULL      $scoreAway       score of away team
+ * @property DateTime|NULL $confirmed       datetime of confirming or NULL if unconfirmed
+ * @property int|NULL      $confirmedAs     order of confirming in category or NULL if unconfirmed
+ * @property MatchTerm     $matchTerm       m:hasOne(match_term_id:match_term)   term for this match
+ * @property Team[]        $historyTeams    m:belongsToMany(after_match_id)   history teams
+ * @property MatchEvent[]  $events          m:belongsToMany all game events
+ *
+ * @property DateTime|NULL $firstHalfStart  real time of match started
+ * @property DateTime|NULL $secondHalfStart real time of second halt start
  */
 class Match extends BaseEntity
 {
+    const HALF_LENGTH = "P600S";
+
     public static $CACHE_TAG = 'match';
 
     /**
      * @return int|string
+     * @throws \LeanMapper\Exception\InvalidStateException
+     * @throws \LeanMapper\Exception\InvalidValueException
+     * @throws \LeanMapper\Exception\MemberAccessException
      */
     public function getScoreHome()
     {
@@ -31,6 +40,9 @@ class Match extends BaseEntity
 
     /**
      * @return int|string
+     * @throws \LeanMapper\Exception\InvalidStateException
+     * @throws \LeanMapper\Exception\InvalidValueException
+     * @throws \LeanMapper\Exception\MemberAccessException
      */
     public function getScoreAway()
     {
@@ -94,6 +106,4 @@ class Match extends BaseEntity
     {
         return $this->homeTeam->id === $teamInfo->id ? $this->awayTeam : $this->homeTeam;
     }
-
-
 }
