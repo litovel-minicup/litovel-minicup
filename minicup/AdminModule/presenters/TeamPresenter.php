@@ -14,6 +14,21 @@ use Minicup\Model\Repository\TeamInfoRepository;
 
 class TeamPresenter extends BaseAdminPresenter
 {
+
+
+    /**
+     * Mapp db name => Real name
+     */
+    const LABELS = [
+        'id' => '#',
+        'slug' => 'Detail na webu',
+        'name' => 'Název',
+        'slug' => 'Slug',
+        'trainer_name' => 'Trenér',
+        'dress_color' => 'Barva dresu',
+        'dress_color_secondary' => 'Sekundární barva'
+    ];
+
     /** @var IMatchFormComponentFactory @inject */
     public $MFCF;
 
@@ -50,16 +65,46 @@ class TeamPresenter extends BaseAdminPresenter
         $CR = $this->CR;
         $that = $this;
         $g = new Grid($this, $name);
-        $f = $connection->select('[ti].*')->from('[team_info]')->as('ti')->where('ti.[category_id] = ', $this->getParameter('category')->id);
+
+        $f = $connection->select('[ti].*')
+            ->from('[team_info]')->as('ti')
+            ->where('ti.[category_id] = ', $this->getParameter('category')->id);
+
         $g->setModel($f);
-        $g->addColumnNumber('id', '#');
+        $g->addColumnNumber('id', $this::LABELS['id']);
         $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
             $category = $CR->get($row->category_id, FALSE);
             return $that->link(':Front:Team:detail', ['team' => $row->slug, 'category' => $category]);
         });
-        $g->addColumnText('name', 'Název')->setEditableCallback(GridHelpers::getEditableCallback('name', $this->TIR));
-        $g->addColumnText('slug', 'Slug')->setEditableCallback(GridHelpers::getEditableCallback('slug', $this->TIR));
+
+        // Name && slug
+        $this->addEditableText($g, 'name');
+        $this->addEditableText($g, 'slug');
+
+        // Treiner name
+        $this->addEditableText($g, 'trainer_name');
+
+
+        // Dress color
+        $this->addEditableText($g, 'dress_color');
+        $this->addEditableText($g, 'dress_color_secondary');
+
+
         return $g;
+    }
+
+    /**
+     * Add Column with Editable callback to griddo
+     *
+     * @param $g Grid instance
+     * @param $identifier name of column. It must be mapped in LABELS
+     *
+     *
+     */
+    private function addEditableText($g, $identifier) {
+
+        $g->addColumnText($identifier, $this::LABELS[$identifier])
+            ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR));
     }
 
 
