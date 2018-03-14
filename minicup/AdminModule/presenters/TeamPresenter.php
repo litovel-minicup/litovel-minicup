@@ -7,9 +7,13 @@ use Grido\Components\Columns\Column;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
+use Minicup\Components\ITeamRosterAdministrationComponent;
 use Minicup\Components\MatchFormComponent;
+use Minicup\Components\TeamRosterAdministrationComponent;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Team;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\TeamInfoRepository;
 
 class TeamPresenter extends BaseAdminPresenter
@@ -38,12 +42,23 @@ class TeamPresenter extends BaseAdminPresenter
     /** @var TeamInfoRepository @inject */
     public $TIR;
 
+    private $teamRosterAdministrationComponentFactory;
+
     /**
      * @param Category $category
      */
     public function renderList(Category $category)
     {
         $this->template->category = $category;
+    }
+
+
+    public function renderTeamList($id) {
+
+        $team = $this->TIR->get($id);
+
+        $this->template->name = $team->name;
+
     }
 
     /**
@@ -63,6 +78,7 @@ class TeamPresenter extends BaseAdminPresenter
         $connection = $this->connection;
         $TIR = $this->TIR;
         $CR = $this->CR;
+
         $that = $this;
         $g = new Grid($this, $name);
 
@@ -72,9 +88,16 @@ class TeamPresenter extends BaseAdminPresenter
 
         $g->setModel($f);
         $g->addColumnNumber('id', $this::LABELS['id']);
+
+        // links
         $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
             $category = $CR->get($row->category_id, FALSE);
             return $that->link(':Front:Team:detail', ['team' => $row->slug, 'category' => $category]);
+        });
+
+        $g->addActionHref('id', 'Editace soupisky')->setCustomHref(function ($row) use ($TIR, $that) {
+
+            return $that->link('Team:TeamList', ['id' => $row->id]);
         });
 
         // Name && slug
@@ -88,7 +111,6 @@ class TeamPresenter extends BaseAdminPresenter
         // Dress color
         $this->addEditableText($g, 'dress_color');
         $this->addEditableText($g, 'dress_color_secondary');
-
 
         return $g;
     }
@@ -105,6 +127,14 @@ class TeamPresenter extends BaseAdminPresenter
 
         $g->addColumnText($identifier, $this::LABELS[$identifier])
             ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR));
+    }
+
+    public function injectTeamRosterAdministrationComponent(ITeamRosterAdministrationComponent $factory) {
+        $this->teamRosterAdministrationComponentFactory = $factory;
+    }
+
+    protected function createComponentTeamRosterAdministrationComponent() {
+        return $this->teamRosterAdministrationComponentFactory->create();
     }
 
 

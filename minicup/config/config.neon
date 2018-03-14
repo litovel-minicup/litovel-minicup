@@ -96,6 +96,8 @@ services:
     - Minicup\Model\Repository\NewsRepository
 
     # component factories
+    - Minicup\Components\ITeamRosterAdministrationComponent
+    - Minicup\Components\ITeamRoasterManagementComponent
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
