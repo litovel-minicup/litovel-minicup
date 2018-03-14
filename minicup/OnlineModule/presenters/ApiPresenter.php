@@ -24,11 +24,17 @@ final class ApiPresenter extends BaseOnlinePresenter
      */
     public function actionState(Match $match)
     {
+        $start = NULL;
+        if ($match->secondHalfStart) {
+            $start = $match->secondHalfStart->getTimestamp();
+        } elseif ($match->firstHalfStart) {
+            $start = $match->firstHalfStart->getTimestamp();
+        }
         $this->sendResponse(new JsonResponse(
             [
                 'id' => $match->id,
                 'score' => [$match->scoreHome, $match->scoreAway],
-                'halfStart' => $match->secondHalfStart ? $match->secondHalfStart->getTimestamp() : $match->firstHalfStart ? $match->firstHalfStart->getTimestamp() : NULL,
+                'halfStart' => $start,
                 'halfIndex' => $match->getHalfIndex()
             ]
 
@@ -70,6 +76,20 @@ final class ApiPresenter extends BaseOnlinePresenter
                 'success' => true,
                 'match' => $match->id,
                 'goal' => $goal->id
+            ]
+        ));
+    }
+
+    /**
+     * @param Match $match
+     * @throws \Nette\Application\AbortException
+     */
+    public function actionStartHalf(Match $match)
+    {
+        $this->OM->startHalf($match);
+
+        $this->sendResponse(new JsonResponse([
+                'success' => true,
             ]
         ));
     }

@@ -82,9 +82,20 @@ class OnlineManager
         $this->MER->persist($goal);
         $this->MR->persist($match);
 
-
         return $goal;
+    }
 
+    public function startHalf(Match $match)
+    {
+        if ($match->firstHalfStart == NULL) {
+            $match->firstHalfStart = new \DateTime();
+        } elseif ($match->secondHalfStart == NULL) {
+            $match->secondHalfStart = new \DateTime();
+        } else {
+            throw new InvalidArgumentException("Match has already started.");
+        }
+
+        $this->MR->persist($match);
     }
 
 }

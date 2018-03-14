@@ -134,7 +134,7 @@ class Filters extends Object
         if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[time_offset]' . $order);
+        $fluent->orderBy('[half_index]' . $order)->orderBy('[time_offset]' . $order);
     }
 
     /**

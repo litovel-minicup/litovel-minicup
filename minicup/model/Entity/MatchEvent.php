@@ -53,6 +53,7 @@ class MatchEvent extends BaseEntity
             'score' => [$this->scoreHome, $this->scoreAway],
             'message' => $this->message,
             'type' => $this->type,
+            'timeOffset' => $this->timeOffset
         ];
     }
 }

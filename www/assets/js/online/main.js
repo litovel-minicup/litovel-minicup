@@ -12,7 +12,8 @@ function initialize(matchId) {
             time: null,
             halfStart: null,
             halfIndex: null,
-            playing: false
+            playing: false,
+            matchEnd: false
         },
         methods: {
             refreshScore: function () {
@@ -25,7 +26,6 @@ function initialize(matchId) {
                 }).catch(function (error) {
                     console.log(error);
                 });
-
             },
             refreshEvents: function () {
                 axios.get(
@@ -38,13 +38,27 @@ function initialize(matchId) {
 
             },
             refreshTime: function () {
-                var secsFromStart = (new Date() - new Date(1000 * app.halfStart)) / 1000;
+                var secsFromStart = ((new Date() - new Date(1000 * this.halfStart)) / 1000);
+                // console.log(this.halfIndex);
+                // console.log(secsFromStart);
                 if (secsFromStart < 10 * 60) {
-                    app.time = new Date(secsFromStart * 1000);
+                    this.time = new Date(secsFromStart * 1000);
+                    this.playing = true;
                 } else {
-                    app.time = null;
+                    this.time = null;
+                    this.playing = false;
                 }
 
+            },
+            startHalf: function () {
+                axios.post(
+                    '/online/api/start-half/' + matchId.toString()
+                ).then(function (response) {
+                    app.refreshScore();
+                    app.refreshTime();
+                }).catch(function (error) {
+                    console.log(error);
+                });
             },
             goal: function (playerId) {
                 axios.post(
@@ -70,12 +84,14 @@ function initialize(matchId) {
         beforeMount: function () {
             this.refreshScore();
             this.refreshEvents();
-            setInterval(function () {
-                app.refreshScore();
-            }, 5000);
+            this.refreshTime();
             setInterval(function () {
                 app.refreshTime();
             }, 500);
+            setInterval(function () {
+                app.refreshScore();
+                app.refreshEvents();
+            }, 2500);
         }
     });
 
@@ -83,4 +99,8 @@ function initialize(matchId) {
     Vue.filter('default', function (value, default_) {
         return (value == null || value === undefined) ? default_ : value;
     });
+    Vue.filter('prettyTime', function (secs) {
+        return Math.floor(secs / 60).pad(2) + ':' + (secs % 60).pad(2);
+    });
+    return app;
 }

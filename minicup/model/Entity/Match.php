@@ -2,24 +2,23 @@
 
 namespace Minicup\Model\Entity;
 
-use Dibi\DateTime;
 use Nette\InvalidArgumentException;
 
 /**
- * @property int           $id
- * @property Category      $category        m:hasOne                              category
- * @property TeamInfo      $homeTeam        m:hasOne(home_team_info_id:team_info) home team
- * @property TeamInfo      $awayTeam        m:hasOne(away_team_info_id:team_info) away team
- * @property int|NULL      $scoreHome       score of home team
- * @property int|NULL      $scoreAway       score of away team
- * @property DateTime|NULL $confirmed       datetime of confirming or NULL if unconfirmed
- * @property int|NULL      $confirmedAs     order of confirming in category or NULL if unconfirmed
- * @property MatchTerm     $matchTerm       m:hasOne(match_term_id:match_term)   term for this match
- * @property Team[]        $historyTeams    m:belongsToMany(after_match_id)   history teams
- * @property MatchEvent[]  $events          m:belongsToMany all game events
+ * @property int            $id
+ * @property Category       $category        m:hasOne                              category
+ * @property TeamInfo       $homeTeam        m:hasOne(home_team_info_id:team_info) home team
+ * @property TeamInfo       $awayTeam        m:hasOne(away_team_info_id:team_info) away team
+ * @property int|NULL       $scoreHome       score of home team
+ * @property int|NULL       $scoreAway       score of away team
+ * @property \DateTime|NULL $confirmed       datetime of confirming or NULL if unconfirmed
+ * @property int|NULL       $confirmedAs     order of confirming in category or NULL if unconfirmed
+ * @property MatchTerm      $matchTerm       m:hasOne(match_term_id:match_term)   term for this match
+ * @property Team[]         $historyTeams    m:belongsToMany(after_match_id)   history teams
+ * @property MatchEvent[]   $events          m:belongsToMany all game events
  *
- * @property DateTime|NULL $firstHalfStart  real time of match started
- * @property DateTime|NULL $secondHalfStart real time of second halt start
+ * @property \DateTime|NULL $firstHalfStart  real time of match started
+ * @property \DateTime|NULL $secondHalfStart real time of second halt start
  */
 class Match extends BaseEntity
 {
@@ -109,10 +108,11 @@ class Match extends BaseEntity
 
     /**
      * Returns index of half, counted from 0.
-     * @return int
+     * @return int|NULL
      */
     public function getHalfIndex()
     {
-        return !is_null($this->firstHalfStart) + !is_null($this->secondHalfStart) - 1;
+        $index = !is_null($this->firstHalfStart) + !is_null($this->secondHalfStart) - 1;
+        return $index >= 0 ? $index : NULL;
     }
 }
