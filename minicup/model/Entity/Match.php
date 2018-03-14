@@ -106,4 +106,13 @@ class Match extends BaseEntity
     {
         return $this->homeTeam->id === $teamInfo->id ? $this->awayTeam : $this->homeTeam;
     }
+
+    /**
+     * Returns index of half, counted from 0.
+     * @return int
+     */
+    public function getHalfIndex()
+    {
+        return !is_null($this->firstHalfStart) + !is_null($this->secondHalfStart) - 1;
+    }
 }

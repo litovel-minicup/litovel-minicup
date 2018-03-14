@@ -5,8 +5,8 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
-use Minicup\Model\TeamHistoryManager;
-use Minicup\Model\TeamHistoryRecord;
+use Minicup\Model\Manager\TeamHistoryManager;
+use Minicup\Model\Manager\TeamHistoryRecord;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 

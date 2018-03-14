@@ -26,26 +26,19 @@ class JsComponentFactory extends Object
 
     /** @var IRequest */
     private $request;
-    /**
-     * @var Panel
-     */
-    private $tracyPanel;
 
     /**
      * @param string   $wwwPath
      * @param string   $productionMode
      * @param IRequest $request
-     * @param Panel    $panel
      */
     public function __construct($wwwPath,
                                 $productionMode,
-                                IRequest $request,
-                                Panel $panel)
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
         $this->request = $request;
-        $this->tracyPanel = $panel;
     }
 
     /**
@@ -88,8 +81,6 @@ class JsComponentFactory extends Object
                 return Minifier::minify($code, ['flaggedComments' => false]);
             });
         }
-
-        $this->tracyPanel->addLoader('js', $compiler);
         $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

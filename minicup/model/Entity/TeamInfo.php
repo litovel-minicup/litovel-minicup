@@ -1,4 +1,5 @@
 <?php
+
 namespace Minicup\Model\Entity;
 
 
@@ -20,6 +21,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string             $password               Password for access to administration
  * @property        datetime           $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
+ * @property        Player[]           $players m:belongsToMany
  */
 class TeamInfo extends BaseEntity
 {
@@ -28,6 +30,7 @@ class TeamInfo extends BaseEntity
     /**
      * @return Match[]
      * @throws InvalidStateException
+     * @throws \LeanMapper\Exception\InvalidArgumentException
      */
     public function getMatches()
     {
@@ -63,4 +66,5 @@ class TeamInfo extends BaseEntity
         @usort($matches, $cmp);
         return $this->entityFactory->createCollection($matches);
     }
+
 }

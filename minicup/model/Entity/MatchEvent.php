@@ -5,7 +5,7 @@ namespace Minicup\Model\Entity;
 
 /**
  * @property int         $id
- * @property Match       $match
+ * @property Match       $match m:hasOne
  * @property int|NULL    $scoreHome actual score of home team
  * @property int|NULL    $scoreAway actual score of away team
  * @property string      $message message of this event
@@ -45,5 +45,14 @@ class MatchEvent extends BaseEntity
         }
         $copied->add(new \DateInterval("PT{$this->timeOffset}S"));
         return $copied;
+    }
+
+    public function serialize()
+    {
+        return [
+            'score' => [$this->scoreHome, $this->scoreAway],
+            'message' => $this->message,
+            'type' => $this->type,
+        ];
     }
 }

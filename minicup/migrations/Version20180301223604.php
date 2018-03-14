@@ -19,7 +19,7 @@ class Version20180301223604 extends AbstractMigration
 
     const TABLE_PLAYER = "player";
 
-    const TABLE_TEAM_INFO_COLUMNS =  [
+    const TABLE_TEAM_INFO_COLUMNS = [
         [
             "name" => "dress_color",
             "type" => Type::STRING,
@@ -72,13 +72,13 @@ class Version20180301223604 extends AbstractMigration
         // Add table for player model Player
         $this->addSql(
 
-            "CREATE TABLE `".$this::TABLE_PLAYER."` (
-                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                  `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-                  `surname` varchar(50) COLLATE utf8_czech_ci NOT NULL,
-                  `number` int(11) NOT NULL,
-                  `secondary_number` int(11) NOT NULL,
-                  `team_info_id` int(11) NOT NULL,
+            "CREATE TABLE `" . $this::TABLE_PLAYER . "` (
+                  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(50) COLLATE utf8_czech_ci NOT NULL,
+                  `surname` VARCHAR(50) COLLATE utf8_czech_ci NOT NULL,
+                  `number` INT(11) NOT NULL,
+                  `secondary_number` INT(11),
+                  `team_info_id` INT(11) NOT NULL,
                   PRIMARY KEY (`id`),
                   KEY `team_info_id` (`team_info_id`),
                   CONSTRAINT `player_ibfk_1` FOREIGN KEY (`team_info_id`) REFERENCES `team_info` (`id`)
@@ -86,14 +86,13 @@ class Version20180301223604 extends AbstractMigration
         );
 
         // Update TeamIfo model
-        foreach($this::TABLE_TEAM_INFO_COLUMNS as $column) {
+        foreach ($this::TABLE_TEAM_INFO_COLUMNS as $column) {
 
-            if(!isset($column['length'])) {
+            if (!isset($column['length'])) {
                 $schema->getTable($this::TABLE_TEAM_INFO)
                     ->addColumn($column['name'], $column['type'])
                     ->setNotnull($column['notnull']);
-            }
-            else {
+            } else {
                 $schema->getTable($this::TABLE_TEAM_INFO)
                     ->addColumn($column['name'], $column['type'])
                     ->setLength($column['length'])
@@ -115,7 +114,7 @@ class Version20180301223604 extends AbstractMigration
         $schema->dropTable($this::TABLE_PLAYER);
 
         // Update TeamIfo model
-        foreach($this::TABLE_TEAM_INFO_COLUMNS as $column) {
+        foreach ($this::TABLE_TEAM_INFO_COLUMNS as $column) {
 
             $schema->getTable($this::TABLE_TEAM_INFO)
                 ->dropColumn($column['name']);

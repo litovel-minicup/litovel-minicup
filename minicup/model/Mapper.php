@@ -85,6 +85,8 @@ class Mapper extends DefaultMapper
             return new ImplicitFilters(['orderPhotos', 'year']);
         } elseif ($entityName === 'MatchEvent') {
             return new ImplicitFilters(['orderMatchEvents']);
+        } elseif ($entityName === 'Player') {
+            return new ImplicitFilters(['orderPlayers']);
         }
         return [];
     }

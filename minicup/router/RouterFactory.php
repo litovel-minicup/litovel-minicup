@@ -2,10 +2,12 @@
 
 namespace Minicup\Router;
 
+use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\CategoryRepository;
+use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TagRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Minicup\Model\Repository\YearRepository;
@@ -35,6 +37,9 @@ class RouterFactory extends Object
     /** @var TagRepository */
     private $TagR;
 
+    /** @var MatchRepository */
+    private $MR;
+
     /** @var YearCategoryRouteFactory */
     private $yearCategoryRouteFactory;
 
@@ -43,6 +48,7 @@ class RouterFactory extends Object
      * @param TeamRepository           $TR
      * @param YearRepository           $YR
      * @param TagRepository            $TagR
+     * @param MatchRepository          $MR
      * @param Session                  $session
      * @param YearCategoryRouteFactory $yearCategoryRouteFactory
      */
@@ -50,6 +56,7 @@ class RouterFactory extends Object
                                 TeamRepository $TR,
                                 YearRepository $YR,
                                 TagRepository $TagR,
+                                MatchRepository $MR,
                                 Session $session,
                                 YearCategoryRouteFactory $yearCategoryRouteFactory)
     {
@@ -57,6 +64,7 @@ class RouterFactory extends Object
         $this->TR = $TR;
         $this->YR = $YR;
         $this->TagR = $TagR;
+        $this->MR = $MR;
         $this->session = $session->getSection('minicup');
         $this->yearCategoryRouteFactory = $yearCategoryRouteFactory;
     }
@@ -72,6 +80,14 @@ class RouterFactory extends Object
         $TagR = $this->TagR;
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
+        $matchFilter = [
+            Route::FILTER_IN => function ($id) use ($TagR) {
+                return $this->MR->get($id);
+            },
+            Route::FILTER_OUT => function (Match $match) {
+                return $match->id;
+            }
+        ];
 
         $front[] = $route('foto/tagy[/<tags .+>]/', [
             'presenter' => 'Gallery',
@@ -241,6 +257,20 @@ class RouterFactory extends Object
 
         $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
+        ]);
+
+        $router[] = $route('online/zapis/<match>/', [
+            'module' => 'Online',
+            'presenter' => 'Homepage',
+            'action' => 'write',
+            'match' => $matchFilter,
+        ]);
+
+        $router[] = $route('online/<presenter>/<action>[/<match>]', [
+            'module' => 'Online',
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'match' => $matchFilter,
         ]);
 
         $router[] = $route->route('', [
