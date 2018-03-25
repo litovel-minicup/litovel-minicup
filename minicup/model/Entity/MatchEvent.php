@@ -4,15 +4,16 @@ namespace Minicup\Model\Entity;
 
 
 /**
- * @property int         $id
- * @property Match       $match m:hasOne
- * @property int|NULL    $scoreHome actual score of home team
- * @property int|NULL    $scoreAway actual score of away team
- * @property string      $message message of this event
- * @property string      $type m:enum(self::TYPE_*)
- * @property int         $halfIndex m:enum(self::HALF_INDEX_*)
- * @property int         $timeOffset total seconds from start of current half of match
- * @property Player|NULL $player m:hasOne optionally linked to player
+ * @property int           $id
+ * @property Match         $match m:hasOne
+ * @property int|NULL      $scoreHome actual score of home team
+ * @property int|NULL      $scoreAway actual score of away team
+ * @property string        $message message of this event
+ * @property string        $type m:enum(self::TYPE_*)
+ * @property int           $halfIndex m:enum(self::HALF_INDEX_*)
+ * @property int           $timeOffset total seconds from start of current half of match
+ * @property Player|NULL   $player m:hasOne optionally linked to player
+ * @property TeamInfo|NULL $teamInfo m:hasOne optionally linked to player
  */
 class MatchEvent extends BaseEntity
 {

@@ -17,6 +17,7 @@ use Nette\InvalidArgumentException;
  * @property Team[]         $historyTeams    m:belongsToMany(after_match_id)   history teams
  * @property MatchEvent[]   $events          m:belongsToMany all game events
  *
+ * @property string         $onlineState
  * @property \DateTime|NULL $firstHalfStart  real time of match started
  * @property \DateTime|NULL $secondHalfStart real time of second halt start
  */
