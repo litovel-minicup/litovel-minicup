@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 umask(0);
 $configurator = new Nette\Configurator;
 
-// $configurator->setDebugMode(\Tracy\Debugger::DEVELOPMENT); // enable for your remote IP
+// $configurator->setDebugMode(FALSE); // enable for your remote IP
 $configurator->enableDebugger(__DIR__ . '/../log');
 
 $configurator->setTempDirectory(__DIR__ . '/../temp');

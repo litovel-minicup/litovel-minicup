@@ -24,26 +24,19 @@ class CssComponentFactory extends Object
     private $wwwPath;
     /** @var  bool */
     private $productionMode;
-    /**
-     * @var Panel
-     */
-    private $tracyBar;
 
     /**
      * @param string   $wwwPath
      * @param bool     $productionMode
      * @param IRequest $request
-     * @param Panel    $tracyBar
      */
     public function __construct($wwwPath,
                                 $productionMode,
-                                IRequest $request,
-                                Panel $tracyBar)
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
         $this->request = $request;
-        $this->tracyBar = $tracyBar;
     }
 
     /**
@@ -62,7 +55,7 @@ class CssComponentFactory extends Object
         } elseif ($module === 'admin') {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
             $files->addFile('assets/css/admin/index.css');
-            $files->addFile('assets/css/admin/bootstrap.css');
+            $files->addFile('assets/css/admin/bootstrap-3.3.2.css');
             $files->addFile('assets/css/admin/toastr.css');
         }
         $compiler = Compiler::createCssCompiler($files, $this->wwwPath . '/webtemp');
@@ -79,8 +72,6 @@ class CssComponentFactory extends Object
                 return \CssMin::minify($code);
             });
         }
-
-        $this->tracyBar->addLoader('css', $compiler);
         $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

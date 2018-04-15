@@ -123,4 +123,30 @@ class Filters extends Object
         }
         $fluent->orderBy('[added]' . $order);
     }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderMatchEvents(Fluent $fluent, $order = BaseRepository::ORDER_DESC)
+    {
+        if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy('[half_index]' . $order)->orderBy('[time_offset]' . $order);
+    }
+
+    /**
+     * @param Fluent $fluent
+     * @param string $order
+     * @throws InvalidArgumentException
+     */
+    public function orderPlayers(Fluent $fluent, $order = BaseRepository::ORDER_ASC)
+    {
+        if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
+            throw new InvalidArgumentException('Invalid ordering method');
+        }
+        $fluent->orderBy('[secondary_number] ' . $order)->orderBy('`number`' . $order);
+    }
 }

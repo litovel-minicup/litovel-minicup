@@ -51,7 +51,8 @@ services:
     - Minicup\Model\Manager\TagManager
     - Minicup\Model\Manager\StatsManager
     - Minicup\Model\Manager\MatchImporter
-    - Minicup\Model\TeamHistoryManager
+    - Minicup\Model\Manager\OnlineManager
+    - Minicup\Model\Manager\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
 
     # css & js compiling
@@ -64,7 +65,7 @@ services:
     - Doctrine\DBAL\Connection(%connection%)
     - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
-    - WebLoader\Nette\Diagnostics\Panel
+    # - WebLoader\Nette\Diagnostics\Panel
 
     leanMapper.connection:
         setup:
@@ -79,6 +80,8 @@ services:
             - registerFilter(activePhotos, [@filters, activePhotos])
             - registerFilter(orderNews, [@filters, orderNews])
             - registerFilter(orderPhotos, [@filters, orderPhotos])
+            - registerFilter(orderMatchEvents, [@filters, orderMatchEvents])
+            - registerFilter(orderPlayers, [@filters, orderPlayers])
 
     # repositories
     - Minicup\Model\Repository\MatchRepository
@@ -86,7 +89,6 @@ services:
     - Minicup\Model\Repository\TeamRepository
     - Minicup\Model\Repository\TeamInfoRepository
     - Minicup\Model\Repository\TagRepository
-    - Minicup\Model\Repository\OnlineReportRepository
     - Minicup\Model\Repository\MatchTermRepository
     - Minicup\Model\Repository\YearRepository
     - Minicup\Model\Repository\PhotoRepository
@@ -94,6 +96,8 @@ services:
     - Minicup\Model\Repository\CategoryRepository
     - Minicup\Model\Repository\DayRepository
     - Minicup\Model\Repository\NewsRepository
+    - Minicup\Model\Repository\MatchEventRepository
+    - Minicup\Model\Repository\PlayerRepository
 
     # component factories
     - Minicup\Components\ILoginFormComponentFactory
@@ -147,9 +151,6 @@ services:
     - implement: Minicup\Components\IListOfMatchesComponentFactory
       parameters: [arg]
       arguments: [%arg%]
-    - implement: Minicup\Components\IOnlineReportComponentFactory
-      parameters: [Minicup\Model\Entity\Match match]
-      arguments: [%match%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
@@ -163,15 +164,15 @@ extensions:
     leanMapper: Minicup\Model\LeanMapperExtension
     replicator: Minicup\Misc\EntitiesReplicatorExtension
     console: Kdyby\Console\DI\ConsoleExtension
-    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
-    - Symnedi\EventDispatcher\DI\EventDispatcherExtension
+    # migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    # - Symnedi\EventDispatcher\DI\EventDispatcherExtension
 
-migrations:
-    table: db_migrations
-    dirs:
-        - %appDir%/migrations
-    namespace: Minicup\Migrations
-    codingStandard: spaces
+#migrations:
+#    table: db_migrations
+#    dirs:
+#        - %appDir%/migrations
+#    namespace: Minicup\Migrations
+#    codingStandard: spaces
 
 console:
     commands:
