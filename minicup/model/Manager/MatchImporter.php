@@ -71,8 +71,9 @@ class MatchImporter
         foreach (Strings::split($data, "#\r|\n#") as $line) {
             $line = Strings::split($line, "#\t#");
 
+            // WITH LEADING ZEROS!
             /** @var \DateTime $datetime */
-            $datetime = \DateTime::createFromFormat('j. n. Y H:i', $line[0] . ' ' . $line[1]);
+            $datetime = \DateTime::createFromFormat("d. m. Y H:i", $line[0] . ' ' . $line[1]);
 
             $home = $this->getTeamInfo($category, $line[2]);
             $away = $this->getTeamInfo($category, $line[3]);
@@ -136,9 +137,9 @@ class MatchImporter
         }
         $term = new MatchTerm();
         $dt->setDate(1, 1, 1);
-        $term->start = $dt;
+        $term->start = clone $dt;
         $dt->add(new \DateInterval('PT30M'));
-        $term->end = $dt;
+        $term->end = clone $dt;
 
         $term->day = $day;
         $term->location = ''; // TODO: small hack, better refactor location arg

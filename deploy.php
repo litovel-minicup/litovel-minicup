@@ -57,7 +57,7 @@ set('writable_dirs', [
 
 // Hosts
 
-host('minicup2')
+host('minicup')
     ->stage('production')
     ->roles('app')
     ->set('deploy_path', '/var/www/html/{{application}}')

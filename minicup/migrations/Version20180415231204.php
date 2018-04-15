@@ -15,9 +15,11 @@ class Version20180415231204 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql('ALTER TABLE team_info MODIFY dress_color VARCHAR(64) DEFAULT \'NULL\';');
-        $this->addSql('ALTER TABLE team_info MODIFY dress_color_secondary VARCHAR(64) NOT NULL;');
-
+        $this->addSql('ALTER TABLE team_info MODIFY dress_color VARCHAR(64) DEFAULT NULL;');
+        $this->addSql('ALTER TABLE team_info MODIFY dress_color_secondary VARCHAR(64) DEFAULT NULL;');
+        $this->addSql('ALTER TABLE team_info MODIFY description LONGTEXT DEFAULT NULL;');
+        $this->addSql('ALTER TABLE team_info MODIFY auth_token VARCHAR(255) DEFAULT NULL;');
+        $this->addSql('ALTER TABLE `match` MODIFY online_state VARCHAR(255) DEFAULT NULL;');
     }
 
     /**
