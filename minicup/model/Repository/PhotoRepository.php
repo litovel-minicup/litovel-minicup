@@ -36,6 +36,7 @@ class PhotoRepository extends BaseRepository
 
     /**
      * @return Photo[]
+     * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function findUntaggedPhotos(Year $year)
     {

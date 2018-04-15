@@ -23,7 +23,7 @@
     "texy/texy": "~2.6",
     "kdyby/forms-replicator": "@dev",
     "zenify/doctrine-migrations": "~2.3",
-    "kdyby/console": "^2.6",
+    "kdyby/console": "^2.7",
     "tedivm/jshrink": "~1.0"
   },
   "minimum-stability": "dev",
@@ -33,5 +33,9 @@
       "type": "vcs",
       "url": "https://github.com/thejoeejoee/grido"
     }
-  ]
+  ],
+  "require-dev": {
+    "deployer/deployer": "^6.1",
+    "deployer/recipes": "^6.0"
+  }
 }

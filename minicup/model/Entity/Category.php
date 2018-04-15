@@ -19,6 +19,9 @@ class Category extends BaseEntity
 
     /**
      * @return string
+     * @throws \LeanMapper\Exception\InvalidStateException
+     * @throws \LeanMapper\Exception\InvalidValueException
+     * @throws \LeanMapper\Exception\MemberAccessException
      */
     public function getName()
     {

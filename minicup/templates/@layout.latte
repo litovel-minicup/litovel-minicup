@@ -7,7 +7,8 @@
 
     {block seo}
         <!-- SEO -->
-        <meta property="description" content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2018 konaný ve dnech 8. - 10. června 2018{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, exhibiční utkání proti družstvu mužů TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+        <meta property="description"
+              content="Miniházenkářský turnaj Litovel MINICUP {$category->year->slug} s informačním servisem včetně živých přenosů, fotek týmů a podrobných statistik.">
         <meta property="keywords" content="litovel,hanacke,benatky,minihazena,hazena,tatran,extraliga,minicup">
         <meta property="author" content="Josef Kolář, Matěj Mitaš">
         {block og}
@@ -15,7 +16,8 @@
             <meta property="fb:app_id" content="1709323006015727">
             <meta property="og:type" content="website">
             <meta property="og:site_name" content="Litovel MINICUP">
-            <meta property="og:description" content="Portál pro turnaj v miniházené MINICUP{if $category->year->actual} 2018 konaný ve dnech 8. - 10. června 2018{else} {$category->year->slug}{/if} v Litovli. Celkem nás čeká 132 zápasů v dvou kategoriích, exhibiční utkání proti družstvu mužů TJ Tatranu Litovel a spousta dalších zajímavých aktivit.">
+            <meta property="og:description"
+                  content="Miniházenkářský turnaj Litovel MINICUP {$category->year->slug} s informačním servisem včetně živých přenosů, fotek týmů a podrobných statistik.">
             <meta property="og:url" content="{$absoluteUrl}">
             <meta property="og:title" content="{ifset title}{include title|stripHtml} | {/ifset}MINICUP {$category->year->slug}">
             {block ogImage}
@@ -27,29 +29,33 @@
     {/block}
 
     {block favicon}
-        <link rel="apple-touch-icon" sizes="57x57" href="{$basePath}/assets/favicon/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="{$basePath}/assets/favicon/apple-touch-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="{$basePath}/assets/favicon/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="{$basePath}/assets/favicon/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="{$basePath}/assets/favicon/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="{$basePath}/assets/favicon/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="{$basePath}/assets/favicon/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="{$basePath}/assets/favicon/apple-touch-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/assets/favicon/apple-touch-icon-180x180.png">
-        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-194x194.png" sizes="194x194">
-        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-96x96.png" sizes="96x96">
-        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/android-chrome-192x192.png" sizes="192x192">
-        <link rel="icon" type="image/png" href="{$basePath}/assets/favicon/favicon-16x16.png" sizes="16x16">
+        <link rel="apple-touch-icon" sizes="57x57" href="{$basePath}/assets/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="{$basePath}/assets/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="{$basePath}/assets/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="{$basePath}/assets/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="{$basePath}/assets/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="{$basePath}/assets/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="{$basePath}/assets/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="{$basePath}/assets/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{$basePath}/assets/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="{$basePath}/assets/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="{$basePath}/assets/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="{$basePath}/assets/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="{$basePath}/assets/favicon/favicon-16x16.png">
         <link rel="manifest" href="{$basePath}/assets/favicon/manifest.json">
-        <link rel="mask-icon" href="{$basePath}/assets/favicon/safari-pinned-tab.svg" color="#4180ff">
-        <link rel="shortcut icon" href="{$basePath}/assets/favicon/favicon.ico">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="msapplication-TileImage" content="{$basePath}/assets/favicon/mstile-144x144.png">
+        <meta name="msapplication-TileColor" content="#0040c1">
+        <meta name="msapplication-TileImage" content="{$basePath}/assets/favicon/ms-icon-144x144.png">
         <meta name="msapplication-config" content="{$basePath}/assets/favicon/browserconfig.xml">
         <meta name="theme-color" content="#0040c1">
-    {/block}
+        <link rel="shortcut icon" href="{$basePath}/assets/favicon/favicon.ico">
 
+        <meta name="application-name" content="Litovel MINICUP">
+        <meta name="apple-mobile-web-app-title" content="Litovel MINICUP">
+
+    {/block}
+    {if !isset($productionMode) || (isset($productionMode) && $productionMode)}
+        <script src="{$basePath}/assets/js/hotjar.js"></script>
+    {/if}
 </head>
 <body>
 {block body}{/block}
