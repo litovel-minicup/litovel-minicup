@@ -67,7 +67,7 @@ class JsComponentFactory extends Object
             $files->addFile('assets/js/chartist.barlabels.js');
             $files->addFile('assets/js/jquery.countdown.js');
             $files->addFile('assets/js/jquery.countdown.cs.js');
-        } elseif ($module === 'admin') {
+        } elseif (in_array($module, ['admin', 'management'])) {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addFile('assets/js/admin/toastr.js');

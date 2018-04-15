@@ -44,6 +44,10 @@ class EntitiesReplicatorContainer extends RContainer
                 $this->createOne($entity->id);
             }
 
+            for ($i = 0; $i < $this->createDefault - count($this->entities); $i++) {
+                $this->createOne();
+            }
+
         }
     }
 
