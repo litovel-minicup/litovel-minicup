@@ -259,20 +259,6 @@ class RouterFactory extends Object
             'presenter' => 'Media',
         ]);
 
-        $router[] = $route('online/zapis/<match>/', [
-            'module' => 'Online',
-            'presenter' => 'Homepage',
-            'action' => 'write',
-            'match' => $matchFilter,
-        ]);
-
-        $router[] = $route('online/<presenter>/<action>[/<match>]', [
-            'module' => 'Online',
-            'presenter' => 'Homepage',
-            'action' => 'default',
-            'match' => $matchFilter,
-        ]);
-
         $router[] = $route->route('', [
             'module' => 'Front',
             'presenter' => 'Homepage',
