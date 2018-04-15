@@ -1,0 +1,59 @@
+{extends '../@layout.latte'}
+{block navbar}
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse-1">
+                    <span class="sr-only">Navigace</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="navbar-link{ifCurrent Homepage:} active{/ifCurrent}" n:href="Homepage:">
+                            <i class="glyphicon glyphicon-user"></i>
+                            Správa soupisky
+                        </a>
+                    </li>
+                </ul>
+                <p class="navbar-text navbar-right">
+                    <a class="navbar-link" n:href=":Front:Homepage:">
+                        <i class="glyphicon glyphicon-home"></i> Veřejná sekce
+                    </a>
+                </p>
+            </div>
+        </div>
+    </nav>
+{/block}
+
+{block body}
+    {include navbar}
+    <div class="container">
+        {snippet flashes}{if $flashes}
+            <script>
+                {foreach $flashes as $flash}
+                toastr[{$flash->type}]({$flash->message});
+                {/foreach}
+            </script>
+        {/if}{/snippet}
+        {snippet content}{block content}{/block}{/snippet}
+    </div>
+{/block}
+
+{block seo}
+    {include parent}
+    <meta name="robots" content="noindex,follow">
+    <meta name="googlebot" content="nosnippet,noarchive">
+{/block}
+
+{block head}
+    {include parent}
+    {control css}
+    {control js}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+{/block}

@@ -123,7 +123,7 @@ class EntitiesReplicatorContainer extends RContainer
 
         ObjectMixin::setExtensionMethod(SubmitButton::class, 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
             $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
-                $replicator = $button->lookup(__NAMESPACE__ . '\Container');
+                $replicator = $button->lookup(__NAMESPACE__ . '\EntitiesReplicatorContainer');
                 /** @var EntitiesReplicatorContainer $replicator */
                 if (!is_bool($allowEmpty)) {
                     $callback = Callback::closure($allowEmpty);

@@ -1,0 +1,24 @@
+{snippet form}
+    {form rosterFormComponent}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Číslo</th>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Číslo na druhých dresech</th>
+            </tr>
+            </thead>
+            {foreach $form['players']->getContainers() as $player}
+                <tr>
+                    <td><input n:name="$player['number']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['name']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['surname']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['secondaryNumber']" type="text" class="form-control"></td>
+                </tr>
+            {/foreach}
+        </table>
+        <input n:name="$form['players']['addPlayer']" type="submit" class="btn btn-primary ajax pull-right">
+        <input n:name="submit" type="submit" class="btn btn-success btn-lg">
+    {/form}
+{/snippet}

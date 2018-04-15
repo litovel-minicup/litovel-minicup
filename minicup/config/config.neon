@@ -64,7 +64,6 @@ services:
     - Doctrine\DBAL\Connection(%connection%)
     - Doctrine\DBAL\Driver\PDOMySql\Driver
     filters: Minicup\Model\Filters
-    - WebLoader\Nette\Diagnostics\Panel
 
     leanMapper.connection:
         setup:
@@ -97,7 +96,6 @@ services:
     - Minicup\Model\Repository\PlayerRepository
 
     # component factories
-    - Minicup\Components\ITeamRosterAdministrationComponentFactory
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
@@ -149,6 +147,9 @@ services:
     - implement: Minicup\Components\IListOfMatchesComponentFactory
       parameters: [arg]
       arguments: [%arg%]
+    - implement: Minicup\Components\ITeamRosterManagementComponentFactory
+      parameters: [Minicup\Model\Entity\TeamInfo team]
+      arguments: [%team%]
     - implement: Minicup\Components\IOnlineReportComponentFactory
       parameters: [Minicup\Model\Entity\Match match]
       arguments: [%match%]

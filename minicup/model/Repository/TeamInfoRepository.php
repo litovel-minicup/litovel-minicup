@@ -38,4 +38,16 @@ class TeamInfoRepository extends BaseRepository
             ->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
+
+    /**
+     * @param $token string
+     * @return TeamInfo|NULL
+     */
+    public function getByToken($token)
+    {
+        $row = $this->createFluent()
+            ->where('[auth_token] = %s', $token)
+            ->fetch();
+        return $row ? $this->createEntity($row) : NULL;
+    }
 }

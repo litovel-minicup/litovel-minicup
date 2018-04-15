@@ -7,9 +7,9 @@ use Grido\Components\Columns\Column;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
-use Minicup\Components\ITeamRosterAdministrationComponentFactory;
+use Minicup\Components\ITeamRosterManagementComponentFactory;
 use Minicup\Components\MatchFormComponent;
-use Minicup\Components\TeamRosterAdministrationComponent;
+use Minicup\Components\TeamRosterManagementComponent;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Player;
@@ -49,7 +49,7 @@ class TeamPresenter extends BaseAdminPresenter
     /** @var PlayerRepository @inject */
     public $PR;
 
-    /** @var ITeamRosterAdministrationComponentFactory @inject */
+    /** @var ITeamRosterManagementComponentFactory @inject */
     public $TRACF;
 
     /**

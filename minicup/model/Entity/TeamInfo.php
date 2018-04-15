@@ -1,4 +1,5 @@
 <?php
+
 namespace Minicup\Model\Entity;
 
 
@@ -8,6 +9,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        int                $id
  * @property        Category           $category m:hasOne      category
  * @property-read   Match[]            $matches                matches for this team
+ * @property        Player[]           $players m:belongsToMany
  * @property        string             $name                   czech name of team
  * @property        string             $slug                   slug for URL
  * @property        Team|NULL          $team m:belongsToOne    actually connected team

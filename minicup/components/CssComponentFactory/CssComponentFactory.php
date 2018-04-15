@@ -10,7 +10,6 @@ use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
 use WebLoader\Nette\CssLoader;
-use WebLoader\Nette\Diagnostics\Panel;
 
 /**
  * Factory for generating css component
@@ -24,26 +23,19 @@ class CssComponentFactory extends Object
     private $wwwPath;
     /** @var  bool */
     private $productionMode;
-    /**
-     * @var Panel
-     */
-    private $tracyBar;
 
     /**
      * @param string   $wwwPath
      * @param bool     $productionMode
      * @param IRequest $request
-     * @param Panel    $tracyBar
      */
     public function __construct($wwwPath,
                                 $productionMode,
-                                IRequest $request,
-                                Panel $tracyBar)
+                                IRequest $request)
     {
         $this->wwwPath = $wwwPath;
         $this->productionMode = $productionMode;
         $this->request = $request;
-        $this->tracyBar = $tracyBar;
     }
 
     /**
@@ -59,7 +51,7 @@ class CssComponentFactory extends Object
         $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
             $files->addFile('assets/css/index.css');
-        } elseif ($module === 'admin') {
+        } elseif (in_array($module, ['admin', 'management'])) {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
             $files->addFile('assets/css/admin/index.css');
             $files->addFile('assets/css/admin/bootstrap.css');
@@ -80,7 +72,7 @@ class CssComponentFactory extends Object
             });
         }
 
-        $this->tracyBar->addLoader('css', $compiler);
+
         $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

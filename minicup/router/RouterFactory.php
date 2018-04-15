@@ -239,6 +239,12 @@ class RouterFactory extends Object
             'category' => $route->getCategoryMetadata(TRUE)
         ]);
 
+        $router[] = new Route('management/[<presenter>/[<action>]]', [
+            'module' => 'Management',
+            'presenter' => 'Homepage',
+            'action' => 'default'
+        ]);
+
         $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
         ]);
