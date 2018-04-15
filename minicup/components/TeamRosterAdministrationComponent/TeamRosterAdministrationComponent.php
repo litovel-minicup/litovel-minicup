@@ -3,7 +3,7 @@
 namespace Minicup\Components;
 
 
-interface ITeamRosterAdministrationComponent
+interface ITeamRosterAdministrationComponentFactory
 {
     /**
      * @return TeamRosterAdministrationComponent

@@ -94,10 +94,10 @@ services:
     - Minicup\Model\Repository\CategoryRepository
     - Minicup\Model\Repository\DayRepository
     - Minicup\Model\Repository\NewsRepository
+    - Minicup\Model\Repository\PlayerRepository
 
     # component factories
-    - Minicup\Components\ITeamRosterAdministrationComponent
-    - Minicup\Components\ITeamRoasterManagementComponent
+    - Minicup\Components\ITeamRosterAdministrationComponentFactory
     - Minicup\Components\ILoginFormComponentFactory
     - Minicup\Components\ICategoryToggleComponentFactory
     - Minicup\Components\IListOfNewsComponentFactory
@@ -165,15 +165,15 @@ extensions:
     leanMapper: Minicup\Model\LeanMapperExtension
     replicator: Minicup\Misc\EntitiesReplicatorExtension
     console: Kdyby\Console\DI\ConsoleExtension
-    migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
-    - Symnedi\EventDispatcher\DI\EventDispatcherExtension
+    # migrations: Zenify\DoctrineMigrations\DI\MigrationsExtension
+    # - Symnedi\EventDispatcher\DI\EventDispatcherExtension
 
-migrations:
-    table: db_migrations
-    dirs:
-        - %appDir%/migrations
-    namespace: Minicup\Migrations
-    codingStandard: spaces
+#migrations:
+#    table: db_migrations
+#    dirs:
+#        - %appDir%/migrations
+#    namespace: Minicup\Migrations
+#    codingStandard: spaces
 
 console:
     commands:

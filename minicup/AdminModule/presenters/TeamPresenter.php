@@ -7,14 +7,18 @@ use Grido\Components\Columns\Column;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
-use Minicup\Components\ITeamRosterAdministrationComponent;
+use Minicup\Components\ITeamRosterAdministrationComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Components\TeamRosterAdministrationComponent;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
+use Minicup\Model\Entity\Player;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Entity\TeamInfo;
+use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
+use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 class TeamPresenter extends BaseAdminPresenter
 {
@@ -23,7 +27,7 @@ class TeamPresenter extends BaseAdminPresenter
     /**
      * Mapp db name => Real name
      */
-    const LABELS = [
+    const TEAM_INFO_GRID_LABELS = [
         'id' => '#',
         'slug' => 'Detail na webu',
         'name' => 'Název',
@@ -42,7 +46,11 @@ class TeamPresenter extends BaseAdminPresenter
     /** @var TeamInfoRepository @inject */
     public $TIR;
 
-    private $teamRosterAdministrationComponentFactory;
+    /** @var PlayerRepository @inject */
+    public $PR;
+
+    /** @var ITeamRosterAdministrationComponentFactory @inject */
+    public $TRACF;
 
     /**
      * @param Category $category
@@ -53,12 +61,10 @@ class TeamPresenter extends BaseAdminPresenter
     }
 
 
-    public function renderTeamList($id) {
-
-        $team = $this->TIR->get($id);
-
-        $this->template->name = $team->name;
-
+    public function renderRoster($team)
+    {
+        $team = $this->TIR->get($team);
+        $this->template->team = $team;
     }
 
     /**
@@ -87,7 +93,7 @@ class TeamPresenter extends BaseAdminPresenter
             ->where('ti.[category_id] = ', $this->getParameter('category')->id);
 
         $g->setModel($f);
-        $g->addColumnNumber('id', $this::LABELS['id']);
+        $g->addColumnNumber('id', $this::TEAM_INFO_GRID_LABELS['id']);
 
         // links
         $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) use ($CR, $that) {
@@ -96,45 +102,97 @@ class TeamPresenter extends BaseAdminPresenter
         });
 
         $g->addActionHref('id', 'Editace soupisky')->setCustomHref(function ($row) use ($TIR, $that) {
-
-            return $that->link('Team:TeamList', ['id' => $row->id]);
+            return $that->link('Team:roster', ['team' => $row->id]);
         });
 
         // Name && slug
-        $this->addEditableText($g, 'name');
-        $this->addEditableText($g, 'slug');
+        $this->addTeamInfoEditableText($g, 'name');
+        $this->addTeamInfoEditableText($g, 'slug');
 
         // Treiner name
-        $this->addEditableText($g, 'trainer_name');
+        $this->addTeamInfoEditableText($g, 'trainer_name');
 
 
         // Dress color
-        $this->addEditableText($g, 'dress_color');
-        $this->addEditableText($g, 'dress_color_secondary');
+        $this->addTeamInfoEditableText($g, 'dress_color');
+        $this->addTeamInfoEditableText($g, 'dress_color_secondary');
 
         return $g;
     }
 
-    /**
-     * Add Column with Editable callback to griddo
-     *
-     * @param $g Grid instance
-     * @param $identifier name of column. It must be mapped in LABELS
-     *
-     *
-     */
-    private function addEditableText($g, $identifier) {
+    public function createComponentRosterGridComponent($name)
+    {
+        $connection = $this->connection;
+        $TIR = $this->TIR;
+        $CR = $this->CR;
 
-        $g->addColumnText($identifier, $this::LABELS[$identifier])
+        $that = $this;
+        $g = new Grid($this, $name);
+
+        $f = $connection->select('[p].*')
+            ->from('[player]')->as('p')
+            ->where('p.[team_info_id] = ', $this->getParameter('team'));
+
+        $g->setModel($f);
+        $g->defaultSort = ['number' => 'ASC', 'secondary_number' => 'ASC'];
+
+        $this->addPlayerEditableText($g, 'number', 'Číslo');
+        $this->addPlayerEditableText($g, 'name', 'Jméno');
+        $this->addPlayerEditableText($g, 'surname', 'Příjmení');
+
+        // Treiner name
+        $this->addPlayerEditableText($g, 'secondary_number', 'Alt. číslo');
+
+        $g->addActionEvent('delete', 'Smazat', function ($id) use ($that) {
+            $that->PR->delete($id);
+        })->setConfirm('Really?');
+
+
+        return $g;
+    }
+
+    public function createComponentPlayerFormComponent()
+    {
+        $f = $this->formFactory->create();
+
+        $f->addText('number', 'Číslo')
+            ->setRequired(true)
+            ->addRule(Form::INTEGER)
+            ->addRule(Form::RANGE, NULL, [0, 99]);
+        $f->addText('name', 'Jméno')->setRequired(true);
+        $f->addText('surname', 'Příjmení')->setRequired(true);
+        $f->addText('secondaryNumber', 'Alt. číslo');
+
+        $f->addSubmit('submit', 'Přidat');
+
+        $f->onSuccess[] = function (Form $form, ArrayHash $values) {
+            $p = new Player();
+            $p->assign($values);
+            $p->teamInfo = $this->TIR->get($this->getParameter('team'));
+            $this->PR->persist($p);
+        };
+
+
+        return $f;
+    }
+
+    private function addTeamInfoEditableText(Grid $g, $identifier)
+    {
+
+        return $g->addColumnText($identifier, $this::TEAM_INFO_GRID_LABELS[$identifier])
             ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR));
     }
 
-    public function injectTeamRosterAdministrationComponent(ITeamRosterAdministrationComponent $factory) {
-        $this->teamRosterAdministrationComponentFactory = $factory;
+    private function addPlayerEditableText(Grid $g, $identifier, $label)
+    {
+
+        return $g->addColumnText($identifier, $label)
+            ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->PR));
     }
 
-    protected function createComponentTeamRosterAdministrationComponent() {
-        return $this->teamRosterAdministrationComponentFactory->create();
+    protected function createComponentTeamRosterAdministrationComponent()
+    {
+        return $this->TRACF->create();
     }
 
 
