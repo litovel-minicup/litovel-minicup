@@ -12,23 +12,12 @@ use Minicup\Model\Repository\TeamInfoRepository;
 final class TeamRosterPresenter extends BaseManagementPresenter
 {
 
-    /** @var TeamInfoRepository @inject */
-    public $TIR;
-
     /** @var ITeamRosterManagementComponentFactory @inject */
     public $TRACF;
 
-    /** @var TeamInfo */
-    public $team;
-
-    public function actionDefault($token)
+    public function renderDefault(TeamInfo $team)
     {
-        $this->team = $this->TIR->getByToken($token);
-    }
-
-    public function renderDefault()
-    {
-        $this->template->team = $this->team;
+        $this->template->team = $team;
     }
 
     public function createComponentTeamRosterManagementComponent()

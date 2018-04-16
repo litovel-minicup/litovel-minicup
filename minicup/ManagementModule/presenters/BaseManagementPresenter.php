@@ -7,16 +7,50 @@ use Grido\Components\Actions\Event;
 use Grido\Components\Columns\Column;
 use Grido\Components\Filters\Filter;
 use Grido\Grid;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Presenters\BasePresenter;
+use Nette\Http\IResponse;
 
 abstract class BaseManagementPresenter extends BasePresenter
 {
+    const MANAGEMENT_COOKIE = 'management_logged_team';
+
+    /** @var TeamInfo */
+    protected $team;
+
+    /**
+     * @throws \Nette\Application\AbortException
+     */
+    public function startup()
+    {
+        parent::startup();
+        $this->team = $this->getParameter('team');
+
+        if (!$this->isLoggedToManageTeam()) {
+            $this->flashMessage('Je nutné přihlášení.');
+            $this->redirect('Homepage:default', [$this->team]);
+        }
+    }
+
+    public function handleLogout()
+    {
+        $this->getHttpResponse()->deleteCookie(self::MANAGEMENT_COOKIE);
+        $this->flashMessage('Ohlášení proběhlo úspěšně.');
+        $this->redirect('Homepage:default', [$this->team]);
+    }
+
+    protected function isLoggedToManageTeam()
+    {
+        return $this->getHttpRequest()->getCookie(self::MANAGEMENT_COOKIE) == $this->team->id;
+    }
 
     public function beforeRender()
     {
         parent::beforeRender();
         $this->template->categories = $this->CR->findAll(FALSE);
         $this->template->years = $this->YR->findAll(FALSE);
+        $this->template->team = $this->team;
+        $this->template->isLogged = $this->isLoggedToManageTeam();
     }
 
 

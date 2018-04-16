@@ -9,6 +9,7 @@ use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TagRepository;
+use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Minicup\Model\Repository\YearRepository;
 use Nette\Application\IRouter;
@@ -27,6 +28,9 @@ class RouterFactory extends Object
 
     /** @var TeamRepository */
     private $TR;
+
+    /** @var TeamInfoRepository */
+    private $TIR;
 
     /** @var YearRepository */
     private $YR;
@@ -47,6 +51,7 @@ class RouterFactory extends Object
      * @param CategoryRepository       $CR
      * @param TeamRepository           $TR
      * @param YearRepository           $YR
+     * @param TeamInfoRepository       $TIR
      * @param TagRepository            $TagR
      * @param MatchRepository          $MR
      * @param Session                  $session
@@ -55,6 +60,7 @@ class RouterFactory extends Object
     public function __construct(CategoryRepository $CR,
                                 TeamRepository $TR,
                                 YearRepository $YR,
+                                TeamInfoRepository $TIR,
                                 TagRepository $TagR,
                                 MatchRepository $MR,
                                 Session $session,
@@ -63,6 +69,7 @@ class RouterFactory extends Object
         $this->CR = $CR;
         $this->TR = $TR;
         $this->YR = $YR;
+        $this->TIR = $TIR;
         $this->TagR = $TagR;
         $this->MR = $MR;
         $this->session = $session->getSection('minicup');
@@ -255,10 +262,27 @@ class RouterFactory extends Object
             'category' => $route->getCategoryMetadata(TRUE)
         ]);
 
-        $router[] = new Route('management/[<presenter>/[<action>]]', [
+        $managementTeamFilter = [
+            Route::FILTER_IN => function ($token) {
+                return $this->TIR->getByToken($token);
+            },
+            Route::FILTER_OUT => function (TeamInfo $team) {
+                return $team->authToken;
+            }
+        ];
+
+        $router[] = new Route('management/<team>/soupiska', [
+            'module' => 'Management',
+            'presenter' => 'TeamRoster',
+            'action' => 'default',
+            'team' => $managementTeamFilter
+        ]);
+
+        $router[] = new Route('management/<team>', [
             'module' => 'Management',
             'presenter' => 'Homepage',
-            'action' => 'default'
+            'action' => 'default',
+            'team' => $managementTeamFilter
         ]);
 
         $router[] = new Route('media/<action>/<slug>', [
