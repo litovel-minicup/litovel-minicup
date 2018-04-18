@@ -21,7 +21,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string|NULL        $trainerName            Name of team trainer
  * @property        string|NULL        $description            Description edited by team
  * @property        string|NULL        $password               Password for access to administration
- * @property        DateTime           $updated                Last time update
+ * @property        DateTime|NULL      $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
  */
 class TeamInfo extends BaseEntity
