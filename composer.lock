@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a749856a72cd0563197fd1dcb92d0086",
-    "content-hash": "6769bf6a44c5e73729697760879f1126",
+    "hash": "9abf443d5c3f1f45cfa147740b9ff7fc",
+    "content-hash": "2516f46a161ce7d79d2724b8bcb54cd7",
     "packages": [
         {
             "name": "dg/dibi",
@@ -890,7 +890,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/da5dcdac140666223b087ca025d39f9dda49dda3",
+                "url": "https://api.github.com/repos/nette/latte/zipball/d4f519ec621dab01f16a938ac488d7e56f5d89bc",
                 "reference": "35d1f36e74e7abaee357ce4a9f53cd4dced66cbe",
                 "shasum": ""
             },
@@ -998,7 +998,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/application/zipball/10b513554b9e1a28bc60977e32b54db02492302f",
+                "url": "https://api.github.com/repos/nette/application/zipball/e4aacc0c92b2af2a7fdee347020e31df04911a5f",
                 "reference": "8cc895d49f048fda12374189d2063ef5b83eb747",
                 "shasum": ""
             },
@@ -1137,7 +1137,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/caching/zipball/51fefd7847e876725090e541efd23905679e2d33",
+                "url": "https://api.github.com/repos/nette/caching/zipball/ec293113dd15b9d004ec78b14f2e19955e79b6b2",
                 "reference": "bf6ab29769bbffac699bef2d6417db5afed4eca0",
                 "shasum": ""
             },
@@ -1368,7 +1368,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/di/zipball/401dca5375c2bc991bff59e632c89270efc75542",
+                "url": "https://api.github.com/repos/nette/di/zipball/865f7e0566e6c9d0543e16db692582f0cd48f1fd",
                 "reference": "5a200a5eb9411f1b93a2205a2aa96c67f6db42e4",
                 "shasum": ""
             },
@@ -1482,7 +1482,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/forms/zipball/0cd3af0a400f3f02c239c0ccfd8859915f02b8e7",
+                "url": "https://api.github.com/repos/nette/forms/zipball/849b672612b709227371f0e0c7d4ee9110206ddc",
                 "reference": "98832d3d79fdda0583c2fc90abeb89c371b97644",
                 "shasum": ""
             },
@@ -2180,6 +2180,54 @@
             "time": "2016-05-03 07:27:48"
         },
         {
+            "name": "nofutur3/nette-sentry",
+            "version": "v0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nofutur3/nette-sentry.git",
+                "reference": "fa8207d729fc31ce60d6139c52d0bb0d1f957e9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nofutur3/nette-sentry/zipball/fa8207d729fc31ce60d6139c52d0bb0d1f957e9c",
+                "reference": "fa8207d729fc31ce60d6139c52d0bb0d1f957e9c",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": ">=2.3.0",
+                "php": ">=5.3.3",
+                "sentry/sentry": ">=1.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.6.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Nofutur3\\Sentry\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Vyvazil",
+                    "email": "jakub@vyvazil.cz"
+                }
+            ],
+            "description": "Nette integration for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
+            "keywords": [
+                "errors",
+                "logging",
+                "nette",
+                "sentry"
+            ],
+            "time": "2016-12-22 20:35:44"
+        },
+        {
             "name": "o5/grido",
             "version": "dev-master",
             "source": {
@@ -2420,6 +2468,70 @@
                 "psr-3"
             ],
             "time": "2016-10-10 12:19:37"
+        },
+        {
+            "name": "sentry/sentry",
+            "version": "1.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/sentry-php.git",
+                "reference": "643ec20d181ca55317d4ccda6ad658b9a8b4f06a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getsentry/sentry-php/zipball/643ec20d181ca55317d4ccda6ad658b9a8b4f06a",
+                "reference": "643ec20d181ca55317d4ccda6ad658b9a8b4f06a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^5.3|^7.0"
+            },
+            "conflict": {
+                "raven/raven": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.8.0",
+                "monolog/monolog": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7"
+            },
+            "suggest": {
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "monolog/monolog": "Automatically capture Monolog events as breadcrumbs"
+            },
+            "bin": [
+                "bin/sentry"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Raven_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "David Cramer",
+                    "email": "dcramer@gmail.com"
+                }
+            ],
+            "description": "A PHP client for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2018-03-20 12:52:10"
         },
         {
             "name": "symfony/console",

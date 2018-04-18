@@ -24,7 +24,8 @@
     "kdyby/forms-replicator": "@dev",
     "zenify/doctrine-migrations": "~2.3",
     "kdyby/console": "^2.7",
-    "tedivm/jshrink": "~1.0"
+    "tedivm/jshrink": "~1.0",
+    "nofutur3/nette-sentry": "^0.9.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
