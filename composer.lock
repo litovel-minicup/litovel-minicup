@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7242013438595e36a2fe4015ff70b87b",
-    "content-hash": "688a69ed1932eb7df2636fa209272c9f",
+    "hash": "95a8910b3d6f47df1779a4f081ccd484",
+    "content-hash": "14d78b6dc607bd73efcd2c4e61195a00",
     "packages": [
         {
             "name": "dibi/dibi",
@@ -3297,16 +3297,16 @@
         },
         {
             "name": "tharos/leanmapper",
-            "version": "v3.1.1",
+            "version": "v3.2.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Tharos/LeanMapper.git",
-                "reference": "ad4dbf6870ccc2dffa176f0ca8366b992e2a957a"
+                "reference": "d73ec5805c745d65c88801a7fa423a9664a83c17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/ad4dbf6870ccc2dffa176f0ca8366b992e2a957a",
-                "reference": "ad4dbf6870ccc2dffa176f0ca8366b992e2a957a",
+                "url": "https://api.github.com/repos/Tharos/LeanMapper/zipball/d73ec5805c745d65c88801a7fa423a9664a83c17",
+                "reference": "d73ec5805c745d65c88801a7fa423a9664a83c17",
                 "shasum": ""
             },
             "require": {
@@ -3339,9 +3339,9 @@
                     "role": "Maintainer"
                 }
             ],
-            "description": "Tiny ORM based on powerful dibi database abstraction library for PHP 5.",
+            "description": "Tiny ORM based on powerful dibi database abstraction library for PHP.",
             "homepage": "http://www.leanmapper.com",
-            "time": "2016-07-10 09:10:35"
+            "time": "2018-04-14 12:21:56"
         },
         {
             "name": "tracy/tracy",

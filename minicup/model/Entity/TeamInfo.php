@@ -3,6 +3,7 @@
 namespace Minicup\Model\Entity;
 
 
+use Dibi\DateTime;
 use LeanMapper\Exception\InvalidStateException;
 
 /**
@@ -19,7 +20,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string             $trainerName            Name of team trainer
  * @property        string|NULL        $description            Description edited by team
  * @property        string             $password               Password for access to administration
- * @property        datetime           $updated                Last time update
+ * @property        DateTime           $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
  * @property        Player[]           $players m:belongsToMany
  */
@@ -53,8 +54,6 @@ class TeamInfo extends BaseEntity
          * @return int
          */
         $cmp = function ($match1, $match2) {
-            dump($match1->matchTerm->row->getData());
-            die;
             $match1Start = $match1->matchTerm->start->setDate(0, 0, 0)->getTimestamp() + $match1->matchTerm->day->day->getTimestamp();
             $match2Start = $match2->matchTerm->start->setDate(0, 0, 0)->getTimestamp() + $match2->matchTerm->day->day->getTimestamp();
             if ($match1Start > $match2Start) {
