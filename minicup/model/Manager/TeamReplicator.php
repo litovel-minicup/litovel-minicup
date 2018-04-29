@@ -8,14 +8,17 @@ use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\CategoryRepository;
 use Minicup\Model\Repository\TeamRepository;
-use Nette\Object;
+
+use Nette\SmartObject;
 
 /**
  * Class for creating team history - it's clone actual teams to historically context
  * @package Minicup\Model\Manager
  */
-class TeamReplicator extends Object
+class TeamReplicator
 {
+
+    use SmartObject;
     /** @var  TeamRepository */
     private $TR;
 

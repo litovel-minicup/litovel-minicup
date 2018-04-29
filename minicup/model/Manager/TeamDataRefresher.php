@@ -6,11 +6,15 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
-use Nette\Object;
+
+use Nette\SmartObject;
 
 
-class TeamDataRefresher extends Object
+class TeamDataRefresher
 {
+
+
+    use SmartObject;
 
     /** @var MatchRepository */
     private $MR;

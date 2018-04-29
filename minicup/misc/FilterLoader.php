@@ -10,13 +10,14 @@ use Nette\Application\LinkGenerator;
 use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\InvalidArgumentException;
-use Nette\Object;
 use Nette\Utils\Html;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Nette\SmartObject;
 
-class FilterLoader extends Object
+class FilterLoader
 {
+    use SmartObject;
 
     /** @var LinkGenerator */
     private $linkGenerator;

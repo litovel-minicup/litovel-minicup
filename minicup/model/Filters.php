@@ -7,10 +7,13 @@ use LeanMapper\Exception\InvalidArgumentException;
 use LeanMapper\Fluent;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\BaseRepository;
-use Nette\Object;
 
-class Filters extends Object
+use Nette\SmartObject;
+
+class Filters
 {
+    use SmartObject;
+
     /**
      * @param Fluent $fluent
      * @param int    $yearId

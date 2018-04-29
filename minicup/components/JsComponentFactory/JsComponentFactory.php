@@ -5,7 +5,8 @@ namespace Minicup\Components;
 
 use JShrink\Minifier;
 use Nette\Http\IRequest;
-use Nette\Object;
+
+use Nette\SmartObject;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
@@ -16,8 +17,10 @@ use WebLoader\Nette\JavaScriptLoader;
  * Factory for generating js component
  * @package Minicup\Components
  */
-class JsComponentFactory extends Object
+class JsComponentFactory
 {
+
+    use SmartObject;
     /** @var  string */
     private $wwwPath;
 

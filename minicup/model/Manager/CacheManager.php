@@ -12,10 +12,13 @@ use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\BaseRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
-use Nette\Object;
 
-class CacheManager extends Object
+use Nette\SmartObject;
+
+class CacheManager
 {
+
+    use SmartObject;
     /** @var IStorage */
     private $cache;
 

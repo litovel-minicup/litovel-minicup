@@ -15,10 +15,13 @@ use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\StaticContentRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\InvalidArgumentException;
-use Nette\Object;
 
-class StaticContentManager extends Object
+use Nette\SmartObject;
+
+class StaticContentManager
 {
+
+    use SmartObject;
     const PARTS_GLUE = '_';
 
     /** @var TeamInfoRepository */

@@ -9,10 +9,13 @@ use LeanMapper\Fluent;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Repository\BaseRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
-use Nette\Object;
 
-class StatsManager extends Object
+use Nette\SmartObject;
+
+class StatsManager
 {
+
+    use SmartObject;
     /** @var Connection */
     private $connection;
 

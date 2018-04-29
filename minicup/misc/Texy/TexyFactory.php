@@ -3,10 +3,13 @@
 namespace Minicup\Misc;
 
 use Nette\Application\LinkGenerator;
-use Nette\Object;
 
-class TexyFactory extends Object
+use Nette\SmartObject;
+
+class TexyFactory
 {
+
+    use SmartObject;
     /** @var  LinkGenerator */
     private $linkGenerator;
 

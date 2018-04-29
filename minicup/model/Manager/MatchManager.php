@@ -12,10 +12,13 @@ use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\MatchTermRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\InvalidArgumentException;
-use Nette\Object;
+use Nette\SmartObject;
 
-class MatchManager extends Object
+class MatchManager
 {
+
+    use SmartObject;
+
     /** @var MatchRepository */
     private $MR;
 

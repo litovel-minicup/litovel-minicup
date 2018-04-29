@@ -17,11 +17,14 @@ use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
-use Nette\Object;
+
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
-class RouterFactory extends Object
+class RouterFactory
 {
+
+    use SmartObject;
     /** @var CategoryRepository */
     private $CR;
 

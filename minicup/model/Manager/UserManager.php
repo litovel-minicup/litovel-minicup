@@ -6,15 +6,19 @@ namespace Minicup\Model\Manager;
 use Minicup\Model\Entity\User;
 use Minicup\Model\Repository\UserRepository;
 use Nette\InvalidArgumentException;
-use Nette\Object;
+
+use Nette\SmartObject;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\Passwords;
 
 
-class UserManager extends Object implements IAuthenticator
+class UserManager implements IAuthenticator
 {
+
+
+    use SmartObject;
 
     /** @var UserRepository */
     private $UR;

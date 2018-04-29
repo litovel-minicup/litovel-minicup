@@ -11,12 +11,14 @@ use Nette\Application\Routers\Route;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\InvalidStateException;
-use Nette\Object;
+
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
-class YearCategoryRouteFactory extends Object
+class YearCategoryRouteFactory
 {
 
+    use SmartObject;
     const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
     const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
 

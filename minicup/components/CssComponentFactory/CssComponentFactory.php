@@ -4,7 +4,8 @@ namespace Minicup\Components;
 
 
 use Nette\Http\IRequest;
-use Nette\Object;
+
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use WebLoader\Compiler;
 use WebLoader\FileCollection;
@@ -16,8 +17,10 @@ use WebLoader\Nette\Diagnostics\Panel;
  * Factory for generating css component
  * @package Minicup\Components
  */
-class CssComponentFactory extends Object
+class CssComponentFactory
 {
+
+    use SmartObject;
     /** @var IRequest */
     public $request;
     /** @var  string */

@@ -6,17 +6,19 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
-use Nette\Object;
 use Tracy\Debugger;
+
+use Nette\SmartObject;
 
 
 /**
  * Class for conversion order
  * @package Minicup\Model\Manager
  */
-class ReorderManager extends Object
+class ReorderManager
 {
 
+    use SmartObject;
     const POINTS_FOR_WINNER = 2;
     const POINTS_FOR_DRAW = 1;
     const POINTS_FOR_LOSER = 0;

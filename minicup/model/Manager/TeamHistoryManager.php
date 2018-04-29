@@ -10,6 +10,8 @@ use Nette\SmartObject;
 
 class TeamHistoryManager
 {
+    use SmartObject;
+
     /** @var TeamRepository */
     private $teamRepository;
 

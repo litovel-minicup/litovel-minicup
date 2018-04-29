@@ -12,14 +12,16 @@ use Nette\FileNotFoundException;
 use Nette\Http\FileUpload;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
-use Nette\Object;
 use Nette\Utils\Image;
 use Nette\Utils\ImageException;
 use Nette\Utils\Random;
 use Tracy\Debugger;
 
-class PhotoManager extends Object
+use Nette\SmartObject;
+
+class PhotoManager
 {
+    use SmartObject;
     /** @internal */
     const PHOTO_ORIGINAL = '_original';
     const PHOTO_MINI = 'mini';
@@ -63,9 +65,9 @@ class PhotoManager extends Object
     private $wwwPath;
 
     /**
-     * @param string $wwwPath
+     * @param string          $wwwPath
      * @param PhotoRepository $PR
-     * @param YearRepository $YR
+     * @param YearRepository  $YR
      * @throws \Nette\Utils\UnknownImageFileException
      */
     public function __construct($wwwPath, PhotoRepository $PR, YearRepository $YR)
@@ -87,8 +89,8 @@ class PhotoManager extends Object
 
     /**
      * @param FileUpload[] $files
-     * @param string|NULL $prefix
-     * @param string|NULL $author
+     * @param string|NULL  $prefix
+     * @param string|NULL  $author
      * @return \Minicup\Model\Entity\Photo[]
      * @throws \LeanMapper\Exception\InvalidArgumentException
      */
@@ -138,7 +140,7 @@ class PhotoManager extends Object
 
     /**
      * @param Photo $photo
-     * @param bool $lazy
+     * @param bool  $lazy
      * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function delete(Photo $photo, $lazy = FALSE)
@@ -160,7 +162,7 @@ class PhotoManager extends Object
 
     /**
      * @param string|Photo|NULL $photo
-     * @param string $format
+     * @param string            $format
      * @throws InvalidArgumentException
      * @throws FileNotFoundException
      * @throws InvalidStateException
@@ -229,8 +231,8 @@ class PhotoManager extends Object
 
 
     /**
-     * @param Photo $photo
-     * @param Image $image
+     * @param Photo  $photo
+     * @param Image  $image
      * @param string $format
      * @return bool
      */

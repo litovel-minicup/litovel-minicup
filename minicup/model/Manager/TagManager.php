@@ -10,11 +10,14 @@ use Minicup\Model\Repository\TagRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
 use Nette\InvalidArgumentException;
-use Nette\Object;
+
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
-class TagManager extends Object
+class TagManager
 {
+
+    use SmartObject;
     const PARTS_GLUE = '_';
 
     /** @var TeamRepository */
