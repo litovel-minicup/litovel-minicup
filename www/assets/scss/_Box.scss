@@ -1,6 +1,6 @@
 .Box {
 	&__head {
-
+		/*
 		@include fill-parent();
 		@include row(table);
 
@@ -12,6 +12,22 @@
 		&__text {
 			@include span-columns(10.5);
 			@include reset-display; 
+			font-family: 'Montserrat';
+			font-size: 24px;
+			line-height: 75px;
+			letter-spacing: -1.5px;
+		}*/
+
+
+		@include display(flex);
+		width: 100%;
+
+		&__icon {
+			@include flex(0 0 75px);
+		}
+
+		&__text {
+			@include flex(1 1 100%);
 			font-family: 'Montserrat';
 			font-size: 24px;
 			line-height: 75px;

@@ -3041,17 +3041,47 @@ Copyright (c) 2015 Daniel Eden
  * Import Components
  */
 .Box__head {
-  width: 100%;
-  display: table;
-  width: 100%;
-  table-layout: fixed; }
+  		/*
+  		@include fill-parent();
+  		@include row(table);
+  
+  		&__icon {
+  			@include span-columns(1.5);
+  			line-height: 75px;
+  		}
+  
+  		&__text {
+  			@include span-columns(10.5);
+  			@include reset-display; 
+  			font-family: 'Montserrat';
+  			font-size: 24px;
+  			line-height: 75px;
+  			letter-spacing: -1.5px;
+  		}*/
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; }
   .Box__head__icon {
-    display: table-cell;
-    width: 12.5%;
-    line-height: 75px; }
+    -webkit-box-flex: 0;
+    -moz-box-flex: 0;
+    box-flex: 0;
+    -webkit-flex: 0 0 75px;
+    -moz-flex: 0 0 75px;
+    -ms-flex: 0 0 75px;
+    flex: 0 0 75px; }
   .Box__head__text {
-    display: table-cell;
-    width: 87.5%;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1 1 100%;
+    -moz-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    flex: 1 1 100%;
     font-family: 'Montserrat';
     font-size: 24px;
     line-height: 75px;
