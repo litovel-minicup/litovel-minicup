@@ -5,6 +5,7 @@ namespace Minicup\Components;
 
 use Dibi\DateTime;
 use Minicup\Misc\EntitiesReplicatorContainer;
+use Minicup\Model\Connection;
 use Minicup\Model\Entity\Player;
 use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\PlayerRepository;
@@ -97,14 +98,19 @@ class TeamRosterManagementComponent extends BaseComponent
             $secondaryNumber = $container
                 ->addText('secondaryNumber')
                 ->setType('number');
-            $number->addCondition(Form::FILLED)->addRule(Form::INTEGER)->addRule(Form::RANGE, 'Číslo na dresu je možné mít od %d do %d.', [1, 99]);
-            $secondaryNumber->addCondition(Form::FILLED)->addRule(Form::INTEGER)->addRule(Form::RANGE, 'Číslo na dresu je možné mít od %d do %d.', [1, 99]);
+            $number
+                ->addCondition(Form::FILLED)
+                ->addRule(Form::INTEGER, 'Zadejte číslo jako numerickou hodnotu.')
+                ->addRule(Form::RANGE, 'Číslo na dresu je možné mít od %d do %d.', [1, 99]);
+            $secondaryNumber
+                ->addCondition(Form::FILLED)
+                ->addRule(Form::INTEGER, 'Zadejte číslo jako numerickou hodnotu.')
+                ->addRule(Form::RANGE, 'Číslo na dresu je možné mít od %d do %d.', [1, 99]);
 
             if ($player) {
                 /** @var Player $player */
                 $player = $player;
                 $container->setDefaults($player->getData());
-                $secondaryNumber->setDefaultValue($secondaryNumber->getValue() || '');
             }
             $name->addConditionOn($number, Form::FILLED)->setRequired('Pole jméno je povinné.');
             $surname->addConditionOn($number, Form::FILLED)->setRequired('Pole příjmení je povinné.');
@@ -126,29 +132,39 @@ class TeamRosterManagementComponent extends BaseComponent
                 /** @var Player[] $players */
                 $players = [];
                 $knownNumbers = [];
+                $knownSecNumbers = [];
                 foreach ($values['players'] as $playerId => $playerData) {
                     if (!$playerData['number']) {
                         continue;
                     }
-                    if (!($p = $this->PR->get($playerData['id']))) {
-                        $p = new Player();
-                        $p->teamInfo = $this->team;
-                    }
+                    $p = new Player();
+                    $p->teamInfo = $this->team;
                     // dump($playerData);
                     // dump($knownNumbers);
                     $p->assign($playerData, ['name', 'number', 'surname', 'secondaryNumber']);
+                    Debugger::barDump($p->secondaryNumber);
                     if (in_array($p->number, $knownNumbers, TRUE)) {
                         $form->addError("Duplicitní číslo hráče {$p->number}.");
                     }
+
+                    if (in_array($p->secondaryNumber, $knownSecNumbers, TRUE)) {
+                        $form->addError("Duplicitní druhé číslo hráče {$p->secondaryNumber}.");
+                    }
                     $knownNumbers[] = $p->number;
+                    if ($p->secondaryNumber)
+                        $knownSecNumbers[] = $p->secondaryNumber;
                     $players[] = $p;
                 }
                 Debugger::barDump($form->getErrors());
                 if ($form->hasErrors()) return;
 
+                foreach ($this->team->players as $player) {
+                    $this->PR->delete($player);
+                }
                 foreach ($players as $player) {
                     $this->PR->persist($player);
                 }
+
                 $this->team->assign($values, ['trainerName', 'dressColor', 'dressColorSecondary']);
                 $this->team->updated = new DateTime();
                 $this->TIR->persist($this->team);
