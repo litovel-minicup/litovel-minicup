@@ -76,13 +76,16 @@ class MatchFormComponent extends BaseComponent
             $container->setCurrentGroup($container->getForm()->addGroup('Zápas', FALSE));
             $home = $container
                 ->addText('scoreHome', $match->homeTeam->name)
+                ->setDefaultValue($match->scoreHome)
                 ->setType('number');
             $home->addCondition(Form::INTEGER);
+            $container->addCheckbox('confirm', ' OK');
             $container->addText('time')
                 ->setDisabled()
                 ->setDefaultValue($match->getOnlineStateName() . ' | ' . $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i'));
             $away = $container
                 ->addText('scoreAway', $match->awayTeam->name)
+                ->setDefaultValue($match->scoreAway)
                 ->setType('number');
             $away->addCondition(Form::INTEGER);
 
@@ -105,6 +108,9 @@ class MatchFormComponent extends BaseComponent
             if ($submitButton->isSubmittedBy()) {
                 foreach ($values['matches'] as $matchId => $matchData) {
                     if (!$matchData['scoreHome'] || !$matchData['scoreAway']) {
+                        continue;
+                    }
+                    if (!$matchData['confirm']) {
                         continue;
                     }
                     /** @var Match $match */

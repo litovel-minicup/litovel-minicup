@@ -111,6 +111,7 @@ class TeamRosterManagementComponent extends BaseComponent
                 /** @var Player $player */
                 $player = $player;
                 $container->setDefaults($player->getData());
+                $secondaryNumber->setDefaultValue($player->secondaryNumber ?: '');
             }
             $name->addConditionOn($number, Form::FILLED)->setRequired('Pole jméno je povinné.');
             $surname->addConditionOn($number, Form::FILLED)->setRequired('Pole příjmení je povinné.');

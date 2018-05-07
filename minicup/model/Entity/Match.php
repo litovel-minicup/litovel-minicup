@@ -123,6 +123,7 @@ class Match extends BaseEntity
      */
     public function getOnlineStateName()
     {
+        //dump($this->onlineState);
         return [
             'init' => 'před zápasem',
             'half_first' => '1. poločas',

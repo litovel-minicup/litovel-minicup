@@ -1,28 +1,33 @@
 <div class="component" n:snippet>
     {form matchForm}
-    {foreach $form['matches']->getContainers() as $id => $_match}
-        {formContainer $match}
-            <div class="row">
-                <div class="col-md-3 col-md-push-2 col-md-pull-1 text-right">
-                    {label $_match['scoreHome'] class=>"input-label"/}
+        {foreach $form['matches']->getContainers() as $id => $_match}
+            {formContainer $match}
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        {label $_match['scoreHome'] class=>"input-label"/}
+                    </div>
+                    <div class="col-md-4 col-md-push-4">
+                        {label $_match['scoreAway'] class=>"input-label"/}
+                    </div>
                 </div>
-                <div class="col-md-3 col-md-push-4">
-                    {label $_match['scoreAway'] class=>"input-label"/}
+                <div class="row" style="margin-bottom: 25px;">
+                    <div class="col-md-4">
+                        {input $_match['scoreHome'] class=>"form-control text-right"}
+                    </div>
+                    <div class="col-md-3">
+                        {input $_match['time'] class=>"form-control text-center"}
+                    </div>
+                    <div class="col-md-1">
+                        {label $_match['confirm']}
+                            {input $_match['confirm'] class=>"form-control text-center"}
+                        {/label}
+                    </div>
+                    <div class="col-md-4">
+                        {input $_match['scoreAway'] class=>"form-control"}
+                    </div>
                 </div>
-            </div>
-            <div class="row" style="margin-bottom: 25px;">
-                <div class="col-md-3 col-md-push-2">
-                    {input $_match['scoreHome'] class=>"form-control text-right"}
-                </div>
-                <div class="col-md-2 col-md-push-2">
-                    {input $_match['time'] class=>"form-control text-center"}
-                </div>
-                <div class="col-md-3 col-md-push-2">
-                    {input $_match['scoreAway'] class=>"form-control"}
-                </div>
-            </div>
-        {/formContainer}
-    {/foreach}
+            {/formContainer}
+        {/foreach}
         <div class="row" n:if="!$control[matchForm][matches]->isEmpty()">
             <div class="col-md-3 col-md-push-9">
                 <input type="submit" class="btn btn-primary btn-success btn-lg" value="odeslat" n:name=submit>
