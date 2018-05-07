@@ -62,11 +62,15 @@ class NewsPresenter extends BaseAdminPresenter
      */
     protected function createComponentNewsGrid($name)
     {
-        $g = new Grid($this, $name);
+        $g = new Grid();
         $g->addColumnNumber('id', '#');
         $g->addColumnText('title', 'Titulek')->setEditableCallback(GridHelpers::getEditableCallback('title', $this->NR));
         $g->addColumnText('content', 'Obsah');
         $g->addColumnNumber('texy', 'Texy?')->setReplacement([
+            0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
+            1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
+        ]);
+        $g->addColumnNumber('published', 'Publikována?')->setReplacement([
             0 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-remove']),
             1 => Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-ok'])
         ]);

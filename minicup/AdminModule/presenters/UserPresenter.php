@@ -49,7 +49,7 @@ class UserPresenter extends BaseAdminPresenter
      */
     protected function createComponentUserGrid($name)
     {
-        $g = new Grid($this, $name);
+        $g = new Grid();
         $fluent = $this->DC->select('*')->from('[user]');
         $g->model = $fluent;
         $g->perPage = 100;

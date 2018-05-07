@@ -75,7 +75,7 @@ task('deploy:update_nginx', function () {
 });
 
 task('deploy:update_php-fpm', function () {
-    run('cp {{current_path}}/conf/php-fpm/minicup.conf /etc/php/7.0/fpm/pool.d/');
+    run('cp {{current_path}}/conf/php-fpm/minicup.conf /etc/php/7.2/fpm/pool.d/');
 });
 
 desc('Deploy minicup from master!');
@@ -100,7 +100,7 @@ task('deploy', [
     'success'
 ]);
 task('reload:php-fpm', function () {
-    run('service php7.0-fpm restart');
+    run('service php7.2-fpm restart');
 });
 task('reload:nginx', function () {
     run('service nginx restart');

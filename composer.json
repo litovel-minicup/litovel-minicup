@@ -22,7 +22,7 @@
     "janmarek/webloader": "~2.5",
     "natxet/CssMin": "@dev",
     "texy/texy": "~2.6",
-    "kdyby/forms-replicator": "@dev",
+    "kdyby/forms-replicator": "dev-master",
     "zenify/doctrine-migrations": "~2.3",
     "kdyby/console": "^2.7",
     "tedivm/jshrink": "~1.0",
@@ -33,7 +33,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/thejoeejoee/grido"
+      "url": "https://github.com/Ciki/grido"
     }
   ],
   "require-dev": {

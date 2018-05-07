@@ -173,7 +173,7 @@ class AdminPhotoListComponent extends BaseComponent
             ->where('[photo.id] IS NOT NULL')
             ->groupBy('id')
             ->select($this->connection->select('COUNT(*)')->from('[photo_tag]')->where('[photo_id] = [photo.id]'), 'count_of_tags');
-        $g = new Grid($this, $name);
+        $g = new Grid();
 
         $g->addColumnNumber('id', '#')
             ->setFilterNumber();

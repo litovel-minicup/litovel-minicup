@@ -95,7 +95,7 @@ final class PhotoPresenter extends BaseAdminPresenter
         $PR = $this->PR;
         $NR = $this->NR;
         $presenter = $this;
-        $g = new Grid($this, $name);
+        $g = new Grid();
 
         $g->addColumnNumber('id', '#');
 

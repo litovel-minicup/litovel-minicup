@@ -55,7 +55,7 @@ class NewsFormComponent extends BaseComponent
         if ($this->news) {
             /** @var Form $form */
             $form = $this['newsForm'];
-            $form->setDefaults($this->news->getData(['title', 'content', 'id', 'texy']));
+            $form->setDefaults($this->news->getData(['title', 'content', 'id', 'texy', 'published']));
             $form->setDefaults(['year' => $this->news->year->id]);
         }
         parent::render();
@@ -70,6 +70,8 @@ class NewsFormComponent extends BaseComponent
         $f->addText('title', 'Titulek')->setRequired();
         $f->addSelect('year', 'Rok', $this->YR->getYearChoices())->setDefaultValue($this->YR->getSelectedYear()->id);
         $f->addCheckbox('texy', 'Užít Texy')->setDefaultValue(TRUE);
+        $f->addCheckbox('published', 'Publikováno')->setDefaultValue(TRUE);
+
         $f->addHidden('id');
         $content = $f->addTextArea('content', 'Obsah')->setRequired();
         $content->getControlPrototype()->attrs['style'] = 'width: 100%; max-width: 100%;';
@@ -86,6 +88,7 @@ class NewsFormComponent extends BaseComponent
     /**
      * @param Form      $form
      * @param ArrayHash $values
+     * @throws \LeanMapper\Exception\InvalidArgumentException
      */
     public function newsFormSubmitted(Form $form, ArrayHash $values)
     {
@@ -97,7 +100,9 @@ class NewsFormComponent extends BaseComponent
             $news->tag = NULL;
         }
         $news->year = $this->YR->get($values->year, FALSE);
-        $news->assign($values, ['title', 'content', 'texy']);
+        if (!$news->published && $values['published'])
+            $news->added = new DateTime();
+        $news->assign($values, ['title', 'content', 'texy', 'published']);
         $news->updated = new DateTime();
 
         try {
@@ -114,7 +119,7 @@ class NewsFormComponent extends BaseComponent
 
     public function handleCreateTag()
     {
-        $tag= $this->tagManager->getTag($this->news);
+        $tag = $this->tagManager->getTag($this->news);
         $this->presenter->flashMessage("Tag k novince vytvořen tag {$tag->slug}.");
         $this->presenter->redrawControl('content');
     }

@@ -86,7 +86,7 @@ class TeamPresenter extends BaseAdminPresenter
         $CR = $this->CR;
 
         $that = $this;
-        $g = new Grid($this, $name);
+        $g = new Grid();
 
         $f = $connection->select('[ti].*')
             ->from('[team_info]')->as('ti')
@@ -127,7 +127,7 @@ class TeamPresenter extends BaseAdminPresenter
         $CR = $this->CR;
 
         $that = $this;
-        $g = new Grid($this, $name);
+        $g = new Grid();
 
         $f = $connection->select('[p].*')
             ->from('[player]')->as('p')

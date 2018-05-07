@@ -63,7 +63,7 @@ final class MatchPresenter extends BaseAdminPresenter
         $connection = $this->connection;
         $MM = $this->MM;
         $MR = $this->MR;
-        $g = new Grid($this, $name);
+        $g = new Grid();
         $f = $connection->select('[m.*]')
             ->from('[match] m')
             ->where('m.[category_id] = ', $this->getParameter('category')->id)
