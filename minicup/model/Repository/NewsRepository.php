@@ -20,7 +20,9 @@ class NewsRepository extends BaseRepository
      */
     public function findLastNews(Year $year, $limit = NewsRepository::DEFAULT_LIMIT)
     {
-        return $this->createEntities($this->createFluent()->where('[year_id] =', $year->id)->limit($limit)->fetchAll());
+        return $this->createEntities(
+            $this->createFluent()->where('[year_id] =', $year->id)->where('[published] = 1')->limit($limit)->fetchAll()
+        );
     }
 
     /**
@@ -29,6 +31,6 @@ class NewsRepository extends BaseRepository
      */
     public function getNewsCountInYear(Year $year)
     {
-        return $this->createFluent()->where('[year_id] =', $year->id)->count();
+        return $this->createFluent()->where('[year_id] =', $year->id)->where('[published] = 1')->count();
     }
 }
