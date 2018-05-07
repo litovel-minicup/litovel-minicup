@@ -116,4 +116,19 @@ class Match extends BaseEntity
         $index = !is_null($this->firstHalfStart) + !is_null($this->secondHalfStart) - 1;
         return $index >= 0 ? $index : NULL;
     }
+
+    /**
+     * Gets name of online state.
+     * @return string
+     */
+    public function getOnlineStateName()
+    {
+        return [
+            'init' => 'před zápasem',
+            'half_first' => '1. poločas',
+            'pause' => 'přestávka',
+            'half_second' => '2. poločas',
+            'end' => 'po zápase'
+        ][$this->onlineState ?: 'init'];
+    }
 }
