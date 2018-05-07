@@ -1,0 +1,63 @@
+{snippet form}
+    {form rosterFormComponent}
+        <p class="lead">
+            Níže prosím vyplňte požadované informace. Veškeré informace budou sloužit pro informační servis v rámci
+            turnajových statistik, přímých textových přenosů a infografik ve video přenosech.
+            <br>Formulář je možno editovat do <strong>31. 5. 2018</strong> - poté jsou změny možné osobně u stolku
+            organizátorů.
+        </p>
+        <p class="text-right">
+            <i>Jestliže mají hráči na druhých dresech stejná čísla, prosím, nevyplňujte jej znovu.</i></p>
+        <hr class="hr">
+
+        <h3 n:if="$form->hasErrors()">Opravte prosím následující chyby:</h3>
+        <div class="alert-danger alert" n:if="$form->hasErrors()">
+            <ul>
+                <li n:foreach="$form->errors as $error">{$error}</li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label n:name=trainerName>
+                    Jméno vedoucího/trenéra
+                    <input class="form-control" placeholder="Jan Novák" n:name=trainerName>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <label n:name=dressColor>
+                    Barva dresů
+                    <input class="form-control" placeholder="modrý dres, žluté kraťasy" n:name=dressColor>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <label n:name=dressColorSecondary>
+                    Barva druhých dresů
+                    <input class="form-control" placeholder="fialová" n:name=dressColorSecondary>
+                </label>
+            </div>
+        </div>
+        <hr class="hr">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Číslo</th>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Číslo na druhých dresech</th>
+            </tr>
+            </thead>
+            {foreach $form['players']->getContainers() as $player}
+                <tr>
+                    <td class="col-md-1"><input n:name="$player['number']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['name']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['surname']" type="text" class="form-control"></td>
+                    <td><input n:name="$player['secondaryNumber']" type="text" class="form-control"></td>
+                </tr>
+            {/foreach}
+        </table>
+        {* <input n:name="$form['players']['addPlayer']" type="submit" class="btn btn-primary ajax pull-right"> *}
+        <i n:if="$team->updated">Poslední modifikace: {$team->updated}</i>
+        <input n:name="submit" type="submit" class="btn btn-success btn-lg pull-right">
+        <hr>
+    {/form}
+{/snippet}

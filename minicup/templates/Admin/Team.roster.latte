@@ -1,0 +1,9 @@
+{block content}
+    <h1 n:block="title">Soupiska týmu {$team->name} v kategorii {$team->category->name}</h1>
+    <div class="alert alert-info">Použij <strong>Ctrl + dvojklik</strong> pro editaci. <strong>Enter</strong> poté pro
+        potvrzení.
+    </div>
+    {control rosterGridComponent}
+
+    {control playerFormComponent}
+{/block}

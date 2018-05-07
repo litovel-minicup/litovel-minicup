@@ -10,19 +10,19 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        int                $id
  * @property        Category           $category m:hasOne      category
  * @property-read   Match[]            $matches                matches for this team
+ * @property        Player[]           $players m:belongsToMany
  * @property        string             $name                   czech name of team
  * @property        string             $slug                   slug for URL
  * @property        Team|NULL          $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL           $tag m:hasOne
- * @property        string             $dressColor             Color of team dress
+ * @property        string|NULL        $dressColor             Color of team dress
  * @property        string|NULL        $dressColorSecondary    Secondary color of team dress
- * @property        string             $trainerName            Name of team trainer
+ * @property        string|NULL        $trainerName            Name of team trainer
  * @property        string|NULL        $description            Description edited by team
- * @property        string             $password               Password for access to administration
- * @property        DateTime           $updated                Last time update
+ * @property        string|NULL        $password               Password for access to administration
+ * @property        DateTime|NULL      $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
- * @property        Player[]           $players m:belongsToMany
  */
 class TeamInfo extends BaseEntity
 {

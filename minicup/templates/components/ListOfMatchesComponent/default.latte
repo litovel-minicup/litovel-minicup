@@ -11,17 +11,54 @@
         </thead>
         <tbody>
         {foreach $matches as $match}
-            <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
+            {if isset($team)}
+                {if $team->id == $match->homeTeam->id}
+                    {*is home*}
+                    <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
                                 isset($team) && $match->isWinner($team) ? 'Table__matches--win',
                                 isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
-                <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
-                       href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
-                <td>{$match->scoreHome} : {$match->scoreAway}</td>
-                <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
-                       href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
-                <td>{$match->matchTerm|matchStart}</td>
-                <td>{$match->matchTerm|matchDate}</td>
-            </tr>
+                        <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
+                        </td>
+                        <td>{$match->scoreHome} : {$match->scoreAway}</td>
+                        <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
+                        </td>
+                        <td>{$match->matchTerm|matchStart}</td>
+                        <td>{$match->matchTerm|matchDate}</td>
+                    </tr>
+                {else}
+                    {*is away*}
+                    <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
+                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
+                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
+                        <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
+                        </td>
+                        <td>{$match->scoreAway} : {$match->scoreHome}</td>
+                        <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
+                        </td>
+                        <td>{$match->matchTerm|matchStart}</td>
+                        <td>{$match->matchTerm|matchDate}</td>
+                    </tr>
+                {/if}
+            {else}
+                {*not known - default*}
+                <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
+                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
+                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
+                    <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
+                                href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
+                    </td>
+                    <td>{$match->scoreHome} : {$match->scoreAway}</td>
+                    <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
+                                href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
+                    </td>
+                    <td>{$match->matchTerm|matchStart}</td>
+                    <td>{$match->matchTerm|matchDate}</td>
+                </tr>
+            {/if}
         {/foreach}
         </tbody>
     </table>

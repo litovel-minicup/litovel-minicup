@@ -1,0 +1,14 @@
+{block content}
+    <h1 n:inner-block="title">Týmová sekce {$team->name} ({$team->category->name})</h1>
+    <div class="row">
+        <div class="col-md-4 col-md-push-4">
+            <h3>Přihlášení</h3>
+            <p><i>Pro přihlášení použijte PIN, který jste obdrželi e-mailem společně s odkazem.</i></p>
+            {form loginFormComponent}
+                <label n:name="pin">PIN: <input class="form-control" n:name="pin"></label>
+
+                <input n:name=login class="btn btn-primary" value="Přihlásit se">
+            {/form}
+        </div>
+    </div>
+{/block}

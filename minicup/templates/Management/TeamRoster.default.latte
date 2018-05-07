@@ -1,0 +1,6 @@
+{block content}
+    {snippet content}
+        <h1 n:inner-block="title">Správa soupisky týmu {$team->name} ({$team->category->name})</h1>
+        {control teamRosterManagementComponent}
+    {/snippet}
+{/block}

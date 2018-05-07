@@ -11,7 +11,6 @@ use WebLoader\Compiler;
 use WebLoader\FileCollection;
 use WebLoader\InvalidArgumentException;
 use WebLoader\Nette\CssLoader;
-use WebLoader\Nette\Diagnostics\Panel;
 
 /**
  * Factory for generating css component
@@ -55,7 +54,7 @@ class CssComponentFactory
         $files->addFile('assets/css/swipebox.css');
         if ($module === 'front') {
             $files->addFile('assets/css/index.css');
-        } elseif ($module === 'admin') {
+        } elseif (in_array($module, ['admin', 'management'])) {
             $files->addFile('assets/css/admin/jquery.fs.dropper.css');
             $files->addFile('assets/css/admin/index.css');
             $files->addFile('assets/css/admin/bootstrap-3.3.2.css');
@@ -75,6 +74,8 @@ class CssComponentFactory
                 return \CssMin::minify($code);
             });
         }
+
+
         $control = new CssLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }

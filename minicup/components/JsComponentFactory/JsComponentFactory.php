@@ -70,7 +70,7 @@ class JsComponentFactory
             $files->addFile('assets/js/chartist.barlabels.js');
             $files->addFile('assets/js/jquery.countdown.js');
             $files->addFile('assets/js/jquery.countdown.cs.js');
-        } elseif ($module === 'admin') {
+        } elseif (in_array($module, ['admin', 'management'])) {
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addFile('assets/js/admin/toastr.js');
@@ -84,6 +84,7 @@ class JsComponentFactory
                 return Minifier::minify($code, ['flaggedComments' => false]);
             });
         }
+
         $control = new JavaScriptLoader($compiler, $this->request->getUrl()->scriptPath . 'webtemp');
         return $control;
     }
