@@ -23,6 +23,11 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string|NULL        $password               Password for access to administration
  * @property        DateTime|NULL      $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
+ *
+ * @property        string|NULL        $dressColorMin
+ * @property        string|NULL        $dressColorMax
+ * @property        string|NULL        $dressColorSecondaryMin
+ * @property        string|NULL        $dressColorSecondaryMax
  */
 class TeamInfo extends BaseEntity
 {

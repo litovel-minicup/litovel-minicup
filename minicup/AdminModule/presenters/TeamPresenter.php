@@ -3,6 +3,7 @@
 namespace Minicup\AdminModule\Presenters;
 
 
+use Dibi\Row;
 use Grido\Components\Columns\Column;
 use Grido\Grid;
 use LeanMapper\Connection;
@@ -18,7 +19,9 @@ use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Application\UI\Form;
+use Nette\Forms\Controls\TextInput;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Html;
 
 class TeamPresenter extends BaseAdminPresenter
 {
@@ -112,10 +115,14 @@ class TeamPresenter extends BaseAdminPresenter
         // Treiner name
         $this->addTeamInfoEditableText($g, 'trainer_name');
 
-
         // Dress color
         $this->addTeamInfoEditableText($g, 'dress_color');
         $this->addTeamInfoEditableText($g, 'dress_color_secondary');
+
+        $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Primární barva od');
+        $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Primární barva do');
+        $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sekundární barva od');
+        $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sekundární barva do');
 
         return $g;
     }
@@ -174,6 +181,21 @@ class TeamPresenter extends BaseAdminPresenter
 
 
         return $f;
+    }
+
+    private function addColorColumn(Grid $g, string $column, string $identifier, string $label)
+    {
+        $color = new TextInput('color');
+        $color->setType('color');
+        $g
+            ->addColumnText($column, $label)
+            ->setEditableControl($color)
+            ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR))
+            ->setCellCallback(function (Row $row, Html $td) use ($column) {
+                $td->addAttributes(['class' => ["grid-cell-$column"], 'style' => "background-color: {$row->{$column}};"]);
+
+                return $td;
+            });
     }
 
     private function addTeamInfoEditableText(Grid $g, $identifier)
