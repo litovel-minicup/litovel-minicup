@@ -3,5 +3,10 @@
     <div class="alert alert-info">Použij <strong>Ctrl + dvojklik</strong> pro editaci. <strong>Enter</strong> poté pro
         potvrzení.
     </div>
+    <div class="hue-scale">
+        {for $i=0; $i < 360; $i+=1}
+            <span class="hue-scale-mark" style="background: hsl({$i}, 100%, 50%);">{if 0 == $i % 20}{$i}{/if}</span>
+        {/for}
+    </div>
     {control matchesGridComponent}
 {/block}

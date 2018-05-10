@@ -77,3 +77,20 @@
         transform: rotate(360deg);
     }
 }
+
+.hue-scale {
+    height: 50px;
+    display: flex;
+    align-content: space-between;
+}
+
+.hue-scale .hue-scale-mark {
+    flex: 1 1 0;
+    color: #444;
+    height: 50px;
+    /* # width: ; */
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 50px;
+    text-align: left;
+}

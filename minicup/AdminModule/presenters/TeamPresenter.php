@@ -11,6 +11,7 @@ use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\ITeamRosterManagementComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Components\TeamRosterManagementComponent;
+use Minicup\Misc\ColorUtils;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Player;
@@ -22,6 +23,7 @@ use Nette\Application\UI\Form;
 use Nette\Forms\Controls\TextInput;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Html;
+use Tracy\Debugger;
 
 class TeamPresenter extends BaseAdminPresenter
 {
@@ -186,13 +188,34 @@ class TeamPresenter extends BaseAdminPresenter
     private function addColorColumn(Grid $g, string $column, string $identifier, string $label)
     {
         $color = new TextInput('color');
-        $color->setType('color');
+        $color->setType('text');
         $g
             ->addColumnText($column, $label)
             ->setEditableControl($color)
-            ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR))
+            ->setEditableCallback(function ($id, $newValue, $oldValue, Column $column) use ($identifier) {
+                $entity = $this->TIR->get($id, FALSE);
+                /* $hsv = ColorUtils::rgbToHsv(
+                    hexdec(substr($newValue, 1, 2)),
+                    hexdec(substr($newValue, 1 + 2, 2)),
+                    hexdec(substr($newValue, 1 + 2 + 2, 2))
+                );
+                Debugger::barDump($hsv, 'HSV');
+                $hsv[1] = $hsv[2] = 100;
+                $rgb = ColorUtils::hsvToRgb(...$hsv);
+                Debugger::barDump($hsv, 'RGB');
+                $pad = function($c) {
+                    return str_pad(dechex($c), 2, '0', STR_PAD_LEFT);
+                };
+                $entity->{$identifier} = "#" . $pad($rgb[0]) . $pad($rgb[1]) . $pad($rgb[2]);
+                Debugger::barDump($entity->{$identifier}, 'conv');
+                */
+
+                $entity->{$identifier} = $newValue;
+                $this->TIR->persist($entity);
+                return TRUE;
+            })
             ->setCellCallback(function (Row $row, Html $td) use ($column) {
-                $td->addAttributes(['class' => ["grid-cell-$column"], 'style' => "background-color: {$row->{$column}};"]);
+                $td->addAttributes(['class' => ["grid-cell-$column"], 'style' => "background-color: hsl({$row->{$column}}, 100%, 50%);"]);
 
                 return $td;
             });
