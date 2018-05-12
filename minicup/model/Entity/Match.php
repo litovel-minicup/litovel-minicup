@@ -25,6 +25,8 @@ class Match extends BaseEntity
 {
     const HALF_LENGTH = "P600S";
 
+    const END_ONLINE_STATE = 'end';
+
     public static $CACHE_TAG = 'match';
 
     /**
@@ -129,7 +131,7 @@ class Match extends BaseEntity
             'half_first' => '1. poločas',
             'pause' => 'přestávka',
             'half_second' => '2. poločas',
-            'end' => 'po zápase'
+            self::END_ONLINE_STATE => 'po zápase'
         ][$this->onlineState ?: 'init'];
     }
 }
