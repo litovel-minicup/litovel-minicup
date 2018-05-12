@@ -607,7 +607,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 88.88889%; }
+    padding-bottom: 88.8888888889%; }
   .ct-major-second:after {
     content: "";
     display: table;
@@ -628,7 +628,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 83.33333%; }
+    padding-bottom: 83.3333333333%; }
   .ct-minor-third:after {
     content: "";
     display: table;
@@ -691,7 +691,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 66.66667%; }
+    padding-bottom: 66.6666666667%; }
   .ct-perfect-fifth:after {
     content: "";
     display: table;
@@ -733,7 +733,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 61.8047%; }
+    padding-bottom: 61.804697157%; }
   .ct-golden-section:after {
     content: "";
     display: table;
@@ -796,7 +796,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 53.33333%; }
+    padding-bottom: 53.3333333333%; }
   .ct-major-seventh:after {
     content: "";
     display: table;
@@ -880,7 +880,7 @@ html {
     content: "";
     width: 0;
     height: 0;
-    padding-bottom: 33.33333%; }
+    padding-bottom: 33.3333333333%; }
   .ct-major-twelfth:after {
     content: "";
     display: table;
@@ -3041,23 +3041,6 @@ Copyright (c) 2015 Daniel Eden
  * Import Components
  */
 .Box__head {
-  		/*
-  		@include fill-parent();
-  		@include row(table);
-  
-  		&__icon {
-  			@include span-columns(1.5);
-  			line-height: 75px;
-  		}
-  
-  		&__text {
-  			@include span-columns(10.5);
-  			@include reset-display; 
-  			font-family: 'Montserrat';
-  			font-size: 24px;
-  			line-height: 75px;
-  			letter-spacing: -1.5px;
-  		}*/
   display: -webkit-box;
   display: -moz-box;
   display: box;
@@ -3085,7 +3068,8 @@ Copyright (c) 2015 Daniel Eden
     font-family: 'Montserrat';
     font-size: 24px;
     line-height: 75px;
-    letter-spacing: -1.5px; }
+    letter-spacing: -1.5px;
+    padding-left: 20px; }
 .Box__head--toggle {
   width: 100%;
   display: table;
@@ -3135,8 +3119,8 @@ Copyright (c) 2015 Daniel Eden
   background: #c8c8c8;
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 24.46996%;
+  margin-right: 0.7067137809%;
+  width: 24.4699646643%;
   margin-bottom: 5px;
   height: 150px;
   padding: 10px;
@@ -3165,24 +3149,24 @@ Copyright (c) 2015 Daniel Eden
 .Box__content--split--left {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 40.8363%;
+  margin-right: 1.4234875445%;
+  width: 40.8362989324%;
   margin-right: 0; }
   .Box__content--split--left:last-child {
     margin-right: 0; }
 .Box__content--split--right {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 40.8363%;
+  margin-right: 1.4234875445%;
+  width: 40.8362989324%;
   margin-right: 0; }
   .Box__content--split--right:last-child {
     margin-right: 0; }
 .Box__content--split--middle {
   float: left;
   display: block;
-  margin-right: 1.42349%;
-  width: 15.48043%;
+  margin-right: 1.4234875445%;
+  width: 15.4804270463%;
   margin-right: 0;
   text-align: center; }
   .Box__content--split--middle:last-child {
@@ -3192,8 +3176,8 @@ Copyright (c) 2015 Daniel Eden
   .Box__rows {
     float: left;
     display: block;
-    margin-right: 0.70671%;
-    width: 49.64664%; }
+    margin-right: 0.7067137809%;
+    width: 49.6466431095%; }
     .Box__rows:last-child {
       margin-right: 0; }
     .Box__rows:nth-child(2n) {
@@ -3539,8 +3523,8 @@ Header module
 .Side__wrapper {
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 41.25442%;
+  margin-right: 0.7067137809%;
+  width: 41.2544169611%;
   margin-right: 0; }
   .Side__wrapper:last-child {
     margin-right: 0; }
@@ -3548,7 +3532,7 @@ Header module
 .Aside {
   float: left;
   display: block;
-  margin-right: 1.71306%;
+  margin-right: 1.7130620985%;
   width: 100%;
   margin-top: 8px;
   background: #ffe033;
@@ -3590,37 +3574,37 @@ Header module
   .Aside__list--rank {
     float: left;
     display: block;
-    margin-right: 1.71306%;
-    width: 8.45824%; }
+    margin-right: 1.7130620985%;
+    width: 8.4582441113%; }
     .Aside__list--rank:last-child {
       margin-right: 0; }
   .Aside__list--team {
     float: left;
     display: block;
-    margin-right: 1.71306%;
-    width: 44.05782%; }
+    margin-right: 1.7130620985%;
+    width: 44.0578158458%; }
     .Aside__list--team:last-child {
       margin-right: 0; }
   .Aside__list--matches {
     float: left;
     display: block;
-    margin-right: 1.71306%;
-    width: 13.5439%; }
+    margin-right: 1.7130620985%;
+    width: 13.5438972163%; }
     .Aside__list--matches:last-child {
       margin-right: 0; }
   .Aside__list--score {
     float: left;
     display: block;
-    margin-right: 1.71306%;
-    width: 13.5439%;
+    margin-right: 1.7130620985%;
+    width: 13.5438972163%;
     text-align: center; }
     .Aside__list--score:last-child {
       margin-right: 0; }
   .Aside__list--points {
     float: left;
     display: block;
-    margin-right: 1.71306%;
-    width: 13.5439%;
+    margin-right: 1.7130620985%;
+    width: 13.5438972163%;
     text-align: right; }
     .Aside__list--points:last-child {
       margin-right: 0; }
@@ -3675,7 +3659,7 @@ Header module
   .Side__wrapper {
     float: left;
     display: block;
-    margin-right: 0.70671%;
+    margin-right: 0.7067137809%;
     width: 100%; }
     .Side__wrapper:last-child {
       margin-right: 0; }
@@ -3683,21 +3667,21 @@ Header module
   .Aside {
     float: left;
     display: block;
-    margin-right: 0.70671%;
+    margin-right: 0.7067137809%;
     width: 100%; }
     .Aside:last-child {
       margin-right: 0; } }
 .Main__wrapper {
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 58.03887%; }
+  margin-right: 0.7067137809%;
+  width: 58.038869258%; }
   .Main__wrapper:last-child {
     margin-right: 0; }
   .Main__wrapper .Section {
     float: left;
     display: block;
-    margin-right: 1.21766%;
+    margin-right: 1.2176560122%;
     width: 100%;
     background: #e1e1e1;
     margin-top: 8px; }
@@ -3708,7 +3692,7 @@ Header module
   .Main__wrapper {
     float: left;
     display: block;
-    margin-right: 0.70671%;
+    margin-right: 0.7067137809%;
     width: 100%; }
     .Main__wrapper:last-child {
       margin-right: 0; } }
@@ -3719,7 +3703,7 @@ Header module
   font-family: "Montserrat";
   float: left;
   display: block;
-  margin-right: 0.70671%;
+  margin-right: 0.7067137809%;
   width: 100%;
   width: 100%;
   display: table;
@@ -3738,7 +3722,7 @@ Header module
       display: table; }
   .Footer__block {
     display: table-cell;
-    width: 33.33333%; }
+    width: 33.3333333333%; }
   .Footer__subhead {
     padding: 15px 20px;
     height: 50px;
@@ -3756,7 +3740,7 @@ Header module
   .Footer__block {
     float: left;
     display: block;
-    margin-right: 0.70671%;
+    margin-right: 0.7067137809%;
     width: 100%; }
     .Footer__block:last-child {
       margin-right: 0; }
@@ -3908,8 +3892,8 @@ Header module
 .Photo__rows {
   float: left;
   display: block;
-  margin-right: 0.70671%;
-  width: 32.86219%;
+  margin-right: 0.7067137809%;
+  width: 32.8621908127%;
   margin-bottom: 1px;
   text-align: center;
   overflow: hidden;
@@ -3940,7 +3924,7 @@ Header module
   .Photo__rows {
     float: left;
     display: block;
-    margin-right: 0.70671%;
+    margin-right: 0.7067137809%;
     width: 100%;
     margin-top: 20px; }
     .Photo__rows:last-child {

@@ -35,8 +35,17 @@
     <div class="Aside" n:if="$category->teams">
         <a href="{plink Stats:default}">
             <div class="Box__head Aside__head">
-                <div class="Aside__head__icon Box__head__icon icon__score"></div>
-                <div class="Box__head__text Aside__head__text">Pořadí kategorie {$category->name}</div>
+                <span class="Article__head__icon Box__head__icon" style="background: #f6cd00">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" width="1" height="49.834"/>
+                    <path opacity="0.3" fill="#231F20" d="M51.25,21.667H23.917c-0.829,0-1.5,0.671-1.5,1.5V52c0,0.828,0.671,1.5,1.5,1.5H51.25
+                        c0.828,0,1.5-0.672,1.5-1.5V23.167C52.75,22.338,52.078,21.667,51.25,21.667z M25.417,24.667H49.75v4.396H26.656v0.021h-1.239
+                        V24.667z M25.417,50.5v-5.833h15.167c0.828,0,1.5-0.672,1.5-1.5s-0.672-1.5-1.5-1.5H25.417v-3.333h15.167c0.828,0,1.5-0.672,1.5-1.5
+                        s-0.672-1.5-1.5-1.5H25.417v-3.25h1.239v0.01H49.75V50.5H25.417z"/>
+                    </svg>
+                </span>
+                <div class="Box__head__text Aside__head__text">Pořadí kategorie <span>({$category->name})</span></div>
             </div>
         </a>
 
@@ -45,7 +54,22 @@
     <div class="Aside" n:if="$control->started">
         <a href="{plink Match:default}">
             <div class="Box__head Aside__head">
-                <div class="Aside__head__icon Box__head__icon icon__matches"></div>
+                <span class="Article__head__icon Box__head__icon" style="background: #f6cd00">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" width="1" height="49.834"/>
+                    <path opacity="0.3" d="M45.723,33.435c-1.092-0.209-2.107-0.634-2.995-1.235l-0.022,5.906l-15.868-0.059l0.03-8.128
+                        c2.409,2.276,4.987,3.445,7.704,3.455c0.048,0,0.097,0,0.145-0.001c2.597-0.029,4.847-1.116,6.61-2.387
+                        c-0.646-0.696-1.174-1.501-1.543-2.391c-1.393,1.07-3.156,2.01-5.116,2.029c-2.218,0.037-4.469-1.211-6.642-3.648l11.289,0.042
+                        c-0.094-0.492-0.147-0.998-0.147-1.517c0-0.42,0.042-0.83,0.104-1.233l-13.882-0.052c-0.829-0.003-1.502,0.609-1.505,1.369
+                        l-0.099,26.584c-0.003,0.759,0.666,1.378,1.495,1.381l18.869,0.07c0.731,0.003,1.341-0.476,1.476-1.11
+                        c0.082-0.235,0.095-0.488,0.031-0.734L45.723,33.435z M28.606,50.812c1.569-1.462,3.998-3.193,6.705-3.184c0.021,0,0.041,0,0.061,0
+                        c2.072,0.028,4.082,1.123,5.997,3.231L28.606,50.812z M42.668,48.093C40.43,46.004,38,44.909,35.4,44.878c-0.026,0-0.053,0-0.079,0
+                        c-3.545-0.013-6.548,1.948-8.524,3.7l0.029-7.781l15.869,0.059L42.668,48.093z"/>
+                    <circle opacity="0.3" cx="47.25" cy="25.75" r="5.125"/>
+                    </svg>
+                </span>
+
                 <div class="Aside__head__text Box__head__text">Poslední odehraná utkání</div>
             </div>
         </a>
