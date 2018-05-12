@@ -1,8 +1,11 @@
 {block content}
     {snippet matchList}
         <h1 n:block="title">Přehled zápasů pro {$category->name}</h1>
-        <div class="alert alert-info">Pomocí <strong>Ctrl + dvojklik</strong> se dají měnit výsledky zpětně. <strong>Důrazně
-                nedoporučuji editovat výsledky řádově 30 a více zápasů zpětně.</strong></div>
-    {control matchesGridComponent}
+        <div class="alert alert-info">
+            Pomocí <strong>Ctrl + dvojklik</strong> se dají měnit výsledky zpětně - <strong>vždy s opatrností a po konzultaci s autorem a vedením!</strong>
+
+            Zelené jsou potvrzené zápasy, modré právě běží, žluté čekají na potvrzení.
+        </div>
+        {control matchesGridComponent}
     {/snippet}
 {/block}
