@@ -1,24 +1,5 @@
 .Box {
 	&__head {
-		/*
-		@include fill-parent();
-		@include row(table);
-
-		&__icon {
-			@include span-columns(1.5);
-			line-height: 75px;
-		}
-
-		&__text {
-			@include span-columns(10.5);
-			@include reset-display; 
-			font-family: 'Montserrat';
-			font-size: 24px;
-			line-height: 75px;
-			letter-spacing: -1.5px;
-		}*/
-
-
 		@include display(flex);
 		width: 100%;
 
@@ -93,11 +74,10 @@
 
 
 	&__subhead {
-	font-size: 16px;
-	padding: 15px 20px;
-	height: 50px;
-	font-family: 'PTBoldItalic';
-	
+		@include default_fonts();
+		font-size: 16px;
+		padding: 15px 20px;
+		height: 50px;
 	}
 
 	&__rows {

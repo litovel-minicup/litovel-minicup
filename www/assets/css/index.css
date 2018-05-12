@@ -1,4 +1,7 @@
 /**
+ * Mixins
+ */
+/**
  * Import Variables
  */
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -857,23 +860,6 @@ html {
  * Import Components
  */
 .Box__head {
-  		/*
-  		@include fill-parent();
-  		@include row(table);
-  
-  		&__icon {
-  			@include span-columns(1.5);
-  			line-height: 75px;
-  		}
-  
-  		&__text {
-  			@include span-columns(10.5);
-  			@include reset-display; 
-  			font-family: 'Montserrat';
-  			font-size: 24px;
-  			line-height: 75px;
-  			letter-spacing: -1.5px;
-  		}*/
   display: -webkit-box;
   display: -moz-box;
   display: box;
@@ -944,10 +930,10 @@ html {
       color: white;
       background: #0e5eff; }
 .Box__subhead {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   padding: 15px 20px;
-  height: 50px;
-  font-family: 'PTBoldItalic'; }
+  height: 50px; }
 .Box__rows {
   background: #c8c8c8;
   float: left;
@@ -1788,23 +1774,5 @@ main {
 .tab-content > .active {
   display: block;
   visibility: visible; }
-
-/**
- * Easter egg
- */
-body {
-  -webkit-transition-duration: 5s;
-  -moz-transition-duration: 2s;
-  -o-transition-duration: 1s;
-  transition-duration: 4s;
-  -webkit-transition-property: -webkit-transform;
-  -moz-transition-property: -moz-transform;
-  -o-transition-property: -o-transform;
-  transition-property: transform; }
-
-body.barrel-roll {
-  -webkit-transform: rotate(720deg);
-  -moz-transform: rotate(-720deg);
-  -o-transform: rotate(-360deg); }
 
 /*# sourceMappingURL=index.css.map */
