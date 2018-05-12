@@ -85,43 +85,46 @@
 	}
 
 	&__rows {
-
-		background: $medium--grey;
-
-		@include span-columns(3 of 12);
-  		@include omega(4n);
-  		margin-bottom: 5px;
+		
   		height: 150px;
-		padding: 10px;
+		padding: 2.5px;
 		text-align: center;
+		@include display(flex);
 
-		display: table;
+		A {
+			@include flex(1 1 100%);
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+			height: 145px;
 
-		a {
+			background: $medium--grey;
 			font-family: "Montserrat";
 			font-size: 24px;
 			letter-spacing: -1.5px;
 
-			display: table-cell;
-    		vertical-align: middle;
-
     		color: darken($medium--grey, 40%);
 
-			&:hover {
+    		&:hover {
+				background: $light--blue;
 				color: white;
 			}
-
 		}
-
-		&:hover {
-			background: $light--blue;
-		}
-
 	}
 
 	&__content {
-		padding: 15px 20px 5px 20px;
+		padding: 20px;
 		line-height: 1.32;
+
+		UL {
+			@include display(flex);
+			//@include justify-content(space-between);
+			@include flex-wrap(wrap);
+
+			& > LI {
+				@include flex(1 1 percentage(1/3));
+			}
+		}
 	}
 
 	&__content--split--left {
