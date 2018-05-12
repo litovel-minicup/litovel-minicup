@@ -64,7 +64,7 @@
     </header>
     <!-- main class -->
     <main>
-        <div class="Main__wrapper animated fadeInUp">
+        <div class="Main__wrapper">
             {block outerContent}
                 <div class="Section">
                     {block content}
@@ -72,7 +72,7 @@
                 </div>
             {/block}
         </div>
-        <div class="Side__wrapper animated fadeInUp">
+        <div class="Side__wrapper">
             {control asideComponent}
 
             <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
@@ -99,7 +99,7 @@
         </div>
     </main>
     <div class="Footer__wrapper">
-        <div class="Footer animated fadeInUp" n:cache="$category->cacheTag, tags => $category->cacheTag">
+        <div class="Footer" n:cache="$category->cacheTag, tags => $category->cacheTag">
             <div class="Footer__block">
                 <div class="Box__subhead Footer__subhead">Kontakt</div>
                 <div class="Box__content Footer__content">
