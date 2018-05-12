@@ -91,7 +91,7 @@ class RouterFactory
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
         $matchFilter = [
-            Route::FILTER_IN => function ($id) use ($TagR) {
+            Route::FILTER_IN => function ($id) {
                 return $this->MR->get($id);
             },
             Route::FILTER_OUT => function (Match $match) {
@@ -169,6 +169,11 @@ class RouterFactory
         $front[] = $route('zapasy/', [
             'presenter' => 'Match',
             'action' => 'default'
+        ]);
+
+        $front[] = $route('zapas/', [
+            'presenter' => 'Match',
+            'action' => 'detail'
         ]);
 
         $front[] = $route('tymy/', [

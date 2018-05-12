@@ -152,6 +152,9 @@ services:
     - implement: Minicup\Components\ITeamRosterManagementComponentFactory
       parameters: [Minicup\Model\Entity\TeamInfo team]
       arguments: [%team%]
+    - implement: Minicup\Components\IMatchDetailComponentFactory
+      parameters: [Minicup\Model\Entity\Match match]
+      arguments: [%match%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
