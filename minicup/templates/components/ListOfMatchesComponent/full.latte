@@ -7,6 +7,8 @@
                                                                href="#{$timestamp}">{$timestamp|dayName}</a></li>
     </ul>
 </div>
+
+
 <div class="tab-content">
     <div n:foreach="$days as $timestamp => $_matches"
          n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">

@@ -1,8 +1,21 @@
 <div class="Section">
     <div class="Article">
         <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-            </div>
+            <span class="Article__head__icon Box__head__icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
+                <g>
+                    <path opacity="0.3" fill="#231F20" d="M28.431,31.699v20.031h-6.465V31.699H28.431 M29.425,28.714h-8.455
+                        c-1.099,0-1.989,0.891-1.989,1.99v22.02c0,1.098,0.891,1.989,1.989,1.989h8.455c1.099,0,1.99-0.892,1.99-1.989v-22.02
+                        C31.415,29.605,30.524,28.714,29.425,28.714L29.425,28.714z"/>
+                    <path opacity="0.3" fill="#231F20" d="M42.306,52.826c0,1.098-0.89,1.989-1.989,1.989h-3.727c-1.098,0-1.989-0.892-1.989-1.989
+                        V22.072c0-1.099,0.891-1.989,1.989-1.989h3.727c1.1,0,1.989,0.891,1.989,1.989V52.826z"/>
+                    <path opacity="0.3" fill="#231F20" d="M56.019,52.928c0,1.1-0.752,1.989-1.681,1.989h-7.062c-0.93,0-1.682-0.89-1.682-1.989V41.802
+                        c0-1.098,0.752-1.989,1.682-1.989h7.062c0.929,0,1.681,0.892,1.681,1.989V52.928z"/>
+                </g>
+                </svg>
+            </span>
             <h1 class="Article__head__text Box__head__text">Statistiky kategorie {$category->name}</h1>
         </div>
         {if $control->isStarted()}
@@ -20,8 +33,21 @@
 <div class="Section" n:if="$control->isStarted()" id="historie-poradi">
     <div class="Article">
         <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams">
-            </div>
+            <span class="Article__head__icon Box__head__icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
+                <g>
+                    <path opacity="0.3" fill="#231F20" d="M28.431,31.699v20.031h-6.465V31.699H28.431 M29.425,28.714h-8.455
+                        c-1.099,0-1.989,0.891-1.989,1.99v22.02c0,1.098,0.891,1.989,1.989,1.989h8.455c1.099,0,1.99-0.892,1.99-1.989v-22.02
+                        C31.415,29.605,30.524,28.714,29.425,28.714L29.425,28.714z"/>
+                    <path opacity="0.3" fill="#231F20" d="M42.306,52.826c0,1.098-0.89,1.989-1.989,1.989h-3.727c-1.098,0-1.989-0.892-1.989-1.989
+                        V22.072c0-1.099,0.891-1.989,1.989-1.989h3.727c1.1,0,1.989,0.891,1.989,1.989V52.826z"/>
+                    <path opacity="0.3" fill="#231F20" d="M56.019,52.928c0,1.1-0.752,1.989-1.681,1.989h-7.062c-0.93,0-1.682-0.89-1.682-1.989V41.802
+                        c0-1.098,0.752-1.989,1.682-1.989h7.062c0.929,0,1.681,0.892,1.681,1.989V52.928z"/>
+                </g>
+                </svg>
+            </span>
             <h2 class="Article__head__text Box__head__text">Vývoj pořadí</h2>
         </div>
         {control categoryHistoryComponent}
