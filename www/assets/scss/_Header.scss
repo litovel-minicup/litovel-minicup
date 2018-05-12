@@ -264,7 +264,7 @@ Header module
                 border-left: 1px solid $medium--blue;
             }
     
-            &:after {
+            &:after, &.active {
                 content: "";
                 left: 0;
                 top: -100%;
@@ -276,7 +276,7 @@ Header module
                 transition: top .1s ease;
             }
 
-            &:hover {
+            &:hover, &.active {
                 //background: rgba(3,65,186,1);
                 &:after {
                     top: 0;

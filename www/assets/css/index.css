@@ -1244,7 +1244,7 @@ Header module
       transition: color .1s ease; }
       .header__nav A:first-of-type {
         border-left: 1px solid #0e5eff; }
-      .header__nav A:after {
+      .header__nav A:after, .header__nav A.active {
         content: "";
         left: 0;
         top: -100%;
@@ -1254,10 +1254,10 @@ Header module
         background: #0341ba;
         z-index: -1;
         transition: top .1s ease; }
-      .header__nav A:hover {
+      .header__nav A:hover, .header__nav A.active {
         color: white;
         transition: color .5s ease; }
-        .header__nav A:hover:after {
+        .header__nav A:hover:after, .header__nav A.active:after {
           top: 0;
           transition: top .25s ease; }
 
