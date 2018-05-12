@@ -123,13 +123,13 @@ class FilterLoader
                 throw new InvalidArgumentException('Unknown photo size.');
             }
             $el = Html::el();
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image', 'content' => $generator->link("Media:$size", [$photo->filename])])
             );
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image:width', 'content' => PhotoManager::$resolutions[$size][0]])
             );
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image:height', 'content' => PhotoManager::$resolutions[$size][1]])
             );
             return $el;
