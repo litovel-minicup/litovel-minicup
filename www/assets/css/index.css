@@ -886,8 +886,11 @@ html {
     flex: 1 1 100%;
     font-family: 'Montserrat';
     font-size: 24px;
+    line-height: 75px;
     letter-spacing: -1.5px;
     padding-left: 20px; }
+    .Box__head__text SPAN {
+      font-size: 1rem; }
 .Box__head--toggle {
   width: 100%;
   display: table;
@@ -1379,8 +1382,6 @@ Header module
     color: white; }
   .Aside__head {
     letter-spacing: -1.5px; }
-    .Aside__head SPAN {
-      font-size: 1rem; }
     .Aside__head__icon {
       background: #f6cd00; }
     .Aside__head__text {

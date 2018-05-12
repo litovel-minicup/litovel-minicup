@@ -19,7 +19,7 @@
             </g>
             </svg>
         </span>
-        <h1 class="Article__head__text Box__head__text" n:block="title">Týmy {$category->name}</h1>
+        <h1 class="Article__head__text Box__head__text" n:block="title">Týmy <span>({$category->name})</span></h1>
     </div>
     <div n:if="$teams" class="Box__content Team__content">
         <ul n:inner-foreach="$teams as $team">
