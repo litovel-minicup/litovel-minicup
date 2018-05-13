@@ -58,6 +58,14 @@
   }
 
   tbody {
+    TR:nth-child(odd) {
+      background: $medium--grey;
+      &:hover {
+        background: $light--blue;
+        transition: background .2s ease;
+      }
+    }
+
     td:nth-of-type(1) {
       width: 10%;
       text-align: right;

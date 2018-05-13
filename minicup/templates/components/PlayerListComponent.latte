@@ -9,7 +9,7 @@
     <tbody>
     {foreach $players as $player}
         <tr>
-            <td>{$player->number}</td>
+            <td>{$player->number}</td> {* TODO: secondary number? *}
             <td>{$player->name} {$player->surname}</td>
             <td>{$player->getRowData()[goals]}</td>
         </tr>

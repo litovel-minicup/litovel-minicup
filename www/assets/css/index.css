@@ -1730,7 +1730,7 @@ Header module
   font-family: "Montserrat";
   font-size: 70px; }
 .Team__content .Table tbody tr {
-  background: #e1e1e1 !important; }
+  background: #e1e1e1; }
   .Team__content .Table tbody tr td a {
     padding-top: 0px;
     font-size: 22px; }
@@ -1773,6 +1773,11 @@ Header module
   width: 20%;
   padding-right: 20px;
   text-align: right; }
+.Table__players tbody TR:nth-child(odd) {
+  background: #c8c8c8; }
+  .Table__players tbody TR:nth-child(odd):hover {
+    background: #4180ff;
+    transition: background .2s ease; }
 .Table__players tbody td:nth-of-type(1) {
   width: 10%;
   text-align: right; }
