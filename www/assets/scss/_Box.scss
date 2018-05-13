@@ -19,8 +19,46 @@
 	      		font-size: 1rem;
 	    	}
 		}
+
+		&__toggle {
+			@include display(flex);
+			@include align-self(stretch);
+			//background: red;
+
+			A {
+				@include display(flex);
+				color: darken($medium--grey, 20%);
+				
+				//background: red;)
+				position: relative;
+				padding: 0 20px;
+
+				transition: all .1s ease;
+
+				SPAN {
+					@include align-self(center);
+					font-family: 'Montserrat';
+					font-size: 24px;
+					line-height: 75px;
+					letter-spacing: -1.5px;
+				}
+
+				&.active {
+					color: white;
+               	 	background: $dark--blue;
+               	 	transition: all .2s ease;
+				}
+
+				&:hover {
+					background: $light--blue;
+					color: white;
+					transition: all .2s ease;
+				}
+			}
+		}
 	}
 
+	/*
 	&__head--toggle {
 
 		@include fill-parent();
@@ -74,7 +112,7 @@
 			}
 		
 		}
-	}
+	}*/
 
 
 	&__subhead {
