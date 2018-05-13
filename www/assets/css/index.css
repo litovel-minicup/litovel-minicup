@@ -1323,6 +1323,45 @@ Header module
   font-family: "Montserrat";
   font-size: 34px;
   letter-spacing: -1.5px; }
+.Article__more {
+  margin: 5px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center; }
+  .Article__more A {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin-top: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #4180ff;
+    padding-left: 50px;
+    color: rgba(255, 255, 255, 0.75);
+    position: relative;
+    transition: background .15s ease; }
+    .Article__more A:hover {
+      background: #0040c1;
+      transition: background .3s ease;
+      color: white; }
+    .Article__more A:before {
+      content: '+';
+      font-weight: bolder;
+      position: absolute;
+      left: 15px;
+      top: -4px;
+      font-size: 2em; }
 .Article__date {
   padding-top: 10px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
@@ -1780,61 +1819,50 @@ Header module
   .Table__detail tbody td {
     font-size: 40px;
     font-family: "Montserrat"; } }
-.Photo {
-  /*	&__rows {
-  			
-  			@include span-columns(4 of 12);
-  	  		@include omega(3n);
-  	  		margin-bottom: 1px;
-  	  		text-align: center;
-  	  		overflow: hidden;
-  	  		height: 150px;
-  
-  			display: table;
-  
-  			a {
-  				border-bottom: 0!important;
-  				display: table-cell;
-  	    		vertical-align: middle;
-  
-  	    		color: darken($medium--grey, 40%);
-  
-  				&:hover {
-  					color: white;
-  				}
-  
-  			}
-  
-  			img {
-  				width: 100%;
-  			}
-  
-  			&--portrait {
-  				height: 300px!important;
-  				margin: -80px 0 -80px 0px;  
-  			}
-  
-  			&:hover {
-  				background: $light--blue;
-  			}
-  	}*/ }
-  .Photo__select {
-    margin-bottom: 20px; }
-  .Photo--clip {
-    -webkit-clip-path: circle(60px at center); }
-
-@media screen and (max-width: 500px) {
-  .Photo__rows {
-    float: left;
-    display: block;
-    margin-right: 0.7067137809%;
+.Photo__row {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: distribute;
+  -moz-box-pack: distribute;
+  box-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  -ms-justify-content: space-around;
+  -o-justify-content: space-around;
+  justify-content: space-around;
+  -ms-flex-pack: distribute; }
+.Photo__item {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -moz-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  margin: 5px;
+  position: relative;
+  height: auto; }
+  .Photo__item IMG {
+    position: absolute;
     width: 100%;
-    margin-top: 20px; }
-    .Photo__rows:last-child {
-      margin-right: 0; }
-    .Photo__rows img {
-      width: 90vw;
-      height: 250px; } }
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; }
+  .Photo__item:before {
+    content: '';
+    float: left;
+    padding-top: 100%; }
+
 body {
   height: 100%;
   -webkit-font-smoothing: antialiased;

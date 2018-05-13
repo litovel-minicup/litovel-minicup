@@ -20,9 +20,9 @@
             </div>
         </div>
     {elseif $actual && $actual < $max}
-        <div class="Box__content">
-            <div class="Article__content Article__more">
-                <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
+        <div class="Box__content" style="padding: 0 20px 20px 20px">
+            <div class="Article__more">
+                <a class="show-more ajax" n:href="show! $step+$actual" style="margin-top: 0">Zobrazit více!</a>
             </div>
         </div>
     {/if}

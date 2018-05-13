@@ -29,6 +29,37 @@
 
   &__more {
     //background: green;
+    margin: 5px;
+    @include display(flex);
+    @include justify-content(center);
+
+    A {
+      @include default-fonts();
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background: $light--blue;
+      padding-left: 50px;
+      color: rgba(255,255,255,.75);
+      position: relative;
+      transition: background .15s ease;
+     
+
+      &:hover {
+        background: $dark--blue;
+        transition: background .3s ease;
+        color: white;
+      }
+
+      &:before {
+        content: '+';
+        font-weight: bolder;
+        position: absolute;
+        left: 15px;
+        top: -4px;
+        font-size: 2em;
+      }
+    }
   }
 
   &__date {

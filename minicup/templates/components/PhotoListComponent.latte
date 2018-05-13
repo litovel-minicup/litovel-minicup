@@ -1,11 +1,9 @@
-<ul class="photo-list" n:snippet="photos" data-more-link="{link show! $step+$actual}">
+{* <div class="photo-list Photo__wrap" n:snippet="photos" data-more-link="{link show! $step+$actual}">
     {foreach $photos as $photo}
-        <li class="Photo__rows">
-            <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
-               href={plink :Media:medium $photo->filename}?2017>
-                <img src="../../../www/assets/sample_thumb.png" alt="Foto {$photo->id}">
-            </a>
-        </li>
+       <a data-id="{$photo->id}" class="swipebox Photo__item" title="{$iterator->counter}. z {$photos|length}"
+           href={plink :Media:medium $photo->filename}?2017>
+            <img src="../../../www/assets/sample_thumb.png" alt="Foto {$photo->id}">
+        </a>
     {/foreach}
 
     <script n:syntax="double">
@@ -19,14 +17,51 @@
             });
         });
     </script>
-</ul>
+</div> *}
+
+
+<div class="Photo__row">
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+</div>
+
+<div class="Photo__row">
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+</div>
+
+<div class="Photo__row">
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+    <a href="#" class="Photo__item">
+        <img src="../../../www/assets/sample_thumb.png" alt="Foto">
+    </a>
+</div>
 
 {if !$photos}
     <div class="Article__content">
         <p>Žádné fotky k zobrazení.</p>
     </div>
 {elseif $actual && $actual < $max}
-    <div class="Article__content Article__more">
+    <div class="Article__more">
         <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
     </div>
 {/if}
