@@ -27,14 +27,17 @@
     letter-spacing: -1.5px;
   }
 
-  &__date {
-    font-family: "PTBoldItalic";
-    padding-top: 10px;
+  &__more {
+    //background: green;
+  }
 
+  &__date {
+    padding-top: 10px;
+    @include default-fonts();
   }
 
   &__content {
-    font-family: "PTRegular";
+    @include default-fonts();
     padding-top: 15px;
     padding-bottom: 30px;
     font-size: 16px;
@@ -59,7 +62,7 @@
     }
 
     strong {
-      font-family: 'MontserratBold';
+      font-weight: bolder; 
     }
 
   }

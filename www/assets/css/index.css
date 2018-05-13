@@ -1324,10 +1324,10 @@ Header module
   font-size: 34px;
   letter-spacing: -1.5px; }
 .Article__date {
-  font-family: "PTBoldItalic";
-  padding-top: 10px; }
+  padding-top: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 .Article__content {
-  font-family: "PTRegular";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   padding-top: 15px;
   padding-bottom: 30px;
   font-size: 16px; }
@@ -1342,7 +1342,7 @@ Header module
   .Article__content IFRAME {
     margin-top: 10px; }
   .Article__content strong {
-    font-family: 'MontserratBold'; }
+    font-weight: bolder; }
 .Article__photos {
   margin-top: -25px;
   margin-left: -5px;
@@ -1780,40 +1780,48 @@ Header module
   .Table__detail tbody td {
     font-size: 40px;
     font-family: "Montserrat"; } }
-.Photo__select {
-  margin-bottom: 20px; }
-.Photo--clip {
-  -webkit-clip-path: circle(60px at center); }
-.Photo__rows {
-  float: left;
-  display: block;
-  margin-right: 0.7067137809%;
-  width: 32.8621908127%;
-  margin-bottom: 1px;
-  text-align: center;
-  overflow: hidden;
-  height: 150px;
-  display: table; }
-  .Photo__rows:last-child {
-    margin-right: 0; }
-  .Photo__rows:nth-child(3n) {
-    margin-right: 0; }
-  .Photo__rows:nth-child(3n+1) {
-    clear: left; }
-  .Photo__rows a {
-    border-bottom: 0 !important;
-    display: table-cell;
-    vertical-align: middle;
-    color: #626262; }
-    .Photo__rows a:hover {
-      color: white; }
-  .Photo__rows img {
-    width: 100%; }
-  .Photo__rows--portrait {
-    height: 300px !important;
-    margin: -80px 0 -80px 0px; }
-  .Photo__rows:hover {
-    background: #4180ff; }
+.Photo {
+  /*	&__rows {
+  			
+  			@include span-columns(4 of 12);
+  	  		@include omega(3n);
+  	  		margin-bottom: 1px;
+  	  		text-align: center;
+  	  		overflow: hidden;
+  	  		height: 150px;
+  
+  			display: table;
+  
+  			a {
+  				border-bottom: 0!important;
+  				display: table-cell;
+  	    		vertical-align: middle;
+  
+  	    		color: darken($medium--grey, 40%);
+  
+  				&:hover {
+  					color: white;
+  				}
+  
+  			}
+  
+  			img {
+  				width: 100%;
+  			}
+  
+  			&--portrait {
+  				height: 300px!important;
+  				margin: -80px 0 -80px 0px;  
+  			}
+  
+  			&:hover {
+  				background: $light--blue;
+  			}
+  	}*/ }
+  .Photo__select {
+    margin-bottom: 20px; }
+  .Photo--clip {
+    -webkit-clip-path: circle(60px at center); }
 
 @media screen and (max-width: 500px) {
   .Photo__rows {

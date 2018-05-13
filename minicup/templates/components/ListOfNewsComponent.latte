@@ -21,9 +21,8 @@
         </div>
     {elseif $actual && $actual < $max}
         <div class="Box__content">
-            <div class="Article__content">
-                <a class="show-more ajax" n:href="show! $step+$actual"
-                   style="float: right; clear: both;">Zobrazit více!</a>
+            <div class="Article__content Article__more">
+                <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
             </div>
         </div>
     {/if}

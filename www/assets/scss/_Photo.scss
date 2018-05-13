@@ -8,7 +8,8 @@
 		 -webkit-clip-path: circle(60px at center);
 	}
 
-	&__rows {
+
+/*	&__rows {
 			
 			@include span-columns(4 of 12);
 	  		@include omega(3n);
@@ -21,9 +22,6 @@
 
 			a {
 				border-bottom: 0!important;
-
-
-
 				display: table-cell;
 	    		vertical-align: middle;
 
@@ -47,7 +45,7 @@
 			&:hover {
 				background: $light--blue;
 			}
-	}
+	}*/
 }	
 
 @media screen and (max-width: 500px) {
