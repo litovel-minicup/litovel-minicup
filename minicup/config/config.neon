@@ -117,7 +117,7 @@ services:
     - implement: Minicup\Components\INewsFormComponentFactory
       parameters: [Minicup\Model\Entity\News news = NULL]
       arguments: [%news%]
-    - implement: Minicup\Components\ITeamHistoryComponent
+    - implement: Minicup\Components\ITeamHistoryComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
     - implement: Minicup\Components\IPhotoEditComponentFactory
@@ -158,6 +158,9 @@ services:
     - implement: Minicup\Components\ICategoryOnlineComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]
+    - implement: Minicup\Components\IPlayerListComponentFactory
+      parameters: [array players]
+      arguments: [%players%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]

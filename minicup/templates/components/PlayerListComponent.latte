@@ -1,0 +1,19 @@
+<table class="Table Table__players">
+    <thead class="Box__subhead Article__subhead">
+    <tr>
+        <th>Číslo</th>
+        <th>Jméno</th>
+        <th>Vstřelené branky</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $players as $player}
+        <tr>
+            <td>{$player->number}</td>
+            <td>{$player->name} {$player->surname}</td>
+            <td>{$player->getRowData()[goals]}</td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+

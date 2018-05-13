@@ -10,7 +10,7 @@ use Minicup\Model\Repository\TeamRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 
-interface ITeamHistoryComponent
+interface ITeamHistoryComponentFactory
 {
     /**
      * @param Team $team

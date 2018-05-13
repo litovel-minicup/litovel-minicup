@@ -44,13 +44,13 @@ class TagRepository extends BaseRepository
     {
         $fluent = $this->createFluent();
         if ($term) {
-            $fluent->where('[slug] LIKE %~like~', $term);
+            $fluent = $fluent->where('[slug] LIKE %~like~', $term);
         }
         if ($year) {
-            $fluent->where('[year_id] = ', $year->id);
+            $fluent = $fluent->where('[year_id] = ', $year->id);
         }
         if (!$includeEmpty) {
-            $fluent->leftJoin('[photo_tag]')->on('[tag.id] = [photo_tag.tag_id]')
+            $fluent = $fluent->leftJoin('[photo_tag]')->on('[tag.id] = [photo_tag.tag_id]')
                 ->groupBy('[tag.id]')->having('COUNT([photo_tag.photo_id]) > 0');
         }
         return $this->createEntities($fluent->fetchAll());

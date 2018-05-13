@@ -1,186 +1,237 @@
 .Table {
-	
-	width: 100%;
 
-	&__content {
-		padding: 0;
-	}
+  width: 100%;
 
-	thead {
-		color: white;
-		text-align: center;
+  &__content {
+    padding: 0;
+  }
 
-		th {
-			padding: 15px 0;
-		}
+  thead {
+    color: white;
+    text-align: center;
 
-	}
+    th {
+      padding: 15px 0;
+    }
 
-	tbody {
-		text-align: center;
-		@include default-fonts();
-		font-size: .95rem;
-		
-		tr:nth-child(odd) {
-			background: $medium--grey;
-		}
+  }
 
-		TR {
-			transition: background .1s ease;
-			&:hover {
-				background: $light--blue;
-				transition: background .2s ease;
-			}
+  tbody {
+    text-align: center;
+    @include default-fonts();
+    font-size: .95rem;
 
-			TD {
-				padding: 15px 0;
-			}
-		}
-	}
+    tr:nth-child(odd) {
+      background: $medium--grey;
+    }
+
+    TR {
+      transition: background .1s ease;
+      &:hover {
+        background: $light--blue;
+        transition: background .2s ease;
+      }
+
+      TD {
+        padding: 15px 0;
+      }
+    }
+  }
 }
 
 .Table__players {
-	thead {
-		th:nth-of-type(1) {width: 35%; padding-left: 20px; text-align: left;}
-		th:nth-of-type(2) {width: 65%; text-align: left;}
-	}
+  thead {
+    th:nth-of-type(1) {
+      width: 10%;
+      text-align: right;
+    }
+    th:nth-of-type(2) {
+      padding-left: 40px;
+      width: 55%;
+      text-align: left;
+    }
+    th:nth-of-type(3) {
+      width: 20%;
+      padding-right: 20px;
+      text-align: right;
+    }
+  }
 
-	tbody {
-		td:nth-of-type(1) {width: 35%; padding-left: 20px; text-align: left;}
-		td:nth-of-type(2) {width: 65%; text-align: left;}
-	}
+  tbody {
+    td:nth-of-type(1) {
+      width: 10%;
+      text-align: right;
+    }
+    td:nth-of-type(2) {
+      padding-left: 40px;
+      width: 55%;
+      text-align: left;
+    }
+    td:nth-of-type(3) {
+      width: 20%;
+      padding-right: 20px;
+      text-align: right;
+    }
+  }
 }
 
 .Table__matches {
-	thead {
-		th:nth-of-type(1), th:nth-of-type(3) {
-			text-align: left; 
-			width: 25%;
-			padding-left: 20px;
-		}
-		th:nth-of-type(2) {width: 10%;}
-		th:nth-of-type(4) {width: 10%;}
-		th:nth-of-type(5) {width: 10%;}
-	}
+  thead {
+    th:nth-of-type(1), th:nth-of-type(3) {
+      text-align: left;
+      width: 25%;
+      padding-left: 20px;
+    }
+    th:nth-of-type(2) {
+      width: 10%;
+    }
+    th:nth-of-type(4) {
+      width: 10%;
+    }
+    th:nth-of-type(5) {
+      width: 10%;
+    }
+  }
 
-	TBODY {
-		TD:nth-of-type(1), td:nth-of-type(3) {
-			font-weight: 600;
-			text-align: left;
-			padding-left: 20px;
+  TBODY {
+    TD:nth-of-type(1), td:nth-of-type(3) {
+      font-weight: 600;
+      text-align: left;
+      padding-left: 20px;
 
-			A {
-				color: rgba(0,0,0,0.75);
-			}
-		}
+      A {
+        color: rgba(0, 0, 0, 0.75);
+      }
+    }
 
-		TR {
-			&:hover {
-				color: white;
-				A {
-					color: rgba(255,255,255,.75);
-				}
-			}
-		}
-	}
+    TR {
+      &:hover {
+        color: white;
+        A {
+          color: rgba(255, 255, 255, .75);
+        }
+      }
+    }
+  }
 
-	&--win {
-		background: lighten(green, 5%)!important;
-		color: rgba(255,255,255,.75);
+  &--win {
+    background: lighten(green, 5%) !important;
+    color: rgba(255, 255, 255, .75);
 
-		&:hover {
-			background: lighten(green, 15%)!important;
-		}
+    &:hover {
+      background: lighten(green, 15%) !important;
+    }
 
-		A {
-			color: rgba(255,255,255,.75)!important;
-		}
-	}
+    A {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+  }
 
-	&--loss {
-		background: darken(red, 10%)!important;
-		color: rgba(255,255,255,.75);
+  &--loss {
+    background: darken(red, 10%) !important;
+    color: rgba(255, 255, 255, .75);
 
-		&:hover {
-			background: darken(red, 5%)!important;
-		}
+    &:hover {
+      background: darken(red, 5%) !important;
+    }
 
-		A {
-			color: rgba(255,255,255,.75)!important;
-		}
-	}
+    A {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+  }
 
-	&--draw {
-		background: $dark--blue!important;
-		color: white;
-	}
+  &--draw {
+    background: $dark--blue !important;
+    color: white;
+  }
 }
 
 .Table__standings {
-	thead {
-		th:nth-of-type(1) {width: 15%;}
-		th:nth-of-type(2) {width: 30%; text-align: left;}
-		th:nth-of-type(3) {width: 6%;}
-		th:nth-of-type(4) {width: 6%;}
-		th:nth-of-type(5) {width: 6%;}
-		th:nth-of-type(6) {width: 6%;}
-		th:nth-of-type(7) {width: 6%;}
-		th:nth-of-type(8) {width: 6%;}
-		th:nth-of-type(9) {width: 6%;}
-	}
-	tbody {
-		// td:nth-of-type(1) {width: 5%;}
-		td:nth-of-type(2) {text-align: left;}
-		// td:nth-of-type(3) {width: 5%;}
-		// td:nth-of-type(4) {width: 5%;}
-		// td:nth-of-type(5) {width: 5%;}
-		// td:nth-of-type(6) {width: 5%;}
-		// td:nth-of-type(7) {width: 5%;}
-		// td:nth-of-type(8) {width: 5%;}
-		// td:nth-of-type(9) {width: 5%;}
-	}
+  thead {
+    th:nth-of-type(1) {
+      width: 15%;
+    }
+    th:nth-of-type(2) {
+      width: 30%;
+      text-align: left;
+    }
+    th:nth-of-type(3) {
+      width: 6%;
+    }
+    th:nth-of-type(4) {
+      width: 6%;
+    }
+    th:nth-of-type(5) {
+      width: 6%;
+    }
+    th:nth-of-type(6) {
+      width: 6%;
+    }
+    th:nth-of-type(7) {
+      width: 6%;
+    }
+    th:nth-of-type(8) {
+      width: 6%;
+    }
+    th:nth-of-type(9) {
+      width: 6%;
+    }
+  }
+  tbody {
+    // td:nth-of-type(1) {width: 5%;}
+    td:nth-of-type(2) {
+      text-align: left;
+    }
+    // td:nth-of-type(3) {width: 5%;}
+    // td:nth-of-type(4) {width: 5%;}
+    // td:nth-of-type(5) {width: 5%;}
+    // td:nth-of-type(6) {width: 5%;}
+    // td:nth-of-type(7) {width: 5%;}
+    // td:nth-of-type(8) {width: 5%;}
+    // td:nth-of-type(9) {width: 5%;}
+  }
 }
 
 .Table__detail {
 
-	width: 100%;
+  width: 100%;
 
-	thead {
-		th {
-			width: 25%;
-		}
-	}
-	tbody {
+  thead {
+    th {
+      width: 25%;
+    }
+  }
+  tbody {
 
-		td {
-			font-size: 50px;
-			font-family: "Montserrat";
-		}
+    td {
+      font-size: 50px;
+      font-family: "Montserrat";
+    }
 
-		td {
-			width: 25%;
-			text-align: center;
-		}
-	}
+    td {
+      width: 25%;
+      text-align: center;
+    }
+  }
 }
 
 @media screen and (max-width: 480px) {
-	.Table__standings thead th:nth-child(n+6), .Table__standings tbody tr td:nth-child(n+6) {
-		display: none;
-	}
+  .Table__standings thead th:nth-child(n+6), .Table__standings tbody tr td:nth-child(n+6) {
+    display: none;
+  }
 
-	.Table__matches thead th:nth-child(n+4), .Table__matches tbody tr td:nth-child(n+4) {
-		display: none;
-	}
+  .Table__matches thead th:nth-child(n+4), .Table__matches tbody tr td:nth-child(n+4) {
+    display: none;
+  }
 
-	.Table__detail {
-		tbody {
+  .Table__detail {
+    tbody {
 
-			td {
-				font-size: 40px;
-				font-family: "Montserrat";
-			}
-		}
-	}
+      td {
+        font-size: 40px;
+        font-family: "Montserrat";
+      }
+    }
+  }
 
 }
