@@ -6,6 +6,7 @@ use Minicup\Components\ICategoryOnlineComponentFactory;
 use Minicup\Components\IListOfMatchesComponentFactory;
 use Minicup\Components\IMatchDetailComponentFactory;
 use Minicup\Components\ListOfMatchesComponent;
+use Minicup\Model\Entity\Match;
 use Minicup\Model\Repository\MatchRepository;
 
 /**
@@ -35,7 +36,7 @@ final class MatchPresenter extends BaseFrontPresenter
 
     public function createComponentMatchDetailComponent()
     {
-        return $this->MDCFactory->create($this->MR->get(4471));
+        return $this->MDCFactory->create($this->getParameter('match'));
     }
 
     public function createComponentCategoryOnlineComponent()
@@ -43,8 +44,8 @@ final class MatchPresenter extends BaseFrontPresenter
         return $this->COCFactory->create($this->category);
     }
 
-    public function renderDetail()
+    public function renderDetail(Match $match)
     {
-        $this->template->match = $this->MR->get(4471);
+        $this->template->match = $match;
     }
 }

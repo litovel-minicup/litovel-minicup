@@ -19,7 +19,9 @@
 
 <div class="Article__head Box__head">
     <span class="Article__head__icon Box__head__icon">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+             x="0px" y="0px" width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+             xml:space="preserve">
         <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
         <path opacity="0.3" d="M43.584,22.833H25.667c-1.104,0-2,0.896-2,2v25.334c0,1.104,0.896,2,2,2h17.917c1.104,0,2-0.896,2-2V24.833
                         C45.584,23.729,44.688,22.833,43.584,22.833z M41.249,25.833c-1.842,1.8-4.352,2.917-7.124,2.917c-2.772,0-5.283-1.117-7.124-2.917
@@ -39,7 +41,7 @@
 
 <div class="tab-content">
     <div n:foreach="$days as $timestamp => $_matches"
-         n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">
+            n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">
         <table class="Table Table__matches">
             <thead class="Box__subhead Article__subhead">
             <tr>
@@ -53,7 +55,11 @@
             <tbody>
             <tr n:foreach="$_matches as $match">
                 <td><a href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a></td>
-                <td>{$match->scoreHome} : {$match->scoreAway}</td>
+                <td>
+                    <a href="{plink Match:detail $match}">
+                        {$match->scoreHome} : {$match->scoreAway}
+                    </a>
+                </td>
                 <td><a href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a></td>
                 <td>{$match->matchTerm|matchStart}</td>
                 <td>{$match->matchTerm|matchDate}</td>

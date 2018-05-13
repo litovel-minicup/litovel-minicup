@@ -18,7 +18,6 @@ use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
-
 use Nette\SmartObject;
 use Nette\Utils\Strings;
 
@@ -176,9 +175,37 @@ class RouterFactory
             'action' => 'online'
         ]);
 
-        $front[] = $route('zapas/', [
+        $front[] = $route('zapas/<match>/', [
             'presenter' => 'Match',
-            'action' => 'detail'
+            'action' => 'detail',
+            NULL => [
+                Route::FILTER_OUT => function (array $params) {
+                    if (!isset($params['match']))
+                        return NULL;
+                    if (!($params['match'] instanceof Match))
+                        return NULL;
+                    $params['match'] = "{$params['match']->homeTeam->slug}-vs-{$params['match']->awayTeam->slug}";
+                    return $params;
+                },
+                Route::FILTER_IN => function ($params) {
+                    $slug = $params['match'];
+                    $parts = Strings::split($slug, '#-vs-#');
+                    if (count($parts) != 2) return NULL;
+                    list($home, $away) = $parts;
+
+                    // get teams from slugs
+                    $home = $this->TIR->getBySlug($params['category'], $home);
+                    $away = $this->TIR->getBySlug($params['category'], $away);
+                    if (!$home || !$away) return NULL;
+
+                    $match = $this->MR->getCommonMatchForTeams($home->team, $away->team, NULL);
+                    if (!$match) return NULL;
+
+                    $params['match'] = $match;
+                    return $params;
+                },
+            ]
+
         ]);
 
         $front[] = $route('tymy/', [

@@ -1,8 +1,8 @@
 {block content}
-    {foreach $year->categories as $category}
+    {foreach $year->categories as $category_}
         <h4>Kategorie {$category->name}</h4>
         <div class="row">
-            {foreach $category->teams as $team}
+            {foreach $category_->teams as $team}
                 <div class="col-md-1">
                     <div class="panel panel-default small">
                         <div class="panel-heading small">

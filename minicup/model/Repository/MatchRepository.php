@@ -106,21 +106,28 @@ class MatchRepository extends BaseRepository
     }
 
     /**
-     * @param Team $team1
-     * @param Team $team2
+     * @param Team      $team1
+     * @param Team      $team2
+     * @param bool|null $confirmed
      * @return Match|NULL
      */
-    public function getCommonMatchForTeams(Team $team1, Team $team2)
+    public function getCommonMatchForTeams(Team $team1, Team $team2, ?bool $confirmed = true)
     {
         $team1InfoId = $team1->i->id;
         $team2InfoId = $team2->i->id;
-        $row = $this->createFluent()
+        $f = $this->createFluent()
             ->where('(
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i)
-            ) AND [confirmed] IS NOT NULL',
+            )',
                 $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId
-            )->fetch();
+            );
+        if ($confirmed === TRUE)
+            $f = $f->where('[confirmed] IS NOT NULL');
+        if ($confirmed === FALSE)
+            $f = $f->where('[confirmed] IS NULL');
+
+        $row = $f->fetch();
         if ($row) {
             return $this->createEntity($row);
         }
