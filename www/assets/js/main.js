@@ -188,12 +188,17 @@ var renderSingleTeamHistoryChart = function (selector, data, teamsCount) {
 };
 
 var initTabs = function () {
-    if ($('ul.Article__head__select').find('.active').length === 0) {
-        $('ul.Article__head__select li:first-child').addClass('active');
+    if ($('.Box__head__toggle .active').length === 0) {
+        $('.Box__head__toggle a:first-child').addClass('active');
     }
-    if ($('.tab-content').find('.active').length === 0) {
+    if ($('.tab-content .active').length === 0) {
         $('.tab-content .tab-pane:first-child').addClass('active');
     }
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var $tab = $(e.target);
+        $tab.parent().find('.active').removeClass('active');
+        $tab.addClass('active'); // newly activated tab
+    })
 };
 
 jQuery(function ($) {
