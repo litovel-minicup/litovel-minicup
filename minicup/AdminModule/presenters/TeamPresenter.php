@@ -10,20 +10,15 @@ use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\ITeamRosterManagementComponentFactory;
 use Minicup\Components\MatchFormComponent;
-use Minicup\Components\TeamRosterManagementComponent;
-use Minicup\Misc\ColorUtils;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Player;
-use Minicup\Model\Entity\Team;
-use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\TextInput;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Html;
-use Tracy\Debugger;
 
 class TeamPresenter extends BaseAdminPresenter
 {
@@ -84,7 +79,7 @@ class TeamPresenter extends BaseAdminPresenter
      * @param string $name
      * @return Grid
      */
-    public function createComponentMatchesGridComponent($name)
+    public function createComponentTeamsGridComponent($name)
     {
         $connection = $this->connection;
         $TIR = $this->TIR;

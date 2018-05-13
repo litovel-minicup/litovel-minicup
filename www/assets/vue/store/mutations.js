@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 export default {
     setMatch(state, match) {
-        state.match = _.merge({}, state.match, match);
+        state.match = match;
     },
     setEvents(state, events) {
         state.events = events

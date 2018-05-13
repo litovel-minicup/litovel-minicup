@@ -9,7 +9,7 @@ import App from './App.vue'
 Raven.config(
     'https://29dc267c2d6b4bcc80cfcb1ce1e34478@sentry.io/1205821',
     {
-        ignoreUrls: ['localhost:8888', '127.0.0.1']
+        ignoreUrls: ['localhost:8000', '127.0.0.1']
     }
 ).addPlugin(RavenVue, Vue).install();
 

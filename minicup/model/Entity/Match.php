@@ -20,6 +20,7 @@ use Nette\InvalidArgumentException;
  * @property string         $onlineState
  * @property \DateTime|NULL $firstHalfStart  real time of match started
  * @property \DateTime|NULL $secondHalfStart real time of second halt start
+ * @property string|NULL    $facebookVideoId ID of facebook stream
  */
 class Match extends BaseEntity
 {

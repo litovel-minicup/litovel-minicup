@@ -3,11 +3,11 @@
 namespace Minicup\AdminModule\Presenters;
 
 
+use Dibi\Row;
 use Grido\Components\Columns\Column;
 use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
-use Dibi\Row;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Model\Entity\Category;
@@ -80,7 +80,7 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnNumber('id', '#');
 
-        $editCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
+        $scoreEditCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
             /** @var Match $match */
             $match = $MR->get($id);
             $match->{$column->getName()} = $newValue;
@@ -104,10 +104,10 @@ final class MatchPresenter extends BaseAdminPresenter
         $g->addColumnText('atiname', 'Hosté');
 
         $g->addColumnNumber('scoreHome', 'Skóre domácích')
-            ->setEditableCallback($editCallback)
+            ->setEditableCallback($scoreEditCallback)
             ->setColumn('score_home');
         $g->addColumnNumber('scoreAway', 'Skóre hostů')
-            ->setEditableCallback($editCallback)
+            ->setEditableCallback($scoreEditCallback)
             ->setColumn('score_away');
 
         $control = new SelectBox(NULL, Match::ONLINE_STATE_CHOICES);
@@ -125,6 +125,13 @@ final class MatchPresenter extends BaseAdminPresenter
         $g->addColumnDate('second_half_start', 'Začátek druhé půle', Date::FORMAT_DATETIME);
         $g->addColumnDate('confirmed', 'Potvrzeno', Date::FORMAT_DATETIME);
         $g->addColumnNumber('confirmed_as', 'Potvrzeno jako');
+        $g->addColumnText('facebook_video_id', 'ID Facebook streamu')->setEditableCallback(function ($id, $new, $old, $col) {
+            /** @var Match $match */
+            $match = $this->MR->get($id, False);
+            $match->facebookVideoId = $new;
+            $this->MR->persist($match);
+            return true;
+        });
         $g->setRowCallback(function (Row $row, Html $tr) {
             if ($row->confirmed !== NULL)
                 $tr->class[] = 'success';
