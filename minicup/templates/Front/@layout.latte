@@ -43,7 +43,7 @@
                 <a class="header__top__logo" n:href="Homepage:default">
                     <img class="" src="{$basePath}/assets/img/logo.png?2018"
                          srcset="{$basePath}/assets/img/logo.png?2018 1x, {$basePath}/assets/img/logo@2x.png?2018 2x"
-                         alt="Litovel MINICUP 2017">
+                         alt="Litovel MINICUP 2018">
                 </a>
 
                 <div class="header__top__toggle">
@@ -53,14 +53,14 @@
         </section>
         <!-- nav class -->
         <nav class="header__nav">
-            <a n:href="Homepage:default">novinky</a>
-            <a n:href="Homepage:informations">informace</a>
-            <a n:href="Team:list">týmy</a>
-            <a n:href="Match:default">zápasy</a>
-            <a n:href="Stats:default">statistiky</a>
-            <a n:href="Gallery:default">foto</a>
-            <a n:href="Homepage:sponsors">sponzoři</a>
-            <a n:href="Match:online">živě</a>
+            <a n:href="Homepage:default" n:class="$presenter->isLinkCurrent() ? active">novinky</a>
+            <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
+            <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
+            <a n:href="Match:default" n:class="$presenter->isLinkCurrent('Match:*') ? active">zápasy</a>
+            <a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a>
+            <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">foto</a>
+            <a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a>
+            <a n:href="Match:online" n:class="$presenter->isLinkCurrent() ? active">živě</a>
         </nav>
     </header>
     <!-- main class -->

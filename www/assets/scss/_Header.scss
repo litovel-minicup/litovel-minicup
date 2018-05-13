@@ -264,7 +264,7 @@ Header module
                 border-left: 1px solid $medium--blue;
             }
     
-            &:after, &.active {
+            &:after {
                 content: "";
                 left: 0;
                 top: -100%;
