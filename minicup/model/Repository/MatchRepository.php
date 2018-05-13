@@ -84,7 +84,7 @@ class MatchRepository extends BaseRepository
         $fluent = $this->createCategoryFluent($category, $limit);
         $dt = new DateTime();
         $fluent = $fluent
-            ->where('TIMESTAMP([mt.start])+TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
+            ->where('TIMESTAMP([mt.start]) + TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
             ->where('[confirmed] IS NULL');
         return $this->createEntities($fluent->fetchAll());
     }
@@ -119,7 +119,8 @@ class MatchRepository extends BaseRepository
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i) OR
                 ([home_team_info_id] = %i AND [away_team_info_id] = %i)
             ) AND [confirmed] IS NOT NULL',
-                $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId)->fetch();
+                $team1InfoId, $team2InfoId, $team2InfoId, $team1InfoId
+            )->fetch();
         if ($row) {
             return $this->createEntity($row);
         }
@@ -142,6 +143,7 @@ class MatchRepository extends BaseRepository
     /**
      * @param Match $match
      * @return Match[]
+     * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function findMatchesConfirmedAfterMatchIncluded(Match $match)
     {
@@ -157,6 +159,7 @@ class MatchRepository extends BaseRepository
     /**
      * @param Match $match
      * @return Match|NULL
+     * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function getMatchConfirmedBeforeMatchExcluded(Match $match)
     {
