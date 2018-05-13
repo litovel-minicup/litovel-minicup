@@ -277,7 +277,6 @@ Header module
             }
 
             &:hover, &.active {
-                //background: rgba(3,65,186,1);
                 &:after {
                     top: 0;
                     transition: top .25s ease;

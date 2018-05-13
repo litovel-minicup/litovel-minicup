@@ -1803,32 +1803,53 @@ Header module
     .Table thead th {
       padding: 15px 0; }
   .Table tbody {
-    text-align: center; }
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: .95rem; }
     .Table tbody tr:nth-child(odd) {
       background: #c8c8c8; }
-    .Table tbody tr:hover {
-      background: #4180ff;
-      color: white; }
-    .Table tbody tr td {
-      border-bottom: 2px solid #a09f9f;
-      padding: 10px 0; }
+    .Table tbody TR {
+      transition: background .1s ease; }
+      .Table tbody TR:hover {
+        background: #4180ff;
+        transition: background .2s ease; }
+      .Table tbody TR TD {
+        padding: 15px 0; }
 
-.Table__matches thead th:nth-of-type(1) {
-  width: 25%; }
+.Table__matches thead th:nth-of-type(1), .Table__matches thead th:nth-of-type(3) {
+  text-align: left;
+  width: 25%;
+  padding-left: 20px; }
 .Table__matches thead th:nth-of-type(2) {
   width: 10%; }
-.Table__matches thead th:nth-of-type(3) {
-  width: 25%; }
 .Table__matches thead th:nth-of-type(4) {
   width: 10%; }
 .Table__matches thead th:nth-of-type(5) {
   width: 10%; }
+.Table__matches TBODY TD:nth-of-type(1), .Table__matches TBODY td:nth-of-type(3) {
+  font-weight: 600;
+  text-align: left;
+  padding-left: 20px; }
+  .Table__matches TBODY TD:nth-of-type(1) A, .Table__matches TBODY td:nth-of-type(3) A {
+    color: rgba(0, 0, 0, 0.75); }
+.Table__matches TBODY TR:hover {
+  color: white; }
+  .Table__matches TBODY TR:hover A {
+    color: rgba(255, 255, 255, 0.75); }
 .Table__matches--win {
   background: #009a00 !important;
-  color: white; }
+  color: rgba(255, 255, 255, 0.75); }
+  .Table__matches--win:hover {
+    background: #00cd00 !important; }
+  .Table__matches--win A {
+    color: rgba(255, 255, 255, 0.75) !important; }
 .Table__matches--loss {
-  background: #ff4d4d !important;
-  color: white; }
+  background: #cc0000 !important;
+  color: rgba(255, 255, 255, 0.75); }
+  .Table__matches--loss:hover {
+    background: #e60000 !important; }
+  .Table__matches--loss A {
+    color: rgba(255, 255, 255, 0.75) !important; }
 .Table__matches--draw {
   background: #0040c1 !important;
   color: white; }
@@ -1876,6 +1897,135 @@ Header module
   .Table__detail tbody td {
     font-size: 40px;
     font-family: "Montserrat"; } }
+.MatchDetail__head {
+  background: #a09f9f;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 20px;
+  position: relative; }
+  .MatchDetail__head__score {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-align-self: stretch;
+    -moz-align-self: stretch;
+    align-self: stretch;
+    -ms-flex-item-align: stretch;
+    background: #555;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    top: 0;
+    padding: 25px 20px;
+    font-size: 32px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.75);
+    transform: translateX(-50%); }
+    @media screen and (max-width: 580px) {
+      .MatchDetail__head__score {
+        font-size: 22px;
+        padding: 28px 15px; } }
+  .MatchDetail__head H2 {
+    color: white;
+    font-size: 28px;
+    padding: 30px 0; }
+    .MatchDetail__head H2:nth-of-type(2) {
+      margin-left: auto; }
+    @media screen and (max-width: 960px) and (min-width: 769px), (max-width: 580px) {
+      .MatchDetail__head H2 {
+        font-size: 18px; } }
+.MatchDetail__video IMG {
+  width: 100%; }
+.MatchDetail__action {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 20px;
+  position: relative; }
+  .MatchDetail__action:after {
+    content: '';
+    width: 2px;
+    height: calc(100% - 20px);
+    background: #bbb;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    z-index: 0; }
+  .MatchDetail__action__time {
+    text-align: center;
+    padding: 20px 0;
+    background: #e1e1e1;
+    position: relative;
+    z-index: 5;
+    color: #999;
+    font-weight: bolder; }
+  .MatchDetail__action__home, .MatchDetail__action__guest {
+    padding: 20px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -ms-flex-align: center;
+    position: relative; }
+    .MatchDetail__action__home:after, .MatchDetail__action__guest:after {
+      content: '';
+      width: 25px;
+      height: 25px;
+      background: white;
+      border-radius: 100%;
+      border: 3px solid #bbb;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20; }
+    .MatchDetail__action__home__time, .MatchDetail__action__guest__time {
+      font-weight: bolder;
+      font-size: 22px;
+      color: rgba(0, 0, 0, 0.5);
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      box-flex: 0;
+      -webkit-flex: 0 0 40%;
+      -moz-flex: 0 0 40%;
+      -ms-flex: 0 0 40%;
+      flex: 0 0 40%; }
+    .MatchDetail__action__home__source, .MatchDetail__action__guest__source {
+      color: white;
+      padding: 10px;
+      font-size: 0.9rem;
+      -webkit-box-flex: 0;
+      -moz-box-flex: 0;
+      box-flex: 0;
+      -webkit-flex: 0 0 40%;
+      -moz-flex: 0 0 40%;
+      -ms-flex: 0 0 40%;
+      flex: 0 0 40%; }
+      .MatchDetail__action__home__source DIV, .MatchDetail__action__guest__source DIV {
+        font-weight: 600;
+        margin-bottom: 5px; }
+  .MatchDetail__action__home__source {
+    background: #4180ff;
+    margin-left: auto; }
+  .MatchDetail__action__home__time {
+    text-align: right; }
+  .MatchDetail__action__guest__source {
+    background: #0040c1;
+    text-align: right;
+    margin-right: auto; }
+
 .Photo__row {
   padding: 0;
   margin: 0;
