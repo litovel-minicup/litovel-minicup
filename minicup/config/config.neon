@@ -155,6 +155,9 @@ services:
     - implement: Minicup\Components\IMatchDetailComponentFactory
       parameters: [Minicup\Model\Entity\Match match]
       arguments: [%match%]
+    - implement: Minicup\Components\ICategoryOnlineComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]

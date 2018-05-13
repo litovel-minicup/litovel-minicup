@@ -171,6 +171,11 @@ class RouterFactory
             'action' => 'default'
         ]);
 
+        $front[] = $route('zive/', [
+            'presenter' => 'Match',
+            'action' => 'online'
+        ]);
+
         $front[] = $route('zapas/', [
             'presenter' => 'Match',
             'action' => 'detail'

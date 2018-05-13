@@ -2,6 +2,7 @@
 
 namespace Minicup\FrontModule\Presenters;
 
+use Minicup\Components\ICategoryOnlineComponentFactory;
 use Minicup\Components\IListOfMatchesComponentFactory;
 use Minicup\Components\IMatchDetailComponentFactory;
 use Minicup\Components\ListOfMatchesComponent;
@@ -18,6 +19,9 @@ final class MatchPresenter extends BaseFrontPresenter
     /** @var IMatchDetailComponentFactory @inject */
     public $MDCFactory;
 
+    /** @var ICategoryOnlineComponentFactory @inject */
+    public $COCFactory;
+
     /** @var MatchRepository @inject */
     public $MR;
 
@@ -32,6 +36,11 @@ final class MatchPresenter extends BaseFrontPresenter
     public function createComponentMatchDetailComponent()
     {
         return $this->MDCFactory->create($this->MR->get(4471));
+    }
+
+    public function createComponentCategoryOnlineComponent()
+    {
+        return $this->COCFactory->create($this->category);
     }
 
     public function renderDetail()
