@@ -131,6 +131,7 @@ class MatchManager
         $match->scoreAway = $scoreAway;
         $this->connection->transactional(function (Connection $connection) use ($match, $scoreHome, $scoreAway, $category) {
             $match->confirmed = new DateTime();
+            $match->onlineState = Match::END_ONLINE_STATE;
             $this->MR->persist($match);
             $connection->commit();
             $this->replicator->replicate($category, $match);

@@ -4,8 +4,10 @@ namespace Minicup\AdminModule\Presenters;
 
 
 use Grido\Components\Columns\Column;
+use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
+use Dibi\Row;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Model\Entity\Category;
@@ -13,6 +15,8 @@ use Minicup\Model\Entity\Match;
 use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Utils\Html;
 
 final class MatchPresenter extends BaseAdminPresenter
 {
@@ -76,8 +80,6 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnNumber('id', '#');
 
-        $g->addColumnText('htiname', 'Domácí');
-
         $editCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
             /** @var Match $match */
             $match = $MR->get($id);
@@ -91,20 +93,47 @@ final class MatchPresenter extends BaseAdminPresenter
             return TRUE;
         };
 
-        $g->addColumnText('scoreHome', 'Skóre domácích')
-            ->setEditableCallback($editCallback)
-            ->setColumn('score_home');
 
         $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
             return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
         });
-        $g->addColumnText('scoreAway', 'Skóre hostů')
+
+        $g->addColumnText('htiname', 'Domácí');
+        $g->addColumnText('atiname', 'Hosté');
+
+        $g->addColumnNumber('scoreHome', 'Skóre domácích')
+            ->setEditableCallback($editCallback)
+            ->setColumn('score_home');
+        $g->addColumnNumber('scoreAway', 'Skóre hostů')
             ->setEditableCallback($editCallback)
             ->setColumn('score_away');
 
-        $g->addColumnText('atiname', 'Hosté');
+        $control = new SelectBox(NULL, Match::ONLINE_STATE_CHOICES);
+        $g->addColumnText('online_state', 'Stav online')->setEditableControl($control)->setEditableCallback(function ($id, $new, $old, $column) {
+            /** @var Match $match */
+            $match = $this->MR->get($id, False);
+            $match->onlineState = $new;
+            $this->MR->persist($match);
+            $this->flashMessage("Online stav zápasu {$id} změněn z {$old} na {$new}.");
+            return TRUE;
+        })->setCustomRender(function ($row) {
+            return Match::ONLINE_STATE_CHOICES[$row->online_state];
+        });
+        $g->addColumnDate('first_half_start', 'Začátek první půle', Date::FORMAT_DATETIME);
+        $g->addColumnDate('second_half_start', 'Začátek druhé půle', Date::FORMAT_DATETIME);
+        $g->addColumnDate('confirmed', 'Potvrzeno', Date::FORMAT_DATETIME);
+        $g->addColumnNumber('confirmed_as', 'Potvrzeno jako');
+        $g->setRowCallback(function (Row $row, Html $tr) {
+            if ($row->confirmed !== NULL)
+                $tr->class[] = 'success';
+            if ($row->online_state == Match::END_ONLINE_STATE && $row->confirmed === NULL)
+                $tr->class[] = 'warning';
+            if ($row->online_state != Match::END_ONLINE_STATE && $row->online_state != Match::INIT_ONLINE_STATE)
+                $tr->class[] = 'info';
+            return $tr;
+        });
         return $g;
     }
 }

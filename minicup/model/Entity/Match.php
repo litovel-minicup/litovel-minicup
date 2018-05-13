@@ -25,6 +25,17 @@ class Match extends BaseEntity
 {
     const HALF_LENGTH = "P600S";
 
+    const INIT_ONLINE_STATE = 'init';
+    const END_ONLINE_STATE = 'end';
+
+    const ONLINE_STATE_CHOICES = [
+        self::INIT_ONLINE_STATE => 'před zápasem',
+        'half_first' => '1. poločas',
+        'pause' => 'přestávka',
+        'half_second' => '2. poločas',
+        self::END_ONLINE_STATE => 'po zápase'
+    ];
+
     public static $CACHE_TAG = 'match';
 
     /**
@@ -124,12 +135,6 @@ class Match extends BaseEntity
     public function getOnlineStateName()
     {
         //dump($this->onlineState);
-        return [
-            'init' => 'před zápasem',
-            'half_first' => '1. poločas',
-            'pause' => 'přestávka',
-            'half_second' => '2. poločas',
-            'end' => 'po zápase'
-        ][$this->onlineState ?: 'init'];
+        return self::ONLINE_STATE_CHOICES[$this->onlineState ?: 'init'];
     }
 }

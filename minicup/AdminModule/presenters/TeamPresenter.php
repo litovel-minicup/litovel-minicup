@@ -111,15 +111,15 @@ class TeamPresenter extends BaseAdminPresenter
         });
 
         // Name && slug
-        $this->addTeamInfoEditableText($g, 'name');
-        $this->addTeamInfoEditableText($g, 'slug');
+        $this->addTeamInfoEditableText($g, 'name', 'name');
+        $this->addTeamInfoEditableText($g, 'slug', 'slug');
 
         // Treiner name
-        $this->addTeamInfoEditableText($g, 'trainer_name');
+        $this->addTeamInfoEditableText($g, 'trainerName', 'trainer_name');
 
         // Dress color
-        $this->addTeamInfoEditableText($g, 'dress_color');
-        $this->addTeamInfoEditableText($g, 'dress_color_secondary');
+        $this->addTeamInfoEditableText($g, 'dressColor', 'dress_color');
+        $this->addTeamInfoEditableText($g, 'dressColorSecondary', 'dress_color_secondary');
 
         $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Primární barva od');
         $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Primární barva do');
@@ -221,10 +221,10 @@ class TeamPresenter extends BaseAdminPresenter
             });
     }
 
-    private function addTeamInfoEditableText(Grid $g, $identifier)
+    private function addTeamInfoEditableText(Grid $g, $identifier, $column)
     {
 
-        return $g->addColumnText($identifier, $this::TEAM_INFO_GRID_LABELS[$identifier])
+        return $g->addColumnText($column, $this::TEAM_INFO_GRID_LABELS[$column])
             ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR));
     }
 
