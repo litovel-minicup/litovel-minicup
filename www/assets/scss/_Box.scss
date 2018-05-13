@@ -58,63 +58,6 @@
 		}
 	}
 
-	/*
-	&__head--toggle {
-
-		@include fill-parent();
-		@include row(table);
-
-		&__icon {
-			@include span-columns(1.5);
-			line-height: 75px;
-		}
-
-		&__text {
-			@include span-columns(4.5);
-			font-family: 'Montserrat';
-			font-size: 24px;
-			line-height: 75px;
-			letter-spacing: -1.5px;
-		}
-
-		&__select {
-			@include span-columns(6);
-			@include reset-display;
-			text-align: right;
-
-			li:last-of-type {
-				margin-right: 20px;
-			}
-
-            li {
-              display: inline-block;
-              &.active, &.active a {
-                color: white;
-                background: $dark--blue;
-              }
-            }
-
-			a {
-				font-family: 'Montserrat';
-				color: darken($medium--grey, 40%);
-				font-size: 24px;
-				line-height: 75px;
-				padding: 10px;
-				letter-spacing: -1.5px;
-                display: inline-block;
-                height: 100%;
-                width: 100%;
-			}
-			
-			li:hover {
-				color: white;
-				background: $medium--blue;
-			}
-		
-		}
-	}*/
-
-
 	&__subhead {
 		@include default_fonts();
 		font-size: 16px;
@@ -142,9 +85,11 @@
 			letter-spacing: -1.5px;
 
     		color: darken($medium--grey, 40%);
+    		transition: background .15s ease, color .15s;
 
     		&:hover {
 				background: $light--blue;
+				transition: background .25s ease, color .15s;
 				color: white;
 			}
 		}
