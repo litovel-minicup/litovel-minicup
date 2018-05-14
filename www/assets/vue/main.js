@@ -15,6 +15,7 @@ Raven.config(
 
 function createWebSocket(path) {
     const protocolPrefix = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
+    // TODO: get from <body>?
     return protocolPrefix + '//' + 'localhost:8888' + path; // TODO: livestream placement
 }
 

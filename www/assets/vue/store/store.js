@@ -10,8 +10,10 @@ const store = new Vuex.Store({
         socket: {
             isConnected: false,
             reconnectError: false,
-            queue: []
+            queue: [],
+            reconnectionCount: 0,
         },
+        match_id: 0,
         match: {
             score: [0, 0],
         },

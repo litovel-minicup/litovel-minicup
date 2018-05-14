@@ -6,6 +6,9 @@ export default {
     setMatch(state, match) {
         state.match = match;
     },
+    setMatchId(state, match) {
+        state.match_id = match;
+    },
     setEvents(state, events) {
         state.events = events
     },
@@ -46,6 +49,7 @@ export default {
     // mutations for reconnect methods
     SOCKET_RECONNECT(state, count) {
         // attempt to reconnect
+        state.socket.reconnectionCount = count;
     },
     SOCKET_RECONNECT_ERROR(state) {
         state.socket.reconnectError = true;

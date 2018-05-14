@@ -138,4 +138,25 @@ class Match extends BaseEntity
         //dump($this->onlineState);
         return self::ONLINE_STATE_CHOICES[$this->onlineState ?: 'init'];
     }
+
+    public function serialize()
+    {
+        return [
+            'id' => $this->id,
+            'home_team_name' => $this->homeTeam->name,
+            'home_team_id' => $this->homeTeam->id,
+            'away_team_name' => $this->awayTeam->name,
+            'away_team_id' => $this->awayTeam->id,
+            'home_team_color' => '#ff8574',
+            'away_team_color' => '#88dd12',
+            'category_name' => $this->category->name,
+            'first_half_start' => $this->firstHalfStart ? $this->firstHalfStart->getTimestamp() : NULL,
+            'second_half_start' => $this->secondHalfStart ? $this->secondHalfStart->getTimestamp() : NULL,
+            'score' => [$this->scoreHome, $this->scoreAway],
+            'confirmed' => $this->confirmed ? $this->confirmed->getTimestamp() : NULL,
+            'half_length' => \DateInterval::createFromDateString(self::HALF_LENGTH)->s,
+            'state' => $this->onlineState,
+            'facebook_video_id' => $this->facebookVideoId
+        ];
+    }
 }

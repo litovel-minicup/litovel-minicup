@@ -26,6 +26,11 @@
         mounted() {
             const matchId = this.$root.$el.parentElement.dataset.matchId;
             this.$store.dispatch('subscribe', {match: matchId});
+            setTimeout(() => {
+                if (!this.$store.state.socket.isConnected) {
+                    this.$store.dispatch('loadMatchFallback');
+                }
+            }, 500); // TODO: fallback timer
         }
     }
 </script>
