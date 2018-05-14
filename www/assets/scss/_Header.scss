@@ -85,10 +85,6 @@ Header module
                 background-size: 426px 180px;
             }
 
-            @media screen and (max-width: 380px) {
-                display: none;
-            }
-
             @media screen and (min-width: 600px) {
                 left: 50%;
                 transform: translateX(-50%);
@@ -105,6 +101,12 @@ Header module
             @media screen and (max-width: 480px) {
                 left: -20%;
                 transform: rotate(-5deg);
+            }
+
+            @media screen and (max-width: 340px) {
+                left: -80px;
+                transform: rotate(-10deg);
+                top: 50px;
             }
         }
 
@@ -124,7 +126,8 @@ Header module
             }
 
             @media screen and (max-width: 640px) {
-               margin-right: 0;
+                width: 100%;
+                margin-right: 0;
             }
         }
 
@@ -166,23 +169,38 @@ Header module
             font-weight: 600;
             @include display(flex);
             @include align-self(stretch);
+            
+            @media screen and (max-width: 380px) {
+                @include flex-wrap(wrap);
+            }
 
             A {
                 @include display(flex);
                 @include align-items(center);
+
                 text-transform: uppercase;
                 color: #89B0FF;
-                font-size: .9em;
-                padding: 0 30px;
+
+                @media screen and (min-width: 769px) {
+                    font-size: .9em;
+                    padding: 0 30px;
+                }
+
+                @media screen and (max-width: 768px) {
+                    padding: 0 20px;
+                }
 
                 @media screen and (max-width: 480px) {
                     font-size: .8em;
                     padding: 0 15px;
                 }
 
-                @media screen and (max-width: 768px) {
-                    padding: 0 20px;
+                @media screen and (max-width: 380px) {
+                    @include justify-content(center);
+                    @include flex(1 1 100%);
+                    padding: 0 5px;
                 }
+                
 
                 &:hover {
                     SPAN {
@@ -218,19 +236,23 @@ Header module
                 }
 
                 @media screen and (max-width: 640px) {
-                    margin-left: 20px;
-                }
-
-                @media screen and (max-width: 480px) {
-                    margin-left: 0;
+                    margin-left: 40px;
                 }
 
                 @media screen and (max-width: 380px) {
                     max-height: 80px;
                 }
 
+
+
             IMG {
-                
+                @media screen and (max-width: 480px) {
+                    width: 120px;
+                }
+
+                @media screen and (max-width: 380px) {
+                    width: 100px;
+                }
             }
         }
 

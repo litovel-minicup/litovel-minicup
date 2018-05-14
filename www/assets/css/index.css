@@ -1124,9 +1124,6 @@ Header module
         .header__top:after {
           background: url("../img/ryba@2x.png");
           background-size: 426px 180px; } }
-      @media screen and (max-width: 380px) {
-        .header__top:after {
-          display: none; } }
       @media screen and (min-width: 600px) {
         .header__top:after {
           left: 50%;
@@ -1142,6 +1139,11 @@ Header module
         .header__top:after {
           left: -20%;
           transform: rotate(-5deg); } }
+      @media screen and (max-width: 340px) {
+        .header__top:after {
+          left: -80px;
+          transform: rotate(-10deg);
+          top: 50px; } }
     .header__top .inner {
       display: -webkit-box;
       display: -moz-box;
@@ -1170,6 +1172,7 @@ Header module
           width: calc(100% - 30px); } }
       @media screen and (max-width: 640px) {
         .header__top .inner {
+          width: 100%;
           margin-right: 0; } }
     .header__top__text {
       color: white;
@@ -1206,6 +1209,15 @@ Header module
       -moz-align-self: stretch;
       align-self: stretch;
       -ms-flex-item-align: stretch; }
+      @media screen and (max-width: 380px) {
+        .header__top__toggle {
+          -webkit-box-lines: multiple;
+          -moz-box-lines: multiple;
+          box-lines: multiple;
+          -webkit-flex-wrap: wrap;
+          -moz-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap; } }
       .header__top__toggle A {
         display: -webkit-box;
         display: -moz-box;
@@ -1224,16 +1236,37 @@ Header module
         align-items: center;
         -ms-flex-align: center;
         text-transform: uppercase;
-        color: #89B0FF;
-        font-size: .9em;
-        padding: 0 30px; }
+        color: #89B0FF; }
+        @media screen and (min-width: 769px) {
+          .header__top__toggle A {
+            font-size: .9em;
+            padding: 0 30px; } }
+        @media screen and (max-width: 768px) {
+          .header__top__toggle A {
+            padding: 0 20px; } }
         @media screen and (max-width: 480px) {
           .header__top__toggle A {
             font-size: .8em;
             padding: 0 15px; } }
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 380px) {
           .header__top__toggle A {
-            padding: 0 20px; } }
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            box-pack: center;
+            -webkit-justify-content: center;
+            -moz-justify-content: center;
+            -ms-justify-content: center;
+            -o-justify-content: center;
+            justify-content: center;
+            -ms-flex-pack: center;
+            -webkit-box-flex: 1;
+            -moz-box-flex: 1;
+            box-flex: 1;
+            -webkit-flex: 1 1 100%;
+            -moz-flex: 1 1 100%;
+            -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+            padding: 0 5px; } }
         .header__top__toggle A:hover SPAN {
           color: white; }
       .header__top__toggle--active {
@@ -1255,13 +1288,16 @@ Header module
           top: 20px; } }
       @media screen and (max-width: 640px) {
         .header__top__logo {
-          margin-left: 20px; } }
-      @media screen and (max-width: 480px) {
-        .header__top__logo {
-          margin-left: 0; } }
+          margin-left: 40px; } }
       @media screen and (max-width: 380px) {
         .header__top__logo {
           max-height: 80px; } }
+      @media screen and (max-width: 480px) {
+        .header__top__logo IMG {
+          width: 120px; } }
+      @media screen and (max-width: 380px) {
+        .header__top__logo IMG {
+          width: 100px; } }
   .header__nav {
     z-index: 50;
     position: relative;
