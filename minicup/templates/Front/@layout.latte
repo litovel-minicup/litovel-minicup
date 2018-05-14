@@ -54,13 +54,14 @@
         <!-- nav class -->
         <nav class="header__nav">
             <a n:href="Homepage:default" n:class="$presenter->isLinkCurrent() ? active">novinky</a>
-            <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
-            <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
-            <a n:href="Match:default" n:class="$presenter->isLinkCurrent('Match:*') ? active">zápasy</a>
-            <a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a>
-            <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">foto</a>
-            <a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a>
             <a n:href="Match:online" n:class="$presenter->isLinkCurrent() ? active">živě</a>
+            <a n:href="Match:default" n:class="$presenter->isLinkCurrent('Match:*') ? active">zápasy</a>
+            <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
+            <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
+            <!--<a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a>-->
+            <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">fotogalerie</a>
+            <!--<a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a>-->
+            
         </nav>
     </header>
     <!-- main class -->

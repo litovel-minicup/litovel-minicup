@@ -6,7 +6,7 @@ Header module
 
 .header {
 
-    font-family: sans-serif;
+    @include default-fonts();
 
     &--msg {
         .header__top {
@@ -32,7 +32,7 @@ Header module
         .header__top__text {
 
             P {
-                font-family: sans-serif;
+                @include default-fonts();
             }
 
             @media screen and (max-width: 640px) {
@@ -142,7 +142,7 @@ Header module
             }
 
             P {
-                font-family: sans-serif;
+                @include default-fonts();
                 font-size: .9em;
             }
 
@@ -265,15 +265,15 @@ Header module
         background: $light--blue;
         width: 100%;
         overflow: auto;
+
         @media screen and (min-width: 1000px) {
             @include justify-content(center);
         }
 
         @include display(flex);
-        
 
         A {
-            font-weight: 600;
+            font-weight: 700;
             color: rgba(255,255,255,.75);
             padding: 25px 40px;
             text-transform: uppercase;
