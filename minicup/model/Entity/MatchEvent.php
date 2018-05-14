@@ -50,11 +50,15 @@ class MatchEvent extends BaseEntity
 
     public function serialize()
     {
+        $teamIndex = array_search($this->teamInfo->id, [$this->match->homeTeam->id, $this->match->awayTeam->id], TRUE);
         return [
+            'id' => $this->id,
             'score' => [$this->scoreHome, $this->scoreAway],
             'message' => $this->message,
             'type' => $this->type,
-            'timeOffset' => $this->timeOffset
+            'time_offset' => $this->timeOffset,
+            'half_index' => $this->halfIndex,
+            'team_index' => $teamIndex === FALSE ? -1 : $teamIndex
         ];
     }
 }

@@ -17,4 +17,17 @@ class MatchPresenter extends BaseApiPresenter
         $this->sendJson(['match' => $match->serialize()]);
     }
 
+    /**
+     * @param Match $match
+     * @throws \Nette\Application\AbortException
+     */
+    public function actionEvents(Match $match)
+    {
+        $data = [];
+        foreach ($match->events as $event) {
+            $data[] = $event->serialize();
+        }
+        $this->sendJson(['events' => $data]);
+    }
+
 }

@@ -7,7 +7,6 @@ use LeanMapper\Exception\InvalidArgumentException;
 use LeanMapper\Fluent;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\BaseRepository;
-
 use Nette\SmartObject;
 
 class Filters
@@ -137,7 +136,7 @@ class Filters
         if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[half_index]' . $order)->orderBy('[time_offset]' . $order);
+        $fluent->orderBy('[half_index]' . $order . ', [time_offset]' . $order);
     }
 
     /**

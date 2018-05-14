@@ -396,6 +396,12 @@ class RouterFactory
             'match' => $matchFilter
         ]);
 
+        $list[] = new Route('api/v1/match/events/<match>', [
+            'presenter' => 'Match',
+            'action' => 'events',
+            'match' => $matchFilter
+        ]);
+
         return $list;
     }
 

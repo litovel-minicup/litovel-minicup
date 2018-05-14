@@ -13,7 +13,7 @@ export default {
         state.events = events
     },
     addEvent(state, event) {
-        state.events.unshift(event)
+        state.events.push(event)
     },
 
     pushSocketQueue(state, obj) {

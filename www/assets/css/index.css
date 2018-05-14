@@ -2026,12 +2026,12 @@ Header module
       .MatchDetail__action__home__source DIV, .MatchDetail__action__guest__source DIV {
         font-weight: 600;
         margin-bottom: 5px; }
-  .MatchDetail__action__home__source {
+  .MatchDetail__action__guest__source {
     background: #4180ff;
     margin-left: auto; }
-  .MatchDetail__action__home__time {
+  .MatchDetail__action__guest__time {
     text-align: right; }
-  .MatchDetail__action__guest__source {
+  .MatchDetail__action__home__source {
     background: #0040c1;
     text-align: right;
     margin-right: auto; }
