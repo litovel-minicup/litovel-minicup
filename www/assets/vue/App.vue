@@ -1,7 +1,13 @@
 <template>
     <div>
-        <match-header></match-header>
-        <event-list :events="events" :match="match"></event-list>
+        <match-header
+                :home-team-url="homeTeamUrl"
+                :away-team-url="awayTeamUrl"
+        ></match-header>
+        <event-list
+                :events="events"
+                :match="match"
+        ></event-list>
         <facebook-video
                 v-if="facebookVideoId"
                 :facebook-video-id="facebookVideoId"
@@ -21,6 +27,12 @@
             FacebookVideo,
             EventList
         },
+        data() {
+            return {
+                homeTeamUrl: '',
+                awayTeamUrl: '',
+            }
+        },
         computed: {
             facebookVideoId() {
                 return this.$store.state.match.facebook_video_id
@@ -34,7 +46,11 @@
             },
         },
         mounted() {
-            const matchId = this.$root.$el.parentElement.dataset.matchId;
+            const data = this.$root.$el.parentElement.dataset;
+            const matchId = data.matchId;
+            this.homeTeamUrl = data.homeTeamUrl;
+            this.awayTeamUrl = data.awayTeamUrl;
+
             this.$store.dispatch('subscribe', {match: matchId});
             this.$store.dispatch('loadEvents');
             setTimeout(() => {

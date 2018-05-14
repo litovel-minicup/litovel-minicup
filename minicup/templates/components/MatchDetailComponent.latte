@@ -17,17 +17,17 @@
 </div>
 
 
-
-<div class="online-report" data-match-id="{$match->id}">
+<div class="online-report"
+     data-match-id="{$match->id}"
+     data-home-team-url="{plink Team:detail $match->category, $match->homeTeam}"
+     data-away-team-url="{plink Team:detail $match->category, $match->awayTeam}"
+>
     <div id="app"></div>
 </div>
 
 {* <div class="MatchDetail__video">
     <img src="{$basePath}/assets/sample_stream.jpg" alt="">
 </div> *}
-
-
-
 
 
 <script src="{$basePath}/assets/vue-build/build.js"></script>

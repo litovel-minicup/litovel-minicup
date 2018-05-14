@@ -4,23 +4,23 @@
             <template v-if="event.type === 'goal' && event.team_index === 0">
                 <li class="MatchDetail__action__home" :key="event.id">
                     <div class="MatchDetail__action__home__source">
-                        <div>#41 Franta Dzuik</div>
+                        <div v-if="event.player_number">#{{ event.player_number }} {{ event.player_name }}</div>
                         <span>{{ event.message }}</span>
                     </div>
                     <span class="MatchDetail__action__home__time">{{ event | eventTime }}</span>
                 </li>
             </template>
-            <template v-if="event.type === 'goal' && event.team_index === 1">
+            <template v-else-if="event.type === 'goal' && event.team_index === 1">
                 <li class="MatchDetail__action__guest" :key="event.id">
                     <span class="MatchDetail__action__guest__time">{{ event | eventTime }}</span>
                     <div class="MatchDetail__action__guest__source">
-                        <div>#24 Štěpan Poč</div>
+                        <div v-if="event.player_number">#{{ event.player_number }} {{ event.player_name }}</div>
                         <span>{{ event.message }}</span>
                     </div>
                 </li>
             </template>
-            <template v-if="event.type === 'time'">
-                <li class="MatchDetail__action__time" :key="event.message">{{ event.message }}</li>
+            <template v-else-if="event.type !== 'goal'">
+                <li class="MatchDetail__action__time" :key="event.id">{{ event | eventMessage }}</li>
             </template>
         </template>
     </transition-group>
@@ -34,26 +34,7 @@
         props: ['events', 'match'],
         computed: {
             eventList() {
-                let events = [];
-                // TODO: eergh, time events are not saved in db, but will be
-                if (this.match.state !== 'init') {
-                    events.push({type: 'time', message: 'Začátek zápasu'})
-                }
-                for (let event of _.sortBy(this.events, ['half_index'], ['time_offset'])) {
-                    if (events.length && events[events.length - 1].half_index === 0 && event.half_index === 1) {
-                        events.push({type: 'time', message: 'Poločas'})
-                    }
-                    if (event.type === 'goal') {
-                        events.push(event);
-                    }
-                }
-                if (this.match.state === 'pause') {
-                    events.push({type: 'time', message: 'Poločas'})
-                }
-                if (this.match.state === 'end') {
-                    events.push({type: 'time', message: 'Konec zápasu'})
-                }
-
+                const events = _.sortBy(this.events, ['half_index'], ['time_offset']);
                 return this.match.confirmed ? events : events.reverse();
             }
         },
@@ -61,7 +42,17 @@
             eventTime(event) {
                 let secs = Number(event.time_offset);
                 return `${Math.floor(secs / 60).pad(2)}:${(secs % 60).pad(2)}`;
-            }
+            },
+            eventMessage(event) {
+                if (event.message) return event.message;
+                const msg = (
+                    event.type === 'start' && event.half_index === 0
+                ) || (
+                    event.type === 'end' && event.half_index === 1
+                ) ? 'zápasu' : `${event.half_index + 1}. poločasu`;
+
+                return `${{end: 'Konec', start: 'Začátek'}[event.type]} ${msg}`;
+            },
         }
     }
 </script>
