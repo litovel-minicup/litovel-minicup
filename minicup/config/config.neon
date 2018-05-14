@@ -36,7 +36,7 @@ services:
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
     formFactory: Minicup\Misc\IFormFactory
-    filterLoader: Minicup\Misc\FilterLoader
+    filterLoader: Minicup\Misc\FilterLoader(%wwwDir%)
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
     - Minicup\Router\YearCategoryRouteFactory
 
