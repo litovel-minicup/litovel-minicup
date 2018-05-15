@@ -13,15 +13,11 @@ Raven.config(
     }
 ).addPlugin(RavenVue, Vue).install();
 
-function createWebSocket(path) {
-    const protocolPrefix = (window.location.protocol === 'https:') ? 'wss:' : 'ws:';
-    // TODO: get from <body>?
-    return protocolPrefix + '//' + 'localhost:8888' + path; // TODO: livestream placement
-}
-
 Vue.use(VueResource);
 
-Vue.use(VueNativeSock, createWebSocket('/ws/broadcast'), {
+const config = window.config || {};
+
+Vue.use(VueNativeSock, config.liveServiceUrl, {
     reconnection: true,
     format: 'json',
     store
@@ -43,6 +39,7 @@ Vue.filter("onlineStateName", state => {
         'end': 'po zápase'
     }[state];
 });
+
 const app = new Vue({
     el: '#app',
     render: h => h(App),

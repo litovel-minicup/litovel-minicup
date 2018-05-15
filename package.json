@@ -11,13 +11,14 @@
     "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9000"
   },
   "dependencies": {
+    "camelcase-keys": "latest",
     "lodash": "^4.17.5",
     "raven-js": "^3.24.0",
     "vue": "^2.5.11",
-    "vuex": "^3.0.1",
+    "vue-loading-template": "^0.1.7",
     "vue-native-websocket": "^2.0.6",
     "vue-resource": "^1.5.0",
-    "camelcase-keys": "latest"
+    "vuex": "^3.0.1"
   },
   "browserslist": [
     "> 1%",

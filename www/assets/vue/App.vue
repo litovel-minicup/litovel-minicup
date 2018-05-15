@@ -1,17 +1,29 @@
 <template>
     <div>
-        <match-header
-                :home-team-url="homeTeamUrl"
-                :away-team-url="awayTeamUrl"
-        ></match-header>
-        <event-list
-                :events="events"
-                :match="match"
-        ></event-list>
-        <facebook-video
-                v-if="facebookVideoId"
-                :facebook-video-id="facebookVideoId"
-        ></facebook-video>
+        <transition name="load">
+            <template v-if="match.id && events">
+                <div>
+                    <match-header
+                            :home-team-url="homeTeamUrl"
+                            :away-team-url="awayTeamUrl"
+                    ></match-header>
+                    <event-list
+                            :events="events"
+                            :match="match"
+                    ></event-list>
+                    <facebook-video
+                            v-if="facebookVideoId"
+                            :facebook-video-id="facebookVideoId"
+                    ></facebook-video>
+                </div>
+            </template>
+        </transition>
+
+        <vue-loading
+                v-if="!(match.id && events)"
+                type="spin" color="#0e5eff"
+                :size="{ width: '100px', height: '100px' }"
+        ></vue-loading>
     </div>
 </template>
 
@@ -19,13 +31,16 @@
     import MatchHeader from './components/MatchHeader'
     import FacebookVideo from './components/FacebookVideo'
     import EventList from './components/EventList'
+    import VueLoading from 'vue-loading-template'
+
 
     export default {
         name: "App",
         components: {
             MatchHeader,
             FacebookVideo,
-            EventList
+            EventList,
+            VueLoading
         },
         data() {
             return {
@@ -63,5 +78,11 @@
 </script>
 
 <style scoped>
+    .load-enter-active, .load-leave-active {
+        transition: opacity .5s;
+    }
 
+    .load-enter, .load-leave-to {
+        opacity: 0;
+    }
 </style>

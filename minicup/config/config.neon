@@ -1,7 +1,8 @@
 parameters:
+    liveServiceUrl: Nette\Http\Url('wss://localhost:8888/ws/broadcast')
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
-    tournamentStart: "2018-06-08 13:00:00"
+    tournamentStart: "2018-06-08 12:30:00"
     cachedRepositories: [
     	@Minicup\Model\Repository\CategoryRepository,
     	@Minicup\Model\Repository\TeamInfoRepository,
@@ -155,6 +156,8 @@ services:
     - implement: Minicup\Components\IMatchDetailComponentFactory
       parameters: [Minicup\Model\Entity\Match match]
       arguments: [%match%]
+      setup:
+            - $liveServiceUrl = %liveServiceUrl%
     - implement: Minicup\Components\ICategoryOnlineComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

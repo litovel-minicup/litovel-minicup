@@ -49,15 +49,16 @@ class TeamDetailComponent extends BaseComponent
      * @param IPlayerListComponentFactory    $PlLCF
      * @throws \Dibi\Exception
      */
-    public function __construct(Team $team,
-                                TeamRepository $TR,
-                                PlayerRepository $PR,
-                                TagManager $TM,
-                                IListOfMatchesComponentFactory $LOMCF,
-                                IStaticContentComponentFactory $SCCF,
-                                IPhotoListComponentFactory $PhLCF,
-                                ITeamHistoryComponentFactory $THCF,
-                                IPlayerListComponentFactory $PlLCF
+    public function __construct(
+        Team $team,
+        TeamRepository $TR,
+        PlayerRepository $PR,
+        TagManager $TM,
+        IListOfMatchesComponentFactory $LOMCF,
+        IStaticContentComponentFactory $SCCF,
+        IPhotoListComponentFactory $PhLCF,
+        ITeamHistoryComponentFactory $THCF,
+        IPlayerListComponentFactory $PlLCF
     )
     {
         parent::__construct();
@@ -124,7 +125,7 @@ class TeamDetailComponent extends BaseComponent
 interface ITeamDetailComponentFactory
 {
     /**
-     * @param $team Team
+     * @param     $team Team
      * @return TeamDetailComponent
      */
     public function create(Team $team);

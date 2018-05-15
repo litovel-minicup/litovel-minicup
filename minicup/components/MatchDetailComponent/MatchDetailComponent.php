@@ -3,15 +3,8 @@
 namespace Minicup\Components;
 
 
-use Minicup\Misc\EntitiesReplicatorContainer;
-use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
-use Minicup\Model\Manager\MatchManager;
-use Minicup\Model\Repository\MatchRepository;
-use Nette\Application\UI\Form;
-use Nette\Forms\Container;
-use Nette\Forms\Controls\SubmitButton;
-use Nette\Utils\ArrayHash;
+use Nette\Http\Url;
 
 interface IMatchDetailComponentFactory
 {
@@ -26,6 +19,8 @@ class MatchDetailComponent extends BaseComponent
 {
     /** @var Match */
     private $match;
+    /** @var Url */
+    public $liveServiceUrl;
 
     public function __construct(Match $match)
     {
@@ -36,6 +31,7 @@ class MatchDetailComponent extends BaseComponent
     public function render()
     {
         $this->template->match = $this->match;
+        $this->template->liveServiceUrl = $this->liveServiceUrl;
         parent::render();
     }
 

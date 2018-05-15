@@ -29,5 +29,9 @@
     <img src="{$basePath}/assets/sample_stream.jpg" alt="">
 </div> *}
 
-
-<script src="{$basePath}/assets/vue-build/build.js"></script>
+<script>
+    window.config = $.extend(window.config || {}, {
+        liveServiceUrl: {$liveServiceUrl}
+    });
+</script>
+<script src="{$basePath}/assets/build/build.js"></script>
