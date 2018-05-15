@@ -32,6 +32,7 @@ class TeamPresenter extends BaseAdminPresenter
         'slug' => 'Detail na webu',
         'name' => 'Název',
         'slug' => 'Slug',
+        'abbr' => 'Zkratka',
         'trainer_name' => 'Trenér',
         'dress_color' => 'Barva dresu',
         'dress_color_secondary' => 'Sekundární barva'
@@ -108,6 +109,7 @@ class TeamPresenter extends BaseAdminPresenter
         // Name && slug
         $this->addTeamInfoEditableText($g, 'name', 'name');
         $this->addTeamInfoEditableText($g, 'slug', 'slug');
+        $this->addTeamInfoEditableText($g, 'abbr', 'abbr');
 
         // Treiner name
         $this->addTeamInfoEditableText($g, 'trainerName', 'trainer_name');
