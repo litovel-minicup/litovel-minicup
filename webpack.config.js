@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 
 module.exports = {
     entry: [path.resolve(__dirname, 'www/assets/vue/main.js')],
@@ -30,7 +32,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
+                test: /\.(png|jpg|gif|svg|woff|woff2|eot|ttf)$/,
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]?[hash]'
@@ -38,7 +40,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+                use: ['style-loader', 'css-loader', 'sass-loader'],
 
                 // postcss: {},
             },
@@ -73,15 +75,15 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
+        new UglifyJSPlugin({
             sourceMap: true,
-            minimize: true,
+            /*minimize: true,
             compress: {
                 warnings: false
             },
             output: {
                 comments: false
-            }
+            }*/
         }),
     ])
 }
