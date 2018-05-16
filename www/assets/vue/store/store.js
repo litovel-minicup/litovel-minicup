@@ -16,6 +16,7 @@ const store = new Vuex.Store({
         match_id: 0,
         match: {
             score: [0, 0],
+            id: 0,
         },
         events: [],
     },

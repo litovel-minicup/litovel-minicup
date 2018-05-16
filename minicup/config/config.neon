@@ -1,5 +1,5 @@
 parameters:
-    liveServiceUrl: Nette\Http\Url('wss://localhost:8888/ws/broadcast')
+    liveServiceUrl: Nette\Http\Url('ws://localhost:8888/ws/live')
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
     tournamentStart: "2018-06-08 12:30:00"

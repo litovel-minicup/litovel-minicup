@@ -32,6 +32,7 @@ export default {
     },
     SOCKET_ONERROR(state, event) {
         state.socket.isConnected = false;
+
     },
     // default handler called for all methods
     SOCKET_ONMESSAGE(state, data) {

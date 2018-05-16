@@ -1,7 +1,7 @@
 <template>
     <div>
         <transition name="load">
-            <template v-if="match.id && events">
+            <template v-if="match.id">
                 <div>
                     <match-header
                             :home-team-url="homeTeamUrl"
@@ -20,7 +20,7 @@
         </transition>
 
         <vue-loading
-                v-if="!(match.id && events)"
+                v-if="!match.id"
                 type="spin" color="#0e5eff"
                 :size="{ width: '100px', height: '100px' }"
         ></vue-loading>
@@ -32,6 +32,7 @@
     import FacebookVideo from './components/FacebookVideo'
     import EventList from './components/EventList'
     import VueLoading from 'vue-loading-template'
+    import {mapState} from 'vuex'
 
 
     export default {
@@ -46,33 +47,57 @@
             return {
                 homeTeamUrl: '',
                 awayTeamUrl: '',
+                matchId: 0
             }
         },
         computed: {
-            facebookVideoId() {
-                return this.$store.state.match.facebook_video_id
+            ...mapState({
+                facebookVideoId: state => state.match.facebook_video_id,
+                match: 'match',
+                events: 'events'
+            }),
+            fallbackReloadInterval() {
+                // if match is playing, reload interval is 30 reconnect counts, else 60
+                return ['half_first', 'half_second'].indexOf(this.match.state) >= 0 ? 30 : 60
+            }
+        },
+        methods: {
+            loadMatch() {
+                this.$store.dispatch('subscribe', {match: this.matchId});
+                this.$store.dispatch('loadEvents');
             },
-            // TODO: vuex map state
-            events() {
-                return this.$store.state.events
-            },
-            match() {
-                return this.$store.state.match
-            },
+            refreshFallback() {
+                this.$store.dispatch('refreshFallback');
+                this.$store.dispatch('loadEvents');
+            }
         },
         mounted() {
             const data = this.$root.$el.parentElement.dataset;
-            const matchId = data.matchId;
+            this.matchId = data.matchId;
             this.homeTeamUrl = data.homeTeamUrl;
             this.awayTeamUrl = data.awayTeamUrl;
 
-            this.$store.dispatch('subscribe', {match: matchId});
-            this.$store.dispatch('loadEvents');
-            setTimeout(() => {
-                if (!this.$store.state.socket.isConnected) {
-                    this.$store.dispatch('loadMatchFallback');
+            this.loadMatch();
+
+            // plan refresh after connection lost
+            this.$store.watch(
+                (state) => {
+                    return state.socket.isConnected;
+                },
+                (old, new_) => {
+                    // load match after connect
+                    !old && new_ && this.loadMatch();
                 }
-            }, 500); // TODO: fallback timer
+            );
+            this.$store.watch(
+                (state) => {
+                    return state.socket.reconnectionCount;
+                },
+                (old, new_) => {
+                    // use load fallback every 10 reconnect fails (include first attempt)
+                    !(new_ % this.fallbackReloadInterval) && this.refreshFallback();
+                }
+            );
         }
     }
 </script>

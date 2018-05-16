@@ -1,12 +1,9 @@
 import Vue from "vue";
 
 export default {
-    subscribe({commit, dispatch}, {match}) {
+    loadMatch({commit, dispatch}, {match}) {
         commit('setMatchId', match);
-        dispatch('sendObj', {
-            action: 'subscribe',
-            match
-        });
+        dispatch('subscribe', match);
     },
     sendObj({state, commit}, obj) {
         console.log('Socket message', obj);
@@ -16,7 +13,14 @@ export default {
             commit('pushSocketQueue', obj)
         }
     },
-    loadMatchFallback({state, commit}) {
+    subscribe({state, commit, dispatch}, {match}) {
+        commit('setMatchId', match);
+        dispatch('sendObj', {
+            action: 'subscribe',
+            match
+        });
+    },
+    refreshFallback({state, commit}) {
         Vue.http.get('/api/v1/match/detail/' + state.match_id).then(response => {
             commit('setMatch', response.body.match)
         }, response => {
