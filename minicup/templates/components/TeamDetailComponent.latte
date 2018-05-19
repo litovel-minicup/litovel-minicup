@@ -1,30 +1,12 @@
 <div class="Section">
     <div class="Article">
         <div class="Article__head Box__head">
-            <span class="Article__head__icon Box__head__icon">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                     x="0px" y="0px"
-                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
-                     xml:space="preserve">
-                <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
-                <g opacity="0.3">
-                    <g>
-                        <path fill="#231F20" d="M43.7,26.648c2.526,0,4.66,2.887,4.66,6.303c0,2.504-1.123,4.776-2.862,5.79l-1.854,1.08l-1.832-1.132
-                            c-1.685-1.041-2.772-3.293-2.772-5.738C39.039,29.535,41.174,26.648,43.7,26.648 M43.566,43.664l2.814,0.603
-                            c4.81,1.029,8.431,4.382,9.582,8.583H30.898c1.196-4.287,4.992-7.733,9.894-8.661L43.566,43.664 M43.7,23.648
-                            c-4.23,0-7.661,4.165-7.661,9.303c0,3.623,1.708,6.752,4.195,8.29c-7.264,1.374-12.732,7.34-12.732,14.493
-                            c0,0.039,0.006,0.077,0.006,0.115h31.835c0-0.038,0.006-0.076,0.006-0.115c0-7.024-5.276-12.89-12.341-14.401
-                            c2.572-1.499,4.352-4.685,4.352-8.381C51.36,27.813,47.931,23.648,43.7,23.648L43.7,23.648z"></path>
-                    </g>
-                    <path fill="#231F20" d="M33.434,40.41c0.129-0.583,0.207-1.192,0.207-1.825c0-3.875-2.586-7.016-5.776-7.016
-                        s-5.777,3.14-5.777,7.016c0,2.73,1.289,5.091,3.165,6.251c-5.479,1.036-9.602,5.534-9.602,10.929c0,0.028,0.005,0.058,0.005,0.086
-                        h8.858c-0.001-0.038-0.003-0.077-0.003-0.116C24.51,49.367,28.026,43.633,33.434,40.41z"></path>
-                </g>
-                </svg>
+            <span class="Article__head__icon Box__head__icon Box__head__icon--team">
+                {$team->i|clubLogo:"css-class"} {* TODO: styles for club logo *}
             </span>
             <h1 class="Article__head__text Box__head__text">Tým {$team->name} <span>({$team->category->name})</span>
             </h1>
-            {$team->i|clubLogo:"css-class"} {* TODO: styles for club logo *}
+            
         </div>
         <div class="Box__content Table__content Team__content">
             <table class="Table Table__detail">

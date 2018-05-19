@@ -5,6 +5,31 @@
 
 		&__icon {
 			@include flex(0 0 75px);
+
+			&--team {
+				//background: red;
+
+				@include display(flex);
+				@include align-items(center);
+				@include justify-content(center);
+
+				position: relative;
+
+				&:after {
+					content: "";
+					position: absolute;
+					width: 1px;
+					height: 49px;
+					background: #8c8c8c;
+					top: 13px;
+					right: 0;
+				}
+
+				IMG {
+					max-width: 50px;
+					max-height: 50px;
+				}
+			}
 		}
 
 		&__text {
