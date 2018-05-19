@@ -1374,19 +1374,22 @@ Header module
       .header__nav A:after {
         content: "";
         left: 0;
-        top: -100%;
+        top: 100%;
         position: absolute;
         width: 100%;
         height: 100%;
         background: #0341ba;
         z-index: -1;
         transition: top .1s ease; }
-      .header__nav A:hover, .header__nav A.active {
+      .header__nav A:hover {
         color: white;
         transition: color .5s ease; }
-        .header__nav A:hover:after, .header__nav A.active:after {
+        .header__nav A:hover:after {
           top: 0;
           transition: top .25s ease; }
+      .header__nav A.active {
+        color: #4180ff;
+        background: white; }
 
 .Article__head {
   background: #c8c8c8; }
