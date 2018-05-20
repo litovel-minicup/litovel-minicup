@@ -206,13 +206,13 @@ Header module
                     }
 
                     SPAN {
-                        text-shadow: 0 0 6px white;
+                        text-shadow: 0 0 10px white;
                     }
                 }
 
                 svg {
                     @include flex(1 1 100%);
-                    transform: scale(.9);
+                    transform: scale(.8);
 
                     &:last-of-type {
                         display: none;
