@@ -265,6 +265,7 @@ Header module
         background: $light--blue;
         width: 100%;
         overflow: auto;
+        overflow-y: hidden;
 
         @media screen and (min-width: 1000px) {
             @include justify-content(center);
