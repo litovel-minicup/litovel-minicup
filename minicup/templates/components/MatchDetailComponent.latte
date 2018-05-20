@@ -22,7 +22,7 @@
      data-home-team-url="{plink Team:detail $match->category, $match->homeTeam}"
      data-away-team-url="{plink Team:detail $match->category, $match->awayTeam}"
 >
-    <div id="app"></div>
+    <div id="match-online"></div>
 </div>
 
 <script>
@@ -30,7 +30,7 @@
         liveServiceUrl: {$liveServiceUrl}
     });
 </script>
-<script src="{$basePath}/assets/build/build.js"></script>
+<script src="{$basePath}/assets/build/MatchOnline.build.js"></script>
 
 <div class="Section" n:if="count($photos)">
     <div class="Article">

@@ -4,11 +4,14 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 
 module.exports = {
-    entry: [path.resolve(__dirname, 'www/assets/vue/main.js')],
+    entry: {
+        MatchOnline: path.resolve(__dirname, 'www/assets/vue/MatchOnline/main.js'),
+        CategoryOnline: path.resolve(__dirname, 'www/assets/vue/CategoryOnline/main.js'),
+    },
     output: {
         path: path.resolve(__dirname, 'www/assets/build/'),
         publicPath: '/assets/build/',
-        filename: 'build.js'
+        filename: '[name].build.js'
     },
     module: {
         rules: [
