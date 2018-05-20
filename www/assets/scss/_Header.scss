@@ -104,7 +104,7 @@ Header module
             }
 
             @media screen and (max-width: 340px) {
-                left: -80px;
+                left: -175px;
                 transform: rotate(-10deg);
                 top: 50px;
             }
@@ -167,13 +167,70 @@ Header module
         &__toggle {
             margin-left: auto;
             font-weight: 600;
-            @include display(flex);
-            @include align-self(stretch);
             
+            @include display(flex);
+            //@include align-self(stretch);
+
             @media screen and (max-width: 380px) {
-                @include flex-wrap(wrap);
+                max-width: 140px;
             }
 
+            A {
+                @include display(flex);
+                @include flex-wrap(wrap);
+                //@include align-items(center);
+
+                text-transform: uppercase;
+                color: white;
+                opacity: .35;
+                transition: opacity .15s ease;
+                font-size: .8em;
+
+                &:hover {
+                    opacity: .75;
+                    transition: opacity .35s ease;
+                }
+
+                &.header__top__toggle--active {
+                    opacity: 1;
+
+                    svg {
+                        &:first-of-type {
+                            display: none;
+                        }
+                        &:last-of-type {
+                            display: block;
+                            -webkit-filter: drop-shadow(0 0 3px white);
+                            filter: drop-shadow(0 0 3px white);
+                        }
+                    }
+
+                    SPAN {
+                        text-shadow: 0 0 6px white;
+                    }
+                }
+
+                svg {
+                    @include flex(1 1 100%);
+                    transform: scale(.9);
+
+                    &:last-of-type {
+                        display: none;
+                    }
+                }
+
+                SPAN {
+                    display: block;
+                    margin: 15px auto 0 auto;
+                }
+
+                @media screen and (max-width: 380px) {
+                    @include justify-content(center);
+                    @include flex(1 1 100%);
+                }
+            }
+
+            /*
             A {
                 @include display(flex);
                 @include align-items(center);
@@ -220,7 +277,7 @@ Header module
                 &:hover SPAN {
                     color: $dark--blue!important;
                 }
-            }            
+            }   */         
         }
 
         &__logo {
