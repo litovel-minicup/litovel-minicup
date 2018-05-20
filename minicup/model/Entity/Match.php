@@ -28,12 +28,17 @@ class Match extends BaseEntity
 
     const INIT_ONLINE_STATE = 'init';
     const END_ONLINE_STATE = 'end';
+    const HALF_FIRST_ONLINE_STATE = 'half_first';
+    const HALF_SECOND_ONLINE_STATE = 'half_second';
+    const PAUSE_ONLINE_STATE = 'pause';
+
+    const ONLINE_STATE_PLAYING = [self::HALF_FIRST_ONLINE_STATE, self::PAUSE_ONLINE_STATE, self::HALF_SECOND_ONLINE_STATE];
 
     const ONLINE_STATE_CHOICES = [
         self::INIT_ONLINE_STATE => 'před zápasem',
-        'half_first' => '1. poločas',
-        'pause' => 'přestávka',
-        'half_second' => '2. poločas',
+        self::HALF_FIRST_ONLINE_STATE => '1. poločas',
+        self::PAUSE_ONLINE_STATE => 'přestávka',
+        self::HALF_SECOND_ONLINE_STATE => '2. poločas',
         self::END_ONLINE_STATE => 'po zápase'
     ];
 
@@ -165,7 +170,9 @@ class Match extends BaseEntity
             'confirmed' => $this->confirmed ? $this->confirmed->getTimestamp() : NULL,
             'half_length' => \DateInterval::createFromDateString(self::HALF_LENGTH)->s,
             'state' => $this->onlineState,
-            'facebook_video_id' => $this->facebookVideoId
+            'facebook_video_id' => $this->facebookVideoId,
+            'match_term_start' => $this->matchTerm->day->day->setTime(0, 0)->getTimestamp() +
+                $this->matchTerm->start->setDate(0, 0, 0)->getTimestamp()
         ];
     }
 }

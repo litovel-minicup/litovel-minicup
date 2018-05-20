@@ -7,7 +7,7 @@ import store from './store/store'
 installWebSocket(store);
 
 const app = new Vue({
-    el: '#category-online',
+    el: '#match-online',
     render: h => h(App),
     store,
 });

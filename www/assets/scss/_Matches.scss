@@ -99,10 +99,14 @@
     th:nth-of-type(5) {
       width: 10%;
     }
+    th:nth-of-type(6) {
+      width: 12.5%;
+    }
   }
 
   TBODY {
-    TD:nth-of-type(1), td:nth-of-type(3) {
+    TD:nth-of-type(1), td:nth-of-type(3),
+    td:nth-of-type(6) {
       font-weight: 600;
       text-align: left;
       padding-left: 20px;
@@ -224,11 +228,18 @@
 }
 
 @media screen and (max-width: 480px) {
-  .Table__standings thead th:nth-child(n+6), .Table__standings tbody tr td:nth-child(n+6) {
+  .Table__standings thead th:nth-child(n+6),
+  .Table__standings tbody tr td:nth-child(n+6) {
     display: none;
   }
 
-  .Table__matches thead th:nth-child(n+4), .Table__matches tbody tr td:nth-child(n+4) {
+  .Table__matches thead th:nth-child(5),
+  .Table__matches thead th:nth-child(n+6) {
+    display: none;
+  }
+  .Table__matches tbody tr td:nth-child(5),
+  .Table__matches tbody tr td:nth-child(n+6) {
+
     display: none;
   }
 

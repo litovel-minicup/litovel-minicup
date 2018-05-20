@@ -112,10 +112,6 @@
           height: 40px;
           vertical-align: top;
         }
-
-        &[onclick] {
-          cursor: pointer;
-        }
       }
 
       td {
@@ -134,9 +130,12 @@
         &:nth-of-type(2) {
           width: 20%;
           background: $medium--yellow;
-          color: white;
-          text-align: center;
           font-family: "Montserrat";
+          text-align: center;
+          A {
+            display: block;
+            color: white;
+          }
         }
       }
     }

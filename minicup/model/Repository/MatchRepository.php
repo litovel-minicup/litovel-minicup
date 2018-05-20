@@ -57,19 +57,43 @@ class MatchRepository extends BaseRepository
      * @param Category $category
      * @param int      $limit
      * @return Match[]
+     * @throws \Dibi\Exception
      */
     public function getCurrentMatches(Category $category, $limit = 0)
     {
-        $fluent = $this->createCategoryFluent($category, $limit);
         $dt = new DateTime();
         $date = clone $dt;
         $time = clone $dt;
         $date->setTime(0, 0, 0);
         $time->setDate(0, 0, 0);
-        $fluent = $fluent
-            ->where('[mt.start] < %s AND [mt.end] > %s', $time->format('H:i:s'), $time->format('H:i:s'))
-            ->where('[d.day] = %s', $date->format('Y-m-d'));
-        return $this->createEntities($fluent->fetchAll());
+
+        return $this->createEntities($this->connection->query('
+            SELECT DISTINCT `match`.*
+            FROM `match`
+              LEFT JOIN `match_term` AS `mt` ON `match`.`match_term_id` = mt.`id`
+              LEFT JOIN `day` AS `d` ON d.`id` = mt.`day_id`
+            WHERE
+              `match`.`category_id` = %i
+              AND
+              `d`.`day` = %s
+              AND
+              (
+                (`mt`.`start` < %s AND `mt`.`end` > %s)
+                OR
+                `online_state` IN %in
+              )
+            
+            ORDER BY d.`day` ASC, mt.`start` ASC, `match`.`id` ASC
+            LIMIT %i
+            ',
+            $category->id,
+            $date->format('Y-m-d'),
+            $time->format('H:i:s'),
+            $time->format('H:i:s'),
+            Match::ONLINE_STATE_PLAYING,
+            $limit
+        )->fetchAll()
+        );
     }
 
     /**

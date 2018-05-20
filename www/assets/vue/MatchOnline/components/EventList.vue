@@ -28,14 +28,16 @@
                 class="MatchDetail__action__time"
                 v-if="match.confirmed && !events.length"
                 :key="0"
-        >zápas bez živého přenosu</li>
+        >zápas bez živého přenosu
+        </li>
 
         <!-- State before match. -->
         <li
                 class="MatchDetail__action__time"
                 v-if="!match.confirmed && !events.length"
                 :key="0"
-        >před začátkem zápasu</li>
+        >před začátkem zápasu v {{ matchStart }}
+        </li>
     </transition-group>
 </template>
 
@@ -49,6 +51,14 @@
             eventList() {
                 const events = _.sortBy(this.events, ['half_index'], ['time_offset']);
                 return this.match.confirmed ? events : events.reverse();
+            },
+            matchStart() {
+                const start = new Date(this.match.match_term_start * 1000);
+                // TODO: add date
+                return `${start.getHours().pad(2)}:${start.getMinutes().pad(2)}`;/* + (
+                    start.getDate() === new Date().getDate() ?
+                    '' : ` ${start.getDay()}.${start.getMonth()}.`
+                );*/
             }
         },
         filters: {

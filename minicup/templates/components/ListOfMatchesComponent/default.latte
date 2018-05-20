@@ -7,6 +7,8 @@
             <th>Hostující tým</th>
             <th>Začátek</th>
             <th>Datum</th>
+            <th></th>
+            {*<th>Umístění</th>*}
         </tr>
         </thead>
         <tbody>
@@ -14,33 +16,68 @@
             {if isset($team)}
                 {if $team->id == $match->homeTeam->id}
                     {*is home*}
-                    <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
-                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
-                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
-                        <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
-                                    href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
+                    <tr n:class="$match->isDraw() ? 'Table__matches--draw',
+                                $match->isWinner($team) ? 'Table__matches--win',
+                                $match->isLoser($team) ? 'Table__matches--loss'">
+                        <td>
+                            <a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->homeTeam}">
+                                {$match->homeTeam->name}
+                            </a>
                         </td>
-                        <td>{$match->scoreHome} : {$match->scoreAway}</td>
-                        <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
-                                    href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                {$match->scoreHome} : {$match->scoreAway}
+                            </a>
                         </td>
-                        <td>{$match->matchTerm|matchStart}</td>
-                        <td>{$match->matchTerm|matchDate}</td>
+                        <td>
+                            <a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
+                                    href="{plink Team:detail $match->category, $match->awayTeam}">
+                                {$match->awayTeam->name}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                {$match->matchTerm|matchStart}
+                            </a>
+                        </td>
+                        <td>
+                            {$match->matchTerm|matchDate}
+                        </td>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                detail
+                            </a>
+                        </td>
+                        {*<td>{$match->matchTerm->location}</td>*}
                     </tr>
                 {else}
                     {*is away*}
-                    <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
-                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
-                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
+                    <tr n:class="$match->isDraw() ? 'Table__matches--draw',
+                                $match->isWinner($team) ? 'Table__matches--win',
+                                $match->isLoser($team) ? 'Table__matches--loss'">
                         <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
                                     href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
                         </td>
-                        <td>{$match->scoreAway} : {$match->scoreHome}</td>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                {$match->scoreHome} : {$match->scoreAway}
+                            </a>
+                        </td>
                         <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
                                     href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
                         </td>
-                        <td>{$match->matchTerm|matchStart}</td>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                {$match->matchTerm|matchStart}
+                            </a>
+                        </td>
                         <td>{$match->matchTerm|matchDate}</td>
+                        <td>
+                            <a href="{plink Match:detail $match}">
+                                detail
+                            </a>
+                        </td>
                     </tr>
                 {/if}
             {else}
@@ -51,12 +88,21 @@
                     <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
                                 href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
                     </td>
-                    <td>{$match->scoreHome} : {$match->scoreAway}</td>
+                    <td>
+                        <a href="{plink Match:detail $match}">
+                            {$match->scoreHome} : {$match->scoreAway}
+                        </a>
+                    </td>
                     <td><a n:tag-if="!isset($team) || $match->awayTeam->id != $team->id"
                                 href="{plink Team:detail $match->category, $match->awayTeam}">{$match->awayTeam->name}</a>
                     </td>
                     <td>{$match->matchTerm|matchStart}</td>
                     <td>{$match->matchTerm|matchDate}</td>
+                    <td>
+                        <a href="{plink Match:detail $match}">
+                            detail
+                        </a>
+                    </td>
                 </tr>
             {/if}
         {/foreach}
