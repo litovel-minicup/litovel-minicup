@@ -23,6 +23,19 @@
                 <li class="MatchDetail__action__time" :key="event.id">{{ event | eventMessage }}</li>
             </template>
         </template>
+        <!-- Matches without live. -->
+        <li
+                class="MatchDetail__action__time"
+                v-if="match.confirmed && !events.length"
+                :key="0"
+        >zápas bez živého přenosu</li>
+
+        <!-- State before match. -->
+        <li
+                class="MatchDetail__action__time"
+                v-if="!match.confirmed && !events.length"
+                :key="0"
+        >před začátkem zápasu</li>
     </transition-group>
 </template>
 
@@ -51,7 +64,7 @@
                     event.type === 'end' && event.half_index === 1
                 ) ? 'zápasu' : `${event.half_index + 1}. poločasu`;
 
-                return `${{end: 'Konec', start: 'Začátek'}[event.type]} ${msg}`;
+                return `${{end: 'konec', start: 'začátek'}[event.type]} ${msg}`;
             },
         }
     }

@@ -56,7 +56,7 @@
             <a n:href="Homepage:default" n:class="$presenter->isLinkCurrent() ? active">novinky</a>
             <a n:href="Match:online" n:class="$presenter->isLinkCurrent() ? active">živě</a>
             <a n:href="Match:default" n:class="
-                $presenter->isLinkCurrent() || $presenter->isLinkCurrent(':detail') ? active
+                $presenter->isLinkCurrent() || $presenter->isLinkCurrent('Match:detail') ? active
             ">zápasy</a>
             <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
             <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>

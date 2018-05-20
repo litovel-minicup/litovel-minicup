@@ -1,14 +1,17 @@
 <div class="component">
     <table class="Aside__table Aside__table--upcoming">
         <tbody n:inner-foreach="$matches as $match">
-        <tr>
+        {* TODO: fix clickable row *}
+        <tr onclick="window.location = {plink Match:detail $match};">
             <td><a href={plink Team:detail $match->category, $match->homeTeam}>{$match->homeTeam->name}</a></td>
             <td>
-                {if $match->confirmed}
+
+                {if $match->hasStarted()}
                     {$match->scoreHome}:{$match->scoreAway}
                 {else}
                     {$match->matchTerm|matchStart}
                 {/if}
+
             </td>
             <td><a href={plink Team:detail $match->category, $match->awayTeam}>{$match->awayTeam->name}</a></td>
         </tr>

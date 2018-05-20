@@ -1919,6 +1919,8 @@ Header module
     .Aside__table--upcoming tr:last-of-type td {
       height: 40px;
       vertical-align: top; }
+    .Aside__table--upcoming tr[onclick] {
+      cursor: pointer; }
     .Aside__table--upcoming td {
       padding: 3px 15px !important;
       vertical-align: middle; }
@@ -2398,7 +2400,8 @@ Header module
   flex: 1 0 auto;
   margin: 5px;
   position: relative;
-  height: auto; }
+  height: auto;
+  max-width: 300px; }
   .Photo__item IMG {
     position: absolute;
     width: 100%;

@@ -112,6 +112,10 @@
           height: 40px;
           vertical-align: top;
         }
+
+        &[onclick] {
+          cursor: pointer;
+        }
       }
 
       td {

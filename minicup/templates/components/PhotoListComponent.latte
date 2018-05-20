@@ -3,9 +3,9 @@
         {first 3}
             <div class="Photo__row">
         {/first}
-        <a href="{plink :Media:medium $photo->filename}?2017" data-id="{$photo->id}"
+        <a href="{$mediaRoot}{plink :Media:medium $photo->filename}?2018" data-id="{$photo->id}"
            title="{$iterator->counter}. z {$photos|length}" class="swipebox Photo__item">
-            <img src="{$basePath}/assets/sample_thumb.png" alt="Foto">
+            <img src="{$mediaRoot}{plink :Media:thumb $photo->filename}?2018" alt="Foto">
         </a>
         {last 3}
             </div>

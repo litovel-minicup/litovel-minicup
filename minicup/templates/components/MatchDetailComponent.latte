@@ -31,3 +31,15 @@
     });
 </script>
 <script src="{$basePath}/assets/build/build.js"></script>
+
+<div class="Section" n:if="count($photos)">
+    <div class="Article">
+        <div class="Article__head Box__head">
+                <span class="Article__head__icon Box__head__icon">
+                    {include "../@icons/photos.svg"}
+                </span>
+            <h2 class="Article__head__text Box__head__text">Fotografie</h2>
+        </div>
+        {control photoListComponent}
+    </div>
+</div>

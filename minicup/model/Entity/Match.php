@@ -120,6 +120,15 @@ class Match extends BaseEntity
     }
 
     /**
+     * Returns true, if match has started or already has end.
+     * @return bool
+     */
+    public function hasStarted()
+    {
+        return $this->onlineState && $this->onlineState != self::INIT_ONLINE_STATE;
+    }
+
+    /**
      * Returns index of half, counted from 0.
      * @return int|NULL
      */

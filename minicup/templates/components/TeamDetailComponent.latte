@@ -2,11 +2,11 @@
     <div class="Article">
         <div class="Article__head Box__head">
             <span class="Article__head__icon Box__head__icon Box__head__icon--team">
-                {$team->i|clubLogo:"css-class"} {* TODO: styles for club logo *}
+                {$team->i|clubLogo}
             </span>
             <h1 class="Article__head__text Box__head__text">Tým {$team->name} <span>({$team->category->name})</span>
             </h1>
-            
+
         </div>
         <div class="Box__content Table__content Team__content">
             <table class="Table Table__detail">
@@ -197,26 +197,7 @@
         <div class="Article">
             <div class="Article__head Box__head">
                 <span class="Article__head__icon Box__head__icon">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                         x="0px" y="0px"
-                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
-                         xml:space="preserve">
-                    <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
-                    <g>
-                        <path opacity="0.3" fill="#231F20" d="M54.922,55.942H31.528c-1.442,0-2.616-1.174-2.616-2.616V29.933
-                            c0-1.443,1.173-2.617,2.616-2.617h23.394c1.442,0,2.616,1.173,2.616,2.617v23.393C57.538,54.769,56.364,55.942,54.922,55.942z
-                             M31.528,29.871c-0.034,0-0.062,0.028-0.062,0.062v23.393c0,0.034,0.028,0.062,0.062,0.062h23.394c0.034,0,0.062-0.028,0.062-0.062
-                            V29.933c0-0.035-0.028-0.062-0.062-0.062H31.528z"></path>
-                        <g opacity="0.3">
-                            <path fill="#231F20" d="M20.057,29.497l22.026-7.881c0.031-0.012,0.067,0.004,0.079,0.038l0.981,2.74h2.712l-1.288-3.601
-                                c-0.486-1.359-1.987-2.068-3.346-1.583l-22.025,7.881c-1.358,0.486-2.068,1.986-1.582,3.345l7.836,21.898v-7.579L20.02,29.577
-                                C20.008,29.544,20.024,29.508,20.057,29.497z"></path>
-                        </g>
-                        <polygon opacity="0.3" fill="#231F20"
-                                 points="34.921,49.508 50.883,49.508 46.732,41.314 43.967,46.422 38.114,36.418     "></polygon>
-                        <circle opacity="0.3" fill="#231F20" cx="48.116" cy="35.567" r="2.979"></circle>
-                    </g>
-                    </svg>
+                    {include "../@icons/photos.svg"}
                 </span>
                 <h2 class="Article__head__text Box__head__text">Fotografie</h2>
             </div>
