@@ -91,7 +91,10 @@ class TeamPresenter extends BaseAdminPresenter
 
         $f = $connection->select('[ti].*')
             ->from('[team_info]')->as('ti')
-            ->where('ti.[category_id] = ', $this->getParameter('category')->id);
+            ->where('ti.[category_id] = ', $this->getParameter('category')->id)
+            ->select('COUNT([photo_tag.photo_id]) as photo_count')
+            ->leftJoin('[photo_tag]')->on('[photo_tag.tag_id] = [ti.tag_id]')
+            ->groupBy('[ti.id]');
 
         $g->setModel($f);
         $g->addColumnNumber('id', $this::TEAM_INFO_GRID_LABELS['id']);
@@ -122,6 +125,8 @@ class TeamPresenter extends BaseAdminPresenter
         $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Primární barva do');
         $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sekundární barva od');
         $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sekundární barva do');
+
+        $g->addColumnNumber('photo_count', 'Počet fotek');
 
         return $g;
     }

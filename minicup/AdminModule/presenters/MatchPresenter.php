@@ -61,6 +61,7 @@ final class MatchPresenter extends BaseAdminPresenter
     /**
      * @param string $name
      * @return Grid
+     * @throws \Grido\Exception
      */
     public function createComponentMatchesGridComponent($name)
     {
