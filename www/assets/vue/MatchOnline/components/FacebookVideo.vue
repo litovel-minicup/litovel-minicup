@@ -8,17 +8,27 @@
                 Házená Velké Meziříčí TJ SOKOL Břve - ženy
             </p>
             Zveřejnil(a) <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a> -->
+            <vue-loading
+                    type="spin" color="#0e5eff"
+                    :size="{ width: '100px', height: '100px' }"
+            ></vue-loading>
         </blockquote>
     </div>
 </template>
 
 <script>
+
+    import VueLoading from 'vue-loading-template'
+
     export default {
         name: "FacebookVideo",
+        components: {
+            VueLoading,
+        },
         props: ['facebookVideoId'],
         computed: {
             videoLink() {
-                return 'https://www.facebook.com/litovel.minicup/videos/' + this.facebookVideoId + '/';
+                return `https://www.facebook.com/litovel.minicup/videos/${this.facebookVideoId}/`;
             }
         }
     }

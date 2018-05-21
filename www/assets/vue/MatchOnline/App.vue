@@ -7,14 +7,14 @@
                             :home-team-url="homeTeamUrl"
                             :away-team-url="awayTeamUrl"
                     ></match-header>
-                    <event-list
-                            :events="events"
-                            :match="match"
-                    ></event-list>
                     <facebook-video
                             v-if="facebookVideoId"
                             :facebook-video-id="facebookVideoId"
                     ></facebook-video>
+                    <event-list
+                            :events="events"
+                            :match="match"
+                    ></event-list>
                 </div>
             </template>
         </transition>
