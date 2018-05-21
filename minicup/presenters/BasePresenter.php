@@ -149,13 +149,17 @@ abstract class BasePresenter extends Presenter
         }
     }
 
-    /** @return CssLoader */
+    /** @return CssLoader
+     * @throws \WebLoader\InvalidArgumentException
+     */
     protected function createComponentCss()
     {
         return $this->CSSCF->create($this->module);
     }
 
-    /** @return JavaScriptLoader */
+    /** @return JavaScriptLoader
+     * @throws \WebLoader\InvalidArgumentException
+     */
     protected function createComponentJs()
     {
         return $this->JSCF->create($this->module);

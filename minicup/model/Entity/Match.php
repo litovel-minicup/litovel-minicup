@@ -44,6 +44,14 @@ class Match extends BaseEntity
 
     public static $CACHE_TAG = 'match';
 
+    public function getCacheTags()
+    {
+        return [
+            $this->homeTeam->tag ? $this->homeTeam->tag->getCacheTag() : NULL,
+            $this->awayTeam->tag ? $this->awayTeam->tag->getCacheTag() : NULL,
+        ];
+    }
+
     /**
      * @return int|string
      * @throws \LeanMapper\Exception\InvalidStateException

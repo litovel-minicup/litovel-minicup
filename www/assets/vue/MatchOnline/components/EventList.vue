@@ -28,7 +28,7 @@
                 class="MatchDetail__action__time"
                 v-if="match.confirmed && !events.length"
                 :key="0"
-        >zápas bez živého přenosu
+        >zápas bez textového přenosu
         </li>
 
         <!-- State before match. -->

@@ -83,7 +83,7 @@ class MatchRepository extends BaseRepository
                 `online_state` IN %in
               )
             
-            ORDER BY d.`day` ASC, mt.`start` ASC, `match`.`id` ASC
+            ORDER BY d.`day` ASC, mt.`start` ASC, `mt`.`location` ASC, `match`.`id` ASC 
             LIMIT %i
             ',
             $category->id,

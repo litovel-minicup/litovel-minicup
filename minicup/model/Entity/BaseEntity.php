@@ -20,6 +20,14 @@ abstract class BaseEntity extends Entity
         return $this::$CACHE_TAG . $this::CACHE_GLUE . $this->id . ($postfix ? $this::CACHE_GLUE . $postfix : '');
     }
 
+    /**
+     * @return array
+     */
+    public function getCacheTags()
+    {
+        return [];
+    }
+
     public function cleanCache()
     {
         $this->row->cleanReferencedRowsCache();

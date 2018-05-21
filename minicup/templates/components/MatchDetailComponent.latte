@@ -23,7 +23,7 @@
 </script>
 <script src="{$basePath}/assets/build/MatchOnline.build.js"></script>
 
-<div class="Section" n:if="count($photos)">
+<div class="Section" n:if="count($photos())" n:cache="$match->cacheTag, tags => $match->cacheTags">
     <div class="Article">
         <div class="Article__head Box__head">
                 <span class="Article__head__icon Box__head__icon">
