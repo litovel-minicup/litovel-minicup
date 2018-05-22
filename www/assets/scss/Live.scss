@@ -1,4 +1,4 @@
-@keyframes example {
+@keyframes blink {
     from {opacity: 1}
     to {opacity: 0}
 }
@@ -18,6 +18,8 @@
 			}
 		}
 
+
+		margin-bottom: 10px;
 		& > DIV {
 			@include flex(1 1 50%);
 			padding: 20px;
@@ -122,8 +124,8 @@
 
 				SPAN {
 					&:last-of-type {
-				 		animation-name: example;
-    					animation-duration: 1.5s;
+				 		animation-name: blink;
+    					animation-duration: 2s;
     					animation-iteration-count: infinite;
 
 						margin-left: auto;
@@ -143,12 +145,14 @@
 	NAV {
 		//background: red;
 		margin-top: 5px;
+		margin-right: -5px;
 
 		@include display(flex);
 
 		@media screen and (max-width: 600px) {
 			@include flex-wrap(wrap);
 		}
+
 
 		A {
 			@include display(flex);
@@ -167,10 +171,6 @@
 			background: $medium--grey;
 			
 			padding: 20px;
-			
-			&:nth-of-type(n+3) {
-				margin-right: 0;
-			}
 
 			&:hover {
 				SPAN {

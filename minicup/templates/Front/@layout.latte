@@ -63,7 +63,7 @@
             <!--<a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a>-->
             <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">fotogalerie</a>
             <!--<a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a>-->
-            
+
         </nav>
     </header>
     <!-- main class -->
@@ -149,4 +149,10 @@
 {block head}
     {include parent}
     {control js}
+
+    <script>
+        window.config = $.extend(window.config || {}, {
+            liveServiceUrl: {$liveServiceUrl}
+        });
+    </script>
 {/block}

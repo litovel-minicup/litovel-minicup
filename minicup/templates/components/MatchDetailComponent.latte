@@ -16,11 +16,7 @@
     <div id="match-online"></div>
 </div>
 
-<script>
-    window.config = $.extend(window.config || {}, {
-        liveServiceUrl: {$liveServiceUrl}
-    });
-</script>
+
 <script src="{$basePath}/assets/build/MatchOnline.build.js"></script>
 
 <div class="Section" n:if="count($photos())" n:cache="$match->cacheTag, tags => $match->cacheTags">

@@ -165,9 +165,13 @@ class Match extends BaseEntity
     {
         return [
             'id' => $this->id,
+            'home_team_abbr' => $this->homeTeam->abbr,
+            'home_team_slug' => $this->homeTeam->slug,
             'home_team_name' => $this->homeTeam->name,
             'home_team_id' => $this->homeTeam->id,
             'away_team_name' => $this->awayTeam->name,
+            'away_team_abbr' => $this->awayTeam->abbr,
+            'away_team_slug' => $this->awayTeam->slug,
             'away_team_id' => $this->awayTeam->id,
             'home_team_color' => '#ff8574',
             'away_team_color' => '#88dd12',

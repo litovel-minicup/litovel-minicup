@@ -5,7 +5,6 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Repository\PhotoRepository;
-use Nette\Http\Url;
 
 interface IMatchDetailComponentFactory
 {
@@ -24,8 +23,6 @@ class MatchDetailComponent extends BaseComponent
     private $PLCF;
     /** @var callable */
     private $photos;
-    /** @var Url */
-    public $liveServiceUrl;
 
     /**
      * MatchDetailComponent constructor.
@@ -44,7 +41,7 @@ class MatchDetailComponent extends BaseComponent
         $this->PLCF = $PLCF;
         $this->photos = function () use ($match, $PR) {
             static $photos;
-            if ($photos == NULL)
+            if ($photos === NULL)
                 $photos = $PR->findForMatch($match);
             return $photos;
         };
@@ -55,7 +52,6 @@ class MatchDetailComponent extends BaseComponent
     {
         $this->template->match = $this->match;
         $this->template->photos = $this->photos;
-        $this->template->liveServiceUrl = $this->liveServiceUrl;
         parent::render();
     }
 

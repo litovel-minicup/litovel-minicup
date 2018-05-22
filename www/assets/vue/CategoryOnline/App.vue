@@ -1,29 +1,40 @@
 <template>
     <div>
-        Online!
+        <category-online></category-online>
     </div>
 </template>
 
 <script>
+    import CategoryOnline from "./components/CategoryOnline";
+    import {mapActions, mapMutations} from 'vuex';
+
     export default {
         name: "App",
+        components: {
+            CategoryOnline
+        },
         data() {
             return {
-                homeTeamUrl: '',
-                awayTeamUrl: '',
-                matchId: 0
+                categoryId: 0
             }
         },
-        computed: {},
-        methods: {},
+        computed: {
+            category() {
+                return this.categoryId;
+            },
+        },
+
+        methods: {
+            ...mapActions(['subscribe']),
+            ...mapMutations(['setBaseLogosPath'])
+        },
         mounted() {
             const data = this.$root.$el.parentElement.dataset;
-            this.matchId = data.matchId;
-            this.homeTeamUrl = data.homeTeamUrl;
-            this.awayTeamUrl = data.awayTeamUrl;
+            this.categoryId = Number(data.categoryId);
 
-
-        }
+            this.setBaseLogosPath(data.baseLogosPath);
+            this.subscribe(this.categoryId);
+        },
     }
 </script>
 

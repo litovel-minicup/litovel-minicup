@@ -28,6 +28,9 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
+	Minicup\FrontModule\Presenters\BaseFrontPresenter:
+		setup:
+			- $liveServiceUrl = %liveServiceUrl%
 
 leanMapper: %connection%
 
@@ -156,8 +159,6 @@ services:
     - implement: Minicup\Components\IMatchDetailComponentFactory
       parameters: [Minicup\Model\Entity\Match match]
       arguments: [%match%]
-      setup:
-            - $liveServiceUrl = %liveServiceUrl%
     - implement: Minicup\Components\ICategoryOnlineComponentFactory
       parameters: [Minicup\Model\Entity\Category category]
       arguments: [%category%]

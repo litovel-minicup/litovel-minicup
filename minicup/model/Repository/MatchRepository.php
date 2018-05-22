@@ -109,7 +109,8 @@ class MatchRepository extends BaseRepository
         $dt = new DateTime();
         $fluent = $fluent
             ->where('TIMESTAMP([mt.start]) + TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
-            ->where('[confirmed] IS NULL');
+            ->where('[confirmed] IS NULL')
+            ->where('[online_state] NOT IN %l', Match::ONLINE_STATE_PLAYING);
         return $this->createEntities($fluent->fetchAll());
     }
 
