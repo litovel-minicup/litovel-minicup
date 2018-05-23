@@ -78,8 +78,8 @@ class MatchRepository extends BaseRepository
               `d`.`day` = %s
               AND
               (
-                (`mt`.`start` < %s AND `mt`.`end` > %s)
-                OR
+               (`mt`.`start` < %s AND `mt`.`end` > %s)
+               OR
                 `online_state` IN %in
               )
             
@@ -96,21 +96,21 @@ class MatchRepository extends BaseRepository
         );
     }
 
+
     /**
-     * TODO: remove actual playing matches from select
-     *
      * @param Category $category
      * @param int      $limit
      * @return Match[]
      */
-    public function getNextMatches(Category $category, $limit = 0)
+    public function findNextMatches(Category $category, $limit = 0)
     {
         $fluent = $this->createCategoryFluent($category, $limit);
         $dt = new DateTime();
         $fluent = $fluent
             ->where('TIMESTAMP([mt.start]) + TIMESTAMP([d.day]) > %i', $dt->getTimestamp())
             ->where('[confirmed] IS NULL')
-            ->where('[online_state] NOT IN %l', Match::ONLINE_STATE_PLAYING);
+            ->where('[online_state] NOT IN %l', Match::ONLINE_STATE_PLAYING)
+            ->where('[online_state] != %s', Match::END_ONLINE_STATE);
         return $this->createEntities($fluent->fetchAll());
     }
 
@@ -119,7 +119,7 @@ class MatchRepository extends BaseRepository
      * @param int      $limit
      * @return Match[]
      */
-    public function getLastMatches(Category $category, $limit = 0)
+    public function findLastMatches(Category $category, $limit = 0): array
     {
         $fluent = $this
             ->createCategoryFluent($category, $limit, BaseRepository::ORDER_DESC)
@@ -136,7 +136,7 @@ class MatchRepository extends BaseRepository
      * @param bool|null $confirmed
      * @return Match|NULL
      */
-    public function getCommonMatchForTeams(Team $team1, Team $team2, ?bool $confirmed = true)
+    public function getCommonMatchForTeams(Team $team1, Team $team2, ?bool $confirmed = true): ?Match
     {
         $team1InfoId = $team1->i->id;
         $team2InfoId = $team2->i->id;
@@ -163,7 +163,7 @@ class MatchRepository extends BaseRepository
      * @param Category $category
      * @return array
      */
-    public function groupMatchesByDay(Category $category)
+    public function groupMatchesByDay(Category $category): array
     {
         $days = [];
         foreach ($category->matches as $match) {
@@ -177,7 +177,7 @@ class MatchRepository extends BaseRepository
      * @return Match[]
      * @throws \LeanMapper\Exception\InvalidStateException
      */
-    public function findMatchesConfirmedAfterMatchIncluded(Match $match)
+    public function findMatchesConfirmedAfterMatchIncluded(Match $match): array
     {
         $f = $this->connection->select('*')->from($this->getTable())
             ->where('[category_id] = ', $match->category->id)
@@ -193,7 +193,7 @@ class MatchRepository extends BaseRepository
      * @return Match|NULL
      * @throws \LeanMapper\Exception\InvalidStateException
      */
-    public function getMatchConfirmedBeforeMatchExcluded(Match $match)
+    public function getMatchConfirmedBeforeMatchExcluded(Match $match): ?Match
     {
         $row = $this->connection->select('*')
             ->from($this->getTable())
@@ -207,7 +207,7 @@ class MatchRepository extends BaseRepository
      * @param Category $category
      * @return Match|NULL
      */
-    public function getFirstMatchInCategory(Category $category)
+    public function getFirstMatchInCategory(Category $category): ?Match
     {
         $row = $this->createCategoryFluent($category)
             ->leftJoin('[match_term] ON [match_term].[id] = [match].[id]')

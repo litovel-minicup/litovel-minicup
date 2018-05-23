@@ -115,7 +115,10 @@
       }
 
       td {
-        padding: 3px 15px !important;
+        A {
+          padding: 3px 15px !important;
+          display: block;
+        }
         vertical-align: middle;
 
         &:nth-of-type(1) {

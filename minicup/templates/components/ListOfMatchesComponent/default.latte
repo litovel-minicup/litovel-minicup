@@ -82,9 +82,7 @@
                 {/if}
             {else}
                 {*not known - default*}
-                <tr n:class="isset($team) && $match->isDraw() ? 'Table__matches--draw',
-                                isset($team) && $match->isWinner($team) ? 'Table__matches--win',
-                                isset($team) && $match->isLoser($team) ? 'Table__matches--loss'">
+                <tr>
                     <td><a n:tag-if="!isset($team) || $match->homeTeam->id != $team->id"
                                 href="{plink Team:detail $match->category, $match->homeTeam}">{$match->homeTeam->name}</a>
                     </td>
