@@ -1,33 +1,34 @@
 {block content}
-    {foreach $year->categories as $category_}
-        <h4>Kategorie {$category->name}</h4>
-        <div class="row">
-            {foreach $category_->teams as $team}
-                <div class="col-md-1">
-                    <div class="panel panel-default small">
-                        <div class="panel-heading small">
-                            {$team->name}
-                        </div>
-                        <table class="table table-condensed table-striped small">
-                            {var $before = NULL}
-                            {foreach $team->i->matches as $match}
-                                {if $before && $before->matchTerm->day != $match->matchTerm->day}
-                                    {var $before = NULL}
-                                {/if}
-                                <tr n:class="$before && call_user_func($this->filters->termdiff, $match->matchTerm, $before->matchTerm) == 0?danger">
-                                    <td class="text-right">
-                                        {$match->matchTerm|matchStart}
-                                    </td>
-                                    <td class="small">{$match->getRival($team->i)->name}</td>
-                                    <td>{if $before}{$match->matchTerm|termDiff:$before->matchTerm}{/if}</td>
-                                    {var $before = $match}
-                                </tr>
-                            {/foreach}
-                        </table>
+    <h4>Kategorie {$category->name}</h4>
+    <div class="row">
+        {foreach $category->teams as $team}
+            <div class="col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {$team->name}
                     </div>
+                    <table class="table table-condensed table-striped">
+                        {var $before = NULL}
+                        {foreach $team->i->matches as $match}
+                            {if $before && $before->matchTerm->day != $match->matchTerm->day}
+                                {var $before = NULL}
+                            {/if}
+                            <tr n:class="
+                                    $before && call_user_func($this->filters->termdiff, $match->matchTerm, $before->matchTerm) == 0?danger,
+                                    $match->confirmed != NULL?success,
+                                    $match->onlineState && $match->onlineState != 'init' && $match->onlineState != 'end'?info
+                                ">
+                                <td class="text-right">
+                                    {$match->matchTerm|matchStart}
+                                </td>
+                                <td>{$match->getRival($team->i)->name}</td>
+                                <td>{if $before}{$match->matchTerm|termDiff:$before->matchTerm} h{/if}</td>
+                                {var $before = $match}
+                            </tr>
+                        {/foreach}
+                    </table>
                 </div>
-            {/foreach}
-        </div>
-        <hr>
-    {/foreach}
+            </div>
+        {/foreach}
+    </div>
 {/block}

@@ -107,6 +107,11 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnNumber('id', '#');
 
+        $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) {
+            $match = $this->MR->get($row->id, FALSE);
+            return $this->link(':Front:Match:detail', ['match' => $match]);
+        });
+
         $scoreEditCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
             /** @var Match $match */
             $match = $MR->get($id);

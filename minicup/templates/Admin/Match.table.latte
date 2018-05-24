@@ -19,6 +19,10 @@
         {foreach $teams as $team}
             <th>{$team->name}</th>
         {/foreach}
+
+        <th>skóre</th>
+        <th>body</th>
+        <th>pořadí</th>
     </tr>
     </thead>
     <tbody>
@@ -40,6 +44,10 @@
                     {/if}
                 </td>
             {/foreach}
+            {var $team = $teams[$id1]->team}
+            <td>{$team->scored}:{$team->received}</td>
+            <td>{$team->points}</td>
+            <td>{$team->order}.</td>
         </tr>
     {/foreach}
     </tbody>
@@ -73,9 +81,28 @@
         border: 1px solid black;
         vertical-align: middle;
     }
+    table {
+        border: 3px solid black;
+    }
+
+    thead tr {
+        border-bottom: 3px solid black;
+    }
+
+    tbody th, thead th:first-child {
+        border-right: 3px solid black;
+    }
 
     td, th {
         padding: 10px;
+    }
+
+    td:nth-last-child(3) {
+        border-left: 3px solid black;
+    }
+    th:nth-last-child(-n+3) {
+        font-style: italic;
+        font-weight: normal;
     }
 
     td {
