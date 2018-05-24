@@ -55,6 +55,7 @@ class JsComponentFactory
         $files->addFile('assets/js/jquery.js');
         $files->addFile('assets/js/jquery.plugin.js');
         $files->addFile('assets/js/jquery.swipebox.js');
+        $files->addFile('assets/js/nette.ajax.js');
         $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
@@ -69,7 +70,6 @@ class JsComponentFactory
             $files->addFile('assets/js/select2.js');
             $files->addFile('assets/js/dropper.js');
             $files->addFile('assets/js/bootstrap.js');
-            $files->addFile('assets/js/nette.ajax.js');
             $files->addFile('assets/js/nette.ajax.confirm.js');
             $files->addFile('assets/js/nette.forms.js');
             $files->addFile('assets/js/admin/grido.js');

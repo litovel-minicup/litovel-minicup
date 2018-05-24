@@ -15,7 +15,12 @@ set('rsync', [
         'vendor',
         'README.md',
         'minicup/config/config.local.neon',
+        'www/media',
+        'www/assets/.sass-cache',
+        'www/assets/scss',
+        'www/assets/vue',
         'www/webtemp',
+        'node_modules',
     ],
     'exclude-file' => false,
     'include' => [
@@ -24,9 +29,9 @@ set('rsync', [
     'filter' => [],
     'filter-file' => false,
     'filter-perdir' => false,
-    'flags' => 'rzcE', // Recursive, with compress
+    'flags' => 'vrzcE', // Recursive, with compress
     'options' => ['delete'],
-    'timeout' => 60,
+    'timeout' => 60*3,
 ]);
 
 // Project name

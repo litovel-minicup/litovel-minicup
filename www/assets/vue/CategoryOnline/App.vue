@@ -1,17 +1,27 @@
 <template>
     <div>
-        <category-online></category-online>
+        <transition name="load">
+            <category-online v-if="hasMatches"></category-online>
+        </transition>
+        <vue-loading
+                v-if="!hasMatches"
+                type="spin" color="#0e5eff"
+                :size="{ width: '100px', height: '100px' }"
+        ></vue-loading>
     </div>
 </template>
 
 <script>
     import CategoryOnline from "./components/CategoryOnline";
-    import {mapActions, mapMutations} from 'vuex';
+    import VueLoading from 'vue-loading-template'
+    import {mapActions, mapMutations, mapState} from 'vuex';
+    import _ from 'lodash';
 
     export default {
         name: "App",
         components: {
-            CategoryOnline
+            CategoryOnline,
+            VueLoading
         },
         data() {
             return {
@@ -22,6 +32,9 @@
             category() {
                 return this.categoryId;
             },
+            ...mapState({
+                hasMatches: (state) => !_.isEmpty(state.matches)
+            })
         },
 
         methods: {
@@ -59,5 +72,11 @@
 </script>
 
 <style scoped>
+    .load-enter-active, .load-leave-active {
+        transition: opacity .5s;
+    }
 
+    .load-enter, .load-leave-to {
+        opacity: 0;
+    }
 </style>
