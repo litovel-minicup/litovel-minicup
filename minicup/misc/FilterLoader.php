@@ -80,7 +80,7 @@ class FilterLoader
 
         $template->addFilter('termDiff', function (MatchTerm $first, MatchTerm $second) use ($latte) {
             $diff = date_diff($first->start, $second->start);
-            return $diff->h + $diff->m / 60.;
+            return $diff->h + $diff->i / 60.;
         });
 
         $template->addFilter('toJson', function (array $array) {

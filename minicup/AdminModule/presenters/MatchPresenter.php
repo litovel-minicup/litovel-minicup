@@ -66,6 +66,11 @@ final class MatchPresenter extends BaseAdminPresenter
         $this->template->data = $data;
     }
 
+    public function renderSchedule(Category $category)
+    {
+        $this->template->days = $this->MR->groupMatchesByDay($category);
+    }
+
     public function renderCategory(Category $category)
     {
         $this->template->year = $category->year;

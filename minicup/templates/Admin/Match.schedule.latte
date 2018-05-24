@@ -1,0 +1,113 @@
+{layout none}
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Litovel MINICUP {$category->year->slug} ({$category->name}) - zápasy</title>
+</head>
+<body>
+
+<h1>Litovel MINICUP {$category->year->slug} ({$category->name})</h1>
+
+<div class="container">
+    {foreach $days as $timestamp => $matches}
+
+        <div class="panel">
+            <h2>{$timestamp|dayName:NULL} {$matches[0]->matchTerm|matchDate}</h2>
+
+            <table>
+                <tbody>
+                {var $next = NULL}
+                {var $used = false}
+                {foreach $matches as $match}
+
+                    {php $next = count($matches) <= $iterator->counter ? NULL : $matches[$iterator->counter]}
+                    <tr>
+                        {var $diff = !$used && $next ? ($match->matchTerm|termDiff:$next->matchTerm) : 1}
+
+                        {if $diff == 0}
+                            <td rowspan="2">{$match->matchTerm|matchStart}</td>
+                            {php $used = true}
+                        {else}
+                            {*<td>{$match->matchTerm|matchStart}</td>*}
+                            {php $used = false}
+                        {/if}
+                        <td class="location">{$match->matchTerm->location}</td>
+                        <td>{$match->homeTeam->name}</td>
+                        <td>{$match->awayTeam->name}</td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+
+    {/foreach}
+</div>
+
+<style>
+    .container {
+    }
+
+    .panel {
+    }
+
+    html {
+        font-family: sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        border-bottom: 2px solid black;
+    }
+
+    tr td:nth-child(-n+1), tr td.location {
+        font-weight: bold;
+    }
+
+    tr td.location {
+        border-right: 2px solid black;
+    }
+
+    tr:nth-child(2n - 1) {
+        border-top: 2px solid black;
+    }
+
+    tbody th {
+        text-align: center;
+    }
+
+    table, th, td {
+        border: 1px solid #888;
+        vertical-align: middle;
+    }
+
+    table {
+        border-right: 2px solid black;
+        border-left: 2px solid black;
+    }
+
+    td, th {
+        padding: 15px;
+    }
+
+    td {
+        text-align: center;
+        font-size: 2em;
+    }
+
+</style>
+<style media="print">
+    table {
+        width: 100%;
+    }
+</style>
+</body>
+</html>
