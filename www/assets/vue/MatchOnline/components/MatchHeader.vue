@@ -2,7 +2,7 @@
     <div class="MatchDetail__head">
         <h2 class="Article__heading"><a :href="homeTeamUrl">{{ match.home_team_name }}</a></h2>
         <span class="MatchDetail__head__score">{{ match.score[0] | score }}:{{ match.score[1] | score }}</span>
-        <h2 class="Article__heading"><a :href="homeTeamUrl">{{ match.away_team_name }}</a></h2>
+        <h2 class="Article__heading"><a :href="awayTeamUrl">{{ match.away_team_name }}</a></h2>
     </div>
 </template>
 

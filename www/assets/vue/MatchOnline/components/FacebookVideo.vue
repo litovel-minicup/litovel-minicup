@@ -26,10 +26,26 @@
             VueLoading,
         },
         props: ['facebookVideoId'],
+        methods: {
+            parseFacebook() {
+                try {
+                    FB.XFBML.parse(this.$el);
+                } catch (e) {
+                }
+            }
+        },
         computed: {
             videoLink() {
                 return `https://www.facebook.com/litovel.minicup/videos/${this.facebookVideoId}/`;
             }
+        },
+        watch: {
+            facebookVideoId(new_, old) {
+                if (new_) this.parseFacebook();
+            }
+        },
+        mounted() {
+            this.parseFacebook()
         }
     }
 </script>

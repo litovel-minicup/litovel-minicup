@@ -1931,6 +1931,11 @@ Header module
     .Aside__table TBODY {
       font-size: .95rem;
       color: rgba(0, 0, 0, 0.75); }
+    .Aside__table--upcoming tr[onclick] {
+      cursor: pointer; }
+      .Aside__table--upcoming tr[onclick]:hover td {
+        background-color: black;
+        color: white; }
     .Aside__table--upcoming tr:nth-of-type(1) td {
       height: 40px;
       vertical-align: bottom; }
@@ -1938,10 +1943,8 @@ Header module
       height: 40px;
       vertical-align: top; }
     .Aside__table--upcoming td {
+      padding: 3px 15px !important;
       vertical-align: middle; }
-      .Aside__table--upcoming td A {
-        padding: 3px 15px !important;
-        display: block; }
       .Aside__table--upcoming td:nth-of-type(1) {
         width: 40%; }
       .Aside__table--upcoming td:nth-of-type(3) {
@@ -1951,10 +1954,8 @@ Header module
         width: 20%;
         background: #ffd803;
         font-family: "Montserrat";
-        text-align: center; }
-        .Aside__table--upcoming td:nth-of-type(2) A {
-          display: block;
-          color: white; }
+        text-align: center;
+        color: white; }
     .Aside__table--standings A {
       font-weight: bolder; }
     .Aside__table--standings th {
@@ -2200,6 +2201,8 @@ Header module
   .Table__matches TBODY TD:nth-of-type(1) A, .Table__matches TBODY td:nth-of-type(3) A,
   .Table__matches TBODY td:nth-of-type(6) A {
     color: rgba(0, 0, 0, 0.75); }
+.Table__matches TBODY TR[onclick] {
+  cursor: pointer; }
 .Table__matches TBODY TR:hover {
   color: white; }
   .Table__matches TBODY TR:hover A {
