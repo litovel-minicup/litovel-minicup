@@ -11,7 +11,6 @@ use Nette\Application\Routers\Route;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\InvalidStateException;
-
 use Nette\SmartObject;
 use Nette\Utils\Strings;
 
@@ -19,10 +18,10 @@ class YearCategoryRouteFactory
 {
 
     use SmartObject;
-    const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
-    const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
+    public const DEFAULT_REQUIRED_PATTERN = '<category ([0-9]{4})-([\w]*)>';
+    public const DEFAULT_OPTIONAL_PATTERN = '[!<category ([0-9]{4})-([\w]*)>]';
 
-    const DEFAULT_CATEGORY_KEY = 'category';
+    public const DEFAULT_CATEGORY_KEY = 'category';
 
     /**
      * @var YearRepository
@@ -82,7 +81,7 @@ class YearCategoryRouteFactory
      * @param bool $requiredCategory
      * @return array
      */
-    public function getCategoryMetadata($requiredCategory)
+    public function getCategoryMetadata($requiredCategory): array
     {
         $categoryMetadata = [
             Route::FILTER_IN => function ($slug) {
@@ -91,10 +90,10 @@ class YearCategoryRouteFactory
                 if ($category = $this->categoryRepository->getBySlug($slug, $this->yearRepository->getBySlug('2014'))) {
                     return $category;
                 }
-                if (!$m = Strings::matchAll($slug, '#([0-9]{4})-([\w]*)#')) {
+                if (!$m = Strings::matchAll($slug, Category::CATEGORY_URL_SPLITTER)) {
                     return NULL;
                 }
-                list(, $yearSlug, $categorySlug) = $m[0];
+                [, $yearSlug, $categorySlug] = $m[0];
                 $year = $this->yearRepository->getBySlug($yearSlug);
                 $category = $this->categoryRepository->getBySlug($categorySlug, $year);
 
@@ -104,8 +103,12 @@ class YearCategoryRouteFactory
                 if (!$category instanceof Category) {
                     $category = $this->categoryRepository->getBySlug($category, $this->yearRepository->getBySlug('2014'));
                 }
-                $slug = "{$category->year->year}-{$category->slug}";
-                if (!Strings::match($slug, '#([0-9]{4})-([\w]*)#')) {
+                $slug = sprintf(
+                    Category::CATEGORY_URL_PATTEN,
+                    $category->year->year,
+                    $category->slug
+                );
+                if (!Strings::match($slug, Category::CATEGORY_URL_SPLITTER)) {
                     throw new InvalidStateException;
                 }
                 return $slug;

@@ -24,17 +24,27 @@ use Nette\InvalidArgumentException;
  */
 class Match extends BaseEntity
 {
-    const HALF_LENGTH = "P600S";
+    public const HALF_LENGTH = 'P600S';
 
-    const INIT_ONLINE_STATE = 'init';
-    const END_ONLINE_STATE = 'end';
-    const HALF_FIRST_ONLINE_STATE = 'half_first';
-    const HALF_SECOND_ONLINE_STATE = 'half_second';
-    const PAUSE_ONLINE_STATE = 'pause';
+    public const INIT_ONLINE_STATE = 'init';
+    public const END_ONLINE_STATE = 'end';
+    public const HALF_FIRST_ONLINE_STATE = 'half_first';
+    public const HALF_SECOND_ONLINE_STATE = 'half_second';
+    public const PAUSE_ONLINE_STATE = 'pause';
 
-    const ONLINE_STATE_PLAYING = [self::HALF_FIRST_ONLINE_STATE, self::PAUSE_ONLINE_STATE, self::HALF_SECOND_ONLINE_STATE];
+    public const MATCH_DETAIL_URL_PART_PATTERN = '%s-vs-%s';
+    public const MATCH_DETAIL_URL_PART_SPLITTER = '#-vs-#';
 
-    const ONLINE_STATE_CHOICES = [
+    public const MATCH_DETAIL_BASE_URL_PATTERN = 'zapas/<match>/';
+    public const MATCH_DETAIL_FULL_URL_PATTERN = '/zapas/' . self::MATCH_DETAIL_URL_PART_PATTERN . '/' . Category::CATEGORY_URL_PATTEN;
+
+    public const ONLINE_STATE_PLAYING = [
+        self::HALF_FIRST_ONLINE_STATE,
+        self::PAUSE_ONLINE_STATE,
+        self::HALF_SECOND_ONLINE_STATE
+    ];
+
+    public const ONLINE_STATE_CHOICES = [
         self::INIT_ONLINE_STATE => 'před zápasem',
         self::HALF_FIRST_ONLINE_STATE => '1. poločas',
         self::PAUSE_ONLINE_STATE => 'přestávka',
@@ -138,16 +148,16 @@ class Match extends BaseEntity
      */
     public function hasStarted()
     {
-        return $this->onlineState && $this->onlineState != self::INIT_ONLINE_STATE;
+        return $this->onlineState && $this->onlineState !== self::INIT_ONLINE_STATE;
     }
 
     /**
      * Returns index of half, counted from 0.
      * @return int|NULL
      */
-    public function getHalfIndex()
+    public function getHalfIndex(): ?int
     {
-        $index = !is_null($this->firstHalfStart) + !is_null($this->secondHalfStart) - 1;
+        $index = (null !== $this->firstHalfStart) + (null !== $this->secondHalfStart) - 1;
         return $index >= 0 ? $index : NULL;
     }
 
@@ -155,14 +165,18 @@ class Match extends BaseEntity
      * Gets name of online state.
      * @return string
      */
-    public function getOnlineStateName()
+    public function getOnlineStateName(): string
     {
-        //dump($this->onlineState);
         return self::ONLINE_STATE_CHOICES[$this->onlineState ?: 'init'];
     }
 
-    public function serialize()
+    public function serialize(): array
     {
+        // fucking mutable datetime
+        $start = clone $this->matchTerm->start;
+        $start->setTime(0, 0);
+        $time = $this->matchTerm->start->diff($start, TRUE);
+
         return [
             'id' => $this->id,
             'home_team_abbr' => $this->homeTeam->abbr,
@@ -176,6 +190,8 @@ class Match extends BaseEntity
             'home_team_color' => '#ff8574',
             'away_team_color' => '#88dd12',
             'category_name' => $this->category->name,
+            'category_slug' => $this->category->slug,
+            'year_slug' => $this->category->year->slug,
             'first_half_start' => $this->firstHalfStart ? $this->firstHalfStart->getTimestamp() : NULL,
             'second_half_start' => $this->secondHalfStart ? $this->secondHalfStart->getTimestamp() : NULL,
             'score' => [$this->scoreHome, $this->scoreAway],
@@ -183,8 +199,7 @@ class Match extends BaseEntity
             'half_length' => \DateInterval::createFromDateString(self::HALF_LENGTH)->s,
             'state' => $this->onlineState,
             'facebook_video_id' => $this->facebookVideoId,
-            'match_term_start' => $this->matchTerm->day->day->setTime(0, 0)->getTimestamp() +
-                $this->matchTerm->start->setDate(0, 0, 0)->getTimestamp()
+            'match_term_start' => $this->matchTerm->day->day->setTime(0, 0)->add($time)->getTimestamp()
         ];
     }
 }

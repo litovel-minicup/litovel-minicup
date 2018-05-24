@@ -18,6 +18,9 @@ class Category extends BaseEntity
 {
     public static $CACHE_TAG = 'category';
 
+    public const CATEGORY_URL_SPLITTER = '#([0-9]{4})-([\w]*)#';
+    public const CATEGORY_URL_PATTEN = '%s-%s';
+
     /**
      * @return string
      * @throws \LeanMapper\Exception\InvalidStateException

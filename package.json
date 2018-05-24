@@ -18,7 +18,8 @@
     "vue-loading-template": "^0.1.7",
     "vue-native-websocket": "^2.0.6",
     "vue-resource": "^1.5.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "sprintf-js": "latest"
   },
   "browserslist": [
     "> 1%",

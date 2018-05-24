@@ -1,5 +1,5 @@
 <template>
-    <a v-if="full" href="" class="Live__video">
+    <a v-if="full" :href="matchDetailUrl" class="Live__video" :data-match-id="match.id">
         <div class="Live__video__teams">
             <div class="Live__video__team">
                 <div class="Live__video__team__img">
@@ -25,15 +25,17 @@
             <span>Zobrazit zápas</span>
         </div>
     </a>
-    <a v-else href="#">
+    <a v-else :href="matchDetailUrl" target="_blank" :data-match-id="match.id">
         <h4>{{ match.home_team_name }}</h4>
         <h4>{{ match.away_team_name }}</h4>
-        <span>Zobrazit zápas ({{ new Date(match.match_term_start*1000) }})</span>
+        <h5>{{ matchTermStart }}</h5>
+        <span>Zobrazit zápas</span>
     </a>
 </template>
 
 <script>
     import _ from 'lodash';
+    import {sprintf} from 'sprintf-js';
     import {mapState} from 'vuex';
 
     export default {
@@ -62,9 +64,25 @@
             },
             logoPath(slug) {
                 return `${this.baseLogosPath}${slug}.png`;
-            }
+            },
         },
         computed: {
+            matchTermStart() {
+                const d = new Date(this.match.match_term_start * 1000);
+                const time = `${d.getHours().pad(2)}:${d.getMinutes().pad(2)}`;
+                if (d.toDateString() === new Date().toDateString()) return time;
+                return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${time}`;
+            },
+            matchDetailUrl() {
+                // corresponding with Match::MATCH_DETAIL_FULL_URL_PATTERN
+                return sprintf(
+                    this.matchDetailUrlPattern,
+                    this.match.home_team_slug,
+                    this.match.away_team_slug,
+                    this.match.year_slug,
+                    this.match.category_slug,
+                );
+            },
             time() {
                 if (this.playing)
                     return `(${Math.floor(this.timerCount / 60).pad(2)}:${(this.timerCount % 60).pad(2)})`;
@@ -72,7 +90,7 @@
             playing() {
                 return _.includes(['half_first', 'half_second'], this.match.state);
             },
-            ...mapState(['baseLogosPath'])
+            ...mapState(['baseLogosPath', 'matchDetailUrlPattern'])
         },
         created() {
             this.timerID = setInterval(() => {

@@ -2,6 +2,7 @@
 
 namespace Minicup\Router;
 
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Team;
@@ -167,7 +168,7 @@ class RouterFactory
             'action' => 'online'
         ]);
 
-        $front[] = $route('zapas/<match>/', [
+        $front[] = $route(Match::MATCH_DETAIL_BASE_URL_PATTERN, [
             'presenter' => 'Match',
             'action' => 'detail',
             NULL => [
@@ -176,14 +177,18 @@ class RouterFactory
                         return NULL;
                     if (!($params['match'] instanceof Match))
                         return NULL;
-                    $params['match'] = "{$params['match']->homeTeam->slug}-vs-{$params['match']->awayTeam->slug}";
+                    $params['match'] = sprintf(
+                        Match::MATCH_DETAIL_URL_PART_PATTERN,
+                        $params['match']->homeTeam->slug,
+                        $params['match']->awayTeam->slug
+                    );
                     return $params;
                 },
                 Route::FILTER_IN => function ($params) {
                     $slug = $params['match'];
-                    $parts = Strings::split($slug, '#-vs-#');
-                    if (count($parts) != 2) return NULL;
-                    list($home, $away) = $parts;
+                    $parts = Strings::split($slug, Match::MATCH_DETAIL_URL_PART_SPLITTER);
+                    if (\count($parts) !== 2) return NULL;
+                    [$home, $away] = $parts;
 
                     // get teams from slugs
                     $home = $this->TIR->getBySlug($params['category'], $home);
@@ -197,7 +202,6 @@ class RouterFactory
                     return $params;
                 },
             ]
-
         ]);
 
         $front[] = $route('tymy/', [
@@ -322,29 +326,47 @@ class RouterFactory
         return $router;
     }
 
-    /**
-     * @param string  $teamSlug
-     * @param Request $request
-     * @return Team|NULL
-     */
-    public function teamSlug2Team($teamSlug, Request $request)
+    protected function createApiRouter()
     {
-        return $this->TR->getBySlug($teamSlug, $request->parameters['category']);
-    }
+        $list = new RouteList('Api');
 
-    /**
-     * @param TeamInfo|Team $team
-     * @param Request       $request
-     * @return string
-     */
-    public function team2TeamSlug($team, Request $request)
-    {
-        if ($team instanceof Team) {
-            return $team->slug;
-        } else {
-            $category = $this->CR->getBySlug($request->parameters['category']);
-            return $this->TR->getBySlug($team, $category)->i->slug;
-        }
+        $matchFilter = [
+            Route::FILTER_IN => function ($id) {
+                return $this->MR->get($id);
+            },
+            Route::FILTER_OUT => function (Match $match) {
+                return $match->id;
+            }
+        ];
+
+        $categoryFilter = [
+            Route::FILTER_IN => function ($id) {
+                return $this->CR->get($id);
+            },
+            Route::FILTER_OUT => function (Category $category) {
+                return $category->id;
+            }
+        ];
+
+        $list[] = new Route('api/v1/match/detail/<match>', [
+            'presenter' => 'Match',
+            'action' => 'detail',
+            'match' => $matchFilter
+        ]);
+
+        $list[] = new Route('api/v1/match/events/<match>', [
+            'presenter' => 'Match',
+            'action' => 'events',
+            'match' => $matchFilter
+        ]);
+
+        $list[] = new Route('api/v1/category/upcoming-matches/<category>', [
+            'presenter' => 'Category',
+            'action' => 'upcomingMatches',
+            'category' => $categoryFilter
+        ]);
+
+        return $list;
     }
 
     /**
@@ -377,32 +399,29 @@ class RouterFactory
         return $management;
     }
 
-    protected function createApiRouter()
+    /**
+     * @param string  $teamSlug
+     * @param Request $request
+     * @return Team|NULL
+     */
+    public function teamSlug2Team($teamSlug, Request $request)
     {
-        $list = new RouteList('Api');
+        return $this->TR->getBySlug($teamSlug, $request->parameters['category']);
+    }
 
-        $matchFilter = [
-            Route::FILTER_IN => function ($id) {
-                return $this->MR->get($id);
-            },
-            Route::FILTER_OUT => function (Match $match) {
-                return $match->id;
-            }
-        ];
-
-        $list[] = new Route('api/v1/match/detail/<match>', [
-            'presenter' => 'Match',
-            'action' => 'detail',
-            'match' => $matchFilter
-        ]);
-
-        $list[] = new Route('api/v1/match/events/<match>', [
-            'presenter' => 'Match',
-            'action' => 'events',
-            'match' => $matchFilter
-        ]);
-
-        return $list;
+    /**
+     * @param TeamInfo|Team $team
+     * @param Request       $request
+     * @return string
+     */
+    public function team2TeamSlug($team, Request $request)
+    {
+        if ($team instanceof Team) {
+            return $team->slug;
+        } else {
+            $category = $this->CR->getBySlug($request->parameters['category']);
+            return $this->TR->getBySlug($team, $category)->i->slug;
+        }
     }
 
 }

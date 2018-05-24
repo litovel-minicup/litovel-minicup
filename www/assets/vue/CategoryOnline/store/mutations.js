@@ -17,6 +17,10 @@ export default {
         state.baseLogosPath = path;
     },
 
+    setMatchDetailUrlPattern(state, pattern) {
+        state.matchDetailUrlPattern = pattern;
+    },
+
     pushSocketQueue(state, obj) {
         state.socket.queue.push(obj);
     },

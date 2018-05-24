@@ -16,7 +16,8 @@ const store = new Vuex.Store({
         category_id: 0,
         matches: {},
 
-        baseLogosPath: null
+        baseLogosPath: null,
+        matchDetailUrlPattern: null,
     },
     actions,
     mutations,

@@ -877,6 +877,8 @@ html {
     -moz-flex: 0 0 75px;
     -ms-flex: 0 0 75px;
     flex: 0 0 75px; }
+    .Box__head__icon[class*=icon__] {
+      line-height: 75px; }
     .Box__head__icon--team {
       display: -webkit-box;
       display: -moz-box;
@@ -1690,7 +1692,14 @@ Header module
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
   @media screen and (max-width: 600px) {
     .Live NAV {
       -webkit-box-lines: multiple;
@@ -1719,14 +1728,20 @@ Header module
     padding: 20px; }
     @media screen and (min-width: 601px) {
       .Live NAV A {
-        -webkit-box-flex: 1;
-        -moz-box-flex: 1;
-        box-flex: 1;
-        -webkit-flex: 1 1 33.3333333333%;
-        -moz-flex: 1 1 33.3333333333%;
-        -ms-flex: 1 1 33.3333333333%;
-        flex: 1 1 33.3333333333%;
-        margin-right: 5px; } }
+        -webkit-flex-grow: 1;
+        -moz-flex-grow: 1;
+        flex-grow: 1;
+        -ms-flex-positive: 1;
+        -webkit-flex-shrink: 1;
+        -moz-flex-shrink: 1;
+        flex-shrink: 1;
+        -ms-flex-negative: 1;
+        -webkit-flex-basis: calc(50% - 5px);
+        -moz-flex-basis: calc(50% - 5px);
+        flex-basis: calc(50% - 5px);
+        -ms-flex-preferred-size: calc(50% - 5px);
+        margin-right: 5px;
+        margin-bottom: 5px; } }
     @media screen and (max-width: 600px) {
       .Live NAV A {
         -webkit-box-flex: 1;
@@ -1745,7 +1760,7 @@ Header module
       font-size: 20px;
       letter-spacing: -1.5px;
       margin-bottom: 10px;
-      color: #626262;
+      color: #4A4A4A;
       position: relative; }
       .Live NAV A H4:first-of-type:after {
         position: absolute;
@@ -1755,8 +1770,11 @@ Header module
         height: 1px;
         left: 0;
         bottom: -5px; }
-      .Live NAV A H4:last-of-type {
-        margin-bottom: 30px; }
+    .Live NAV A H5 {
+      font-family: "Montserrat";
+      color: white;
+      font-size: 18px;
+      margin-bottom: 30px; }
     .Live NAV A SPAN {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       margin-top: auto;

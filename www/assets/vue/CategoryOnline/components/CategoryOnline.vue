@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="Box__content Live">
+        <div v-if="hasOnlineMatches" class="Box__content Live">
             <match-panel
                     v-for="(match, match_id) in onlineMatches"
                     :key="match.id"
@@ -8,8 +8,8 @@
                     :full="true"
             ></match-panel>
         </div>
-        <template v-if="upcomingMatches.length > 0">
-            <div v-if="" class="Article__head Box__head">
+        <template v-if="hasUpcomingMatches">
+            <div v-if="hasOnlineMatches" class="Article__head Box__head">
                 <h2 class="Article__head__text Box__head__text">Další zápasy</h2>
             </div>
             <div class="Box__content Live">
@@ -31,16 +31,10 @@
     import {mapActions, mapState} from 'vuex';
     import _ from 'lodash';
 
-
     export default {
         name: "CategoryOnline",
         components: {
             MatchPanel
-        },
-        data() {
-            return {
-                timerID: 0
-            }
         },
         methods: mapActions(['subscribe']),
         computed: {
@@ -54,26 +48,30 @@
                 return _.pickBy(this.matches, (match, _) => {
                     return !this.$options.filters.isOnline(match);
                 });
-            }
+            },
+            hasOnlineMatches() {
+                return !_.isEmpty(this.onlineMatches)
+            },
+            hasUpcomingMatches() {
+                return !_.isEmpty(this.upcomingMatches)
+            },
         },
         filters: {
             isOnline(match) {
                 return _.includes(['half_first', 'pause', 'half_second'], match.state);
             },
-            not(v) {
-                return !v
-            },
-            isNotEmpty(v) {
-                return !_.isEmpty(v)
-            }
         },
         created() {
-            this.timerID = setInterval(() => {
-                this.subscribe()
-            }, 1000 * 15);
-        },
-        destroyed() {
-            clearInterval(this.timerID);
+            this.$store.watch(
+                (state) => state.matches,
+                (new_, old) => {
+
+                    if (_.size(old) !== _.size(new_) && _.size(_.pickBy(new_, (match, _) => {
+                        return _.includes(['half_first', 'pause', 'half_second'], match.state)
+                    })) < 4)
+                        this.subscribe();
+                }
+            );
         }
     }
 </script>
