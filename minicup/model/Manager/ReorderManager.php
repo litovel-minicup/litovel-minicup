@@ -6,9 +6,8 @@ use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamRepository;
-use Tracy\Debugger;
-
 use Nette\SmartObject;
+use Tracy\Debugger;
 
 
 /**
@@ -201,10 +200,10 @@ class ReorderManager
         }
 
         asort($teamsScored);
-        if (count(array_unique($teamsScored)) !== 1) {
+        if (\count(array_unique($teamsScored)) !== 1) {
             foreach ($teamsScored as $key => $teamScored) {
                 $this->getEntityOfTeam($teamsToCompare[$key]->id)->order = $teamPosition;
-                $teamPosition -= 1;
+                --$teamPosition;
             }
         } else {
             $this->setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition);
@@ -218,7 +217,7 @@ class ReorderManager
      *
      * @return team
      */
-    private function getEntityOfTeam($teamID)
+    private function getEntityOfTeam($teamID): Team
     {
         return $this->teamsEntities[$teamID];
     }
@@ -230,9 +229,9 @@ class ReorderManager
      * @param int   $countOfTeamsWithSamePoints
      * @param int   $teamPosition
      */
-    private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    private function setUnorderableTeams($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition): void
     {
-        $teamPosition = $teamPosition - ($countOfTeamsWithSamePoints - 1);
+        $teamPosition -= ($countOfTeamsWithSamePoints - 1);
         foreach ($teamsToCompare as $team) {
             $team->order = $teamPosition;
         }
@@ -245,7 +244,7 @@ class ReorderManager
      * @param int   $countOfTeamsWithSamePoints
      * @param int   $teamPosition
      */
-    private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition)
+    private function orderByScoreDifferenceFromMiniTable($teamsToCompare, $countOfTeamsWithSamePoints, $teamPosition): void
     {
         if ($countOfTeamsWithSamePoints === 2) {
             $commonMatch = $this->MR->getCommonMatchForTeams($teamsToCompare[0], $teamsToCompare[1]);

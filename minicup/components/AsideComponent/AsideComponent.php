@@ -128,7 +128,7 @@ class AsideComponent extends BaseComponent
     /**
      * @return CategoryTableComponent
      */
-    protected function createComponentCategoryTableComponent()
+    protected function createComponentCategoryTableComponent(): CategoryTableComponent
     {
         return $this->CTCF->create($this->category);
     }
@@ -136,7 +136,7 @@ class AsideComponent extends BaseComponent
     /**
      * @return CountdownComponent
      */
-    protected function createComponentCountdownComponent()
+    protected function createComponentCountdownComponent(): CountdownComponent
     {
         $firstMatch = $this->MR->getFirstMatchInCategory($this->category);
         $countdown = $firstMatch ? DateTime::createFromFormat(
@@ -150,7 +150,7 @@ class AsideComponent extends BaseComponent
     /**
      * @return StaticContentComponent
      */
-    protected function createComponentStreamComponent()
+    protected function createComponentStreamComponent(): StaticContentComponent
     {
         $staticContentComponent = $this->ISCCF->create(StaticContent::STREAM, $this->category->year, FALSE);
         $staticContentComponent->onChange[] = function (StaticContent $content) {

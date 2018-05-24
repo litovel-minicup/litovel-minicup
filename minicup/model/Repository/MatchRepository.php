@@ -70,8 +70,8 @@ class MatchRepository extends BaseRepository
         return $this->createEntities($this->connection->query('
             SELECT DISTINCT `match`.*
             FROM `match`
-              LEFT JOIN `match_term` AS `mt` ON `match`.`match_term_id` = mt.`id`
-              LEFT JOIN `day` AS `d` ON d.`id` = mt.`day_id`
+              INNER JOIN `match_term` AS `mt` ON `match`.`match_term_id` = mt.`id`
+              INNER JOIN `day` AS `d` ON d.`id` = mt.`day_id`
             WHERE
               `match`.`category_id` = %i
               AND
