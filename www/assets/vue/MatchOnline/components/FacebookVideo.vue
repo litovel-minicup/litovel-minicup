@@ -29,7 +29,7 @@
         methods: {
             parseFacebook() {
                 try {
-                    FB.XFBML.parse(this.$el);
+                    FB.XFBML.parse(this.$el.parent);
                 } catch (e) {
                 }
             }

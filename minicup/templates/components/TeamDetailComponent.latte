@@ -65,7 +65,7 @@
     </div>
 {/if}
 
-
+{*
 {if $team->order}
     <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="historie-poradi">
         <div class="Article">
@@ -97,6 +97,7 @@
         </div>
     </div>
 {/if}
+*}
 
 {if count($team->matches)}
     <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="zapasy">
