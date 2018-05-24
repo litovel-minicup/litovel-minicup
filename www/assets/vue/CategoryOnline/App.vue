@@ -49,6 +49,8 @@
             this.setMatchDetailUrlPattern(data.matchDetailUrlPattern);
             this.subscribe(this.categoryId);
 
+            !this.$store.state.socket.isConnected && this.subscribeFallback();
+
             this.$store.watch(
                 (state) => {
                     return state.socket.isConnected;

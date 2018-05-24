@@ -124,7 +124,8 @@ task('reload:nginx', function () {
 });
 
 task('deploy:update_perms', function () {
-    run('find . -type d -exec chmod +r {} \;');
+    run('find {{current_path}} -type d -exec chmod +r {} \;');
+    run('find {{current_path}}/log  -exec chmod a+wr {} \;');
 });
 
 

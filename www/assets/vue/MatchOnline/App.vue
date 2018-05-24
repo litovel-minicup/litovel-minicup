@@ -79,6 +79,8 @@
 
             this.loadMatch();
 
+            !this.$store.state.socket.isConnected && this.refreshFallback();
+
             // plan refresh after connection lost
             this.$store.watch(
                 (state) => {

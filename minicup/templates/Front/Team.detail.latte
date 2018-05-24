@@ -6,7 +6,7 @@
 {block title}{$team->name} - {$team->category->name}{/block}
 {block ogImage}
     {if $team->tag && $team->tag->mainPhoto}
-        {*{$team->tag->mainPhoto|ogImage}*}
+        {$team->tag->mainPhoto|ogImage}
     {else}
         {include parent}
     {/if}
