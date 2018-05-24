@@ -6,6 +6,7 @@ namespace Minicup\Model\Entity;
  * @property int         $id
  * @property string|NULL $name                                       czech name of category
  * @property string      $slug                                       slug for URL
+ * @property TeamInfo[]  $teamInfos m:belongsToMany                      actually teams in this category
  * @property Team[]      $teams m:belongsToMany                      actually teams in this category
  * @property Match[]     $matches m:belongsToMany                    matches in this category
  * @property Team[]      $allTeams m:belongsToMany(::category_id)    all historical teams in category

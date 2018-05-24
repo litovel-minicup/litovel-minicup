@@ -12,6 +12,7 @@ use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
@@ -43,6 +44,26 @@ final class MatchPresenter extends BaseAdminPresenter
     public function renderList(Category $category)
     {
         $this->template->category = $category;
+    }
+
+    public function renderTable(Category $category)
+    {
+        $this->template->teams = $category->teamInfos;
+        $data = [];
+        /** @var TeamInfo $team1 */
+        foreach ($this->template->teams as $team1) {
+            $row = [];
+            /** @var TeamInfo $team2 */
+            foreach ($this->template->teams as $team2) {
+                $row[] = $this->MR->getCommonMatchForTeams(
+                    $team1->team,
+                    $team2->team,
+                    NULL
+                );
+            }
+            $data[] = $row;
+        }
+        $this->template->data = $data;
     }
 
     public function renderCategory(Category $category)

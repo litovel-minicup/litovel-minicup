@@ -1,0 +1,100 @@
+{layout none}
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Litovel MINICUP {$category->year->slug} ({$category->name}) - tabulka</title>
+</head>
+<body>
+
+{var $middleText = "MINICUP {$category->year->slug}"}
+<h1>Litovel MINICUP {$category->year->slug} ({$category->name})</h1>
+<table id="table">
+    <thead>
+    <tr>
+        <th></th>
+        {foreach $teams as $team}
+            <th>{$team->name}</th>
+        {/foreach}
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $data as $id1 => $row}
+        <tr>
+            <th>{$teams[$id1]->name}</th>
+            {foreach $row as $id2 => $match}
+                <td n:class="$match?'':'not'">
+                    {if $match}
+                        {if is_numeric($match->scoreHome) || is_numeric($match->scoreAway)}
+                            {if $match->homeTeam->id == $teams[$id1]->id}
+                                {$match->scoreHome}:{$match->scoreAway}
+                            {else}
+                                {$match->scoreAway}:{$match->scoreHome}
+                            {/if}
+                        {/if}
+                    {else}
+                        {$middleText[$id1]}
+                    {/if}
+                </td>
+            {/foreach}
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+
+<style>
+    html {
+        font-family: sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    th, tr td:first-child {
+        width: 200px;
+        height: 40px;
+        font-weight: bold;
+    }
+
+    tbody th {
+        text-align: center;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        vertical-align: middle;
+    }
+
+    td, th {
+        padding: 10px;
+    }
+
+    td {
+        text-align: center;
+        font-size: 2em;
+    }
+
+    td.not {
+        background-color: #DDD;
+    }
+
+    table.hide td:not(.not) {
+        font-size: 0;
+    }
+</style>
+<script>
+    window.document.getElementById('table').onclick = function () {
+        this.classList.toggle('hide');
+    };
+</script>
+</body>
+</html>
