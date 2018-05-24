@@ -7,7 +7,6 @@ use Minicup\Components\IListOfMatchesComponentFactory;
 use Minicup\Components\IMatchDetailComponentFactory;
 use Minicup\Components\ListOfMatchesComponent;
 use Minicup\Model\Entity\Match;
-use Minicup\Model\Repository\MatchRepository;
 
 /**
  * Match presenter.
@@ -22,9 +21,6 @@ final class MatchPresenter extends BaseFrontPresenter
 
     /** @var ICategoryOnlineComponentFactory @inject */
     public $COCFactory;
-
-    /** @var MatchRepository @inject */
-    public $MR;
 
     /**
      * @return ListOfMatchesComponent
@@ -47,5 +43,15 @@ final class MatchPresenter extends BaseFrontPresenter
     public function renderDetail(Match $match)
     {
         $this->template->match = $match;
+    }
+
+    /**
+     * @throws \Nette\Application\BadRequestException
+     */
+    public function actionOnline()
+    {
+        if ($this->MR->isFinished($this->category)) {
+            $this->error();
+        }
     }
 }

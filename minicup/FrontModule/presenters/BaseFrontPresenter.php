@@ -8,6 +8,7 @@ use Minicup\Components\IAsideComponentFactory;
 use Minicup\Components\ICategoryToggleComponentFactory;
 use Minicup\Components\IYearToggleComponentFactory;
 use Minicup\Components\YearToggleComponent;
+use Minicup\Model\Manager\MatchManager;
 use Minicup\Presenters\BasePresenter;
 use Nette\Http\Url;
 
@@ -26,6 +27,9 @@ abstract class BaseFrontPresenter extends BasePresenter
     /** @var IAsideComponentFactory @inject */
     public $ACF;
 
+    /** @var MatchManager @inject */
+    public $MR;
+
     /** @var Url */
     public $liveServiceUrl;
 
@@ -37,6 +41,7 @@ abstract class BaseFrontPresenter extends BasePresenter
         $this->template->actualYear = $this->YR->getActualYear();
         $this->template->categories = $this->YR->getSelectedYear()->categories;
         $this->template->liveServiceUrl = $this->liveServiceUrl;
+        $this->template->isFinished = $this->MR->isFinished($this->category);
     }
 
     /**

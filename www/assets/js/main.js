@@ -202,14 +202,16 @@ var initTabs = function () {
 };
 
 jQuery(function ($) {
-    $.nette.init();
-    $.nette.ext({
-        success: function () {
-            $.nette.load();
-        }
-    });
+    if ($.nette) {
+        $.nette.init();
+        $.nette.ext({
+            success: function () {
+                $.nette.load();
+            }
+        });
+    }
 
-    initMobileNav($('#nav-mobile'));
+    // initMobileNav($('#nav-mobile'));
     initEasterEgg($(document), 'do a barrel roll');
     initLinkLogging();
     initTabs();

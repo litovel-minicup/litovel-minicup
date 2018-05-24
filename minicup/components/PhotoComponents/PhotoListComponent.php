@@ -61,6 +61,10 @@ class PhotoListComponent extends BaseComponent
         $this->redrawControl('photos');
     }
 
+    /**
+     * @throws \Nette\Application\AbortException
+     * @throws \Nette\Application\UI\InvalidLinkException
+     */
     public function handleAll()
     {
         $data = [];

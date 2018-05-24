@@ -54,23 +54,24 @@ class JsComponentFactory
         $files = new FileCollection($this->wwwPath);
         $files->addFile('assets/js/jquery.js');
         $files->addFile('assets/js/jquery.plugin.js');
-        $files->addFile('assets/js/dropper.js');
-        $files->addFile('assets/js/select2.js');
-        $files->addFile('assets/js/nette.ajax.js');
-        $files->addFile('assets/js/nette.ajax.confirm.js');
-        $files->addFile('assets/js/nette.forms.js');
         $files->addFile('assets/js/jquery.swipebox.js');
-        $files->addFile('assets/js/bootstrap.js');
         $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
-            $files->addFile('assets/js/chartist.js');
+            /*$files->addFile('assets/js/chartist.js');
             $files->addFile('assets/js/chartist.tooltip.js');
             $files->addFile('assets/js/chartist.legend.js');
-            $files->addFile('assets/js/chartist.barlabels.js');
+            $files->addFile('assets/js/chartist.barlabels.js');*/
             $files->addFile('assets/js/jquery.countdown.js');
             $files->addFile('assets/js/jquery.countdown.cs.js');
+
         } elseif (in_array($module, ['admin', 'management'])) {
+            $files->addFile('assets/js/select2.js');
+            $files->addFile('assets/js/dropper.js');
+            $files->addFile('assets/js/bootstrap.js');
+            $files->addFile('assets/js/nette.ajax.js');
+            $files->addFile('assets/js/nette.ajax.confirm.js');
+            $files->addFile('assets/js/nette.forms.js');
             $files->addFile('assets/js/admin/grido.js');
             $files->addFile('assets/js/admin/grido.ext.js');
             $files->addFile('assets/js/admin/toastr.js');

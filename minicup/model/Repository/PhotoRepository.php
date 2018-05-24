@@ -108,14 +108,15 @@ class PhotoRepository extends BaseRepository
                       pt1.tag_id IS NOT NULL AND pt2.tag_id IS NOT NULL
                     ) OR (
                       -- or has one tag and has been taken in match term
-                      (pt1.tag_id IS NOT NULL OR pt2.tag_id IS NOT NULL) AND taken BETWEEN %s AND %s
+                      (pt1.tag_id IS NOT NULL OR pt2.tag_id IS NOT NULL) AND taken BETWEEN %s AND %s AND taken = %s
                     )
                     ORDER BY taken;
                 ',
                 $match->homeTeam->tag->id,
                 $match->awayTeam->tag->id,
                 $match->matchTerm->start->format('H:i:s'),
-                $match->matchTerm->end->format('H:i:s')
+                $match->matchTerm->end->format('H:i:s'),
+                $match->matchTerm->day->day->format('Y-m-d')
             )->fetchAll()
         );
     }

@@ -117,6 +117,9 @@
     }
 
     TR {
+      &[onclick] {
+        cursor: pointer;
+      }
       &:hover {
         color: white;
         A {

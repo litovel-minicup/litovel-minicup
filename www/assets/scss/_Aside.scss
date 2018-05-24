@@ -11,9 +11,8 @@
 
   border-bottom: 2px solid $dark--yellow;
 
-  
   A {
-    color: rgba(0,0,0,.75);
+    color: rgba(0, 0, 0, .75);
     &:hover {
       background: black;
       color: white;
@@ -35,7 +34,7 @@
 
   &__subhead {
     background: $medium--yellow;
-    color: rgba(0,0,0,.5);
+    color: rgba(0, 0, 0, .5);
   }
 
   &__content {
@@ -98,11 +97,18 @@
 
     TBODY {
       font-size: .95rem;
-      color: rgba(0,0,0,.75);
+      color: rgba(0, 0, 0, .75);
     }
 
     &--upcoming {
       tr {
+        &[onclick] {
+          cursor: pointer;
+          &:hover td {
+            background-color: black;
+            color: white;
+          }
+        }
         &:nth-of-type(1) td {
           height: 40px;
           vertical-align: bottom;
@@ -115,10 +121,10 @@
       }
 
       td {
-        A {
-          padding: 3px 15px !important;
-          display: block;
-        }
+        //A {
+        padding: 3px 15px !important;
+        //display: block;
+        //}
         vertical-align: middle;
 
         &:nth-of-type(1) {
@@ -135,10 +141,7 @@
           background: $medium--yellow;
           font-family: "Montserrat";
           text-align: center;
-          A {
-            display: block;
-            color: white;
-          }
+          color: white;
         }
       }
     }

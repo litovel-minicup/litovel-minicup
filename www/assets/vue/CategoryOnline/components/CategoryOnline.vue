@@ -9,8 +9,11 @@
             ></match-panel>
         </div>
         <template v-if="hasUpcomingMatches">
-            <div v-if="hasOnlineMatches" class="Article__head Box__head">
-                <h2 class="Article__head__text Box__head__text">Další zápasy</h2>
+            <div v-if="true" class="Article__head Box__head">
+                <h2 class="Article__head__text Box__head__text">
+                    <template v-if="hasOnlineMatches">Další zápasy</template>
+                    <template v-else>Nejbližší zápasy</template>
+                </h2>
             </div>
             <div class="Box__content Live">
                 <nav>

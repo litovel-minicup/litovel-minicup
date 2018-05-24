@@ -41,6 +41,7 @@ class MatchDetailComponent extends BaseComponent
         $this->PLCF = $PLCF;
         $this->photos = function () use ($match, $PR) {
             static $photos;
+
             if ($photos === NULL)
                 $photos = $PR->findForMatch($match);
             return $photos;
