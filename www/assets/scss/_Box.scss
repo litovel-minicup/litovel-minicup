@@ -6,6 +6,11 @@
 		&__icon {
 			@include flex(0 0 75px);
 
+			&[class*=icon__] {
+				// fallback for icon saved as static contents in database
+				line-height: 75px;
+			}
+
 			&--team {
 				//background: red;
 
