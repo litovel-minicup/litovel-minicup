@@ -2,17 +2,28 @@
 {block body}
     {control css}
 
-    <div id="fb-root"></div>
     <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1709323006015727',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v2.6'
+            });
+        };
+
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
+            if (d.getElementById(id)) {
+                return;
+            }
             js = d.createElement(s);
             js.id = id;
-            js.src = "//connect.facebook.net/cs_CZ/sdk.js#xfbml=1&version=v2.6&appId=1709323006015727";
+            js.src = "https://connect.facebook.net/cs_CZ/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
     <!--[if lt IE 9]>
     <div id="warning">
         <a href="http://www.browser-update.org/cs/update.html" target="_blank">
@@ -62,7 +73,8 @@
             <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
             {*<a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a> *}
             <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">fotogalerie</a>
-            {* <a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a> *}
+            {*<a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a>*}
+            
         </nav>
     </header>
     <!-- main class -->
@@ -117,23 +129,25 @@
                 <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
                 <div class="Box__content Footer__content">Martin Zifčák<br>
                     <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
-                    +420 603 934 479
-                </div>
-            </div>
+                    <a href="tel:+420603934479">+420 603 934 479</a> <br><br>
 
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Facebook</div>
-                <div class="Box__content Footer__content">
                     <a href="https://www.facebook.com/litovel.minicup/" target="_blank">
-                        Facebook stránka turnaje Litovel MINICUP
+                        Facebook turnaje Litovel MINICUP
                     </a>
                 </div>
             </div>
 
             <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
+                <div class="Box__subhead Footer__subhead">Archiv</div>
                 <div class="Box__content Footer__content">
                     {control archiveYearsToggleComponent:archiveYears}
+                </div>
+            </div>
+
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">&nbsp;</div>
+                <div class="Box__content Footer__content">
+                    <a href="//live.minicup.tatranlitovel.cz/">administrace LIVE</a>
                     <br>
                     <a n:href=":Admin:Homepage:default">administrace</a>
                     <br>
