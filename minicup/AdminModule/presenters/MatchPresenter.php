@@ -3,11 +3,13 @@
 namespace Minicup\AdminModule\Presenters;
 
 
+use Dibi\DateTime;
 use Dibi\Row;
 use Grido\Components\Columns\Column;
 use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
+use LeanMapper\IMapper;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Model\Entity\Category;
@@ -18,6 +20,7 @@ use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Html;
+use Tracy\Debugger;
 
 final class MatchPresenter extends BaseAdminPresenter
 {
@@ -84,6 +87,9 @@ final class MatchPresenter extends BaseAdminPresenter
         return $this->MFCF->create($this->params['category'], 8);
     }
 
+    /** @var IMapper @inject */
+    public $mapper;
+
     /**
      * @param string $name
      * @return Grid
@@ -98,11 +104,11 @@ final class MatchPresenter extends BaseAdminPresenter
         $f = $connection->select('[m.*]')
             ->from('[match] m')
             ->where('m.[category_id] = ', $this->getParameter('category')->id)
-            ->orderBy('d.[day] ASC, mt.[start] ASC, m.[id] ASC');
-        $f->leftJoin('[team_info] hti')->on('m.[home_team_info_id] = hti.[id]')->select('hti.[name] htiname');
-        $f->leftJoin('[team_info] ati')->on('m.[away_team_info_id] = ati.[id]')->select('ati.[name] atiname');
-        $f->leftJoin('[match_term] mt')->on('m.[match_term_id] = mt.[id]');
-        $f->leftJoin('[day] d')->on('mt.[day_id] = d.[id]');
+            ->orderBy('[d.day] ASC, [mt.start] ASC, [m.id] ASC');
+        $f->innerJoin('[team_info]')->as('hti')->on('[m.home_team_info_id] = [hti.id]')->select('[hti.name]')->as('htiname');
+        $f->innerJoin('[team_info]')->as('ati')->on('[m.away_team_info_id] = [ati.id]')->select('[ati.name]')->as('atiname');
+        $f->innerJoin('[match_term]')->as('mt')->on('[m.match_term_id] = [mt.id]');
+        $f->innerJoin('[day]')->as('d')->on('[mt.day_id] = [d.id]');
         $g->setModel($f);
 
         $g->addColumnNumber('id', '#');
@@ -112,19 +118,7 @@ final class MatchPresenter extends BaseAdminPresenter
             return $this->link(':Front:Match:detail', ['match' => $match]);
         });
 
-        $scoreEditCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
-            /** @var Match $match */
-            $match = $MR->get($id);
-            $match->{$column->getName()} = $newValue;
-            if ($match->confirmed === NULL) {
-                return FALSE;
-            }
-            $MR->persist($match);
-            $count = $MM->regenerateFromMatch($match);
-            $this->flashMessage("Skóre bylo úspěšně upraveno, historie byla přegenerována pro {$count} zápasů.");
-            return TRUE;
-        };
-
+        $scoreEditCallback = $this->getScoreEditableCallback();
 
         $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
@@ -143,18 +137,47 @@ final class MatchPresenter extends BaseAdminPresenter
             ->setColumn('score_away');
 
         $control = new SelectBox(NULL, Match::ONLINE_STATE_CHOICES);
-        $g->addColumnText('online_state', 'Stav online')->setEditableControl($control)->setEditableCallback(function ($id, $new, $old, $column) {
+        $g->addColumnText('online_state', 'Stav online')
+            ->setEditableControl($control)
+            ->setEditableRowCallback(function ($id, Column $col) {
+                /** @var Match $match */
+                $match = $this->MR->get($id, FALSE);
+                return $match->getOnlineStateName();
+            })
+            ->setEditableCallback(function ($id, $new, $old, $column) {
+                /** @var Match $match */
+                $match = $this->MR->get($id, False);
+                $match->onlineState = $new;
+                $this->MR->persist($match);
+                $this->flashMessage("Online stav zápasu {$id} změněn z {$old} na {$new}.");
+                return TRUE;
+            })
+            ->setCustomRender(function ($row) {
+                if ($row instanceof Row)
+                    return Match::ONLINE_STATE_CHOICES[$row->online_state];
+                return $row;
+            });
+
+        $halfStartEditableCallback = function ($id, $new, $old, Column $col) {
             /** @var Match $match */
-            $match = $this->MR->get($id, False);
-            $match->onlineState = $new;
-            $this->MR->persist($match);
-            $this->flashMessage("Online stav zápasu {$id} změněn z {$old} na {$new}.");
+            $match = $this->MR->get($id);
+            $match->{$this->mapper->getEntityField('match', $col->getName())} = new DateTime($new);
+            try {
+                $this->MR->persist($match);
+            } catch (\Exception $e) {
+                $this->flashMessage("Chyba při editaci {$col->getName()} {$e->getMessage()}!");
+                Debugger::log($e);
+                return TRUE;
+            }
+
+            $this->flashMessage("Sloupec {$col->getName()} úspěšně upraven!");
             return TRUE;
-        })->setCustomRender(function ($row) {
-            return Match::ONLINE_STATE_CHOICES[$row->online_state];
-        });
-        $g->addColumnDate('first_half_start', 'Začátek první půle', Date::FORMAT_DATETIME);
-        $g->addColumnDate('second_half_start', 'Začátek druhé půle', Date::FORMAT_DATETIME);
+        };
+        $g->addColumnDate('first_half_start', 'Začátek první půle', Date::FORMAT_DATETIME)
+            ->setEditableCallback($halfStartEditableCallback);
+        $g->addColumnDate('second_half_start', 'Začátek druhé půle', Date::FORMAT_DATETIME)
+            ->setEditableCallback($halfStartEditableCallback);
+
         $g->addColumnDate('confirmed', 'Potvrzeno', Date::FORMAT_DATETIME);
         $g->addColumnNumber('confirmed_as', 'Potvrzeno jako');
         $g->addColumnText('facebook_video_id', 'ID Facebook streamu')->setEditableCallback(function ($id, $new, $old, $col) {
@@ -174,5 +197,25 @@ final class MatchPresenter extends BaseAdminPresenter
             return $tr;
         });
         return $g;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getScoreEditableCallback(): \Closure
+    {
+        $scoreEditCallback = function ($id, $newValue, $oldValue, Column $column) {
+            /** @var Match $match */
+            $match = $this->MR->get($id);
+            $match->{$column->getName()} = $newValue;
+            if ($match->confirmed === NULL) {
+                return FALSE;
+            }
+            $this->MR->persist($match);
+            $count = $this->MM->regenerateFromMatch($match);
+            $this->flashMessage("Skóre bylo úspěšně upraveno, historie byla přegenerována pro {$count} zápasů.");
+            return TRUE;
+        };
+        return $scoreEditCallback;
     }
 }
