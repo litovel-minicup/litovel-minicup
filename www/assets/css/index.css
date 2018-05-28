@@ -2192,15 +2192,19 @@ Header module
 .Table__matches thead th:nth-of-type(5) {
   width: 10%; }
 .Table__matches thead th:nth-of-type(6) {
-  width: 12.5%; }
-.Table__matches TBODY TD:nth-of-type(1), .Table__matches TBODY td:nth-of-type(3),
-.Table__matches TBODY td:nth-of-type(6) {
+  width: 5%; }
+.Table__matches TBODY TD:nth-of-type(1),
+.Table__matches TBODY TD:nth-of-type(3) {
   font-weight: 600;
   text-align: left;
   padding-left: 20px; }
-  .Table__matches TBODY TD:nth-of-type(1) A, .Table__matches TBODY td:nth-of-type(3) A,
-  .Table__matches TBODY td:nth-of-type(6) A {
+  .Table__matches TBODY TD:nth-of-type(1) A,
+  .Table__matches TBODY TD:nth-of-type(3) A {
     color: rgba(0, 0, 0, 0.75); }
+.Table__matches TBODY TD:nth-of-type(6) {
+  vertical-align: middle;
+  text-align: right;
+  padding-right: 20px; }
 .Table__matches TBODY TR[onclick] {
   cursor: pointer; }
 .Table__matches TBODY TR:hover {

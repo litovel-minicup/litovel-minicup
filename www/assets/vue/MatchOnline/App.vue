@@ -8,13 +8,18 @@
                             :away-team-url="awayTeamUrl"
                     ></match-header>
                     <facebook-video
-                            v-if="facebookVideoId"
-                            :facebook-video-id="facebookVideoId"
+                            v-if="facebookVideoUrl"
+                            :facebook-video-url="facebookVideoUrl"
+                            :link="fbLink"
                     ></facebook-video>
                     <event-list
                             :events="events"
                             :match="match"
                     ></event-list>
+                    <!-- <facebook-comments
+                            v-if="facebookVideoUrl"
+                            :facebook-video-url="facebookVideoUrl"
+                    ></facebook-comments>-->
                 </div>
             </template>
         </transition>
@@ -30,6 +35,7 @@
 <script>
     import MatchHeader from './components/MatchHeader'
     import FacebookVideo from './components/FacebookVideo'
+    import FacebookComments from './components/FacebookComments'
     import EventList from './components/EventList'
     import VueLoading from 'vue-loading-template'
     import {mapState} from 'vuex'
@@ -41,18 +47,22 @@
             MatchHeader,
             FacebookVideo,
             EventList,
-            VueLoading
+            VueLoading,
+            FacebookComments,
         },
         data() {
             return {
                 homeTeamUrl: '',
                 awayTeamUrl: '',
-                matchId: 0
+                matchId: 0,
+                fbLink: ''
             }
         },
         computed: {
             ...mapState({
-                facebookVideoId: state => state.match.facebook_video_id,
+                facebookVideoUrl:
+                    state => state.match.facebook_video_id ?
+                        `https://www.facebook.com/litovel.minicup/videos/${state.match.facebook_video_id}/` : '',
                 match: 'match',
                 events: 'events'
             }),
@@ -63,12 +73,14 @@
         },
         methods: {
             loadMatch() {
-                this.$store.dispatch('subscribe', {match: this.matchId});
-                this.$store.dispatch('loadEvents');
+                this.$store.dispatch('subscribe', {match: this.matchId}).then(() => {
+                    this.$store.dispatch('loadEvents');
+                });
             },
             refreshFallback() {
-                this.$store.dispatch('refreshFallback');
-                this.$store.dispatch('loadEvents');
+                this.$store.dispatch('refreshFallback').then(() => {
+                    this.$store.dispatch('loadEvents');
+                });
             }
         },
         mounted() {

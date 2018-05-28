@@ -1,6 +1,6 @@
 <template>
-    <div class="fb-video" :data-href="videoLink" data-width="665" data-show-text="false">
-        <blockquote :cite="videoLink" class="fb-xfbml-parse-ignore">
+    <div class="fb-video" :data-href="facebookVideoUrl" data-width="665" data-show-text="false">
+        <blockquote :cite="facebookVideoUrl" class="fb-xfbml-parse-ignore">
             <!-- <a :href="videoLink">mladší - SOKOL BŘVE vs. VELKÉ
                 MEZIŘÍČÍ</a>
             <p>
@@ -25,18 +25,13 @@
         components: {
             VueLoading,
         },
-        props: ['facebookVideoId'],
+        props: ['facebookVideoUrl'],
         methods: {
             parseFacebook() {
                 try {
                     FB.XFBML.parse(this.$el.parent);
                 } catch (e) {
                 }
-            }
-        },
-        computed: {
-            videoLink() {
-                return `https://www.facebook.com/litovel.minicup/videos/${this.facebookVideoId}/`;
             }
         },
         watch: {
