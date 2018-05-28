@@ -1,8 +1,12 @@
-<div class="Section animated">
+<div class="Section">
     <div class="Article">
         <div class="Article__head Box__head">
-            <div class="Article__head__icon Box__head__icon icon__teams"></div>
-            <h1 class="Article__head__text Box__head__text">Tým {$team->name} ({$team->category->name})</h1>
+            <span class="Article__head__icon Box__head__icon Box__head__icon--team">
+                {$team->i|clubLogo}
+            </span>
+            <h1 class="Article__head__text Box__head__text">{$team->name} <span>({$team->category->name})</span>
+            </h1>
+
         </div>
         <div class="Box__content Table__content Team__content">
             <table class="Table Table__detail">
@@ -26,24 +30,92 @@
         </div>
     </div>
 </div>
+
+{if $players}
+    <div class="Section">
+        <div class="Article">
+            <div class="Article__head Box__head">
+            <span class="Article__head__icon Box__head__icon">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                     x="0px" y="0px"
+                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                     xml:space="preserve">
+                <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
+                <g opacity="0.3">
+                    <g>
+                        <path fill="#231F20" d="M43.7,26.648c2.526,0,4.66,2.887,4.66,6.303c0,2.504-1.123,4.776-2.862,5.79l-1.854,1.08l-1.832-1.132
+                            c-1.685-1.041-2.772-3.293-2.772-5.738C39.039,29.535,41.174,26.648,43.7,26.648 M43.566,43.664l2.814,0.603
+                            c4.81,1.029,8.431,4.382,9.582,8.583H30.898c1.196-4.287,4.992-7.733,9.894-8.661L43.566,43.664 M43.7,23.648
+                            c-4.23,0-7.661,4.165-7.661,9.303c0,3.623,1.708,6.752,4.195,8.29c-7.264,1.374-12.732,7.34-12.732,14.493
+                            c0,0.039,0.006,0.077,0.006,0.115h31.835c0-0.038,0.006-0.076,0.006-0.115c0-7.024-5.276-12.89-12.341-14.401
+                            c2.572-1.499,4.352-4.685,4.352-8.381C51.36,27.813,47.931,23.648,43.7,23.648L43.7,23.648z"></path>
+                    </g>
+                    <path fill="#231F20" d="M33.434,40.41c0.129-0.583,0.207-1.192,0.207-1.825c0-3.875-2.586-7.016-5.776-7.016
+                        s-5.777,3.14-5.777,7.016c0,2.73,1.289,5.091,3.165,6.251c-5.479,1.036-9.602,5.534-9.602,10.929c0,0.028,0.005,0.058,0.005,0.086
+                        h8.858c-0.001-0.038-0.003-0.077-0.003-0.116C24.51,49.367,28.026,43.633,33.434,40.41z"></path>
+                </g>
+                </svg>
+            </span>
+                <h2 class="Article__head__text Box__head__text">Soupiska hráčů</span></h2>
+            </div>
+            <div class="Box__content Table__content Team__content">
+                {control playerListComponent}
+            </div>
+        </div>
+    </div>
+{/if}
+
+{*
 {if $team->order}
     <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="historie-poradi">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__news"></div>
+               <span class="Article__head__icon Box__head__icon">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
+                    <g opacity="0.3">
+                        <g>
+                            <path fill="#231F20" d="M43.7,26.648c2.526,0,4.66,2.887,4.66,6.303c0,2.504-1.123,4.776-2.862,5.79l-1.854,1.08l-1.832-1.132
+                                c-1.685-1.041-2.772-3.293-2.772-5.738C39.039,29.535,41.174,26.648,43.7,26.648 M43.566,43.664l2.814,0.603
+                                c4.81,1.029,8.431,4.382,9.582,8.583H30.898c1.196-4.287,4.992-7.733,9.894-8.661L43.566,43.664 M43.7,23.648
+                                c-4.23,0-7.661,4.165-7.661,9.303c0,3.623,1.708,6.752,4.195,8.29c-7.264,1.374-12.732,7.34-12.732,14.493
+                                c0,0.039,0.006,0.077,0.006,0.115h31.835c0-0.038,0.006-0.076,0.006-0.115c0-7.024-5.276-12.89-12.341-14.401
+                                c2.572-1.499,4.352-4.685,4.352-8.381C51.36,27.813,47.931,23.648,43.7,23.648L43.7,23.648z"></path>
+                        </g>
+                        <path fill="#231F20" d="M33.434,40.41c0.129-0.583,0.207-1.192,0.207-1.825c0-3.875-2.586-7.016-5.776-7.016
+                            s-5.777,3.14-5.777,7.016c0,2.73,1.289,5.091,3.165,6.251c-5.479,1.036-9.602,5.534-9.602,10.929c0,0.028,0.005,0.058,0.005,0.086
+                            h8.858c-0.001-0.038-0.003-0.077-0.003-0.116C24.51,49.367,28.026,43.633,33.434,40.41z"></path>
+                    </g>
+                    </svg>
+                </span>
                 <h2 class="Article__head__text Box__head__text">Historie pořadí</h2>
             </div>
             {control teamHistoryComponent}
         </div>
     </div>
 {/if}
+*}
 
 {if count($team->matches)}
     <div class="Section" n:cache="$team->cacheTag, tags => $team->cacheTag" id="zapasy">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__matches">
-                </div>
+                <span class="Article__head__icon Box__head__icon">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
+                    <path opacity="0.3" d="M43.584,22.833H25.667c-1.104,0-2,0.896-2,2v25.334c0,1.104,0.896,2,2,2h17.917c1.104,0,2-0.896,2-2V24.833
+                        C45.584,23.729,44.688,22.833,43.584,22.833z M41.249,25.833c-1.842,1.8-4.352,2.917-7.124,2.917c-2.772,0-5.283-1.117-7.124-2.917
+                        H41.249z M27.866,49.167c1.853-1.876,4.421-3.042,7.259-3.042c2.838,0,5.408,1.166,7.259,3.042H27.866z M42.584,45.436
+                        c-2.123-1.455-4.69-2.311-7.458-2.311c-3.219,0-6.167,1.154-8.458,3.067v-7.193h15.917V45.436z M42.584,36H26.667v-6.561
+                        c2.123,1.455,4.69,2.311,7.458,2.311c3.219,0,6.167-1.154,8.458-3.067V36z"></path>
+                    </svg>
+                </span>
                 <h2 class="Article__head__text Box__head__text">Zápasy</h2>
             </div>
             {control listOfMatchesComponent}
@@ -55,7 +127,27 @@
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__news"></div>
+                <span class="Article__head__icon Box__head__icon">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
+                    <g opacity="0.3">
+                        <g>
+                            <path fill="#231F20" d="M43.7,26.648c2.526,0,4.66,2.887,4.66,6.303c0,2.504-1.123,4.776-2.862,5.79l-1.854,1.08l-1.832-1.132
+                                c-1.685-1.041-2.772-3.293-2.772-5.738C39.039,29.535,41.174,26.648,43.7,26.648 M43.566,43.664l2.814,0.603
+                                c4.81,1.029,8.431,4.382,9.582,8.583H30.898c1.196-4.287,4.992-7.733,9.894-8.661L43.566,43.664 M43.7,23.648
+                                c-4.23,0-7.661,4.165-7.661,9.303c0,3.623,1.708,6.752,4.195,8.29c-7.264,1.374-12.732,7.34-12.732,14.493
+                                c0,0.039,0.006,0.077,0.006,0.115h31.835c0-0.038,0.006-0.076,0.006-0.115c0-7.024-5.276-12.89-12.341-14.401
+                                c2.572-1.499,4.352-4.685,4.352-8.381C51.36,27.813,47.931,23.648,43.7,23.648L43.7,23.648z"></path>
+                        </g>
+                        <path fill="#231F20" d="M33.434,40.41c0.129-0.583,0.207-1.192,0.207-1.825c0-3.875-2.586-7.016-5.776-7.016
+                            s-5.777,3.14-5.777,7.016c0,2.73,1.289,5.091,3.165,6.251c-5.479,1.036-9.602,5.534-9.602,10.929c0,0.028,0.005,0.058,0.005,0.086
+                            h8.858c-0.001-0.038-0.003-0.077-0.003-0.116C24.51,49.367,28.026,43.633,33.434,40.41z"></path>
+                    </g>
+                    </svg>
+                </span>
                 <h2 class="Article__head__text Box__head__text">Informace</h2>
             </div>
             {control staticContentComponent}
@@ -67,7 +159,32 @@
     <div class="Section" id="foto">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                <span class="Article__head__icon Box__head__icon">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
+                    <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"></rect>
+                    <g>
+                        <polygon opacity="0.3" fill="#231F20"
+                                 points="25.236,49.834 42.112,49.834 37.725,41.171 34.8,46.571 28.612,35.995   "></polygon>
+                        <path opacity="0.3" fill="#231F20" d="M56.115,37.262l-7.535-7.535c0.834-1.176,1.329-2.608,1.329-4.156
+                            c0-3.975-3.234-7.208-7.209-7.208c-3.974,0-7.207,3.233-7.207,7.208s3.233,7.208,7.207,7.208c1.452,0,2.804-0.435,3.937-1.177
+                            l7.569,7.57L56.115,37.262z M38.193,25.571c0-2.486,2.021-4.508,4.507-4.508c2.486,0,4.509,2.022,4.509,4.508
+                            s-2.022,4.508-4.509,4.508C40.215,30.079,38.193,28.057,38.193,25.571z"></path>
+                        <g>
+                            <path opacity="0.3" fill="#231F20" d="M36.571,33.341c-0.336,0.501-0.534,1.105-0.534,1.754c0,1.74,1.411,3.15,3.15,3.15
+                                c1.614,0,2.932-1.22,3.113-2.786C40.143,35.372,38.161,34.598,36.571,33.341z"></path>
+                        </g>
+                        <g>
+                            <path opacity="0.3" fill="#231F20" d="M46.448,35.233v18.638c0,0.035-0.029,0.065-0.065,0.065H21.649
+                                c-0.036,0-0.064-0.03-0.064-0.065V29.139c0-0.037,0.028-0.066,0.064-0.066h11.795c-0.323-0.852-0.534-1.756-0.61-2.7H21.649
+                                c-1.524,0-2.765,1.24-2.765,2.766v24.732c0,1.524,1.24,2.766,2.765,2.766h24.733c1.524,0,2.766-1.241,2.766-2.766V37.933
+                                L46.448,35.233z"></path>
+                        </g>
+                    </g>
+                    </svg>
+                </span>
                 <h2 class="Article__head__text Box__head__text">Foto týmu</h2>
             </div>
             <img style="width: 100%;" src="{plink :Media:medium $team->tag->mainPhoto->filename}"
@@ -80,7 +197,9 @@
     <div class="Section">
         <div class="Article">
             <div class="Article__head Box__head">
-                <div class="Article__head__icon Box__head__icon icon__photo"></div>
+                <span class="Article__head__icon Box__head__icon">
+                    {include "../@icons/photos.svg"}
+                </span>
                 <h2 class="Article__head__text Box__head__text">Fotografie</h2>
             </div>
             {control photoListComponent}

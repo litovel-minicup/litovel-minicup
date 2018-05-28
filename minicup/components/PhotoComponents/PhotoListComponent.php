@@ -5,6 +5,7 @@ namespace Minicup\Components;
 
 use Latte\Runtime\Filters;
 use Minicup\Model\Entity\Photo;
+use Tracy\Debugger;
 
 interface IPhotoListComponentFactory
 {
@@ -50,6 +51,7 @@ class PhotoListComponent extends BaseComponent
         $this->template->photos = $this->actual ? array_slice($this->photos, 0, $this->actual) : $this->photos;
         $this->template->max = count($this->photos);
         $this->template->allPhotos = $this->photos;
+        $this->template->mediaRoot = Debugger::$productionMode ? '' : 'https://minicup.tatranlitovel.cz';
         parent::render();
     }
 
@@ -59,6 +61,10 @@ class PhotoListComponent extends BaseComponent
         $this->redrawControl('photos');
     }
 
+    /**
+     * @throws \Nette\Application\AbortException
+     * @throws \Nette\Application\UI\InvalidLinkException
+     */
     public function handleAll()
     {
         $data = [];

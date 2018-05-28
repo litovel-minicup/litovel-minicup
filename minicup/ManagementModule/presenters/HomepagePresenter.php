@@ -4,7 +4,7 @@ namespace Minicup\ManagementModule\Presenters;
 
 use Minicup\Model\Entity\TeamInfo;
 use Nette\Application\UI\Form;
-use Nette\ArrayHash;
+use Nette\Utils\ArrayHash;
 use Nette\Forms\Controls\TextInput;
 
 /**
@@ -15,12 +15,16 @@ final class HomepagePresenter extends BaseManagementPresenter
 
     protected function isLoggedToManageTeam()
     {
-        if ($this->action == 'default') {
+        if ($this->action === 'default') {
             return true;
         }
         return parent::isLoggedToManageTeam();
     }
 
+    /**
+     * @param TeamInfo $team
+     * @throws \Nette\Application\AbortException
+     */
     public function actionDefault(TeamInfo $team)
     {
         if (parent::isLoggedToManageTeam()) {
@@ -42,7 +46,7 @@ final class HomepagePresenter extends BaseManagementPresenter
         $f->addProtection();
 
         $f->onSuccess[] = function (Form $form, ArrayHash $values) {
-            if ($values['pin'] == $this->team->password) {
+            if ($values['pin'] === $this->team->password) {
                 $this->getHttpResponse()->setCookie(self::MANAGEMENT_COOKIE, $this->team->id, 0);
                 $this->flashMessage('Přihlášení proběhlo úspěšně!', 'success');
                 $this->redirect('TeamRoster:', [$this->team]);

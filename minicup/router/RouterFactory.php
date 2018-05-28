@@ -2,6 +2,7 @@
 
 namespace Minicup\Router;
 
+use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Team;
@@ -18,7 +19,6 @@ use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
-
 use Nette\SmartObject;
 use Nette\Utils\Strings;
 
@@ -90,14 +90,6 @@ class RouterFactory
         $TagR = $this->TagR;
         $route = $this->yearCategoryRouteFactory;
         $front = new RouteList('Front');
-        $matchFilter = [
-            Route::FILTER_IN => function ($id) use ($TagR) {
-                return $this->MR->get($id);
-            },
-            Route::FILTER_OUT => function (Match $match) {
-                return $match->id;
-            }
-        ];
 
         $front[] = $route('foto/tagy[/<tags .+>]/', [
             'presenter' => 'Gallery',
@@ -169,6 +161,47 @@ class RouterFactory
         $front[] = $route('zapasy/', [
             'presenter' => 'Match',
             'action' => 'default'
+        ]);
+
+        $front[] = $route('zive/', [
+            'presenter' => 'Match',
+            'action' => 'online'
+        ]);
+
+        $front[] = $route(Match::MATCH_DETAIL_BASE_URL_PATTERN, [
+            'presenter' => 'Match',
+            'action' => 'detail',
+            NULL => [
+                Route::FILTER_OUT => function (array $params) {
+                    if (!isset($params['match']))
+                        return NULL;
+                    if (!($params['match'] instanceof Match))
+                        return NULL;
+                    $params['match'] = sprintf(
+                        Match::MATCH_DETAIL_URL_PART_PATTERN,
+                        $params['match']->homeTeam->slug,
+                        $params['match']->awayTeam->slug
+                    );
+                    return $params;
+                },
+                Route::FILTER_IN => function ($params) {
+                    $slug = $params['match'];
+                    $parts = Strings::split($slug, Match::MATCH_DETAIL_URL_PART_SPLITTER);
+                    if (\count($parts) !== 2) return NULL;
+                    [$home, $away] = $parts;
+
+                    // get teams from slugs
+                    $home = $this->TIR->getBySlug($params['category'], $home);
+                    $away = $this->TIR->getBySlug($params['category'], $away);
+                    if (!$home || !$away) return NULL;
+
+                    $match = $this->MR->getCommonMatchForTeams($home->team, $away->team, NULL);
+                    if (!$match) return NULL;
+
+                    $params['match'] = $match;
+                    return $params;
+                },
+            ]
         ]);
 
         $front[] = $route('tymy/', [
@@ -265,28 +298,11 @@ class RouterFactory
             'category' => $route->getCategoryMetadata(TRUE)
         ]);
 
-        $managementTeamFilter = [
-            Route::FILTER_IN => function ($token) {
-                return $this->TIR->getByToken($token);
-            },
-            Route::FILTER_OUT => function (TeamInfo $team) {
-                return $team->authToken;
-            }
-        ];
+        $api = $this->createApiRouter();
+        $management = $this->createManagementRouter();
 
-        $router[] = new Route('management/<team>/soupiska', [
-            'module' => 'Management',
-            'presenter' => 'TeamRoster',
-            'action' => 'default',
-            'team' => $managementTeamFilter
-        ]);
-
-        $router[] = new Route('management/<team>', [
-            'module' => 'Management',
-            'presenter' => 'Homepage',
-            'action' => 'default',
-            'team' => $managementTeamFilter
-        ]);
+        $router[] = $management;
+        $router[] = $api;
 
         $router[] = new Route('media/<action>/<slug>', [
             'presenter' => 'Media',
@@ -308,6 +324,79 @@ class RouterFactory
 
         // $front[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
         return $router;
+    }
+
+    protected function createApiRouter()
+    {
+        $list = new RouteList('Api');
+
+        $matchFilter = [
+            Route::FILTER_IN => function ($id) {
+                return $this->MR->get($id);
+            },
+            Route::FILTER_OUT => function (Match $match) {
+                return $match->id;
+            }
+        ];
+
+        $categoryFilter = [
+            Route::FILTER_IN => function ($id) {
+                return $this->CR->get($id);
+            },
+            Route::FILTER_OUT => function (Category $category) {
+                return $category->id;
+            }
+        ];
+
+        $list[] = new Route('api/v1/match/detail/<match>', [
+            'presenter' => 'Match',
+            'action' => 'detail',
+            'match' => $matchFilter
+        ]);
+
+        $list[] = new Route('api/v1/match/events/<match>', [
+            'presenter' => 'Match',
+            'action' => 'events',
+            'match' => $matchFilter
+        ]);
+
+        $list[] = new Route('api/v1/category/upcoming-matches/<category>', [
+            'presenter' => 'Category',
+            'action' => 'upcomingMatches',
+            'category' => $categoryFilter
+        ]);
+
+        return $list;
+    }
+
+    /**
+     * @return array|RouteList
+     */
+    protected function createManagementRouter()
+    {
+        $managementTeamFilter = [
+            Route::FILTER_IN => function ($token) {
+                return $this->TIR->getByToken($token);
+            },
+            Route::FILTER_OUT => function (TeamInfo $team) {
+                return $team->authToken;
+            }
+        ];
+
+        $management = new RouteList('Management');
+
+        $management[] = new Route('management/<team>/soupiska', [
+            'presenter' => 'TeamRoster',
+            'action' => 'default',
+            'team' => $managementTeamFilter
+        ]);
+
+        $management[] = new Route('management/<team>', [
+            'presenter' => 'Homepage',
+            'action' => 'default',
+            'team' => $managementTeamFilter
+        ]);
+        return $management;
     }
 
     /**

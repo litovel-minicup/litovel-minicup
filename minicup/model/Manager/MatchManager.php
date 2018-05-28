@@ -71,6 +71,7 @@ class MatchManager
      * After that regenerates for repaired match.
      *
      * @param Match $match repaired match
+     * @return mixed
      * @throws Exception
      * @throws \Exception
      */
@@ -108,7 +109,7 @@ class MatchManager
                 $_match->category->cleanCache();
                 $this->confirmMatch($_match, $_match->scoreHome, $_match->scoreAway);
             }
-            $count = count($matchesAfter);
+            $count = \count($matchesAfter);
         });
         return $count;
     }
@@ -124,13 +125,14 @@ class MatchManager
      * @throws Exception
      * @throws \Exception
      */
-    public function confirmMatch(Match $match, $scoreHome, $scoreAway)
+    public function confirmMatch(Match $match, $scoreHome, $scoreAway): Match
     {
         $category = $match->category;
         $match->scoreHome = $scoreHome;
         $match->scoreAway = $scoreAway;
         $this->connection->transactional(function (Connection $connection) use ($match, $scoreHome, $scoreAway, $category) {
             $match->confirmed = new DateTime();
+            $match->onlineState = Match::END_ONLINE_STATE;
             $this->MR->persist($match);
             $connection->commit();
             $this->replicator->replicate($category, $match);
@@ -147,7 +149,7 @@ class MatchManager
      * @param Category $category
      * @return bool
      */
-    public function isPlayingTime(Category $category)
+    public function isPlayingTime(Category $category): bool
     {
         $now = new DateTime();
         return NULL !== $this->MTR->getInTime($now);
@@ -157,7 +159,7 @@ class MatchManager
      * @param Category $category
      * @return bool
      */
-    public function isStarted(Category $category)
+    public function isStarted(Category $category): bool
     {
         foreach ($category->matches as $match) {
             if ($match->confirmed) {
@@ -171,7 +173,7 @@ class MatchManager
      * @param Category $category
      * @return bool
      */
-    public function isFinished(Category $category)
+    public function isFinished(Category $category): bool
     {
         foreach ($category->matches as $match) {
             if (!$match->confirmed) {

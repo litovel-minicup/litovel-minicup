@@ -40,6 +40,20 @@ class TeamInfoRepository extends BaseRepository
     }
 
     /**
+     * @param Category $category
+     * @param string   $slug
+     * @return TeamInfo|NULL
+     */
+    public function getBySlug(Category $category, string $slug)
+    {
+        $row = $this->createFluent()
+            ->where('[category_id] = ', $category->id)
+            ->where('[slug] = %s', $slug)
+            ->fetch();
+        return $row ? $this->createEntity($row) : NULL;
+    }
+
+    /**
      * @param $token string
      * @return TeamInfo|NULL
      */

@@ -10,20 +10,15 @@ use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\ITeamRosterManagementComponentFactory;
 use Minicup\Components\MatchFormComponent;
-use Minicup\Components\TeamRosterManagementComponent;
-use Minicup\Misc\ColorUtils;
 use Minicup\Misc\GridHelpers;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Player;
-use Minicup\Model\Entity\Team;
-use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\TextInput;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Html;
-use Tracy\Debugger;
 
 class TeamPresenter extends BaseAdminPresenter
 {
@@ -37,6 +32,7 @@ class TeamPresenter extends BaseAdminPresenter
         'slug' => 'Detail na webu',
         'name' => 'Název',
         'slug' => 'Slug',
+        'abbr' => 'Zkratka',
         'trainer_name' => 'Trenér',
         'dress_color' => 'Barva dresu',
         'dress_color_secondary' => 'Sekundární barva'
@@ -84,7 +80,7 @@ class TeamPresenter extends BaseAdminPresenter
      * @param string $name
      * @return Grid
      */
-    public function createComponentMatchesGridComponent($name)
+    public function createComponentTeamsGridComponent($name)
     {
         $connection = $this->connection;
         $TIR = $this->TIR;
@@ -95,7 +91,10 @@ class TeamPresenter extends BaseAdminPresenter
 
         $f = $connection->select('[ti].*')
             ->from('[team_info]')->as('ti')
-            ->where('ti.[category_id] = ', $this->getParameter('category')->id);
+            ->where('ti.[category_id] = ', $this->getParameter('category')->id)
+            ->select('COUNT([photo_tag.photo_id]) as photo_count')
+            ->leftJoin('[photo_tag]')->on('[photo_tag.tag_id] = [ti.tag_id]')
+            ->groupBy('[ti.id]');
 
         $g->setModel($f);
         $g->addColumnNumber('id', $this::TEAM_INFO_GRID_LABELS['id']);
@@ -111,20 +110,23 @@ class TeamPresenter extends BaseAdminPresenter
         });
 
         // Name && slug
-        $this->addTeamInfoEditableText($g, 'name');
-        $this->addTeamInfoEditableText($g, 'slug');
+        $this->addTeamInfoEditableText($g, 'name', 'name');
+        $this->addTeamInfoEditableText($g, 'slug', 'slug');
+        $this->addTeamInfoEditableText($g, 'abbr', 'abbr');
 
         // Treiner name
-        $this->addTeamInfoEditableText($g, 'trainer_name');
+        $this->addTeamInfoEditableText($g, 'trainerName', 'trainer_name');
 
         // Dress color
-        $this->addTeamInfoEditableText($g, 'dress_color');
-        $this->addTeamInfoEditableText($g, 'dress_color_secondary');
+        $this->addTeamInfoEditableText($g, 'dressColor', 'dress_color');
+        $this->addTeamInfoEditableText($g, 'dressColorSecondary', 'dress_color_secondary');
 
         $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Primární barva od');
         $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Primární barva do');
         $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sekundární barva od');
         $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sekundární barva do');
+
+        $g->addColumnNumber('photo_count', 'Počet fotek');
 
         return $g;
     }
@@ -221,10 +223,10 @@ class TeamPresenter extends BaseAdminPresenter
             });
     }
 
-    private function addTeamInfoEditableText(Grid $g, $identifier)
+    private function addTeamInfoEditableText(Grid $g, $identifier, $column)
     {
 
-        return $g->addColumnText($identifier, $this::TEAM_INFO_GRID_LABELS[$identifier])
+        return $g->addColumnText($column, $this::TEAM_INFO_GRID_LABELS[$column])
             ->setEditableCallback(GridHelpers::getEditableCallback($identifier, $this->TIR));
     }
 

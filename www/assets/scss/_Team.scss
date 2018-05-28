@@ -1,40 +1,40 @@
 .Team {
-	&__content {
-		ul {
-			li {		
+  &__content {
+    ul {
+      li {
 
-				.heading {
-					font-family: "PTBoldItalic";
-					font-size: 16px;
-				}
+        .heading {
+          font-family: "PTBoldItalic";
+          font-size: 16px;
+        }
 
-				.text {
-					font-family: "Montserrat";
-					font-size: 70px;
-				}
+        .text {
+          font-family: "Montserrat";
+          font-size: 70px;
+        }
 
-	  		}	
-		}
+      }
+    }
 
-		.Table tbody tr {
-			background: $light--grey!important;
+    .Table tbody tr {
+      background: $light--grey; // !important;
 
-			td {
-				a {
-					padding-top: 0px;
-					font-size: 22px;
-				}
-			}
+      td {
+        a {
+          padding-top: 0px;
+          font-size: 22px;
+        }
+      }
 
-		}
+    }
 
-		.Table tbody tr:hover {
-			color: black;
-		}
+    .Table tbody tr:hover {
+      color: black;
+    }
 
-	}
+  }
 
-	&__Text {
-		background: red;
-	}
+  &__Text {
+    background: red;
+  }
 }

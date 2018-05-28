@@ -1,7 +1,8 @@
 parameters:
+    liveServiceUrl: Nette\Http\Url('ws://localhost:8888/ws/live')
     texyLinkPrefix: "Front:"
     entityFQN: Minicup\Model\Entity
-    tournamentStart: "2018-06-08 13:00:00"
+    tournamentStart: "2018-06-08 12:30:00"
     cachedRepositories: [
     	@Minicup\Model\Repository\CategoryRepository,
     	@Minicup\Model\Repository\TeamInfoRepository,
@@ -27,6 +28,9 @@ decorator:
 		inject: yes
 		setup:
 			- injectProductionMode(%productionMode%)
+	Minicup\FrontModule\Presenters\BaseFrontPresenter:
+		setup:
+			- $liveServiceUrl = %liveServiceUrl%
 
 leanMapper: %connection%
 
@@ -36,7 +40,7 @@ services:
     year: @Minicup\Model\Repository\YearRepository::getSelectedYear
     - Minicup\Router\RouterFactory
     formFactory: Minicup\Misc\IFormFactory
-    filterLoader: Minicup\Misc\FilterLoader
+    filterLoader: Minicup\Misc\FilterLoader(%wwwDir%)
     - Minicup\Misc\TexyFactory(%texyLinkPrefix%)
     - Minicup\Router\YearCategoryRouteFactory
 
@@ -117,7 +121,7 @@ services:
     - implement: Minicup\Components\INewsFormComponentFactory
       parameters: [Minicup\Model\Entity\News news = NULL]
       arguments: [%news%]
-    - implement: Minicup\Components\ITeamHistoryComponent
+    - implement: Minicup\Components\ITeamHistoryComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]
     - implement: Minicup\Components\IPhotoEditComponentFactory
@@ -152,6 +156,15 @@ services:
     - implement: Minicup\Components\ITeamRosterManagementComponentFactory
       parameters: [Minicup\Model\Entity\TeamInfo team]
       arguments: [%team%]
+    - implement: Minicup\Components\IMatchDetailComponentFactory
+      parameters: [Minicup\Model\Entity\Match match]
+      arguments: [%match%]
+    - implement: Minicup\Components\ICategoryOnlineComponentFactory
+      parameters: [Minicup\Model\Entity\Category category]
+      arguments: [%category%]
+    - implement: Minicup\Components\IPlayerListComponentFactory
+      parameters: [array players]
+      arguments: [%players%]
     - implement: Minicup\Components\ITeamDetailComponentFactory
       parameters: [Minicup\Model\Entity\Team team]
       arguments: [%team%]

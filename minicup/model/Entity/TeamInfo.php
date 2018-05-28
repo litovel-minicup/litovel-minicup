@@ -13,6 +13,7 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        Player[]           $players m:belongsToMany
  * @property        string             $name                   czech name of team
  * @property        string             $slug                   slug for URL
+ * @property        string|NULL        $abbr                   team three or four letter abbr
  * @property        Team|NULL          $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL           $tag m:hasOne

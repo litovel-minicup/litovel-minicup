@@ -12,7 +12,6 @@ use Minicup\Model\Entity\Year;
 use Minicup\Model\Repository\BaseRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
-
 use Nette\SmartObject;
 
 class CacheManager
@@ -73,7 +72,7 @@ class CacheManager
         if ($entity instanceof TeamInfo && $entity->team) {
             $this->cleanByEntity($entity->team);
         }
-        $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()]]);
+        $this->cache->clean([Cache::TAGS => [$entity->getCacheTag()] + $entity->getCacheTags()]);
         $this->cache->remove($entity->getCacheTag());
         $this->cache->remove($entity::$CACHE_TAG);
     }

@@ -1,0 +1,32 @@
+<div class="Article__head Box__head">
+	<span class="Article__head__icon Box__head__icon">
+        {include "../@icons/match.svg"}
+    </span>
+    <h1 class="Article__head__text Box__head__text">
+        Detail zápasu <span>({$match->category->name})</span> / <a href="#" onclick="window.history.back();">Zpět</a>
+    </h1>
+</div>
+
+
+<div class="online-report"
+     data-match-id="{$match->id}"
+     data-home-team-url="{plink Team:detail $match->category, $match->homeTeam}"
+     data-away-team-url="{plink Team:detail $match->category, $match->awayTeam}"
+>
+    <div id="match-online"></div>
+</div>
+
+
+<script src="{$basePath}/assets/build/MatchOnline.build.js"></script>
+
+<div class="Section" n:if="count($photos())" n:cache="$match->cacheTag, tags => $match->cacheTags">
+    <div class="Article">
+        <div class="Article__head Box__head">
+                <span class="Article__head__icon Box__head__icon">
+                    {include "../@icons/photos.svg"}
+                </span>
+            <h2 class="Article__head__text Box__head__text">Fotografie</h2>
+        </div>
+        {control photoListComponent}
+    </div>
+</div>

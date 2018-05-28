@@ -1,4 +1,31 @@
+{*
 <a n:foreach="$categories as $_category"
-   n:class="Header__toggle__anchor, $selectedCategory && $_category->id == $selectedCategory->id ? 'header__top__toggle--active'"
-        {if $selectedCategory && $_category->id != $selectedCategory->id} href={link changeCategory! $_category->id} {/if}> <span>{$_category->name}</span>
+   n:class="
+   		Header__toggle__anchor, 
+   		$selectedCategory->id == 11 ? 'header__top__toggle--mladsi.svg' : 'header__top__toggle--older',
+   		$selectedCategory && $_category->id == $selectedCategory->id ? 'header__top__toggle--active'
+   		"
+        {if $selectedCategory && $_category->id != $selectedCategory->id} href={link changeCategory! $_category->id} {/if}>
+        <span>{$_category->name}</span>
+</a>
+
+<a href="#">
+    {include "../@icons/category-toggle/mladsi.svg"}
+    {include "../@icons/category-toggle/mladsi--active.svg"}
+    <span>mladší</span>
+</a>
+<a href="#" class="header__top__toggle--active">
+    {include "../@icons/category-toggle/starsi.svg"}
+    {include "../@icons/category-toggle/starsi--active.svg"}
+    <span>starší</span>
+</a>
+*}
+<a
+        n:foreach="$categories as $_category"
+        n:class="$_category->id == $selectedCategory->id ? 'header__top__toggle--active'"
+        {if $_category->id != $selectedCategory->id} href={link changeCategory! $_category->id} {/if}
+>
+    {include "../@icons/category-toggle/{$_category->slug}.svg"}
+    {include "../@icons/category-toggle/{$_category->slug}--active.svg"}
+    <span>{$_category->name}</span>
 </a>

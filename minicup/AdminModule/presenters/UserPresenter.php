@@ -2,11 +2,11 @@
 
 namespace Minicup\AdminModule\Presenters;
 
-use Grido\Components\Filters\Filter;
+use Grido\Components\Columns\Column;
 use Grido\Grid;
 use LeanMapper\Connection;
-use Minicup\Model\Entity;
 use Minicup\Model\Manager\UserManager;
+use Minicup\Model\Repository\UserRepository;
 use Nette\Application\UI\Form;
 use Nette\InvalidArgumentException;
 use Nette\Utils\ArrayHash;
@@ -22,6 +22,9 @@ class UserPresenter extends BaseAdminPresenter
 
     /** @var UserManager @inject */
     public $UM;
+
+    /** @var UserRepository @inject */
+    public $UR;
 
     /**
      * @param Form      $form
@@ -49,14 +52,20 @@ class UserPresenter extends BaseAdminPresenter
      */
     protected function createComponentUserGrid($name)
     {
+        $callback = function ($id, $new, $old, Column $col)  {
+            $user = $this->UR->get($id);
+            $user->{$col->getName()} = $new;
+            $this->UR->persist($user);
+            $this->flashMessage('Upraveno!', 'success');
+            return TRUE;
+        };
         $g = new Grid();
         $fluent = $this->DC->select('*')->from('[user]');
         $g->model = $fluent;
         $g->perPage = 100;
         $g->addColumnNumber('id', 'id');
-        $g->addColumnText('username', 'Username')
-            ->setFilterText()
-            ->setSuggestion();
+        $g->addColumnText('username', 'Username')->setEditableCallback($callback);
+        $g->addColumnText('pin', 'PIN')->setEditableCallback($callback);
         return $g;
     }
 

@@ -1,0 +1,17 @@
+<div class="Article__head Box__head">
+    <span class="Article__head__icon Box__head__icon">
+        {include "../@icons/live.svg"}
+    </span>
+    <h1 class="Article__head__text Box__head__text">Živě z kategorie <span>({$category->name})</span></h1>
+</div>
+
+<div
+        data-category-id="{$category->id}"
+        data-base-logos-path="{$basePath}/assets/img/logos/{$category->year->slug}/"
+        data-match-detail-url-pattern="{\Minicup\Model\Entity\Match::MATCH_DETAIL_FULL_URL_PATTERN}"
+>
+	<div id="category-online"></div>
+</div>
+
+
+<script src="{$basePath}/assets/build/CategoryOnline.build.js"></script>

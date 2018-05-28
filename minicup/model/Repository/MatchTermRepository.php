@@ -18,7 +18,7 @@ class MatchTermRepository extends BaseRepository
         $time->setDate(0, 0, 0);
         $row = $this->createFluent()
             ->where('[match_term.start] = %s', $time->format('H:i:s'), ' AND [day.day] = %s', $date->format('Y-m-d'))
-            ->leftJoin('day')
+            ->innerJoin('day')
             ->on('[day.id] = [match_term.day_id]')->fetch();
         return $row ? $this->createEntity($row) : NULL;
     }
@@ -36,7 +36,7 @@ class MatchTermRepository extends BaseRepository
         $row = $this->createFluent()
             ->where('%s BETWEEN [match_term.start] AND [match_term.end]', $time->format('H:i:s'))
             ->where('[day.day] = %s', $date->format('Y-m-d'))
-            ->leftJoin('day')
+            ->innerJoin('day')
             ->on('[day.id] = [match_term.day_id]')->fetch();
 
         return $row ? $this->createEntity($row) : NULL;

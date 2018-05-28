@@ -3,16 +3,21 @@
 namespace Minicup\AdminModule\Presenters;
 
 
+use Dibi\Row;
 use Grido\Components\Columns\Column;
+use Grido\Components\Columns\Date;
 use Grido\Grid;
 use LeanMapper\Connection;
 use Minicup\Components\IMatchFormComponentFactory;
 use Minicup\Components\MatchFormComponent;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Match;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Utils\Html;
 
 final class MatchPresenter extends BaseAdminPresenter
 {
@@ -41,6 +46,31 @@ final class MatchPresenter extends BaseAdminPresenter
         $this->template->category = $category;
     }
 
+    public function renderTable(Category $category)
+    {
+        $this->template->teams = $category->teamInfos;
+        $data = [];
+        /** @var TeamInfo $team1 */
+        foreach ($this->template->teams as $team1) {
+            $row = [];
+            /** @var TeamInfo $team2 */
+            foreach ($this->template->teams as $team2) {
+                $row[] = $this->MR->getCommonMatchForTeams(
+                    $team1->team,
+                    $team2->team,
+                    NULL
+                );
+            }
+            $data[] = $row;
+        }
+        $this->template->data = $data;
+    }
+
+    public function renderSchedule(Category $category)
+    {
+        $this->template->days = $this->MR->groupMatchesByDay($category);
+    }
+
     public function renderCategory(Category $category)
     {
         $this->template->year = $category->year;
@@ -57,6 +87,7 @@ final class MatchPresenter extends BaseAdminPresenter
     /**
      * @param string $name
      * @return Grid
+     * @throws \Grido\Exception
      */
     public function createComponentMatchesGridComponent($name)
     {
@@ -76,9 +107,12 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnNumber('id', '#');
 
-        $g->addColumnText('htiname', 'Domácí');
+        $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) {
+            $match = $this->MR->get($row->id, FALSE);
+            return $this->link(':Front:Match:detail', ['match' => $match]);
+        });
 
-        $editCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
+        $scoreEditCallback = function ($id, $newValue, $oldValue, Column $column) use ($MR, $MM) {
             /** @var Match $match */
             $match = $MR->get($id);
             $match->{$column->getName()} = $newValue;
@@ -91,20 +125,54 @@ final class MatchPresenter extends BaseAdminPresenter
             return TRUE;
         };
 
-        $g->addColumnText('scoreHome', 'Skóre domácích')
-            ->setEditableCallback($editCallback)
-            ->setColumn('score_home');
 
         $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
             /** @var Match $match */
             $match = $MR->get($row->id);
             return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
         });
-        $g->addColumnText('scoreAway', 'Skóre hostů')
-            ->setEditableCallback($editCallback)
+
+        $g->addColumnText('htiname', 'Domácí');
+        $g->addColumnText('atiname', 'Hosté');
+
+        $g->addColumnNumber('scoreHome', 'Skóre domácích')
+            ->setEditableCallback($scoreEditCallback)
+            ->setColumn('score_home');
+        $g->addColumnNumber('scoreAway', 'Skóre hostů')
+            ->setEditableCallback($scoreEditCallback)
             ->setColumn('score_away');
 
-        $g->addColumnText('atiname', 'Hosté');
+        $control = new SelectBox(NULL, Match::ONLINE_STATE_CHOICES);
+        $g->addColumnText('online_state', 'Stav online')->setEditableControl($control)->setEditableCallback(function ($id, $new, $old, $column) {
+            /** @var Match $match */
+            $match = $this->MR->get($id, False);
+            $match->onlineState = $new;
+            $this->MR->persist($match);
+            $this->flashMessage("Online stav zápasu {$id} změněn z {$old} na {$new}.");
+            return TRUE;
+        })->setCustomRender(function ($row) {
+            return Match::ONLINE_STATE_CHOICES[$row->online_state];
+        });
+        $g->addColumnDate('first_half_start', 'Začátek první půle', Date::FORMAT_DATETIME);
+        $g->addColumnDate('second_half_start', 'Začátek druhé půle', Date::FORMAT_DATETIME);
+        $g->addColumnDate('confirmed', 'Potvrzeno', Date::FORMAT_DATETIME);
+        $g->addColumnNumber('confirmed_as', 'Potvrzeno jako');
+        $g->addColumnText('facebook_video_id', 'ID Facebook streamu')->setEditableCallback(function ($id, $new, $old, $col) {
+            /** @var Match $match */
+            $match = $this->MR->get($id, False);
+            $match->facebookVideoId = $new;
+            $this->MR->persist($match);
+            return true;
+        });
+        $g->setRowCallback(function (Row $row, Html $tr) {
+            if ($row->confirmed !== NULL)
+                $tr->class[] = 'success';
+            if ($row->online_state == Match::END_ONLINE_STATE && $row->confirmed === NULL)
+                $tr->class[] = 'warning';
+            if ($row->online_state != Match::END_ONLINE_STATE && $row->online_state != Match::INIT_ONLINE_STATE)
+                $tr->class[] = 'info';
+            return $tr;
+        });
         return $g;
     }
 }

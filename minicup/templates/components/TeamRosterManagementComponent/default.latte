@@ -1,13 +1,31 @@
 {snippet form}
     {form rosterFormComponent}
-        <p class="lead">
-            Níže prosím vyplňte požadované informace. Veškeré informace budou sloužit pro informační servis v rámci
-            turnajových statistik, přímých textových přenosů a infografik ve video přenosech.
-            <br>Formulář je možno editovat do <strong>31. 5. 2018</strong> - poté jsou změny možné osobně u stolku
-            organizátorů.
-        </p>
-        <p class="text-right">
-            <i>Jestliže mají hráči na druhých dresech stejná čísla, prosím, nevyplňujte je znovu.</i></p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="lead">
+                        Níže prosím vyplňte požadované informace.
+                        Veškeré informace budou sloužit pro informační servis v rámci
+                        turnajových statistik, přímých textových přenosů a infografik ve video přenosech.
+                        <br>Formulář je možno editovat do <strong>31. 5. 2018</strong> - poté jsou
+                        změny možné osobně u stolku organizátorů.
+                    </p>
+
+                    <p class="text-right">
+                        <i>Jestliže mají hráči na druhých dresech stejná čísla, prosím, nevyplňujte je znovu.</i>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        {foreach $team->matches as $match}
+                            <li>
+                                <strong>{$match->matchTerm|matchDate} {$match->matchTerm|matchStart}</strong>: {$match->getRival($team)->name}
+                            </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            </div>
+        </div>
         <hr class="hr">
 
         <h3 n:if="$form->hasErrors()">Opravte prosím následující chyby:</h3>

@@ -3,6 +3,7 @@
 namespace Minicup\Model\Repository;
 
 
+use Minicup\Model\Entity\Match;
 use Minicup\Model\Entity\Photo;
 use Minicup\Model\Entity\Tag;
 use Minicup\Model\Entity\Year;
@@ -80,9 +81,43 @@ class PhotoRepository extends BaseRepository
                 ->select('[photo.*]')->from('photo')
                 ->leftJoin('[photo_tag]')->on('[photo_tag.photo_id] = [photo.id]')
                 ->where('[photo_tag.tag_id] = ', $tag->id)
-				->where('[photo.active] = 1')
+                ->where('[photo.active] = 1')
                 ->orderBy("[photo.taken] $order")
                 ->fetchAll()
+        );
+    }
+
+    /**
+     * @param Match $match
+     * @return array
+     * @throws \Dibi\Exception
+     */
+    public function findForMatch(Match $match)
+    {
+        if (!$match->homeTeam->tag || !$match->awayTeam->tag) return [];
+
+        return $this->createEntities(
+            $this->connection->query(
+                '
+                    SELECT p.*
+                    FROM photo p
+                    LEFT JOIN photo_tag pt1 on p.id = pt1.photo_id and pt1.tag_id = ?
+                    LEFT JOIN photo_tag pt2 on p.id = pt2.photo_id and pt2.tag_id = ?
+                    WHERE (
+                      -- has both tags
+                      pt1.tag_id IS NOT NULL AND pt2.tag_id IS NOT NULL
+                    ) OR (
+                      -- or has one tag and has been taken in match term
+                      (pt1.tag_id IS NOT NULL OR pt2.tag_id IS NOT NULL) AND taken BETWEEN %s AND %s AND taken = %s
+                    )
+                    ORDER BY taken;
+                ',
+                $match->homeTeam->tag->id,
+                $match->awayTeam->tag->id,
+                $match->matchTerm->start->format('H:i:s'),
+                $match->matchTerm->end->format('H:i:s'),
+                $match->matchTerm->day->day->format('Y-m-d')
+            )->fetchAll()
         );
     }
 }

@@ -7,7 +7,6 @@ use LeanMapper\Exception\InvalidArgumentException;
 use LeanMapper\Fluent;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Repository\BaseRepository;
-
 use Nette\SmartObject;
 
 class Filters
@@ -20,7 +19,7 @@ class Filters
      */
     public function yearRestrict(Fluent $fluent, $yearId = NULL)
     {
-        if ($yearId !== NULL && $yearId !== 0) {
+        if ($yearId) {
             $fluent->where('[year_id] = %i', $yearId);
         }
     }
@@ -32,7 +31,9 @@ class Filters
      */
     public function joinAllMatches(Fluent $fluent, Team $team)
     {
-        $fluent->removeClause('where')->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
+        $fluent
+            ->removeClause('where')
+            ->where('[home_team_id] = ', $team->id, 'OR [away_team_id] =', $team->id);
     }
 
     /**
@@ -40,7 +41,10 @@ class Filters
      */
     public function joinTeamInfo(Fluent $fluent)
     {
-        $fluent->leftJoin('[team_info]')->on('[team.team_info_id] = [team_info.id]')->select('[team_info.name], [team_info.slug]');
+        $fluent
+            ->innerJoin('[team_info]')
+            ->on('[team.team_info_id] = [team_info.id]')
+            ->select('[team_info.name], [team_info.slug]');
     }
 
     /**
@@ -86,11 +90,11 @@ class Filters
             throw new InvalidArgumentException('Invalid ordering method');
         }
         $fluent
-            ->leftJoin('match_term')->as('mt')
-            ->on('[match.match_term_id] = mt.[id]')
-            ->leftJoin('day')->as('d')
-            ->on('d.[id] = mt.[day_id]')
-            ->orderBy("d.[day] $order, mt.[start] $order, [match.id] $order");
+            ->innerJoin('match_term')->as('mt')
+            ->on('[match.match_term_id] = [mt.id]')
+            ->innerJoin('day')->as('d')
+            ->on('[d.id] = [mt.day_id]')
+            ->orderBy("[d.day] $order, [mt.start] $order, [mt.location] $order, [match.id] $order");
     }
 
     /**
@@ -124,7 +128,7 @@ class Filters
         if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[added]' . $order);
+        $fluent->orderBy("[added] $order");
     }
 
     /**
@@ -137,7 +141,7 @@ class Filters
         if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[half_index]' . $order)->orderBy('[time_offset]' . $order);
+        $fluent->orderBy("[half_index] $order, [time_offset] $order");
     }
 
     /**
@@ -150,6 +154,6 @@ class Filters
         if (!in_array($order, [BaseRepository::ORDER_ASC, BaseRepository::ORDER_DESC], TRUE)) {
             throw new InvalidArgumentException('Invalid ordering method');
         }
-        $fluent->orderBy('[secondary_number] ' . $order)->orderBy('`number`' . $order);
+        $fluent->orderBy("[secondary_number] $order")->orderBy("`number` $order");
     }
 }

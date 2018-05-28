@@ -8,7 +8,7 @@ namespace Minicup\Model\Entity;
  * @property Match         $match m:hasOne
  * @property int|NULL      $scoreHome actual score of home team
  * @property int|NULL      $scoreAway actual score of away team
- * @property string        $message message of this event
+ * @property string|NULL   $message message of this event
  * @property string        $type m:enum(self::TYPE_*)
  * @property int           $halfIndex m:enum(self::HALF_INDEX_*)
  * @property int           $timeOffset total seconds from start of current half of match
@@ -50,11 +50,21 @@ class MatchEvent extends BaseEntity
 
     public function serialize()
     {
+        $teamIndex = array_search(
+            $this->teamInfo ? $this->teamInfo->id : NULL,
+            [$this->match->homeTeam->id, $this->match->awayTeam->id],
+            TRUE
+        );
         return [
+            'id' => $this->id,
             'score' => [$this->scoreHome, $this->scoreAway],
             'message' => $this->message,
             'type' => $this->type,
-            'timeOffset' => $this->timeOffset
+            'time_offset' => $this->timeOffset,
+            'half_index' => $this->halfIndex,
+            'team_index' => $teamIndex === FALSE ? -1 : $teamIndex,
+            'player_name' => $this->player ? "{$this->player->name} {$this->player->surname}" : NULL,
+            'player_number' => $this->player ? $this->player->number : NULL,
         ];
     }
 }

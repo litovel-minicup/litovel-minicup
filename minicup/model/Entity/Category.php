@@ -6,6 +6,7 @@ namespace Minicup\Model\Entity;
  * @property int         $id
  * @property string|NULL $name                                       czech name of category
  * @property string      $slug                                       slug for URL
+ * @property TeamInfo[]  $teamInfos m:belongsToMany                      actually teams in this category
  * @property Team[]      $teams m:belongsToMany                      actually teams in this category
  * @property Match[]     $matches m:belongsToMany                    matches in this category
  * @property Team[]      $allTeams m:belongsToMany(::category_id)    all historical teams in category
@@ -16,6 +17,9 @@ namespace Minicup\Model\Entity;
 class Category extends BaseEntity
 {
     public static $CACHE_TAG = 'category';
+
+    public const CATEGORY_URL_SPLITTER = '#([0-9]{4})-([\w]*)#';
+    public const CATEGORY_URL_PATTEN = '%s-%s';
 
     /**
      * @return string

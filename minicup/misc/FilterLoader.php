@@ -5,15 +5,17 @@ namespace Minicup\Misc;
 
 use Minicup\Model\Entity\MatchTerm;
 use Minicup\Model\Entity\Photo;
+use Minicup\Model\Entity\TeamInfo;
 use Minicup\Model\Manager\PhotoManager;
 use Nette\Application\LinkGenerator;
 use Nette\Application\UI\ITemplate;
 use Nette\Bridges\ApplicationLatte\Template;
+use Nette\Http\IRequest;
 use Nette\InvalidArgumentException;
+use Nette\SmartObject;
 use Nette\Utils\Html;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
-use Nette\SmartObject;
 
 class FilterLoader
 {
@@ -24,16 +26,28 @@ class FilterLoader
 
     /** @var Texy */
     private $texy;
+    /**
+     * @var string
+     */
+    private $wwwPath;
+    /** @var IRequest */
+    private $request;
 
     /**
+     * @param string        $wwwPath
      * @param LinkGenerator $linkGenerator
+     * @param IRequest      $request
      * @param Texy          $texy
      */
-    public function __construct(LinkGenerator $linkGenerator,
+    public function __construct(string $wwwPath,
+                                LinkGenerator $linkGenerator,
+                                IRequest $request,
                                 Texy $texy)
     {
         $this->linkGenerator = $linkGenerator;
         $this->texy = $texy;
+        $this->wwwPath = $wwwPath;
+        $this->request = $request;
     }
 
 
@@ -66,7 +80,7 @@ class FilterLoader
 
         $template->addFilter('termDiff', function (MatchTerm $first, MatchTerm $second) use ($latte) {
             $diff = date_diff($first->start, $second->start);
-            return $diff->h + $diff->m / 60.;
+            return $diff->h + $diff->i / 60.;
         });
 
         $template->addFilter('toJson', function (array $array) {
@@ -123,15 +137,28 @@ class FilterLoader
                 throw new InvalidArgumentException('Unknown photo size.');
             }
             $el = Html::el();
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image', 'content' => $generator->link("Media:$size", [$photo->filename])])
             );
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image:width', 'content' => PhotoManager::$resolutions[$size][0]])
             );
-            $el->add(
+            $el->addHtml(
                 Html::el('meta', ['property' => 'og:image:height', 'content' => PhotoManager::$resolutions[$size][1]])
             );
+            return $el;
+        });
+
+        $template->addFilter('clubLogo', function (TeamInfo $teamInfo, string $cssClass = '') {
+            $el = Html::el('img');
+            $assetsPath = "assets/img/logos/{$teamInfo->category->year->slug}/{$teamInfo->slug}.png";
+            if (!file_exists("{$this->wwwPath}/$assetsPath"))
+                return '';
+
+            $el->addAttributes([
+                'src' => $this->request->getUrl()->getBaseUrl() . $assetsPath,
+                'class' => $cssClass
+            ]);
             return $el;
         });
 

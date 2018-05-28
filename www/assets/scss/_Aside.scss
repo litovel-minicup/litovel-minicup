@@ -5,14 +5,18 @@
 
 .Aside {
   @include span-columns(5 of 5);
+  @include default-fonts();
   margin-top: $universal-dis;
   background: $light--yellow;
 
   border-bottom: 2px solid $dark--yellow;
 
-  a:hover {
-    background: black;
-    color: white;
+  A {
+    color: rgba(0, 0, 0, .75);
+    &:hover {
+      background: black;
+      color: white;
+    }
   }
 
   &__head {
@@ -30,6 +34,7 @@
 
   &__subhead {
     background: $medium--yellow;
+    color: rgba(0, 0, 0, .5);
   }
 
   &__content {
@@ -90,8 +95,20 @@
 
     width: 100%;
 
+    TBODY {
+      font-size: .95rem;
+      color: rgba(0, 0, 0, .75);
+    }
+
     &--upcoming {
       tr {
+        &[onclick] {
+          cursor: pointer;
+          &:hover td {
+            background-color: black;
+            color: white;
+          }
+        }
         &:nth-of-type(1) td {
           height: 40px;
           vertical-align: bottom;
@@ -104,7 +121,10 @@
       }
 
       td {
+        //A {
         padding: 3px 15px !important;
+        //display: block;
+        //}
         vertical-align: middle;
 
         &:nth-of-type(1) {
@@ -119,14 +139,18 @@
         &:nth-of-type(2) {
           width: 20%;
           background: $medium--yellow;
-          color: white;
-          text-align: center;
           font-family: "Montserrat";
+          text-align: center;
+          color: white;
         }
       }
     }
 
     &--standings {
+
+      A {
+        font-weight: bolder;
+      }
 
       th {
         padding: 20px 0;

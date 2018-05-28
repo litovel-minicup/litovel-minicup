@@ -15,7 +15,12 @@ set('rsync', [
         'vendor',
         'README.md',
         'minicup/config/config.local.neon',
+        'www/media',
+        'www/assets/.sass-cache',
+        'www/assets/scss',
+        'www/assets/vue',
         'www/webtemp',
+        'node_modules',
     ],
     'exclude-file' => false,
     'include' => [
@@ -24,9 +29,9 @@ set('rsync', [
     'filter' => [],
     'filter-file' => false,
     'filter-perdir' => false,
-    'flags' => 'rzcE', // Recursive, with compress
+    'flags' => 'vrzcE', // Recursive, with compress
     'options' => ['delete'],
-    'timeout' => 60,
+    'timeout' => 60*3,
 ]);
 
 // Project name
@@ -81,6 +86,7 @@ task('deploy:update_php-fpm', function () {
 desc('Deploy minicup from master!');
 task('deploy', [
     'deploy:info',
+    'deploy:webpack_build',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
@@ -90,6 +96,7 @@ task('deploy', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
+    'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
@@ -99,20 +106,34 @@ task('deploy', [
     'cleanup',
     'success'
 ]);
+
+task('deploy:webpack_build', function () {
+    run('npm run build');
+})->local();
+
+task('deploy:migrate', function () {
+    run('php {{current_path}}/www/index.php migrations:migrate --no-interaction');
+});
+
 task('reload:php-fpm', function () {
     run('service php7.2-fpm restart');
 });
+
 task('reload:nginx', function () {
     run('service nginx restart');
 });
+
 task('deploy:update_perms', function () {
-    run('find . -type d -exec chmod +r {} \;');
+    run('find {{current_path}} -type d -exec chmod +r {} \;');
+    run('find {{current_path}}/log -exec chmod a+wr {} \;');
+    run('find {{current_path}}/log -exec chown www-data:www-data {} \;');
 });
 
 
 desc('Deploy minicup from local!');
 task('deploy_local', [
     'deploy:info',
+    'deploy:webpack_build',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
@@ -122,6 +143,7 @@ task('deploy_local', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
+    'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',

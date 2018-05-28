@@ -14,9 +14,9 @@ class Version20180429212433 extends AbstractMigration
     {
         $this->addSql("
         UPDATE match_term
-SET start = start + INTERVAL 2000 YEAR
-WHERE cast(start AS DATE) = '0001-01-01';
-");
+        SET start = start + INTERVAL 2000 YEAR
+        WHERE cast(start AS DATE) = '0001-01-01';
+        ");
 
     }
 

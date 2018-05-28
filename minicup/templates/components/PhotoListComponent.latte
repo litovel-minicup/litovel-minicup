@@ -1,32 +1,39 @@
 <div class="photo-list" n:snippet="photos" data-more-link="{link show! $step+$actual}">
     {foreach $photos as $photo}
-        <div class="Photo__rows">
-            <a data-id="{$photo->id}" class="swipebox" title="{$iterator->counter}. z {$photos|length}"
-               href={plink :Media:medium $photo->filename}?2017>
-                <img src="{plink :Media:thumb $photo->filename}?2017" alt="Foto {$photo->id}">
-            </a>
-        </div>
+        {first 3}
+            <div class="Photo__row">
+        {/first}
+        <a href="{$mediaRoot}{plink :Media:medium $photo->filename}" data-id="{$photo->id}"
+           title="{$iterator->counter}. z {$photos|length}" class="swipebox Photo__item">
+            <img src="{$mediaRoot}{plink :Media:thumb $photo->filename}" alt="Foto">
+        </a>
+        {last 3}
+            </div>
+        {/last}
     {/foreach}
+    <script n:syntax="double">
+        jQuery(function ($) {
+            $('a.swipebox').click(function (e) {
+                var i = $('.photo-list a').index(this);
+                $.ajax({{link all!}}).then(function (data) {
+                    $.swipebox(data, {
+                        initialIndexOnArray: i,
+                        useSVG: false
+                    });
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+
 
     {if !$photos}
         <div class="Article__content">
             <p>Žádné fotky k zobrazení.</p>
         </div>
     {elseif $actual && $actual < $max}
-        <div class="Article__content">
-            <a class="show-more ajax" n:href="show! $step+$actual" style="clear: both;">Zobrazit více!</a>
+        <div class="Article__more">
+            <a class="show-more ajax" n:href="show! $step+$actual">Zobrazit více!</a>
         </div>
     {/if}
-
-    <script n:syntax="double">
-        jQuery(function ($) {
-            $('a.swipebox').click(function (e) {
-                var i = $('.Photo__rows').children().index(this);
-                $.ajax({{link all!}}).then(function (data) {
-                    $.swipebox(data, { initialIndexOnArray: i});
-                });
-                e.preventDefault();
-            });
-        });
-    </script>
 </div>
