@@ -1499,18 +1499,21 @@ Header module
   padding-top: 15px;
   padding-bottom: 30px;
   font-size: 16px; }
-  .Article__content p {
-    line-height: 1.5; }
-  .Article__content a {
+  .Article__content P {
+    line-height: 1.5;
+    text-align: justify; }
+  .Article__content A {
     border-bottom: 3px solid #4180ff;
     color: #4180ff; }
-    .Article__content a:hover {
+    .Article__content A:hover {
       background: #4180ff;
       color: white; }
   .Article__content IFRAME {
     margin-top: 10px; }
-  .Article__content strong {
+  .Article__content STRONG {
     font-weight: bolder; }
+  .Article__content I {
+    font-style: italic; }
 .Article__photos {
   margin-top: -25px;
   margin-left: -5px;

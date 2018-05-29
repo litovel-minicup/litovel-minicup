@@ -12,7 +12,7 @@ namespace Minicup\Model\Entity;
  * @property Year      $year m:hasOne
  * @property Tag|NULL  $tag m:hasOne
  * @property int       $texy
- * @property int       $published
+ * @property int|NULL  $published
  */
 class News extends BaseEntity
 {
