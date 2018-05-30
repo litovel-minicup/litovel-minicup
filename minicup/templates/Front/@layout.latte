@@ -40,7 +40,13 @@
                 {else}
                     {control actualYearToggleComponent:actualYear}
                 {/if}
-                <a class="header__top__logo" n:href="Homepage:default">
+                <a class="header__top__logo"
+                        {if $category->year->actual}
+                            href="{plink Homepage:default}"
+                        {else}
+                            href="{$control['actualYearToggleComponent']->getActualYearLink()}"
+                        {/if}
+                >
                     <img class="" src="{$basePath}/assets/img/logo.png?2018"
                          srcset="{$basePath}/assets/img/logo.png?2018 1x, {$basePath}/assets/img/logo@2x.png?2018 2x"
                          alt="Litovel MINICUP 2018">
@@ -117,13 +123,8 @@
                 <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
                 <div class="Box__content Footer__content">Martin Zifčák<br>
                     <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
-                    +420 603 934 479
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Facebook</div>
-                <div class="Box__content Footer__content">
+                    <a href="tel:420603934479">+420 603 934 479</a>
+                    <br><br>
                     <a href="https://www.facebook.com/litovel.minicup/" target="_blank">
                         Facebook stránka turnaje Litovel MINICUP
                     </a>
@@ -131,12 +132,19 @@
             </div>
 
             <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Všechny ročníky</div>
+                <div class="Box__subhead Footer__subhead">Archiv</div>
                 <div class="Box__content Footer__content">
                     {control archiveYearsToggleComponent:archiveYears}
-                    <br>
+                </div>
+            </div>
+
+            <div class="Footer__block">
+                <div class="Box__subhead Footer__subhead">&nbsp;</div>
+                <div class="Box__content Footer__content">
+                    <a href="https://live.minicup.tatranlitovel.cz">zápis přenosů</a>
+                    <br><br>
                     <a n:href=":Admin:Homepage:default">administrace</a>
-                    <br>
+                    <br><br>
                     Josef Kolář, Matěj Mitaš <br> © 2015 - {date("Y")}
                 </div>
             </div>

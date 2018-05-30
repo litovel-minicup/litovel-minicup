@@ -54,11 +54,11 @@
             },
             matchStart() {
                 const start = new Date(this.match.match_term_start * 1000);
-                // TODO: add date
-                return `${start.getHours().pad(2)}:${start.getMinutes().pad(2)}`;/* + (
-                    start.getDate() === new Date().getDate() ?
-                    '' : ` ${start.getDay()}.${start.getMonth()}.`
-                );*/
+
+                return `${start.getHours().pad(2)}:${start.getMinutes().pad(2)}` + (
+                    start.toLocaleDateString() === new Date().toLocaleDateString() ?
+                    '' : ` ${start.toLocaleDateString()}.`
+                );
             }
         },
         filters: {

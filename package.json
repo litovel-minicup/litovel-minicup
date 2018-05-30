@@ -14,12 +14,14 @@
     "camelcase-keys": "latest",
     "lodash": "^4.17.5",
     "raven-js": "^3.24.0",
+    "sprintf-js": "latest",
     "vue": "^2.5.11",
     "vue-loading-template": "^0.1.7",
     "vue-native-websocket": "^2.0.6",
     "vue-resource": "^1.5.0",
-    "vuex": "^3.0.1",
-    "sprintf-js": "latest"
+    "vue-tween-number": "^0.2.0",
+    "vue2-animate": "^2.0.0",
+    "vuex": "^3.0.1"
   },
   "browserslist": [
     "> 1%",

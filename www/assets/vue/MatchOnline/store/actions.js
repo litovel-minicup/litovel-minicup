@@ -21,14 +21,14 @@ export default {
         });
     },
     refreshFallback({state, commit}) {
-        Vue.http.get('/api/v1/match/detail/' + state.match_id).then(response => {
+        return Vue.http.get('/api/v1/match/detail/' + state.match_id).then(response => {
             commit('setMatch', response.body.match)
         }, response => {
             // TODO: errro
         });
     },
     loadEvents({state, commit}) {
-        Vue.http.get('/api/v1/match/events/' + state.match_id).then(response => {
+        return Vue.http.get('/api/v1/match/events/' + state.match_id).then(response => {
             commit('setEvents', response.body.events)
         }, response => {
             // TODO: errro

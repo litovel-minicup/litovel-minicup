@@ -100,13 +100,13 @@
       width: 10%;
     }
     th:nth-of-type(6) {
-      width: 12.5%;
+      width: 5%;
     }
   }
 
   TBODY {
-    TD:nth-of-type(1), td:nth-of-type(3),
-    td:nth-of-type(6) {
+    TD:nth-of-type(1),
+    TD:nth-of-type(3) {
       font-weight: 600;
       text-align: left;
       padding-left: 20px;
@@ -114,6 +114,12 @@
       A {
         color: rgba(0, 0, 0, 0.75);
       }
+    }
+
+    TD:nth-of-type(6) {
+      vertical-align: middle;
+      text-align: right;
+      padding-right: 20px;
     }
 
     TR {

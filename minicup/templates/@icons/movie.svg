@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
+   enable-background="new 0 0 512 512"
+   xml:space="preserve"
+   sodipodi:docname="movie.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"><metadata
+   id="metadata3783"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs3781" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1873"
+   inkscape:window-height="1148"
+   id="namedview3779"
+   showgrid="false"
+   inkscape:zoom="1.363114"
+   inkscape:cx="91.474492"
+   inkscape:cy="253.04514"
+   inkscape:window-x="47"
+   inkscape:window-y="24"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0" />
+<path
+   d="M 18.749996,0 H 1.2500044 C 0.55911165,0 0,0.55969 0,1.25 v 17.5 C 0,19.44094 0.55911165,20 1.2500044,20 H 18.749996 C 19.440934,20 20,19.4409 20,18.75 V 1.25 C 20,0.55969 19.440934,0 18.749996,0 Z m -6.249992,1.25 1.249995,2.5 h -2.49999 l -1.250004,-2.5 z m -4.9999978,0 1.2499944,2.5 H 6.2500019 L 5.0000075,1.25 Z m -6.2500018,0 h 1.2499944 l 1.2500043,2.5 H 1.2500044 Z M 18.749996,18.75 H 1.2500044 V 5.00001 H 18.749996 Z m 0,-15 h -2.499999 l -1.249995,-2.5 h 2.499999 l 1.249995,1.25 z m -4.868158,7.56594 c 0.615231,0.30761 0.615231,0.81055 0,1.11816 L 7.3681678,15.69094 C 6.7529282,15.99856 6.2500019,15.68711 6.2500019,15 V 8.75 c 0,-0.68726 0.5029263,-0.99855 1.1181659,-0.69094 z"
+   id="path3776"
+   inkscape:connector-curvature="0"
+   style="stroke-width:0.03906248" />
+</svg>

@@ -5,6 +5,9 @@ import RavenVue from 'raven-js/plugins/vue'
 import VueNativeSock from 'vue-native-websocket'
 
 
+import 'vue2-animate/dist/vue2-animate.css';
+
+
 Raven.config(
     'https://29dc267c2d6b4bcc80cfcb1ce1e34478@sentry.io/1205821',
     {

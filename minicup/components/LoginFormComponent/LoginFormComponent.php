@@ -31,6 +31,9 @@ class LoginFormComponent extends BaseComponent
         parent::__construct();
     }
 
+    const EXPIRATION_SHORT = 60 * 60; // one hour
+    const EXPIRATION_LONG = self::EXPIRATION_SHORT * 24 * 7;
+
     /**
      * @return Form
      */
@@ -50,7 +53,7 @@ class LoginFormComponent extends BaseComponent
         $form->onSuccess[] = function (Form $form, ArrayHash $values) {
             $user = $this->presenter->user;
             try {
-                $user->setExpiration($values->remember ? '14 days' : '60 minutes');
+                $user->setExpiration($values->remember ? self::EXPIRATION_LONG : self::EXPIRATION_SHORT);
                 $user->login($values->username, $values->password);
             } catch (AuthenticationException $e) {
                 $form->addError($e->getMessage());

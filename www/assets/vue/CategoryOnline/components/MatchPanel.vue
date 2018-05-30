@@ -25,7 +25,7 @@
             <span>Zobrazit zápas</span>
         </div>
     </a>
-    <a v-else :href="matchDetailUrl" target="_blank" :data-match-id="match.id">
+    <a v-else :href="matchDetailUrl" :data-match-id="match.id">
         <h4>{{ match.home_team_name }}</h4>
         <h4>{{ match.away_team_name }}</h4>
         <h5>{{ matchTermStart }}</h5>

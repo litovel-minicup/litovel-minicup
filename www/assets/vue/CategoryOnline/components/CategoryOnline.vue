@@ -1,12 +1,14 @@
 <template>
     <div>
         <div v-if="hasOnlineMatches" class="Box__content Live">
-            <match-panel
-                    v-for="(match, match_id) in onlineMatches"
-                    :key="match.id"
-                    :match="match"
-                    :full="true"
-            ></match-panel>
+            <transition-group name="zoom">
+                <match-panel
+                        v-for="match in onlineMatches"
+                        :key="match.id"
+                        :match="match"
+                        :full="true"
+                ></match-panel>
+            </transition-group>
         </div>
         <template v-if="hasUpcomingMatches">
             <div v-if="true" class="Article__head Box__head">
@@ -16,14 +18,14 @@
                 </h2>
             </div>
             <div class="Box__content Live">
-                <nav>
+                <transition-group name="zoom" tag="nav">
                     <match-panel
-                            v-for="(match, match_id) in upcomingMatches"
+                            v-for="match in upcomingMatches"
                             :key="match.id"
                             :match="match"
                             :full="false"
                     ></match-panel>
-                </nav>
+                </transition-group>
             </div>
         </template>
     </div>
@@ -43,14 +45,14 @@
         computed: {
             ...mapState(['matches']),
             onlineMatches() {
-                return _.pickBy(this.matches, (match, _) => {
+                return _.filter(this.matches, (match) => {
                     return this.$options.filters.isOnline(match);
                 });
             },
             upcomingMatches() {
-                return _.pickBy(this.matches, (match, _) => {
+                return _.filter(this.matches, (match) => {
                     return !this.$options.filters.isOnline(match);
-                });
+                })
             },
             hasOnlineMatches() {
                 return !_.isEmpty(this.onlineMatches)
@@ -66,9 +68,8 @@
         },
         created() {
             this.$store.watch(
-                (state) => state.matches,
+                (state) => _.values(state.matches),
                 (new_, old) => {
-
                     if (_.size(old) !== _.size(new_) && _.size(_.pickBy(new_, (match, _) => {
                         return _.includes(['half_first', 'pause', 'half_second'], match.state)
                     })) < 4)

@@ -56,6 +56,7 @@ class JsComponentFactory
         $files->addFile('assets/js/jquery.plugin.js');
         $files->addFile('assets/js/jquery.swipebox.js');
         $files->addFile('assets/js/nette.ajax.js');
+        $files->addFile('assets/js/bootstrap.js');
         $files->addFile('assets/js/main.js');
 
         if ($module === 'front') {
@@ -66,7 +67,7 @@ class JsComponentFactory
             $files->addFile('assets/js/jquery.countdown.js');
             $files->addFile('assets/js/jquery.countdown.cs.js');
 
-        } elseif (in_array($module, ['admin', 'management'])) {
+        } elseif (\in_array($module, ['admin', 'management'])) {
             $files->addFile('assets/js/select2.js');
             $files->addFile('assets/js/dropper.js');
             $files->addFile('assets/js/bootstrap.js');

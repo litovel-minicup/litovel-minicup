@@ -7,15 +7,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Litovel MINICUP {$category->year->slug} ({$category->name}) - zápasy</title>
+    {control js}
+    <script>
+        window.panel = function (id, title) {
+            $('.panel').hide();
+            $('#' + id).show();
+            $('title').text('Litovel MINICUP {$category->year->slug|noescape} ({$category->name|noescape}) - zápasy ' + title);
+        }
+    </script>
 </head>
 <body>
 
-<h1>Litovel MINICUP {$category->year->slug} ({$category->name})</h1>
+<div class="nav">
+    {foreach $days as $timestamp => $matches}
+        <a href="#" onclick="window.panel({$timestamp}, {$matches[0]->matchTerm|matchDate})">{$timestamp}</a>
+    {/foreach}
+</div>
 
 <div class="container">
     {foreach $days as $timestamp => $matches}
 
-        <div class="panel">
+        <div class="panel" id="{$timestamp}">
+
+            <h1>Litovel MINICUP {$category->year->slug} ({$category->name})</h1>
             <h2>{$timestamp|dayName:NULL} {$matches[0]->matchTerm|matchDate}</h2>
 
             <table>
@@ -48,6 +62,12 @@
 </div>
 
 <style>
+    @media print {
+        .nav {
+            display: none;
+        }
+    }
+
     .container {
     }
 
@@ -58,8 +78,12 @@
         font-family: sans-serif;
     }
 
-    h1 {
+    h1, h2 {
         text-align: center;
+    }
+
+    h2 {
+        font-size: 2em;
     }
 
     table {
@@ -92,10 +116,25 @@
     table {
         border-right: 2px solid black;
         border-left: 2px solid black;
+        border-bottom: 2px solid black;
+        table-layout: fixed;
+        page-break-after: always;
     }
 
     td, th {
         padding: 15px;
+    }
+
+    tr td:nth-last-child(-n+2) {
+        width: 300px;
+    }
+
+    tr td[rowspan] + .location, tr td:first-child:not([rowspan]) {
+        width: 50px;
+    }
+
+    tr td:first-child {
+        width: 100px;
     }
 
     td {

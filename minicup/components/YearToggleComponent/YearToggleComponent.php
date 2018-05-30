@@ -71,6 +71,10 @@ class YearToggleComponent extends BaseComponent
         parent::render();
     }
 
+    /**
+     * @param $year
+     * @throws \Nette\Application\AbortException
+     */
     public function handleChangeYear($year)
     {
         $actualCategorySlug = $this->category->slug;
@@ -79,6 +83,15 @@ class YearToggleComponent extends BaseComponent
         $this->session->offsetSet('category', $category->id);
 
         $this->presenter->redirect(':Front:Homepage:default', ['category' => $category]);
+    }
+
+    /**
+     * @return string
+     * @throws \Nette\Application\UI\InvalidLinkException
+     */
+    public function getActualYearLink()
+    {
+        return $this->link('changeYear!', ['year' => $this->YR->getActualYear()->id]);
     }
 
 }

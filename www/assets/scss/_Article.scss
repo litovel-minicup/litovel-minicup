@@ -40,10 +40,9 @@
       padding: 10px 20px;
       background: $light--blue;
       padding-left: 50px;
-      color: rgba(255,255,255,.75);
+      color: rgba(255, 255, 255, .75);
       position: relative;
       transition: background .15s ease;
-     
 
       &:hover {
         background: $dark--blue;
@@ -73,11 +72,12 @@
     padding-bottom: 30px;
     font-size: 16px;
 
-    p {
+    P {
       line-height: 1.5;
+      text-align: justify;
     }
 
-    a {
+    A {
       border-bottom: 3px solid $light--blue;
       color: $light--blue;
 
@@ -92,10 +92,13 @@
       margin-top: 10px;
     }
 
-    strong {
-      font-weight: bolder; 
+    STRONG {
+      font-weight: bolder;
     }
 
+    I {
+      font-style: italic;
+    }
   }
 
   &__photos {
