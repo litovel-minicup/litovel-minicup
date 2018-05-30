@@ -6,370 +6,371 @@ Header module
 
 .header {
 
-    @include default-fonts();
+  @include default-fonts();
 
-    &--msg {
-        .header__top {
-            background-image: radial-gradient(50% 99%, #555 0%, black 100%);
+  &--msg {
+    .header__top {
+      background-image: radial-gradient(50% 99%, #555 0%, black 100%);
 
-            @media screen and (max-width: 640px) {
-                margin-top: 70px;
-            }
-        }
-
-        .header__nav {
-            background: #555;
-
-            A {
-                border-right: 1px solid #444;
-
-                &:first-of-type {
-                    border-left: 1px solid #444;
-                }
-            }
-        }
-
-        .header__top__text {
-
-            P {
-                @include default-fonts();
-            }
-
-            @media screen and (max-width: 640px) {
-                display: block;
-                position: absolute;
-                background: #444;
-                top: -70px;
-                max-width: 100%;
-                left: -5px;
-                text-align: center;
-
-                P {
-                    width: 100%;
-                    padding: 20px;
-                }
-            }
-        } 
-
-        .header__top__toggle {
-
-            A {
-                color: #777;
-            }
-
-            &--active {
-                background: #555;
-                box-shadow: inset 0px -1px 0px 0px #444;
-            }
-        }
+      @media screen and (max-width: 640px) {
+        margin-top: 70px;
+      }
     }
 
+    .header__nav {
+      background: #555;
 
-    &__top {
-        background-image: radial-gradient(50% 99%, $medium--blue 0%, #00339A 75%);
-        position: relative;
+      A {
+        border-right: 1px solid #444;
+
+        &:first-of-type {
+          border-left: 1px solid #444;
+        }
+      }
+    }
+
+    .header__top__text {
+
+      P {
+        @include default-fonts();
+      }
+
+      @media screen and (max-width: 640px) {
+        display: block;
+        position: absolute;
+        background: #444;
+        top: -70px;
+        max-width: 100%;
+        left: -5px;
+        text-align: center;
+
+        P {
+          width: 100%;
+          padding: 20px;
+        }
+      }
+    }
+
+    .header__top__toggle {
+
+      A {
+        color: #777;
+      }
+
+      &--active {
+        background: #555;
+        box-shadow: inset 0px -1px 0px 0px #444;
+      }
+    }
+  }
+
+  &__top {
+    background-image: radial-gradient(50% 99%, $medium--blue 0%, #00339A 75%);
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 426px;
+      height: 180px;
+      top: -5px;
+      opacity: 0.15;
+
+      background: url('../img/ryba.png');
+
+      @media (-webkit-min-device-pixel-ratio: 2) {
+        background: url('../img/ryba@2x.png');
+        background-size: 426px 180px;
+      }
+
+      @media screen and (min-width: 600px) {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      @media screen and (max-width: 600px) {
+        left: -5%;
+        width: 300px;
+        height: 127px;
+        top: 20px;
+        background-size: 300px 127px;
+      }
+
+      @media screen and (max-width: 480px) {
+        left: -20%;
+        transform: rotate(-5deg);
+      }
+
+      @media screen and (max-width: 340px) {
+        left: -175px;
+        transform: rotate(-10deg);
+        top: 50px;
+      }
+    }
+
+    .inner {
+      @include display(flex);
+      @include align-items(center);
+      max-width: $max-width;
+      margin: 0 auto;
+      height: 140px;
+
+      @media screen and (max-width: 1140px) {
+        width: calc(100% - 40px);
+      }
+
+      @media screen and (max-width: 768px) {
+        width: calc(100% - 30px);
+      }
+
+      @media screen and (max-width: 640px) {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    &__text {
+      color: white;
+      max-width: 250px;
+      line-height: 1.2;
+
+      H3 {
+        font-weight: 700;
+        font-size: 2em;
+      }
+
+      P {
+        @include default-fonts();
+        font-size: .9em;
+      }
+
+      @media screen and (max-width: 768px) {
+        margin-left: 5px;
+
+        H3 {
+          font-size: 1.75em;
+          margin-bottom: 5px;
+        }
+
+        P {
+          font-size: .85em;
+        }
+      }
+
+      @media screen and (max-width: 640px) {
+        display: none;
+      }
+    }
+
+    &__toggle {
+      margin-left: auto;
+      font-weight: 600;
+
+      @include display(flex);
+      //@include align-self(stretch);
+
+      @media screen and (max-width: 380px) {
+        max-width: 140px;
+      }
+
+      A {
+        @include display(flex);
+        @include flex-wrap(wrap);
+        //@include align-items(center);
+
+        text-transform: uppercase;
+        color: white;
+        opacity: .35;
+        transition: opacity .15s ease;
+        font-size: .8em;
+
+        &:hover {
+          opacity: .75;
+          transition: opacity .35s ease;
+        }
+
+        &.header__top__toggle--active {
+          opacity: 1;
+
+          svg {
+            &:first-of-type {
+              display: none;
+            }
+            &:last-of-type {
+              display: block;
+              -webkit-filter: drop-shadow(0 0 3px white);
+              filter: drop-shadow(0 0 3px white);
+            }
+          }
+
+          SPAN {
+            text-shadow: 0 0 10px white;
+          }
+        }
+
+        svg {
+          @include flex(1 1 100%);
+          transform: scale(.8);
+
+          &:last-of-type {
+            display: none;
+          }
+        }
+
+        SPAN {
+          display: block;
+          margin: 15px auto 0 auto;
+        }
+
+        @media screen and (max-width: 380px) {
+          @include justify-content(center);
+          @include flex(1 1 100%);
+        }
+      }
+
+      /*
+      A {
+          @include display(flex);
+          @include align-items(center);
+
+          text-transform: uppercase;
+          color: #89B0FF;
+
+          @media screen and (min-width: 769px) {
+              font-size: .9em;
+              padding: 0 30px;
+          }
+
+          @media screen and (max-width: 768px) {
+              padding: 0 20px;
+          }
+
+          @media screen and (max-width: 480px) {
+              font-size: .8em;
+              padding: 0 15px;
+          }
+
+          @media screen and (max-width: 380px) {
+              @include justify-content(center);
+              @include flex(1 1 100%);
+              padding: 0 5px;
+          }
+
+
+          &:hover {
+              SPAN {
+                  color: white;
+              }
+          }
+      }
+
+      &--active {
+          background: white;
+          box-shadow: inset 0px -1px 0px 0px $medium--blue;
+
+          SPAN {
+              color: $dark--blue;
+          }
+
+          &:hover SPAN {
+              color: $dark--blue!important;
+          }
+      }   */
+    }
+
+    &__logo {
+      display: block;
+      z-index: 500;
+      max-height: 100px;
+
+      @media screen and (min-width: 640px) {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px;
+      }
+
+      @media screen and (max-width: 640px) {
+        margin-left: 40px;
+      }
+
+      @media screen and (max-width: 380px) {
+        max-height: 80px;
+      }
+
+      IMG {
+        @media screen and (max-width: 480px) {
+          width: 120px;
+        }
+
+        @media screen and (max-width: 380px) {
+          width: 100px;
+        }
+      }
+    }
+
+  }
+
+  &__nav {
+    z-index: 50;
+    position: relative;
+    background: $light--blue;
+    width: 100%;
+    overflow: auto;
+    overflow-y: hidden;
+
+    @media screen and (min-width: 1000px) {
+      @include justify-content(center);
+    }
+
+    @include display(flex);
+
+    A {
+      font-weight: 700;
+      color: rgba(255, 255, 255, .75);
+      padding: 25px 40px;
+      text-transform: uppercase;
+      font-size: .9em;
+      border-right: 1px solid $medium--blue;
+      position: relative;
+      transition: color .1s ease;
+
+      &:first-of-type {
+        border-left: 1px solid $medium--blue;
+      }
+
+      @media screen and (min-width: 1000px) {
+        // background-color: red !important;
 
         &:after {
-            content: "";
-            position: absolute;
-            z-index: 0;
-            width: 426px;
-            height: 180px;
-            top: -5px;
-            opacity: 0.15;
-
-            background: url('../img/ryba.png');
-
-            @media (-webkit-min-device-pixel-ratio: 2) {
-                background: url('../img/ryba@2x.png');
-                background-size: 426px 180px;
-            }
-
-            @media screen and (min-width: 600px) {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            @media screen and (max-width: 600px) {
-                left: -5%;
-                width: 300px;
-                height: 127px;
-                top: 20px;
-                background-size: 300px 127px;
-            }
-
-            @media screen and (max-width: 480px) {
-                left: -20%;
-                transform: rotate(-5deg);
-            }
-
-            @media screen and (max-width: 340px) {
-                left: -175px;
-                transform: rotate(-10deg);
-                top: 50px;
-            }
+          content: "";
+          left: 0;
+          top: 100%;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: rgba(3, 65, 186, 1);
+          z-index: -1;
+          transition: top .1s ease;
         }
 
-        .inner {
-            @include display(flex);
-            @include align-items(center);
-            max-width: $max-width;
-            margin: 0 auto;
-            height: 140px;
-
-            @media screen and (max-width: 1140px) {
-                width: calc(100% - 40px);
-            }
-
-            @media screen and (max-width: 768px) {
-                width: calc(100% - 30px);
-            }
-
-            @media screen and (max-width: 640px) {
-                width: 100%;
-                margin-right: 0;
-            }
+        &:hover {
+          &:after {
+            top: 0;
+            transition: top .25s ease;
+          }
         }
+      }
+      &:hover {
+        color: white;
+        transition: color .5s ease;
+      }
 
-        &__text {
-            color: white;
-            max-width: 250px;
-            line-height: 1.2;
-
-            H3 {
-                font-weight: 700;
-                font-size: 2em;
-            }
-
-            P {
-                @include default-fonts();
-                font-size: .9em;
-            }
-
-            @media screen and (max-width: 768px) {
-                margin-left: 5px;
-
-                H3 {
-                    font-size: 1.75em;
-                    margin-bottom: 5px;
-                }
-
-                P {
-                    font-size: .85em;
-                }
-            }
-
-            @media screen and (max-width: 640px) {
-                display: none;
-            }
-        }
-
-        &__toggle {
-            margin-left: auto;
-            font-weight: 600;
-            
-            @include display(flex);
-            //@include align-self(stretch);
-
-            @media screen and (max-width: 380px) {
-                max-width: 140px;
-            }
-
-            A {
-                @include display(flex);
-                @include flex-wrap(wrap);
-                //@include align-items(center);
-
-                text-transform: uppercase;
-                color: white;
-                opacity: .35;
-                transition: opacity .15s ease;
-                font-size: .8em;
-
-                &:hover {
-                    opacity: .75;
-                    transition: opacity .35s ease;
-                }
-
-                &.header__top__toggle--active {
-                    opacity: 1;
-
-                    svg {
-                        &:first-of-type {
-                            display: none;
-                        }
-                        &:last-of-type {
-                            display: block;
-                            -webkit-filter: drop-shadow(0 0 3px white);
-                            filter: drop-shadow(0 0 3px white);
-                        }
-                    }
-
-                    SPAN {
-                        text-shadow: 0 0 10px white;
-                    }
-                }
-
-                svg {
-                    @include flex(1 1 100%);
-                    transform: scale(.8);
-
-                    &:last-of-type {
-                        display: none;
-                    }
-                }
-
-                SPAN {
-                    display: block;
-                    margin: 15px auto 0 auto;
-                }
-
-                @media screen and (max-width: 380px) {
-                    @include justify-content(center);
-                    @include flex(1 1 100%);
-                }
-            }
-
-            /*
-            A {
-                @include display(flex);
-                @include align-items(center);
-
-                text-transform: uppercase;
-                color: #89B0FF;
-
-                @media screen and (min-width: 769px) {
-                    font-size: .9em;
-                    padding: 0 30px;
-                }
-
-                @media screen and (max-width: 768px) {
-                    padding: 0 20px;
-                }
-
-                @media screen and (max-width: 480px) {
-                    font-size: .8em;
-                    padding: 0 15px;
-                }
-
-                @media screen and (max-width: 380px) {
-                    @include justify-content(center);
-                    @include flex(1 1 100%);
-                    padding: 0 5px;
-                }
-                
-
-                &:hover {
-                    SPAN {
-                        color: white;
-                    }
-                }
-            }
-
-            &--active {
-                background: white;
-                box-shadow: inset 0px -1px 0px 0px $medium--blue;
-
-                SPAN {
-                    color: $dark--blue;
-                }
-
-                &:hover SPAN {
-                    color: $dark--blue!important;
-                }
-            }   */         
-        }
-
-        &__logo {
-            display: block;
-            z-index: 500;
-            max-height: 100px;
-
-                @media screen and (min-width: 640px) {
-                    position: absolute;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    top: 20px;
-                }
-
-                @media screen and (max-width: 640px) {
-                    margin-left: 40px;
-                }
-
-                @media screen and (max-width: 380px) {
-                    max-height: 80px;
-                }
-
-
-
-            IMG {
-                @media screen and (max-width: 480px) {
-                    width: 120px;
-                }
-
-                @media screen and (max-width: 380px) {
-                    width: 100px;
-                }
-            }
-        }
-
-       
-    } 
-
-    &__nav {
-        z-index: 50;
-        position: relative;
-        background: $light--blue;
-        width: 100%;
-        overflow: auto;
-        overflow-y: hidden;
-
-        @media screen and (min-width: 1000px) {
-            @include justify-content(center);
-        }
-
-        @include display(flex);
-
-        A {
-            font-weight: 700;
-            color: rgba(255,255,255,.75);
-            padding: 25px 40px;
-            text-transform: uppercase;
-            font-size: .9em;
-            border-right: 1px solid $medium--blue;
-            position: relative;
-            transition: color .1s ease;
-
-            &:first-of-type {
-                border-left: 1px solid $medium--blue;
-            }
-    
-            &:after {
-                content: "";
-                left: 0;
-                top: 100%;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background: rgba(3,65,186,1);
-                z-index: -1;
-                transition: top .1s ease;
-            }
-
-            &:hover {
-                &:after {
-                    top: 0;
-                    transition: top .25s ease;
-                }
-
-                color: white;
-                transition: color .5s ease;
-            }
-
-            &.active {
-                color: $light--blue;
-                background: white;
-            }
-        }
+      &.active {
+        color: $light--blue;
+        background: white;
+      }
     }
+  }
 }
