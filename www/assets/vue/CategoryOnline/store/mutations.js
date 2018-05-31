@@ -1,5 +1,3 @@
-import camelCaseKeys from 'camelcase-keys'
-
 import _ from 'lodash'
 import Vue from 'vue';
 
@@ -19,6 +17,9 @@ export default {
 
     setMatchDetailUrlPattern(state, pattern) {
         state.matchDetailUrlPattern = pattern;
+    },
+    setServerTime(state, serverTime) {
+        state.serverTimeOffset = (new Date() / 1000) - serverTime;
     },
 
     pushSocketQueue(state, obj) {
@@ -41,7 +42,6 @@ export default {
     },
     // default handler called for all methods
     SOCKET_ONMESSAGE(state, data) {
-        data = camelCaseKeys(data);
         state.lastData = data;
 
         if (_.has(data, 'matches')) {
@@ -49,6 +49,9 @@ export default {
         }
         if (_.has(data, 'match')) {
             this.commit('setMatch', data.match);
+        }
+        if (_.has(data, 'server_time')) {
+            this.commit('setServerTime', data.server_time);
         }
     },
     // mutations for reconnect methods

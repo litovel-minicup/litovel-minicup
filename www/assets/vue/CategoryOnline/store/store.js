@@ -18,6 +18,7 @@ const store = new Vuex.Store({
 
         baseLogosPath: null,
         matchDetailUrlPattern: null,
+        serverTimeOffset: 0,
     },
     actions,
     mutations,

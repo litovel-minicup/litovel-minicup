@@ -67,11 +67,12 @@
             },
         },
         computed: {
+            ...mapState(['baseLogosPath', 'matchDetailUrlPattern', 'serverTimeOffset']),
             matchTermStart() {
                 const d = new Date(this.match.match_term_start * 1000);
                 const time = `${d.getHours().pad(2)}:${d.getMinutes().pad(2)}`;
                 if (d.toDateString() === new Date().toDateString()) return time;
-                return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${time}`;
+                return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} ${time}`;
             },
             matchDetailUrl() {
                 // corresponding with Match::MATCH_DETAIL_FULL_URL_PATTERN
@@ -90,12 +91,11 @@
             playing() {
                 return _.includes(['half_first', 'half_second'], this.match.state);
             },
-            ...mapState(['baseLogosPath', 'matchDetailUrlPattern'])
         },
         created() {
             this.timerID = setInterval(() => {
                 const start = this.match.second_half_start ? this.match.second_half_start : this.match.first_half_start;
-                this.timerCount = (Number(Date.now() / 1000) - start) | 0;
+                this.timerCount = Math.floor(Number(Date.now() / 1000) - start + this.serverTimeOffset);
             }, 1000);
         },
         destroyed() {
