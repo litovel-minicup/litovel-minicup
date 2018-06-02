@@ -1,139 +1,146 @@
 .MatchDetail {
 
-	&__head {
-		background: #a09f9f;
-		@include display(flex);
-		padding: 0 20px;
-		position: relative;
+  &__head {
+    background: #a09f9f;
+    @include display(flex);
+    padding: 0 20px;
+    position: relative;
 
-		&__score {
-			@include default_fonts();
-			@include align-self(stretch);
-			background: #555;
-			position: absolute;
-			left: 50%;
-			bottom: 0;
-			top: 0;
-			padding: 25px 20px;
-			font-size: 32px;
-			font-weight: 300;
-			color: rgba(255,255,255,.75);
-			transform: translateX(-50%);
+    &__score {
+      @include default_fonts();
+      @include align-self(stretch);
+      background: #555;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      top: 0;
+      padding: 25px 20px;
+      font-size: 32px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, .75);
+      transform: translateX(-50%);
 
-			@media screen and (max-width: 580px) {
-				font-size: 22px;
-				padding: 28px 15px;
-			}
-		}
+      @media screen and (max-width: 580px) {
+        font-size: 22px;
+        padding: 28px 15px;
+      }
+    }
 
-		H2 {
-			color: white;
-			font-size: 28px;
-			padding: 30px 0;
-			&:nth-of-type(2) {
-				margin-left: auto;
-			}
+    H2 {
+      color: white;
+      font-size: 28px;
+      padding: 30px 0;
+      &:nth-of-type(2) {
+        margin-left: auto;
+      }
 
-			@media screen and (max-width: 960px) and (min-width: 769px), (max-width: 580px) {
-				font-size: 18px;
-			}
-		}
-	}
+      @media screen and (max-width: 960px) and (min-width: 769px), (max-width: 580px) {
+        font-size: 18px;
+      }
+    }
+  }
 
-	&__video {
-		IMG {
-			width: 100%;
-		}
-	}
+  &__video {
+    IMG {
+      width: 100%;
+    }
+  }
 
-	&__action {
+  &__action {
 
-		@include default-fonts();
+    @include default-fonts();
 
-		padding: 20px;
-		position: relative;
+    padding: 20px;
+    position: relative;
 
-		&:after {
-			content: '';
-			width: 2px;
-			height: calc(100% - 20px);
-			background: #bbb;
-			position: absolute;
-			top: 10px;
-			left: 50%;
-			z-index: 0;
-		}
+    &:after {
+      content: '';
+      width: 2px;
+      height: calc(100% - 20px);
+      background: #bbb;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      z-index: 0;
+    }
 
-		&__time {
-			text-align: center;
-			padding: 20px 0;
-			background: $light--grey;
-			position: relative;
-			z-index: 5;
-			color: #999;
-			font-weight: bolder;
-		}
+    &__time {
+      text-align: center;
+      padding: 20px 0;
+      background: $light--grey;
+      position: relative;
+      z-index: 5;
+      color: #999;
+      font-weight: bolder;
+    }
 
-		&__home, &__guest {
-			padding: 20px;
-			@include display(flex);
-			@include align-items(center);
+    &__more {
+      z-index: 5;
+      position: relative;
+      padding: 20px 0;
+      background: $light--grey;
+    }
 
-			position: relative;
+    &__home, &__guest {
+      padding: 20px;
+      @include display(flex);
+      @include align-items(center);
 
-			&:after {
-				content: '';
-				width: 25px;
-				height: 25px;
-				background: white;
-				border-radius: 100%;
-				border: 3px solid #bbb;
-				position: absolute;
-				left: 50%;
-				top: 50%;
+      position: relative;
 
-				transform: translate(-50%, -50%);
-				z-index: 20;
-			}
+      &:after {
+        content: '';
+        width: 25px;
+        height: 25px;
+        background: white;
+        border-radius: 100%;
+        border: 3px solid #bbb;
+        position: absolute;
+        left: 50%;
+        top: 50%;
 
-			&__time {
-				font-weight: bolder;
-				font-size: 22px;
-				color: rgba(0,0,0,.5);
-				@include flex(0 0 40%);
-			}
+        transform: translate(-50%, -50%);
+        z-index: 20;
+      }
 
-			&__source {
-				color: white;
-				padding: 10px;
-				font-size: 0.9rem;
+      &__time {
+        font-weight: bolder;
+        font-size: 22px;
+        color: rgba(0, 0, 0, .5);
+        @include flex(0 0 40%);
+      }
 
-				@include flex(0 0 40%);
+      &__source {
+        color: white;
+        padding: 10px;
+        font-size: 0.9rem;
 
-				DIV {
-					font-weight: 600;
-					margin-bottom: 5px;
-				}
-			}
-		}
+        @include flex(0 0 40%);
 
-		&__guest {
-			&__source {
-				background: $light--blue;
-				margin-left: auto;
-			}
+        DIV {
+          font-weight: 600;
+          margin-bottom: 5px;
+        }
+      }
+    }
 
-			&__time {
-				text-align: right;
-			}
-		}
+    &__guest {
+      &__source {
+        background: $light--blue;
+        margin-left: auto;
+      }
 
-		&__home {
-			&__source {
-				background: $dark--blue;
-				text-align: right;
-				margin-right: auto;
-			}
-		}
-	}
+      &__time {
+        text-align: right;
+      }
+    }
+
+    &__home {
+      &__source {
+        background: $dark--blue;
+        text-align: right;
+        margin-right: auto;
+      }
+    }
+  }
 }

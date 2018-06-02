@@ -1,5 +1,5 @@
 <template>
-    <transition-group tag="ul" name="flip-list" class="MatchDetail__action">
+    <transition-group tag="ul" name="slideDown" class="MatchDetail__action">
         <template v-for="event in eventList">
             <template v-if="event.type === 'goal' && event.team_index === 0">
                 <li class="MatchDetail__action__home" :key="event.id">
@@ -27,7 +27,7 @@
         <li
                 class="MatchDetail__action__time"
                 v-if="match.confirmed && !events.length"
-                :key="0"
+                :key="-1"
         >zápas bez textového přenosu
         </li>
 
@@ -35,8 +35,18 @@
         <li
                 class="MatchDetail__action__time"
                 v-if="!match.confirmed && !events.length"
-                :key="0"
+                :key="-2"
         >před začátkem zápasu v {{ matchStart }}
+        </li>
+
+        <li
+                :key="-3"
+                v-if="events.length > count"
+                class="MatchDetail__action__more"
+        >
+            <div class="Article__more">
+                <a @click="count += 10">Zobrazit více</a>
+            </div>
         </li>
     </transition-group>
 </template>
@@ -47,17 +57,22 @@
     export default {
         name: "EventList",
         props: ['events', 'match'],
+        data() {
+            return {
+                count: 10
+            }
+        },
         computed: {
             eventList() {
                 const events = _.sortBy(this.events, ['half_index'], ['time_offset']);
-                return this.match.confirmed ? events : events.reverse();
+                return _.slice(this.match.confirmed ? events : events.reverse(), 0, this.count);
             },
             matchStart() {
                 const start = new Date(this.match.match_term_start * 1000);
 
                 return `${start.getHours().pad(2)}:${start.getMinutes().pad(2)}` + (
                     start.toLocaleDateString() === new Date().toLocaleDateString() ?
-                    '' : ` ${start.toLocaleDateString()}.`
+                        '' : ` ${start.toLocaleDateString()}.`
                 );
             }
         },

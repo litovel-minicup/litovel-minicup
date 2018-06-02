@@ -2352,6 +2352,11 @@ Header module
     z-index: 5;
     color: #999;
     font-weight: bolder; }
+  .MatchDetail__action__more {
+    z-index: 5;
+    position: relative;
+    padding: 20px 0;
+    background: #e1e1e1; }
   .MatchDetail__action__home, .MatchDetail__action__guest {
     padding: 20px;
     display: -webkit-box;
