@@ -1,14 +1,18 @@
+{var $hasLocation = (bool) (count($matches) && $matches[0]->matchTerm->location)}
+
 <div class="Box__content Table__content">
-    <table class="Table Table__matches">
+    <table n:class="Table,Table__matches,$hasLocation?Table__matches--with-location">
         <thead class="Box__subhead Article__subhead">
         <tr>
             <th>Domácí</th>
             <th>Skóre</th>
             <th>Hosté</th>
+            {if $hasLocation}
+                <th>Hřiště</th>
+            {/if}
             <th>Začátek</th>
             <th>Datum</th>
-            <th></th>
-            {*<th>Umístění</th>*}
+            <th> </th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +32,9 @@
                         <td>
                             {$match->awayTeam->name}
                         </td>
+                        {if $hasLocation}
+                            <td>{$match->matchTerm->location}</td>
+                        {/if}
                         <td>
                             {$match->matchTerm|matchStart}
                         </td>
@@ -35,8 +42,6 @@
                             {$match->matchTerm|matchDate}
                         </td>
                         <td>{if $match->facebookVideoId}{include "../../@icons/movie.svg"}{/if}</td>
-                        {*<td>{$match->matchTerm->location}</td>*}
-                    </tr>
                 {else}
                     {*is away*}
                     <tr onclick="window.location = {plink Match:detail $match};" n:class="$match->isDraw() ? 'Table__matches--draw',
@@ -51,6 +56,9 @@
                         <td>
                             {$match->homeTeam->name}
                         </td>
+                        {if $hasLocation}
+                            <td>{$match->matchTerm->location}</td>
+                        {/if}
                         <td>
                             {$match->matchTerm|matchStart}
                         </td>
@@ -66,7 +74,12 @@
                         {$match->scoreHome} : {$match->scoreAway}
                     </td>
                     <td>{$match->awayTeam->name}</td>
-                    <td>{$match->matchTerm|matchStart}</td>
+                    {if $hasLocation}
+                        <td>{$match->matchTerm->location}</td>
+                    {/if}
+                    <td>
+                        {$match->matchTerm|matchStart}
+                    </td>
                     <td>{$match->matchTerm|matchDate}</td>
                     <td>{if $match->facebookVideoId}{include "../../@icons/movie.svg"}{/if}</td>
                 </tr>

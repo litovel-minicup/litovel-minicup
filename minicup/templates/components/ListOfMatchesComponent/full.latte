@@ -42,12 +42,17 @@
 <div class="tab-content">
     <div n:foreach="$days as $timestamp => $_matches"
             n:class="Box__content, Table__content, tab-pane, $control->isToday($timestamp) ?active" id="{$timestamp}">
-        <table class="Table Table__matches">
+        {var $hasLocation = (bool) (count($_matches) && $_matches[0]->matchTerm->location)}
+
+        <table n:class="Table,Table__matches,$hasLocation?Table__matches--with-location">
             <thead class="Box__subhead Article__subhead">
             <tr>
                 <th>Domácí</th>
                 <th>Skóre</th>
                 <th>Hosté</th>
+                {if $hasLocation}
+                    <th>Hřiště</th>
+                {/if}
                 <th>Začátek</th>
                 <th>Datum</th>
                 <th> </th>
@@ -60,6 +65,9 @@
                     {$match->scoreHome} : {$match->scoreAway}
                 </td>
                 <td>{$match->awayTeam->name}</td>
+                {if $hasLocation}
+                    <td>{$match->matchTerm->location}</td>
+                {/if}
                 <td>
                     {$match->matchTerm|matchStart}
                 </td>

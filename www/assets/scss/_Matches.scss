@@ -85,7 +85,8 @@
 
 .Table__matches {
   thead {
-    th:nth-of-type(1), th:nth-of-type(3) {
+    th:nth-of-type(1),
+    th:nth-of-type(3) {
       text-align: left;
       width: 25%;
       padding-left: 20px;
@@ -93,14 +94,23 @@
     th:nth-of-type(2) {
       width: 10%;
     }
-    th:nth-of-type(4) {
+
+    th:nth-last-of-type(3) {
       width: 10%;
     }
-    th:nth-of-type(5) {
+    th:nth-last-of-type(2) {
       width: 10%;
     }
-    th:nth-of-type(6) {
+    th:nth-last-of-type(1) {
       width: 5%;
+    }
+  }
+  &--with-location {
+    THEAD TH:nth-of-type(4) {
+      width: 2%;
+    }
+    TBODY TD:nth-of-type(4) {
+      width: 2%;
     }
   }
 
@@ -116,7 +126,7 @@
       }
     }
 
-    TD:nth-of-type(6) {
+    TD:nth-last-of-type(1) {
       vertical-align: middle;
       text-align: right;
       padding-right: 20px;
@@ -242,19 +252,25 @@
     display: none;
   }
 
-  .Table__matches thead th:nth-child(5),
-  .Table__matches thead th:nth-child(n+6) {
-    display: none;
+  .Table__matches:not(.Table__matches--with-location) {
+    thead th:nth-child(n+5) {
+      display: none;
+    }
+    tbody td:nth-child(n+5) {
+      display: none;
+    }
   }
-  .Table__matches tbody tr td:nth-child(5),
-  .Table__matches tbody tr td:nth-child(n+6) {
-
-    display: none;
+  .Table__matches--with-location {
+    thead th:nth-child(n+6) {
+      display: none;
+    }
+    tbody td:nth-child(n+6) {
+      display: none;
+    }
   }
 
   .Table__detail {
     tbody {
-
       td {
         font-size: 40px;
         font-family: "Montserrat";
