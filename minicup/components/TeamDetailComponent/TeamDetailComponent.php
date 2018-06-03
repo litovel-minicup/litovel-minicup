@@ -4,6 +4,7 @@ namespace Minicup\Components;
 
 use Minicup\Model\Entity\Player;
 use Minicup\Model\Entity\Team;
+use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Manager\TagManager;
 use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamRepository;
@@ -18,6 +19,9 @@ class TeamDetailComponent extends BaseComponent
 
     /** @var TagManager */
     private $TM;
+
+    /** @var MatchManager */
+    private $MM;
 
     /** @var IListOfMatchesComponentFactory */
     private $LOMCF;
@@ -42,6 +46,7 @@ class TeamDetailComponent extends BaseComponent
      * @param TeamRepository                 $TR
      * @param PlayerRepository               $PR
      * @param TagManager                     $TM
+     * @param MatchManager                   $MM
      * @param IListOfMatchesComponentFactory $LOMCF
      * @param IStaticContentComponentFactory $SCCF
      * @param IPhotoListComponentFactory     $PhLCF
@@ -54,6 +59,7 @@ class TeamDetailComponent extends BaseComponent
         TeamRepository $TR,
         PlayerRepository $PR,
         TagManager $TM,
+        MatchManager $MM,
         IListOfMatchesComponentFactory $LOMCF,
         IStaticContentComponentFactory $SCCF,
         IPhotoListComponentFactory $PhLCF,
@@ -68,6 +74,7 @@ class TeamDetailComponent extends BaseComponent
         $this->SCCF = $SCCF;
         $this->PhLCF = $PhLCF;
         $this->TM = $TM;
+        $this->MM = $MM;
         $this->THCF = $THCF;
         $this->PlLCF = $PlLCF;
         $this->players = $PR->findByTeamWithConfirmedGoals($team->i);
@@ -78,6 +85,7 @@ class TeamDetailComponent extends BaseComponent
         $this->team->i->tag = $this->TM->getTag($this->team);
         $this->template->team = $this->team;
         $this->template->players = $this->players;
+        $this->template->hasStarted = $this->MM->isStarted($this->team->category);
         parent::render();
     }
 
