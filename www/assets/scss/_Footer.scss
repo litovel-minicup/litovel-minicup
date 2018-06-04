@@ -60,12 +60,12 @@
       font-family: "Montserrat";
     }
     SVG {
-      margin-left: 30px;
-      height: 30px;
-      width: 30px;
+      max-height: 30px;
+      max-width: 30px;
     }
     &__icon_link {
       display: inline-block;
+      margin-left: 30px;
     }
 
     & A:not(&__icon_link) {
@@ -76,7 +76,6 @@
         background: $light--blue;
         color: white;
       }
-
     }
   }
 

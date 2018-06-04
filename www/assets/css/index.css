@@ -2105,11 +2105,11 @@ Header module
     .Footer__content H5, .Footer__content H6 {
       font-family: "Montserrat"; }
     .Footer__content SVG {
-      margin-left: 30px;
-      height: 30px;
-      width: 30px; }
+      max-height: 30px;
+      max-width: 30px; }
     .Footer__content__icon_link {
-      display: inline-block; }
+      display: inline-block;
+      margin-left: 30px; }
     .Footer__content A:not(.Footer__content__icon_link) {
       border-bottom: 3px solid #4180ff;
       color: #4180ff; }
