@@ -2,12 +2,12 @@
   background: $light--black;
   margin-top: $universal-dis;
 
-  @include span-columns(12);
-
   @include fill-parent();
-  @include row(table);
 
   &__container {
+    @include display(flex);
+    @include align-items(center);
+
     @include outer-container();
 
     color: darken(white, 40%);
@@ -20,7 +20,6 @@
     background: lighten(black, 20%);
 
     padding: 15px 20px;
-    height: 100px;
     line-height: 100px;
     vertical-align: middle;
 
@@ -33,13 +32,10 @@
         margin-left: 40px;
       }
     }
-    .Footer__block {
-      @include span-columns(2);
-    }
   }
 
   &__block {
-    @include span-columns(3);
+    @include flex(1 1 100%);
 
     &:first-of-type {
       text-align: left;
@@ -60,26 +56,94 @@
     H5, H6 {
       font-family: "Montserrat";
     }
+
+    A {
+      border-bottom: 3px solid $light--blue;
+      color: $light--blue;
+
+      &:hover {
+        background: $light--blue;
+        color: white;
+      }
+
+    }
   }
 
-  a {
-    border-bottom: 3px solid $light--blue;
-    color: $light--blue;
+  &__years {
+    padding: 15px 0;
+    font-family: "Montserrat";
 
-    &:hover {
-      background: $light--blue;
-      color: white;
+    NAV {
+      margin: 20px 0;
+      padding: 20px 0 0;
+      position: relative;
+      text-align: center;
+
+      @include display(flex);
+      @include align-items(center);
+
+      &:before {
+        width: 80%;
+        height: 3px;
+        content: '';
+        background-color: $dark--grey;
+        position: absolute;
+        bottom: calc(100% - 27px);
+        left: 10%;
+      }
     }
+    A {
+      position: relative;
+      display: inline-block;
+      @include flex(1 1 100%);
+      margin-top: 20px;
+      padding-top: 20px;
 
+      color: $dark--grey;
+      font-size: 16px;
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: calc(50% - 15px);
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        border: 3px solid $dark--grey;
+        background: $light--black;
+      }
+      &.active, &:hover {
+        color: white;
+        &:before {
+          background: $light--blue;
+          border-color: white;
+        }
+      }
+    }
   }
 }
 
 @media screen and (max-width: 768px) {
   .Footer {
+    &__container {
+      // @include flex-direction(column);
+      @include flex-wrap(wrap);
+    }
     &__block {
-      @include span-columns(12);
-      &:not(:nth-of-type(1)) {
-        margin-top: 20px;
+      &:first-of-type, &:last-of-type {
+        @include order(1);
+        @include flex-basis(50%);
+      }
+      &:nth-of-type(2) {
+        @include order(2);
+      }
+    }
+    &--bottom {
+      .Footer__container {
+        @include flex-direction(column);
+      }
+      .Footer__block {
+        @include flex-basis(100%);
       }
     }
   }

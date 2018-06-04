@@ -69,15 +69,15 @@ class YearRepository extends BaseRepository
      * @return Year[]
      * @throws \LeanMapper\Exception\InvalidStateException
      */
-    public function findArchiveYears()
+    public function findAllYears()
     {
-        static $archiveYears;
-        if (NULL === $archiveYears) {
-            $archiveYears = $this->createEntities(
-                $this->connection->select('*')->from($this->getTable())->where('[actual] = 0')->orderBy('year DESC')->fetchAll()
+        static $years;
+        if (NULL === $years) {
+            $years = $this->createEntities(
+                $this->connection->select('*')->from($this->getTable())->orderBy('year ASC')->fetchAll()
             );
         }
-        return $archiveYears;
+        return $years;
     }
 
     /**

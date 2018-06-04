@@ -1,4 +1,9 @@
-<a n:foreach="$years as $_year"
-   n:href="changeYear! year => $_year->id">Litovel
-    MINICUP {$_year->year}<br>
-</a>
+<nav>
+    <a
+            n:foreach="$years as $_year"
+            n:href="changeYear! year => $_year->id"
+            n:class="$_year->id == $category->year->id ? active"
+    >
+        {$_year->year}
+    </a>
+</nav>

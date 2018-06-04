@@ -26,7 +26,8 @@
         </a>
     </div>
     <![endif]-->
-    {*
+
+
     <!-- header class -->
     <header class="header">
         <!-- logo class -->
@@ -67,48 +68,48 @@
             <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
             <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
             {*<a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a> *}
-    {*
+
             <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">fotogalerie</a>
             {* <a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a> *}
-    {*</nav>
-</header>
-<!-- main class -->
-<main>
-    <div class="Main__wrapper">
-        {block outerContent}
-            <div class="Section">
-                {block content}
-                {/block}
-            </div>
-        {/block}
-    </div>
-    <div class="Side__wrapper">
-        {control asideComponent}
-
-        <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
-             data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
-             data-show-facepile="true" data-width="472" style="margin-top: 8px;">
-            <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
-                <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
-            </blockquote>
+        </nav>
+    </header>
+    <!-- main class -->
+    <main>
+        <div class="Main__wrapper">
+            {block outerContent}
+                <div class="Section">
+                    {block content}
+                    {/block}
+                </div>
+            {/block}
         </div>
-        <style>
-            @media (max-width: 472px) {
-                .fb-page {
-                    display: none;
-                }
-            }
+        <div class="Side__wrapper">
+            {control asideComponent}
 
-            @media (max-width: 768px) {
-                .fb-page {
-                    text-align: center;
-                    width: 100%;
+            <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
+                 data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
+                 data-show-facepile="true" data-width="472" style="margin-top: 8px;">
+                <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
+                </blockquote>
+            </div>
+            <style>
+                @media (max-width: 472px) {
+                    .fb-page {
+                        display: none;
+                    }
                 }
-            }
-        </style>
-    </div>
-</main>
-*}
+
+                @media (max-width: 768px) {
+                    .fb-page {
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            </style>
+        </div>
+    </main>
+
     {include '@footer.latte'}
     {include '../@tracking.latte'}
 {/block}

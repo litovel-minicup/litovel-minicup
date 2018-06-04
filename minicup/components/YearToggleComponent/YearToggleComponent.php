@@ -65,7 +65,7 @@ class YearToggleComponent extends BaseComponent
 
     public function render()
     {
-        $this->template->years = $this->YR->findArchiveYears();
+        $this->template->years = $this->YR->findAllYears();
         $this->template->actualYear = $this->YR->getActualYear();
         $this->template->category = $this->category;
         parent::render();
