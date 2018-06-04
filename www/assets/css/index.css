@@ -1787,56 +1787,77 @@ Header module
       padding: 10px 0;
       color: white; }
 
-.Sponsors__sprite {
+.Sponsors__wrapper {
+  max-width: 1145px;
+  margin-left: auto;
+  margin-right: auto; }
+  .Sponsors__wrapper::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .Sponsors__wrapper H2 {
+    text-align: center;
+    font-variant-caps: all-petite-caps;
+    font-family: "Montserrat";
+    color: #a09f9f;
+    margin: 3em 0 0;
+    padding: 0 0 2em;
+    font-size: 32px;
+    border-bottom: 1px solid #a09f9f; }
+.Sponsors__list {
+  text-align: center;
+  padding: 40px 0; }
+  .Sponsors__list SPAN {
+    display: inline-block;
+    margin: 10px; }
+.Sponsors .s-11 {
+  width: 150px;
   height: 150px;
-  background: white;
-  background: url("../img/sprites.png") no-repeat; }
-  .Sponsors__sprite:hover {
-    background: url("../img/sprites.png") no-repeat; }
-  .Sponsors__sprite:nth-of-type(1) {
-    background-position: 0 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(2) {
-    background-position: -150px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(3) {
-    background-position: -300px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(4) {
-    background-position: -450px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(5) {
-    background-position: -600px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(6) {
-    background-position: -750px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(7) {
-    background-position: -900px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(8) {
-    background-position: -1050px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(9) {
-    background-position: -1200px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(10) {
-    background-position: -1350px 0;
-    width: 150px;
-    height: 150px; }
-  .Sponsors__sprite:nth-of-type(11) {
-    background-position: -1500px 0;
-    width: 150px;
-    height: 150px; }
+  background: url("../img/sprites.png") -150px 0; }
+.Sponsors .s-10 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") 0 -300px; }
+.Sponsors .s-9 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") 0 -150px; }
+.Sponsors .s-8 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -150px -150px; }
+.Sponsors .s-7 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -300px 0; }
+.Sponsors .s-6 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -300px -150px; }
+.Sponsors .s-5 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") 0 0; }
+.Sponsors .s-4 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -150px -300px; }
+.Sponsors .s-3 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -300px -300px; }
+.Sponsors .s-2 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -450px 0; }
+.Sponsors .s-1 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -450px -150px; }
+.Sponsors .s-0 {
+  width: 150px;
+  height: 150px;
+  background: url("../img/sprites.png") -450px -300px; }
 
 .Side__wrapper {
   float: left;
@@ -2040,15 +2061,6 @@ Header module
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    box-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items: center;
-    align-items: center;
-    -ms-flex-align: center;
     max-width: 1145px;
     margin-left: auto;
     margin-right: auto;
@@ -2065,7 +2077,7 @@ Header module
     line-height: 100px;
     vertical-align: middle; }
     .Footer--bottom .Box__content {
-      font-size: 18px; }
+      font-size: 16px; }
     .Footer--bottom A {
       padding: 0 5px; }
       .Footer--bottom A + A {
@@ -2088,12 +2100,20 @@ Header module
     line-height: 1.5; }
     .Footer__content H6 {
       font-size: 16px; }
+      .Footer__content H6:last-of-type {
+        margin-bottom: 20px; }
     .Footer__content H5, .Footer__content H6 {
       font-family: "Montserrat"; }
-    .Footer__content A {
+    .Footer__content SVG {
+      margin-left: 30px;
+      height: 30px;
+      width: 30px; }
+    .Footer__content__icon_link {
+      display: inline-block; }
+    .Footer__content A:not(.Footer__content__icon_link) {
       border-bottom: 3px solid #4180ff;
       color: #4180ff; }
-      .Footer__content A:hover {
+      .Footer__content A:not(.Footer__content__icon_link):hover {
         background: #4180ff;
         color: white; }
   .Footer__years {

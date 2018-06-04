@@ -6,7 +6,7 @@
 
   &__container {
     @include display(flex);
-    @include align-items(center);
+    // @include align-items(center);
 
     @include outer-container();
 
@@ -24,7 +24,7 @@
     vertical-align: middle;
 
     .Box__content {
-      font-size: 18px;
+      font-size: 16px;
     }
     A {
       padding: 0 5px;
@@ -52,12 +52,23 @@
     line-height: 1.5;
     H6 {
       font-size: 16px;
+      &:last-of-type {
+        margin-bottom: 20px;
+      }
     }
     H5, H6 {
       font-family: "Montserrat";
     }
+    SVG {
+      margin-left: 30px;
+      height: 30px;
+      width: 30px;
+    }
+    &__icon_link {
+      display: inline-block;
+    }
 
-    A {
+    & A:not(&__icon_link) {
       border-bottom: 3px solid $light--blue;
       color: $light--blue;
 

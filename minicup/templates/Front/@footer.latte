@@ -1,7 +1,5 @@
 <div class="Footer">
     <div class="Footer__container" n:cache="$category->cacheTag, tags => $category->cacheTag">
-
-
         <div class="Footer__block">
             <div class="Box__content Footer__content">
                 <h5>Kontaktní osoba</h5>
@@ -10,7 +8,6 @@
                 <a href="tel:420603934479">+420 603 934 479</a>
             </div>
         </div>
-
 
         <div class="Footer__block">
             <div class="Box__content Footer__years">
@@ -25,8 +22,15 @@
                 <h6>Nám. Přemysla Otakara 770</h6>
                 <h6>Litovel 784 01</h6>
 
-                <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
-                <a href="mailto:hazena@tatranlitovel.cz">Email</a>
+                <a href="http://hazena.tatranlitovel.cz" class="Footer__content__icon_link">
+                    {include '../@icons/home.svg'}
+                </a>
+                <a href="mailto:hazena@tatranlitovel.cz" class="Footer__content__icon_link">
+                    {include '../@icons/envelope.svg'}
+                </a>
+                <a href="https://www.facebook.com/TatranLitovelHazena/" class="Footer__content__icon_link">
+                    {include '../@icons/facebook.svg'}
+                </a>
             </div>
         </div>
     </div>

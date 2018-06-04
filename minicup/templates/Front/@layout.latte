@@ -110,6 +110,19 @@
         </div>
     </main>
 
+    <div class="Sponsors">
+        <div class="Sponsors__wrapper">
+            <h2>Děkujeme naši sponzorům za podporu</h2>
+
+            <div class="Sponsors__list">
+                {php $numbers = range(0, 12); shuffle($numbers);}
+                {foreach $numbers as $i}
+                    <span class="s-{$i}"></span>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+
     {include '@footer.latte'}
     {include '../@tracking.latte'}
 {/block}

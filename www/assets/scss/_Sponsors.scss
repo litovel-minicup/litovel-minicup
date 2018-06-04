@@ -1,69 +1,98 @@
 .Sponsors {
+  &__wrapper {
+    @include outer-container();
+    H2 {
+      text-align: center;
+      font-variant-caps: all-petite-caps;
+      font-family: "Montserrat";
+      color: $dark--grey;
+      margin: 3em 0 0;
+      padding: 0 0 2em;
+      font-size: 32px;
+      border-bottom: 1px solid $dark--grey;
+    }
+  }
 
-	&__sprite {
-		height: 150px;
-		background: white;
-		background: url("../img/sprites.png") no-repeat;
+  &__list {
+    text-align: center;
+    padding: 40px 0;
+    SPAN {
+      display: inline-block;
+      margin: 10px;
+    }
+  }
 
-		&:hover {
-			background: url("../img/sprites.png") no-repeat;
-		}
+  .s-11 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -150px -0;
+  }
 
-		&:nth-of-type(1) {
-background-position: 0 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(2) {
-background-position: -150px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(3) {
-background-position: -300px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(4) {
-background-position: -450px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(5) {
-background-position: -600px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(6) {
-background-position: -750px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(7) {
-background-position: -900px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(8) {
-background-position: -1050px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(9) {
-background-position: -1200px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(10) {
-background-position: -1350px 0;
-	width: 150px;
-	height: 150px;
-		}
-		&:nth-of-type(11) {
-background-position: -1500px 0;
-	width: 150px;
-	height: 150px;
-		}
-	}
-} 
+  .s-10 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -0 -300px;
+  }
+
+  .s-9 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -0 -150px;
+  }
+
+  .s-8 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -150px -150px;
+  }
+
+  .s-7 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -300px -0;
+  }
+
+  .s-6 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -300px -150px;
+  }
+
+  .s-5 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -0 -0;
+  }
+
+  .s-4 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -150px -300px;
+  }
+
+  .s-3 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -300px -300px;
+  }
+
+  .s-2 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -450px -0;
+  }
+
+  .s-1 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -450px -150px;
+  }
+
+  .s-0 {
+    width: 150px;
+    height: 150px;
+    background: url('../img/sprites.png') -450px -300px;
+  }
+}
+
 
