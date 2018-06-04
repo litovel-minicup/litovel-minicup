@@ -26,7 +26,7 @@
         </a>
     </div>
     <![endif]-->
-
+    {*
     <!-- header class -->
     <header class="header">
         <!-- logo class -->
@@ -67,89 +67,49 @@
             <a n:href="Team:list" n:class="$presenter->isLinkCurrent('Team:*') ? active">týmy</a>
             <a n:href="Homepage:informations" n:class="$presenter->isLinkCurrent() ? active">informace</a>
             {*<a n:href="Stats:default" n:class="$presenter->isLinkCurrent() ? active">statistiky</a> *}
+    {*
             <a n:href="Gallery:default" n:class="$presenter->isLinkCurrent('Gallery:*') ? active">fotogalerie</a>
             {* <a n:href="Homepage:sponsors" n:class="$presenter->isLinkCurrent() ? active">sponzoři</a> *}
-        </nav>
-    </header>
-    <!-- main class -->
-    <main>
-        <div class="Main__wrapper">
-            {block outerContent}
-                <div class="Section">
-                    {block content}
-                    {/block}
-                </div>
-            {/block}
-        </div>
-        <div class="Side__wrapper">
-            {control asideComponent}
-
-            <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
-                 data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
-                 data-show-facepile="true" data-width="472" style="margin-top: 8px;">
-                <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
-                    <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
-                </blockquote>
+    {*</nav>
+</header>
+<!-- main class -->
+<main>
+    <div class="Main__wrapper">
+        {block outerContent}
+            <div class="Section">
+                {block content}
+                {/block}
             </div>
-            <style>
-                @media (max-width: 472px) {
-                    .fb-page {
-                        display: none;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .fb-page {
-                        text-align: center;
-                        width: 100%;
-                    }
-                }
-            </style>
-        </div>
-    </main>
-    <div class="Footer__wrapper">
-        <div class="Footer" n:cache="$category->cacheTag, tags => $category->cacheTag">
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Kontakt</div>
-                <div class="Box__content Footer__content">
-                    TJ Tatran Litovel – oddíl házené <br>
-                    Nám. Přemysla Otakara 770, Litovel 784 01 <br>
-                    <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
-                    <a href="mailto:hazena@tatranlitovel.cz">Email</a>
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Kontaktní osoba</div>
-                <div class="Box__content Footer__content">Martin Zifčák<br>
-                    <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
-                    <a href="tel:420603934479">+420 603 934 479</a>
-                    <br><br>
-                    <a href="https://www.facebook.com/litovel.minicup/" target="_blank">
-                        Facebook stránka turnaje Litovel MINICUP
-                    </a>
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">Archiv</div>
-                <div class="Box__content Footer__content">
-                    {control archiveYearsToggleComponent:archiveYears}
-                </div>
-            </div>
-
-            <div class="Footer__block">
-                <div class="Box__subhead Footer__subhead">&nbsp;</div>
-                <div class="Box__content Footer__content">
-                    <a href="https://live.minicup.tatranlitovel.cz">zápis přenosů</a>
-                    <br><br>
-                    <a n:href=":Admin:Homepage:default">administrace</a>
-                    <br><br>
-                    Josef Kolář, Matěj Mitaš <br> © 2015 - {date("Y")}
-                </div>
-            </div>
-        </div>
+        {/block}
     </div>
+    <div class="Side__wrapper">
+        {control asideComponent}
+
+        <div class="fb-page" data-href="https://www.facebook.com/litovel.minicup/" data-tabs="timeline,messages"
+             data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
+             data-show-facepile="true" data-width="472" style="margin-top: 8px;">
+            <blockquote cite="https://www.facebook.com/litovel.minicup/" class="fb-xfbml-parse-ignore">
+                <a href="https://www.facebook.com/litovel.minicup/">Litovel Minicup</a>
+            </blockquote>
+        </div>
+        <style>
+            @media (max-width: 472px) {
+                .fb-page {
+                    display: none;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .fb-page {
+                    text-align: center;
+                    width: 100%;
+                }
+            }
+        </style>
+    </div>
+</main>
+*}
+    {include '@footer.latte'}
     {include '../@tracking.latte'}
 {/block}
 

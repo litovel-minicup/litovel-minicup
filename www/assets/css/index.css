@@ -2031,8 +2031,6 @@ Header module
 .Footer {
   background: #4A4A4A;
   margin-top: 8px;
-  color: #999999;
-  font-family: "Montserrat";
   float: left;
   display: block;
   margin-right: 0.70671%;
@@ -2040,42 +2038,61 @@ Header module
   width: 100%;
   display: table;
   width: 100%;
-  table-layout: fixed;
-  border-bottom: 2px solid black; }
+  table-layout: fixed; }
   .Footer:last-child {
     margin-right: 0; }
-  .Footer__wrapper {
+  .Footer__container {
     max-width: 1145px;
     margin-left: auto;
-    margin-right: auto; }
-    .Footer__wrapper::after {
+    margin-right: auto;
+    color: #999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+    .Footer__container::after {
       clear: both;
       content: "";
       display: table; }
+  .Footer--bottom {
+    margin-top: 0;
+    background: #333333;
+    padding: 15px 20px;
+    height: 100px;
+    line-height: 100px;
+    vertical-align: middle; }
+    .Footer--bottom .Box__content {
+      font-size: 18px; }
+    .Footer--bottom A {
+      padding: 0 5px; }
+      .Footer--bottom A + A {
+        margin-left: 40px; }
+    .Footer--bottom .Footer__block {
+      display: table-cell;
+      width: 16.66667%; }
   .Footer__block {
     display: table-cell;
-    width: 33.33333%; }
-  .Footer__subhead {
-    padding: 15px 20px;
-    height: 50px;
-    background: #333333; }
+    width: 25%; }
+    .Footer__block:first-of-type {
+      text-align: left; }
+    .Footer__block:nth-of-type(2) {
+      text-align: center; }
+    .Footer__block:last-of-type {
+      text-align: right; }
   .Footer__content {
     line-height: 1.5; }
-    .Footer__content a {
-      border-bottom: 3px solid #4180ff;
-      color: #4180ff; }
-      .Footer__content a:hover {
-        background: #4180ff;
-        color: white; }
+    .Footer__content H6 {
+      font-size: 16px; }
+    .Footer__content H5, .Footer__content H6 {
+      font-family: "Montserrat"; }
+  .Footer a {
+    border-bottom: 3px solid #4180ff;
+    color: #4180ff; }
+    .Footer a:hover {
+      background: #4180ff;
+      color: white; }
 
 @media screen and (max-width: 768px) {
   .Footer__block {
-    float: left;
-    display: block;
-    margin-right: 0.70671%;
+    display: table-cell;
     width: 100%; }
-    .Footer__block:last-child {
-      margin-right: 0; }
     .Footer__block:not(:nth-of-type(1)) {
       margin-top: 20px; } }
 .Cover {

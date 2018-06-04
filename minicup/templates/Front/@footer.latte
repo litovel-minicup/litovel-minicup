@@ -1,0 +1,50 @@
+<div class="Footer">
+    <div class="Footer__container" n:cache="$category->cacheTag, tags => $category->cacheTag">
+
+
+        <div class="Footer__block">
+            <div class="Box__content Footer__content">
+                <h5>Kontaktní osoba</h5>
+                Martin Zifčák<br>
+                <a href="mailto:minicup@tatranlitovel.cz">minicup@tatranlitovel.cz</a> <br>
+                <a href="tel:420603934479">+420 603 934 479</a>
+            </div>
+        </div>
+
+
+        <div class="Footer__block">
+            <div class="Box__content Footer__content">
+                <h5>Ročník turnaje</h5>
+                {control archiveYearsToggleComponent:archiveYears}
+            </div>
+        </div>
+
+        <div class="Footer__block">
+            <div class="Box__content Footer__content">
+                <h5>TJ Tatran Litovel – oddíl házené</h5>
+                <h6>Nám. Přemysla Otakara 770</h6>
+                <h6>Litovel 784 01</h6>
+
+                <a href="http://hazena.tatranlitovel.cz">Webové stránky</a> <br>
+                <a href="mailto:hazena@tatranlitovel.cz">Email</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="Footer Footer--bottom">
+    <div class="Footer__container">
+        <div class="Footer__block">
+            <div class="Box__content">
+                <a n:href=":Admin:Homepage:default">administrace</a>
+                <a href="https://live.minicup.tatranlitovel.cz">zápis přenosů</a>
+            </div>
+        </div>
+        <div class="Footer__block">
+            <div class="Box__content">
+                Josef Kolář, Matěj Mitaš © 2015 - {date("Y")}
+            </div>
+        </div>
+    </div>
+</div>

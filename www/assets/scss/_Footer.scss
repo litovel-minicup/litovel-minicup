@@ -1,60 +1,86 @@
 .Footer {
-	background: $light--black;
-	margin-top: $universal-dis;
+  background: $light--black;
+  margin-top: $universal-dis;
 
-	color: darken(white, 40%);
-	font-family: "Montserrat";
+  @include span-columns(12);
 
-	@include span-columns(12);
+  @include fill-parent();
+  @include row(table);
 
-	@include fill-parent();
-	@include row(table);
+  &__container {
+    @include outer-container();
 
-	border-bottom: 2px solid black;
+    color: darken(white, 40%);
+    @include default_fonts();
 
-	&__wrapper {
-		@include outer-container();
-	}
+  }
 
-	&__block {
-		@include span-columns(4);
+  &--bottom {
+    margin-top: 0;
+    background: lighten(black, 20%);
 
-		&:nth-of-type(3) {
-			@include reset-display;
-		}
-	}
-	
-	&__subhead {
-		padding: 15px 20px;
-		height: 50px;
-		background: lighten( black, 20%);
-	}
+    padding: 15px 20px;
+    height: 100px;
+    line-height: 100px;
+    vertical-align: middle;
 
-	&__content {
-		
-		line-height: 1.5;
+    .Box__content {
+      font-size: 18px;
+    }
+    A {
+      padding: 0 5px;
+      & + A {
+        margin-left: 40px;
+      }
+    }
+    .Footer__block {
+      @include span-columns(2);
+    }
+  }
 
-		a {
-			border-bottom: 3px solid $light--blue;
-			color: $light--blue;
+  &__block {
+    @include span-columns(3);
 
-			&:hover {
-				background: $light--blue;
-				color: white;
-			}
+    &:first-of-type {
+      text-align: left;
+    }
+    &:nth-of-type(2) {
+      text-align: center;
+    }
+    &:last-of-type {
+      text-align: right;
+    }
+  }
 
-		}
-	}
+  &__content {
+    line-height: 1.5;
+    H6 {
+      font-size: 16px;
+    }
+    H5, H6 {
+      font-family: "Montserrat";
+    }
+  }
 
+  a {
+    border-bottom: 3px solid $light--blue;
+    color: $light--blue;
+
+    &:hover {
+      background: $light--blue;
+      color: white;
+    }
+
+  }
 }
 
 @media screen and (max-width: 768px) {
-	.Footer {
-		&__block {
-			@include span-columns(12);
-			&:not(:nth-of-type(1)) {
-				margin-top: 20px;
-			}
-		}
-	}
+  .Footer {
+    &__block {
+      @include span-columns(12);
+      &:not(:nth-of-type(1)) {
+        margin-top: 20px;
+      }
+    }
+  }
 }
