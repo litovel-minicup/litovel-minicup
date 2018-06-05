@@ -1801,7 +1801,7 @@ Header module
     font-family: "Montserrat";
     color: #a09f9f;
     margin: 3em 0 0;
-    padding: 0 0 2em;
+    padding: 0 20px 2em;
     font-size: 32px;
     border-bottom: 1px solid #a09f9f; }
 .Sponsors__list {
@@ -1810,6 +1810,12 @@ Header module
   .Sponsors__list SPAN {
     display: inline-block;
     margin: 10px; }
+@media screen and (max-width: 768px) {
+  .Sponsors__list SPAN[class^=s-] {
+    margin: 0; } }
+@media screen and (max-width: 540px) {
+  .Sponsors__list SPAN[class^=s-] {
+    margin: -5px; } }
 .Sponsors .s-11 {
   width: 150px;
   height: 150px;
@@ -2108,8 +2114,9 @@ Header module
       max-height: 30px;
       max-width: 30px; }
     .Footer__content__icon_link {
-      display: inline-block;
-      margin-left: 30px; }
+      display: inline-block; }
+      .Footer__content__icon_link:not(:first-of-type) {
+        margin-left: 30px; }
     .Footer__content A:not(.Footer__content__icon_link) {
       border-bottom: 3px solid #4180ff;
       color: #4180ff; }
@@ -2178,6 +2185,20 @@ Header module
           background: #4180ff;
           border-color: white; }
 
+@media screen and (max-width: 540px) {
+  .Footer__block {
+    -webkit-flex-basis: 100%;
+    -moz-flex-basis: 100%;
+    flex-basis: 100%;
+    -ms-flex-preferred-size: 100%; }
+    .Footer__block:last-of-type {
+      text-align: left; } }
+@media screen and (max-width: 768px) and (min-width: 541px) {
+  .Footer__block:first-of-type, .Footer__block:last-of-type {
+    -webkit-flex-basis: 50%;
+    -moz-flex-basis: 50%;
+    flex-basis: 50%;
+    -ms-flex-preferred-size: 50%; } }
 @media screen and (max-width: 768px) {
   .Footer__container {
     -webkit-box-lines: multiple;
@@ -2194,11 +2215,7 @@ Header module
     -webkit-order: 1;
     -moz-order: 1;
     order: 1;
-    -ms-flex-order: 1;
-    -webkit-flex-basis: 50%;
-    -moz-flex-basis: 50%;
-    flex-basis: 50%;
-    -ms-flex-preferred-size: 50%; }
+    -ms-flex-order: 1; }
   .Footer__block:nth-of-type(2) {
     -webkit-box-ordinal-group: 2;
     -moz-box-ordinal-group: 2;
@@ -2219,7 +2236,8 @@ Header module
     -webkit-flex-basis: 100%;
     -moz-flex-basis: 100%;
     flex-basis: 100%;
-    -ms-flex-preferred-size: 100%; } }
+    -ms-flex-preferred-size: 100%;
+    text-align: center; } }
 .Cover {
   position: fixed;
   bottom: 0;

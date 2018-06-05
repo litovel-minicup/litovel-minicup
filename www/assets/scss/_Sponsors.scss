@@ -7,7 +7,7 @@
       font-family: "Montserrat";
       color: $dark--grey;
       margin: 3em 0 0;
-      padding: 0 0 2em;
+      padding: 0 20px 2em;
       font-size: 32px;
       border-bottom: 1px solid $dark--grey;
     }
@@ -19,6 +19,22 @@
     SPAN {
       display: inline-block;
       margin: 10px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &__list {
+      SPAN[class^=s-] {
+        margin: 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 540px) {
+    &__list {
+      SPAN[class^=s-] {
+        margin: -5px;
+      }
     }
   }
 
