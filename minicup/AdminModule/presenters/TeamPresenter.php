@@ -22,8 +22,6 @@ use Nette\Utils\Html;
 
 class TeamPresenter extends BaseAdminPresenter
 {
-
-
     /**
      * Mapp db name => Real name
      */
@@ -61,11 +59,15 @@ class TeamPresenter extends BaseAdminPresenter
         $this->template->category = $category;
     }
 
-
     public function renderRoster($team)
     {
         $team = $this->TIR->get($team);
         $this->template->team = $team;
+    }
+
+    public function renderRosterExport(Category $category)
+    {
+        $this->template->category = $category;
     }
 
     /**

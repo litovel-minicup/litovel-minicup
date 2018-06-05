@@ -2073,7 +2073,7 @@ Header module
   .Footer--bottom {
     margin-top: 0;
     background: #333333;
-    padding: 15px 20px;
+    padding: 20px;
     line-height: 100px;
     vertical-align: middle; }
     .Footer--bottom .Box__content {
