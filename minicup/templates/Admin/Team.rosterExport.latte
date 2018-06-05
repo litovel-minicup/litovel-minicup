@@ -19,9 +19,18 @@
         table {
             border-collapse: collapse;
             table-layout: fixed;
-            border: 2px solid black;
+
+            border-top: 2px solid black;
+            border-right: 2px solid black;
+            border-left: 2px solid black;
             page-break-after: always;
+
             width: 100%;
+
+            background-position: center;
+            background-image: url('/assets/img/logo_eee.svg');
+            background-repeat: no-repeat;
+            background-size: 80% 80%;
         }
 
         th, td {
@@ -32,26 +41,37 @@
         td, th {
             padding: 5px 0 5px 5px;
         }
+
         tbody td {
             height: 40px;
         }
+
         thead th {
             border-bottom: 2px solid black;
             font-size: .8em;
         }
+
         tbody tr td:first-child {
             border-right: 2px solid black;
         }
+
+        tbody tr:last-child td {
+            border-bottom: 2px solid black;
+        }
+
         tbody tr td:last-child {
             border-left: 2px solid black;
         }
+
         tbody tr td:last-child,
         thead tr th:last-child {
             width: 40px;
         }
+
         tbody tr td:not(:last-child):not(:first-child) {
             position: relative;
         }
+
         tbody tr td:not(:last-child):not(:first-child):after {
             position: absolute;
             bottom: 50%;
@@ -67,6 +87,7 @@
             font-size: .9em;
             width: 210px;
         }
+
         .hide {
             display: none;
         }
