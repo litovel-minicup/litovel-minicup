@@ -99,7 +99,7 @@
                 </th>
                 {foreach $team->i->matches as $match}
                     <th>
-                        {$match->homeTeam->id == $team->id ? $match->awayTeam->name : $match->homeTeam->name} <br>
+                        {$match->homeTeam->id == $team->i->id ? $match->awayTeam->name : $match->homeTeam->name} <br>
                         <small><i>{$match->matchTerm->location} {$match->matchTerm|matchStart}</i></small>
                     </th>
                 {/foreach}

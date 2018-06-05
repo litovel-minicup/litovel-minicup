@@ -6,7 +6,6 @@ export default {
         dispatch('subscribe', match);
     },
     sendObj({state, commit}, obj) {
-        console.log('Socket message', obj);
         if (state.socket.isConnected) {
             this.$socket.sendObj(obj)
         } else {

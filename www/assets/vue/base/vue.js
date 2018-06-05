@@ -11,7 +11,10 @@ import 'vue2-animate/dist/vue2-animate.css';
 Raven.config(
     'https://29dc267c2d6b4bcc80cfcb1ce1e34478@sentry.io/1205821',
     {
-        ignoreUrls: [new RegExp('localhost:.*'), new RegExp('127\..*')]
+        ignoreUrls: [
+            /127\..*/,
+            /localhost:.*/
+        ]
     }
 ).addPlugin(RavenVue, Vue).install();
 
@@ -36,12 +39,17 @@ Vue.filter("onlineStateName", state => {
 });
 
 function installWebSocket(store) {
-    Vue.use(VueNativeSock, config.liveServiceUrl, {
-        reconnection: true,
-        format: 'json',
-        store
-    });
-    store.$socket = Vue.prototype.$socket;
+    try {
+        Vue.use(VueNativeSock, config.liveServiceUrl, {
+            reconnection: true,
+            format: 'json',
+            store
+        });
+        store.$socket = Vue.prototype.$socket;
+    } catch (e) {
+        console.warn('Failed to initialize WS due ' + e + '. Fallback is now used.');
+        Raven.captureException(e);
+    }
 }
 
 export default Vue;
