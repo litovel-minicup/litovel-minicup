@@ -59,7 +59,7 @@
         props: ['events', 'match'],
         data() {
             return {
-                count: 10
+                count: 5
             }
         },
         computed: {

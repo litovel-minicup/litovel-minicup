@@ -3,6 +3,7 @@ import VueResource from 'vue-resource'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import VueNativeSock from 'vue-native-websocket'
+import VueLoading from 'vue-loading-template'
 
 
 import 'vue2-animate/dist/vue2-animate.css';
@@ -51,6 +52,11 @@ function installWebSocket(store) {
         Raven.captureException(e);
     }
 }
+
+Vue.component('v-loading', {
+    template: '<vue-loading type="spin" color="#0e5eff" :size="{ width: \'100px\', height: \'100px\' }"></vue-loading>',
+    components: {VueLoading}
+});
 
 export default Vue;
 export {Vue, installWebSocket};

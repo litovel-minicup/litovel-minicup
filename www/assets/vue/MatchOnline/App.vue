@@ -10,16 +10,12 @@
                     <facebook-video
                             v-if="facebookVideoUrl"
                             :facebook-video-url="facebookVideoUrl"
-                            :link="fbLink"
                     ></facebook-video>
                     <event-list
                             :events="events"
                             :match="match"
                     ></event-list>
-                    <!-- <facebook-comments
-                            v-if="facebookVideoUrl"
-                            :facebook-video-url="facebookVideoUrl"
-                    ></facebook-comments>-->
+                    <facebook-comments></facebook-comments>
                 </div>
             </template>
         </transition>
@@ -55,7 +51,6 @@
                 homeTeamUrl: '',
                 awayTeamUrl: '',
                 matchId: 0,
-                fbLink: ''
             }
         },
         computed: {
