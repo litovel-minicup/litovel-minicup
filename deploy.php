@@ -21,6 +21,7 @@ set('rsync', [
         'www/assets/vue',
         'www/webtemp',
         'node_modules',
+        '_',
     ],
     'exclude-file' => false,
     'include' => [
@@ -31,7 +32,7 @@ set('rsync', [
     'filter-perdir' => false,
     'flags' => 'vrzcE', // Recursive, with compress
     'options' => ['delete'],
-    'timeout' => 60*3,
+    'timeout' => 60 * 3,
 ]);
 
 // Project name
@@ -41,7 +42,7 @@ set('application', 'minicup.cz');
 set('repository', 'git@github.com:litovel-minicup/litovel-minicup.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+set('git_tty', false);
 
 // Shared files/dirs between deploys 
 set('shared_files', [
@@ -96,7 +97,7 @@ task('deploy', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
-    'deploy:migrate',
+    // 'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
@@ -112,7 +113,7 @@ task('deploy:webpack_build', function () {
 })->local();
 
 task('deploy:migrate', function () {
-    run('php {{current_path}}/www/index.php migrations:migrate --no-interaction');
+    run('php {{current_path}}/www/index.php migrations:migrate -n');
 });
 
 task('reload:php-fpm', function () {
@@ -143,7 +144,7 @@ task('deploy_local', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
-    'deploy:migrate',
+    // 'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
