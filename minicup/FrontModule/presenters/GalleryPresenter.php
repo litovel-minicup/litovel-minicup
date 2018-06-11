@@ -40,6 +40,7 @@ class GalleryPresenter extends BaseFrontPresenter
     public function renderDefault()
     {
         $this->template->tags = $this->TR->findMainTags($this->category->year);
+        $this->template->photosCount = $this->PR->countYearPhotos($this->category->year);
     }
 
     public function renderDetail(Tag $tag)

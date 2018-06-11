@@ -121,4 +121,15 @@ class PhotoRepository extends BaseRepository
             )->fetchAll()
         );
     }
+
+    public function countYearPhotos(Year $year): int
+    {
+        return $this->connection->query('
+            SELECT COUNT(DISTINCT p.id) as c
+            FROM photo p
+            INNER JOIN photo_tag pt on p.id = pt.photo_id
+            INNER JOIN tag t on t.id = pt.tag_id
+            WHERE t.year_id = ? AND active = 1
+        ', $year->id)->fetch()['c'];
+    }
 }
