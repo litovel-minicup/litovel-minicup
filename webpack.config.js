@@ -79,7 +79,7 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
         new UglifyJSPlugin({
-            sourceMap: true,
+            sourceMap: false, //true,
             /*minimize: true,
             compress: {
                 warnings: false

@@ -29,6 +29,7 @@ FOR EACH ROW BEGIN
   END IF;
 END');
 
+
         $this->addSql('CREATE TRIGGER `team_bi` BEFORE INSERT ON `team` FOR EACH ROW SET NEW.inserted = NOW()');
     }
 

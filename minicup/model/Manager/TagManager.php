@@ -46,12 +46,15 @@ class TagManager
     /**
      * @param News|Tag|Team|string $arg
      * @return Tag|NULL
+     * @throws \LeanMapper\Exception\InvalidArgumentException
      */
     public function getTag($arg)
     {
         if ($arg instanceof Tag) {
             return $arg;
-        } elseif ($arg instanceof Team) {
+        }
+
+        if ($arg instanceof Team) {
             $tag = $arg->i->tag;
             if (!$tag instanceof Tag) {
                 $tag = new Tag();
@@ -76,7 +79,24 @@ class TagManager
             $arg->tag = $tag;
             $this->newsRepository->persist($arg);
             return $tag;
-        } elseif (is_string($arg)) {
+        }
+
+        if ($arg instanceof News) {
+            if ($arg->tag) {
+                return $arg->tag;
+            }
+            $tag = new Tag([
+                'name' => "novinka - {$arg->title}",
+                'slug' => $arg::$CACHE_TAG . $this::PARTS_GLUE . Strings::webalize($arg->title),
+                'year' => $arg->year
+            ]);
+            $this->tagRepository->persist($tag);
+            $arg->tag = $tag;
+            $this->newsRepository->persist($arg);
+            return $tag;
+        }
+
+        if (is_string($arg)) {
             return $this->tagRepository->getBySlug($arg);
         }
         throw new InvalidArgumentException('Unknown type "' . gettype($arg) . '"" given.');

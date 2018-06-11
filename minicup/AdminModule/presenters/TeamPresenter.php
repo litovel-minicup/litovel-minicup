@@ -22,6 +22,7 @@ use Nette\Utils\Html;
 
 class TeamPresenter extends BaseAdminPresenter
 {
+
     /**
      * Mapp db name => Real name
      */
@@ -69,7 +70,6 @@ class TeamPresenter extends BaseAdminPresenter
     {
         $this->template->category = $category;
     }
-
     /**
      * @return MatchFormComponent
      */
@@ -94,8 +94,8 @@ class TeamPresenter extends BaseAdminPresenter
         $f = $connection->select('[ti].*')
             ->from('[team_info]')->as('ti')
             ->where('ti.[category_id] = ', $this->getParameter('category')->id)
-            ->select('COUNT([photo_tag.photo_id]) as photo_count')
-            ->select('COUNT([player.id]) as player_count')
+            ->select('COUNT(DISTINCT [photo_tag.photo_id]) as photo_count')
+            ->select('COUNT(DISTINCT [player.id]) as player_count')
             ->leftJoin('[photo_tag]')->on('[photo_tag.tag_id] = [ti.tag_id]')
             ->leftJoin('[player]')->on('[player.team_info_id] = [ti.id]')
             ->groupBy('[ti.id]');

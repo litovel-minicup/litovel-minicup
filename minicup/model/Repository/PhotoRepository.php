@@ -36,10 +36,11 @@ class PhotoRepository extends BaseRepository
     }
 
     /**
+     * @param Year $year
      * @return Photo[]
      * @throws \LeanMapper\Exception\InvalidStateException
      */
-    public function findUntaggedPhotos(Year $year)
+    public function findUntaggedPhotos(Year $year): array
     {
         return $this->createEntities($this->connection
             ->select('*')

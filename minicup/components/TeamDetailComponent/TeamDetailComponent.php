@@ -6,8 +6,19 @@ use Minicup\Model\Entity\Player;
 use Minicup\Model\Entity\Team;
 use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Manager\TagManager;
+use Minicup\Model\Repository\BaseRepository;
+use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\PlayerRepository;
 use Minicup\Model\Repository\TeamRepository;
+
+interface ITeamDetailComponentFactory
+{
+    /**
+     * @param     $team Team
+     * @return TeamDetailComponent
+     */
+    public function create(Team $team);
+}
 
 class TeamDetailComponent extends BaseComponent
 {
@@ -16,6 +27,9 @@ class TeamDetailComponent extends BaseComponent
 
     /** @var TeamRepository */
     private $TR;
+
+    /** @var PhotoRepository */
+    private $PR;
 
     /** @var TagManager */
     private $TM;
@@ -45,6 +59,11 @@ class TeamDetailComponent extends BaseComponent
      * @param Team                           $team
      * @param TeamRepository                 $TR
      * @param PlayerRepository               $PR
+     * @param PhotoRepository                $photoRepository
+     * @param TagManager                     $TM
+     * @param Team                           $team
+     * @param TeamRepository                 $TR
+     * @param PlayerRepository               $PR
      * @param TagManager                     $TM
      * @param MatchManager                   $MM
      * @param IListOfMatchesComponentFactory $LOMCF
@@ -58,13 +77,14 @@ class TeamDetailComponent extends BaseComponent
         Team $team,
         TeamRepository $TR,
         PlayerRepository $PR,
+        PhotoRepository $photoRepository,
         TagManager $TM,
-        MatchManager $MM,
         IListOfMatchesComponentFactory $LOMCF,
         IStaticContentComponentFactory $SCCF,
         IPhotoListComponentFactory $PhLCF,
         ITeamHistoryComponentFactory $THCF,
-        IPlayerListComponentFactory $PlLCF
+        IPlayerListComponentFactory $PlLCF,
+        MatchManager $MM
     )
     {
         parent::__construct();
@@ -76,6 +96,9 @@ class TeamDetailComponent extends BaseComponent
         $this->TM = $TM;
         $this->MM = $MM;
         $this->THCF = $THCF;
+        $this->PlLCF = $PlLCF;
+        $this->PR = $photoRepository;
+        $this->players = $PR->findByTeamWithConfirmedGoals($team->i);
         $this->PlLCF = $PlLCF;
         $this->players = $PR->findByTeamWithConfirmedGoals($team->i);
     }
@@ -107,10 +130,12 @@ class TeamDetailComponent extends BaseComponent
 
     /**
      * @return PhotoListComponent
+     * @throws \LeanMapper\Exception\InvalidArgumentException
      */
     public function createComponentPhotoListComponent()
     {
-        return $this->PhLCF->create($this->TM->getTag($this->team)->photos);
+        $tag = $this->TM->getTag($this->team);
+        return $this->PhLCF->create($tag ? $this->PR->findByTag($tag, BaseRepository::ORDER_ASC) : []);
     }
 
     /**
@@ -128,13 +153,5 @@ class TeamDetailComponent extends BaseComponent
     {
         return $this->PlLCF->create($this->players);
     }
-}
 
-interface ITeamDetailComponentFactory
-{
-    /**
-     * @param     $team Team
-     * @return TeamDetailComponent
-     */
-    public function create(Team $team);
 }

@@ -3,7 +3,6 @@
 namespace Minicup\AdminModule\Presenters;
 
 
-use Dibi\DateTime;
 use Dibi\Row;
 use Grido\Components\Columns\Column;
 use Grido\Components\Columns\Date;
@@ -20,7 +19,6 @@ use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Html;
-use Tracy\Debugger;
 
 final class MatchPresenter extends BaseAdminPresenter
 {
@@ -166,7 +164,6 @@ final class MatchPresenter extends BaseAdminPresenter
                 $this->MR->persist($match);
             } catch (\Exception $e) {
                 $this->flashMessage("Chyba při editaci {$col->getName()} {$e->getMessage()}!");
-                Debugger::log($e);
                 return TRUE;
             }
 
