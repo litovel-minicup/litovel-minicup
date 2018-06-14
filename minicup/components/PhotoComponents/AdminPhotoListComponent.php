@@ -99,7 +99,14 @@ class AdminPhotoListComponent extends BaseComponent
         $this->session->allPhotos = $this->allPhotos;
         $this->session[$this->id] = $this->session[$this->id] ?: [];
         $this->photos = $this->PR->findByTags($this->TR->findByIds($this->session[$this->id]));
+        $this->sortPhotos();
         parent::__construct();
+    }
+
+    private function sortPhotos() {
+        usort($this->photos, function (Photo $a, Photo $b) {
+            return ($a->taken && $b->taken) ? $a->taken > $b->taken : 0;
+        });
     }
 
     public function render()
@@ -120,6 +127,7 @@ class AdminPhotoListComponent extends BaseComponent
         $this->session[$this->id] = $params['ids'];
         $this->tags = $this->TR->findByIds((array)$this->session[$this->id]);
         $this->photos = $this->PR->findByTags($this->tags);
+        $this->sortPhotos();
         $this->session->allPhotos = FALSE;
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
@@ -153,6 +161,7 @@ class AdminPhotoListComponent extends BaseComponent
     public function handleUntaggedPhotos()
     {
         $this->photos = $this->PR->findUntaggedPhotos($this->year);
+        $this->sortPhotos();
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
         } else {

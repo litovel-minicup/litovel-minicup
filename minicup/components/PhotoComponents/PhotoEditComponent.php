@@ -118,7 +118,7 @@ class PhotoEditComponent extends BaseComponent
             return;
         }
         $this->photo->removeAllTags();
-        foreach (($tags ?: []) as $id) {
+        foreach ($tags ?: [] as $id) {
             /** @var Tag $tag */
             $tag = $this->TR->get($id);
             if (!$tag) {
