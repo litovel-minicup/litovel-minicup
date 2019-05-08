@@ -1449,7 +1449,7 @@ Header module
   background: #a09f9f; }
   .Article__subhead a:hover {
     background: white; }
-.Article__heading {
+.Article__heading, .Article__content H2 {
   font-family: "Montserrat";
   font-size: 34px;
   letter-spacing: -1.5px; }

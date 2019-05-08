@@ -99,6 +99,10 @@
     I {
       font-style: italic;
     }
+
+    H2 {
+      @extend .Article__heading;
+    }
   }
 
   &__photos {
