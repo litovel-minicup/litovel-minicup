@@ -72,16 +72,16 @@ Header module
       content: "";
       position: absolute;
       z-index: 0;
-      width: 426px;
-      height: 180px;
-      top: -5px;
+      width: 421px;
+      height: 190px;
+      top: -10px;
       opacity: 0.15;
 
-      background: url('../img/ryba.png');
+      background: url('../img/ryba.png?2019');
 
       @media (-webkit-min-device-pixel-ratio: 2) {
-        background: url('../img/ryba@2x.png');
-        background-size: 426px 180px;
+        background: url('../img/ryba@2x.png?2019');
+        background-size: 421px 190px;
       }
 
       @media screen and (min-width: 600px) {
