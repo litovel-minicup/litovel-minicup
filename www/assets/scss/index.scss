@@ -2,7 +2,7 @@
  * Mixins
  */
 @mixin default_fonts() {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: color-emoji, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 /**
@@ -42,7 +42,7 @@ body {
 }
 
 main {
-    @include outer-container();
+  @include outer-container();
 }
 
 // TODO: move to right partials file
