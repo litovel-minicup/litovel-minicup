@@ -3,6 +3,7 @@
 namespace Minicup\Components;
 
 
+use Countable;
 use Dibi\DateTime;
 use Dibi\DriverException;
 use Minicup\Model\Entity\News;
@@ -76,7 +77,7 @@ class NewsFormComponent extends BaseComponent
         $content = $f->addTextArea('content', 'Obsah')->setRequired();
         $content->getControlPrototype()->attrs['style'] = 'width: 100%; max-width: 100%;';
         $rows = 10;
-        if ($this->news) {
+        if ($this->news && $this->news->content instanceof Countable) {
             $rows = count(Strings::match($this->news->content, '#\n#')) + 5;
         }
         $content->getControlPrototype()->attrs['rows'] = $rows;
