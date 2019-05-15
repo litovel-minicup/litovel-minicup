@@ -8,9 +8,10 @@ class MatchTermRepository extends BaseRepository
 {
     /**
      * @param \DateTime $dt
+     * @param string    $location
      * @return MatchTerm|null
      */
-    public function getByStart(\DateTime $dt)
+    public function getByStart(\DateTime $dt, string $location)
     {
         $date = clone $dt;
         $time = clone $dt;
@@ -18,6 +19,7 @@ class MatchTermRepository extends BaseRepository
         $time->setDate(0, 0, 0);
         $row = $this->createFluent()
             ->where('[match_term.start] = %s', $time->format('H:i:s'), ' AND [day.day] = %s', $date->format('Y-m-d'))
+            ->where('[match_term.location] = %s', $location)
             ->innerJoin('day')
             ->on('[day.id] = [match_term.day_id]')->fetch();
         return $row ? $this->createEntity($row) : NULL;

@@ -38,7 +38,8 @@ class MatchesImportCommand extends Command
             ->addUsage('app:import-matches 2016 mladsi mladsi.txt')
             ->addArgument('year', InputArgument::REQUIRED, 'Year of given matches.')
             ->addArgument('category', InputArgument::REQUIRED, 'Category of given matches')
-            ->addArgument('file', InputArgument::REQUIRED, 'Filed with exported matches.');
+            ->addArgument('file', InputArgument::REQUIRED,
+                'Filed with exported matches - text file with lines in format d.m.Y\tH:i.\tLOCATION\tTEAM1\tTEAM2\n');
     }
 
     /**

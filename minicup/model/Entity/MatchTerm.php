@@ -2,7 +2,8 @@
 
 namespace Minicup\Model\Entity;
 
-use Dibi\DateTime;
+
+use DateTime;
 
 /**
  * @property int      $id

@@ -74,10 +74,11 @@ class MatchImporter
             // WITH LEADING ZEROS!
             /** @var \DateTime $datetime */
             $datetime = \DateTime::createFromFormat("d. m. Y H:i", $line[0] . ' ' . $line[1]);
+            $location = $line[2];
 
-            $home = $this->getTeamInfo($category, $line[2]);
-            $away = $this->getTeamInfo($category, $line[3]);
-            $term = $this->getMatchTerm($datetime, $category->year);
+            $home = $this->getTeamInfo($category, $line[3]);
+            $away = $this->getTeamInfo($category, $line[4]);
+            $term = $this->getMatchTerm($datetime, $category->year, $location);
 
             $match = new Match();
             $match->category = $category;
@@ -120,9 +121,9 @@ class MatchImporter
         return $teamInfo;
     }
 
-    protected function getMatchTerm(\DateTime $dt, Year $year)
+    protected function getMatchTerm(\DateTime $dt, Year $year, string $location)
     {
-        $term = $this->MTR->getByStart($dt);
+        $term = $this->MTR->getByStart($dt, $location);
         if ($term) {
             return $term;
         }
@@ -142,7 +143,7 @@ class MatchImporter
         $term->end = clone $dt;
 
         $term->day = $day;
-        $term->location = ''; // TODO: small hack, better refactor location arg
+        $term->location = $location;
         $this->MTR->persist($term);
         return $term;
 

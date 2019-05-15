@@ -136,7 +136,7 @@ class MatchRepository extends BaseRepository
      * @param bool|null $confirmed
      * @return Match|NULL
      */
-    public function getCommonMatchForTeams(Team $team1, Team $team2, ?bool $confirmed = true): ?Match
+    public function getCommonMatchForTeams(Team $team1, Team $team2, $confirmed = true): ?Match
     {
         $team1InfoId = $team1->i->id;
         $team2InfoId = $team2->i->id;

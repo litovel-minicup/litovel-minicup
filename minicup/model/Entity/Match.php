@@ -17,7 +17,7 @@ use Nette\InvalidArgumentException;
  * @property Team[]         $historyTeams    m:belongsToMany(after_match_id)   history teams
  * @property MatchEvent[]   $events          m:belongsToMany all game events
  *
- * @property string         $onlineState
+ * @property string|NULL    $onlineState
  * @property \DateTime|NULL $firstHalfStart  real time of match started
  * @property \DateTime|NULL $secondHalfStart real time of second halt start
  * @property string|NULL    $facebookVideoId ID of facebook stream
@@ -190,7 +190,7 @@ class Match extends BaseEntity
             'away_team_slug' => $this->awayTeam->slug,
             'away_team_id' => $this->awayTeam->id,
             'away_team_color' => '#88dd12',
-            
+
             'category_name' => $this->category->name,
             'category_slug' => $this->category->slug,
             'year_slug' => $this->category->year->slug,
