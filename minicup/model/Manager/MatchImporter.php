@@ -4,6 +4,7 @@ namespace Minicup\Model\Manager;
 
 
 use Dibi\DriverException;
+use LeanMapper\Exception\InvalidValueException;
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\Day;
 use Minicup\Model\Entity\Match;
@@ -16,6 +17,7 @@ use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\MatchTermRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Minicup\Model\Repository\TeamRepository;
+use Nette\UnexpectedValueException;
 use Nette\Utils\Strings;
 
 class MatchImporter
@@ -69,12 +71,17 @@ class MatchImporter
         $count = 0;
         $data = file_get_contents($file);
         foreach (Strings::split($data, "#\r|\n#") as $line) {
-            $line = Strings::split($line, "#\t#");
+            $line = Strings::split(Strings::trim($line), "#\t#");
+            if (!$line) continue;
 
             // WITH LEADING ZEROS!
             /** @var \DateTime $datetime */
             $datetime = \DateTime::createFromFormat("d. m. Y H:i", $line[0] . ' ' . $line[1]);
             $location = $line[2];
+            if (!$datetime) {
+                $parsed = $line[0] . ' ' . $line[1];
+                throw new UnexpectedValueException("Cannot parse date '{$parsed}'");
+            }
 
             $home = $this->getTeamInfo($category, $line[3]);
             $away = $this->getTeamInfo($category, $line[4]);
