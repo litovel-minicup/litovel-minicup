@@ -1799,7 +1799,7 @@ Header module
     opacity: 0; } }
 .LiveBar {
   background: #ffe033;
-  line-height: 1.75;
+  line-height: 2;
   font-family: Montserrat;
   color: #907800; }
   .LiveBar .LiveBar__content {
