@@ -24,7 +24,7 @@ use Nette\InvalidArgumentException;
  */
 class Match extends BaseEntity
 {
-    public const HALF_LENGTH = 'P600S';
+    public const HALF_LENGTH = '10 minutes';
 
     public const INIT_ONLINE_STATE = 'init';
     public const END_ONLINE_STATE = 'end';
