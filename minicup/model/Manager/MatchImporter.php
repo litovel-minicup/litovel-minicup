@@ -92,6 +92,7 @@ class MatchImporter
             $match->homeTeam = $home;
             $match->awayTeam = $away;
             $match->matchTerm = $term;
+            $match->onlineState = Match::INIT_ONLINE_STATE;
 
             try {
                 $this->MR->persist($match);
