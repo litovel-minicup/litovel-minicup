@@ -1,10 +1,10 @@
-<div id="countdown"></div>
+<div id="countdown" class="text-lowercase"></div>
 
 <script type="text/javascript" n:syntax="double">
     $("#countdown").countdown({
         until: new Date({{strtotime($toDate) * 1000}}),
         format: 'D H M S',
         compact: false,
-        layout: '{dn} {dl}, {hn} {hl} {mn} {ml} a {sn} {sl}'
+        layout: '{dn} {dl}, {hn} {hl}, {mn} {ml} a {sn} {sl}'
     })
 </script>
