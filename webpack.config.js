@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         MatchOnline: path.resolve(__dirname, 'www/assets/vue/MatchOnline/main.js'),
         CategoryOnline: path.resolve(__dirname, 'www/assets/vue/CategoryOnline/main.js'),
+        AdminPhotoPut: path.resolve(__dirname, 'www/assets/vue/AdminPhotoPut/main.js'),
         LiveBar: path.resolve(__dirname, 'www/assets/vue/LiveBar/main.js'),
         InstagramStories: path.resolve(__dirname, 'www/assets/vue/InstagramStories/main.js'),
     },

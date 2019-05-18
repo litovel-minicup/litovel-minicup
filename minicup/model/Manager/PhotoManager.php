@@ -94,7 +94,7 @@ class PhotoManager
      * @return \Minicup\Model\Entity\Photo[]
      * @throws \LeanMapper\Exception\InvalidArgumentException
      */
-    public function save($files, $prefix = NULL, $author = NULL)
+    public function saveFromUpload($files, $prefix = NULL, $author = NULL)
     {
         if (!$prefix) {
             $prefix = Random::generate(20);
@@ -125,6 +125,41 @@ class PhotoManager
         }
 
         return $photos;
+    }
+
+
+    /**
+     * @param Image       $image
+     * @param string|NULL $prefix
+     * @param string|NULL $author
+     * @return Photo
+     * @throws \LeanMapper\Exception\InvalidArgumentException
+     */
+    public function saveImage(Image $image, $prefix = NULL, $author = NULL): Photo
+    {
+        if (!$prefix) {
+            $prefix = Random::generate(20);
+        }
+
+        $photo = new Photo();
+        $filename = substr(md5($prefix . time()), 0, 10) . '.jpg';
+        $photo->filename = (string)$filename;
+        $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
+        $image->save($path);
+
+        $exif = exif_read_data($path);
+        $taken = new DateTime();
+        if (isset($exif['DateTimeOriginal'])) {
+            try {
+                $taken = new DateTime($exif['DateTimeOriginal']);
+            } catch (\Exception $e) {
+            }
+        }
+        $photo->taken = $taken;
+        $photo->author = $author;
+        $this->PR->persist($photo);
+
+        return $photo;
     }
 
     /**
@@ -163,10 +198,10 @@ class PhotoManager
     /**
      * @param string|Photo|NULL $photo
      * @param string            $format
-     * @throws InvalidArgumentException
+     * @return string
      * @throws FileNotFoundException
      * @throws InvalidStateException
-     * @return string
+     * @throws InvalidArgumentException
      * @throws \Nette\Utils\UnknownImageFileException
      */
     public function getInFormat($photo, $format)

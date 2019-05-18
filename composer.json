@@ -25,9 +25,9 @@
     "zenify/doctrine-migrations": "~2.3",
     "kdyby/console": "^2.7",
     "tedivm/jshrink": "~1.0",
-    "nofutur3/nette-sentry": "dev-master",
     "contributte/logging": "^0.3.0",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^6.3",
+    "ext-exif": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
