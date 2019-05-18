@@ -97,7 +97,7 @@ class PhotoUploadComponent extends BaseComponent
 
     public function handleUpload()
     {
-        $photos = $this->PM->save($this->request->files, $this->uploadId, $this->request->getPost('author'));
+        $photos = $this->PM->saveFromUpload($this->request->files, $this->uploadId, $this->request->getPost('author'));
         foreach ($photos as $photo) {
             $this->photos[] = $photo->id;
         }

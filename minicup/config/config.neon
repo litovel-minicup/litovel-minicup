@@ -173,6 +173,7 @@ services:
       arguments: [%toDate%]
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
     - implement: Minicup\Components\IYearToggleComponentFactory
+    - implement: Minicup\Components\IPhotoPutComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

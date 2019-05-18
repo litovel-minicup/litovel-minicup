@@ -10,6 +10,7 @@ use Minicup\Components\AdminPhotoListComponent;
 use Minicup\Components\IAdminPhotoListComponentFactory;
 use Minicup\Components\IPhotoEditComponentFactory;
 use Minicup\Components\IPhotoListComponentFactory;
+use Minicup\Components\IPhotoPutComponentFactory;
 use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\ITagFormComponentFactory;
 use Minicup\Components\PhotoEditComponent;
@@ -26,6 +27,7 @@ use Minicup\Model\Repository\NewsRepository;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
 use Nette\Utils\Html;
+use Nette\Utils\Image;
 
 final class PhotoPresenter extends BaseAdminPresenter
 {
@@ -58,6 +60,9 @@ final class PhotoPresenter extends BaseAdminPresenter
     /** @var IPhotoEditComponentFactory @inject */
     public $PECF;
 
+    /** @var IPhotoPutComponentFactory @inject */
+    public $PPCF;
+
     /** @var NewsRepository @inject */
     public $NR;
 
@@ -88,6 +93,7 @@ final class PhotoPresenter extends BaseAdminPresenter
     /**
      * @param string $name
      * @return Grid
+     * @throws \Grido\Exception
      */
     protected function createComponentTagsGrid($name)
     {
@@ -185,6 +191,17 @@ final class PhotoPresenter extends BaseAdminPresenter
             };
         }
         return $photoEdit;
+    }
+
+    protected function createComponentPhotoPutComponent()
+    {
+        return $this->PPCF->create();
+    }
+
+    public function handleUpload() {
+        bdump($this->getHttpRequest());
+        $im = Image::fromString($this->getHttpRequest()->getRawBody());
+        bdump($im->width);
     }
 
 }

@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         MatchOnline: path.resolve(__dirname, 'www/assets/vue/MatchOnline/main.js'),
         CategoryOnline: path.resolve(__dirname, 'www/assets/vue/CategoryOnline/main.js'),
+        AdminPhotoPut: path.resolve(__dirname, 'www/assets/vue/AdminPhotoPut/main.js'),
     },
     output: {
         path: path.resolve(__dirname, 'www/assets/build/'),
@@ -66,7 +67,12 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    devServer: {
+        proxy: {
+            '*': 'http://localhost:8000'
+        }
+    }
 };
 
 if (process.env.NODE_ENV === 'production') {
