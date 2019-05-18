@@ -28,13 +28,15 @@ class TeamPresenter extends BaseAdminPresenter
      */
     const TEAM_INFO_GRID_LABELS = [
         'id' => '#',
-        'slug' => 'Detail na webu',
         'name' => 'Název',
         'slug' => 'Slug',
         'abbr' => 'Zkratka',
         'trainer_name' => 'Trenér',
         'dress_color' => 'Barva dresu',
-        'dress_color_secondary' => 'Sekundární barva'
+        'dress_color_secondary' => 'Sek. barva dresu',
+
+        'color_primary' => 'Prim. barva',
+        'color_secondary' => 'Sek. barva',
     ];
 
     /** @var IMatchFormComponentFactory @inject */
@@ -118,20 +120,24 @@ class TeamPresenter extends BaseAdminPresenter
         $this->addTeamInfoEditableText($g, 'slug', 'slug');
         $this->addTeamInfoEditableText($g, 'abbr', 'abbr');
 
-        // Treiner name
+        // Trainer name
         $this->addTeamInfoEditableText($g, 'trainerName', 'trainer_name');
+
+        // Team color
+        $this->addTeamInfoEditableText($g, 'colorPrimary', 'color_primary');
+        $this->addTeamInfoEditableText($g, 'colorSecondary', 'color_secondary');
 
         // Dress color
         $this->addTeamInfoEditableText($g, 'dressColor', 'dress_color');
         $this->addTeamInfoEditableText($g, 'dressColorSecondary', 'dress_color_secondary');
 
-        $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Primární barva od');
-        $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Primární barva do');
-        $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sekundární barva od');
-        $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sekundární barva do');
+        $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Prim. barva od');
+        $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Prim. barva do');
+        $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sek. barva od');
+        $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sek. barva do');
 
-        $g->addColumnNumber('photo_count', 'Počet fotek');
-        $g->addColumnNumber('player_count', 'Počet hráčů');
+        $g->addColumnNumber('photo_count', 'Fotek');
+        $g->addColumnNumber('player_count', 'Hráčů');
 
         return $g;
     }

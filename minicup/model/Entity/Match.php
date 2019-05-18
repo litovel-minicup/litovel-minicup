@@ -183,13 +183,15 @@ class Match extends BaseEntity
             'home_team_slug' => $this->homeTeam->slug,
             'home_team_name' => $this->homeTeam->name,
             'home_team_id' => $this->homeTeam->id,
-            'home_team_color' => '#ff8574',
+            'home_team_color_primary' => $this->homeTeam->colorPrimary,
+            'home_team_color_secondary' => $this->homeTeam->colorSecondary,
 
             'away_team_name' => $this->awayTeam->name,
             'away_team_abbr' => $this->awayTeam->abbr,
             'away_team_slug' => $this->awayTeam->slug,
             'away_team_id' => $this->awayTeam->id,
-            'away_team_color' => '#88dd12',
+            'away_team_color_primary' => $this->awayTeam->colorPrimary,
+            'away_team_color_secondary' => $this->awayTeam->colorSecondary,
 
             'category_name' => $this->category->name,
             'category_slug' => $this->category->slug,

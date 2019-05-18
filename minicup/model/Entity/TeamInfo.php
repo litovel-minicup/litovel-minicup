@@ -5,6 +5,7 @@ namespace Minicup\Model\Entity;
 
 use Dibi\DateTime;
 use LeanMapper\Exception\InvalidStateException;
+use Psr\Log\NullLogger;
 
 /**
  * @property        int                $id
@@ -17,8 +18,10 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        Team|NULL          $team m:belongsToOne    actually connected team
  * @property        StaticContent|NULL $staticContent m:hasOne
  * @property        Tag|NULL           $tag m:hasOne
+ *
  * @property        string|NULL        $dressColor             Color of team dress
  * @property        string|NULL        $dressColorSecondary    Secondary color of team dress
+ *
  * @property        string|NULL        $trainerName            Name of team trainer
  * @property        string|NULL        $description            Description edited by team
  * @property        string|NULL        $password               Password for access to administration
@@ -29,6 +32,9 @@ use LeanMapper\Exception\InvalidStateException;
  * @property        string|NULL        $dressColorMax
  * @property        string|NULL        $dressColorSecondaryMin
  * @property        string|NULL        $dressColorSecondaryMax
+ *
+ * @property        string|NULL        $colorPrimary Primary color of team - in #RRGGBB (used in livestreams)
+ * @property        string|NULL        $colorSecondary Secondary color of team - in #RRGGBB (used in livestreams)
  */
 class TeamInfo extends BaseEntity
 {
