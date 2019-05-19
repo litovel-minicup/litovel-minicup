@@ -1808,6 +1808,9 @@ Header module
     margin: auto;
     position: relative;
     height: 2em; }
+  .LiveBar .LiveBar__live {
+    font-family: MontserratBold;
+    color: #ffe033; }
   .LiveBar .LiveBar__match {
     position: absolute;
     width: 100%;

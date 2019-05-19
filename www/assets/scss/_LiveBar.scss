@@ -21,7 +21,10 @@
     height: 2em;
   }
 
-
+  .LiveBar__live {
+    font-family: MontserratBold;
+    color: $light--yellow;
+  }
 
   .LiveBar__match {
     position: absolute;

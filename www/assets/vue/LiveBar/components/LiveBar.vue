@@ -5,6 +5,9 @@
                 <transition name="fade">
                 <span class="LiveBar__match" :key="key">
                     <span v-if="displayed.match_id">
+
+                        <span class="LiveBar__live">ŽIVĚ: </span>
+
                         <strong>
                             {{ matches[displayed.match_id].home_team_name }}
                         </strong>

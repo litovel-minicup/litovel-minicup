@@ -6,7 +6,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     entry: {
         MatchOnline: path.resolve(__dirname, 'www/assets/vue/MatchOnline/main.js'),
-        CategoryOnline: path.resolve(__dirname, 'www/assets/vue/LiveBar/main.js'),
+        CategoryOnline: path.resolve(__dirname, 'www/assets/vue/CategoryOnline/main.js'),
         LiveBar: path.resolve(__dirname, 'www/assets/vue/LiveBar/main.js'),
     },
     output: {
