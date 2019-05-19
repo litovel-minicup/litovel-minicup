@@ -34,7 +34,7 @@
             replace() {
                 let msg = this.news[this.key = Math.floor(Math.random() * this.news.length)];
                 this.displayed = {message: msg};
-                this.timeoutID = setTimeout(this.replace, 8000);
+                this.timeoutID = setTimeout(this.replace, 10000);
             }
         },
         computed: {
@@ -70,7 +70,7 @@
                 this.displayed = new_[new_.length - 1];
                 this.key = this.displayed.id;
                 clearTimeout(this.timeoutID);
-                this.timeoutID = setTimeout(this.replace, 8000);
+                this.timeoutID = setTimeout(this.replace, 10000);
             },
             'news'() {
                 clearTimeout(this.timeoutID);
