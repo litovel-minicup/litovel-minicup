@@ -1792,6 +1792,34 @@ Header module
       padding: 10px 0;
       color: white; }
 
+@keyframes blink {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+.LiveBar {
+  background: #4180ff;
+  line-height: 2;
+  font-family: Montserrat;
+  color: white;
+  overflow: hidden; }
+  .LiveBar .LiveBar__content {
+    max-width: 1145px;
+    margin: auto;
+    position: relative;
+    height: 2em; }
+  .LiveBar .LiveBar__match {
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    text-align: center; }
+    .LiveBar .LiveBar__match STRONG {
+      font-family: MontserratBold; }
+    .LiveBar .LiveBar__match A {
+      color: white; }
+      .LiveBar .LiveBar__match A:hover {
+        text-decoration: underline; }
+
 .Sponsors__wrapper {
   max-width: 1145px;
   margin-left: auto;

@@ -1,0 +1,44 @@
+@keyframes blink {
+  from {
+    opacity: 1
+  }
+  to {
+    opacity: 0
+  }
+}
+
+.LiveBar {
+  background: $light--blue;
+  line-height: 2;
+  font-family: Montserrat;
+  color: white;
+  overflow: hidden;
+
+  .LiveBar__content {
+    max-width: $max-width;
+    margin: auto;
+    position: relative;
+    height: 2em;
+  }
+
+
+
+  .LiveBar__match {
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+
+    STRONG {
+      font-family: MontserratBold;
+    }
+
+    A {
+      color: white;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
