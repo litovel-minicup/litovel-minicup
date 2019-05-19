@@ -348,22 +348,28 @@ class RouterFactory
             }
         ];
 
+        $list[] = new Route('api/v1/news-live-bar/<category>', [
+            'presenter' => 'News',
+            'action' => 'liveBar',
+            'category' => $categoryFilter,
+        ]);
+
         $list[] = new Route('api/v1/match/detail/<match>', [
             'presenter' => 'Match',
             'action' => 'detail',
-            'match' => $matchFilter
+            'match' => $matchFilter,
         ]);
 
         $list[] = new Route('api/v1/match/events/<match>', [
             'presenter' => 'Match',
             'action' => 'events',
-            'match' => $matchFilter
+            'match' => $matchFilter,
         ]);
 
         $list[] = new Route('api/v1/category/upcoming-matches/<category>', [
             'presenter' => 'Category',
             'action' => 'upcomingMatches',
-            'category' => $categoryFilter
+            'category' => $categoryFilter,
         ]);
 
         return $list;

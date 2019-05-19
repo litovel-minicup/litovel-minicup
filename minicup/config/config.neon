@@ -11,6 +11,10 @@ parameters:
     	@Minicup\Model\Repository\MatchRepository,
     	@Minicup\Model\Repository\StaticContentRepository,
     	@Minicup\Model\Repository\NewsRepository]
+    liveBarMessages:
+        - "Jsme i na Facebooku - <strong><a href=https://www.facebook.com/litovel.minicup/>@litovel.minicup</a>.</strong>"
+        - "Sleduj nás na Instagramu - <strong><a href=https://www.instagram.com/litovel.minicup/>@litovel.minicup</a>.</strong>"
+        - "Neboj se nás označit na sítích, <strong>#litovelminicup</strong>!"
 
 php:
     date.timezone: Europe/Prague
@@ -57,6 +61,7 @@ services:
     - Minicup\Model\Manager\MatchImporter
     - Minicup\Model\Manager\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
+    - Minicup\Model\Manager\LiveBarMessagesManager(%liveBarMessages%)
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)

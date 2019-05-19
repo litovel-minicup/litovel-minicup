@@ -8,46 +8,36 @@
 }
 
 .LiveBar {
-  background: $light--yellow;
+  background: $light--blue;
   line-height: 2;
   font-family: Montserrat;
-  color: darken($dark--yellow, 20%);
+  color: white;
+  overflow: hidden;
 
   .LiveBar__content {
-    @include display(flex);
-    @include align-items(center);
     max-width: $max-width;
     margin: auto;
+    position: relative;
+    height: 2em;
   }
 
-  .LiveBar__match {
-    @include flex(1);
-    text-align: center;
-    position: relative;
 
-    &:nth-child(odd) {
-      background-color: $dark--yellow;
-    }
+
+  .LiveBar__match {
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
 
     STRONG {
       font-family: MontserratBold;
     }
 
-    &--live:before {
-      animation-name: blink;
-      animation-duration: 2s;
-      animation-iteration-count: infinite;
-
-      margin-left: auto;
-      width: 15px;
-      height: 15px;
-      background: #e03c62;
-      border-radius: 100%;
-      display: block;
-      content: "";
-      position: absolute;
-      left: $universal-dis*1.5;
-      top: calc(50% - 7.5px);
+    A {
+      color: white;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
