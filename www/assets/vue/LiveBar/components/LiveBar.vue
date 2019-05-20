@@ -47,7 +47,7 @@
             }
         },
         data() {
-            return {timeoutID: 0, displayed: null, key: 0}
+            return {timeoutID: 0, displayed: {}, key: 0}
         },
         filters: {
             isOnline(match) {
