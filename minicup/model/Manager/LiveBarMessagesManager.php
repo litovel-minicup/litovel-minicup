@@ -20,18 +20,24 @@ class LiveBarMessagesManager
     /** @var MatchRepository */
     private $MR;
 
+    /** @var MatchManager */
+    private $MM;
+
     /**
      * @param string[]        $liveBarMessages
      * @param MatchRepository $MR
+     * @param MatchManager    $MM
      */
-    public function __construct(array $liveBarMessages, MatchRepository $MR)
+    public function __construct(array $liveBarMessages, MatchRepository $MR, MatchManager $MM)
     {
         $this->liveBarMessages = $liveBarMessages;
         $this->MR = $MR;
+        $this->MM = $MM;
     }
 
     public function generateMessages(Category $category)
     {
+        $matches = $this->MM->isFinished($category) ? [] : $this->MR->findLastMatches($category, 8);
         return array_merge(
             $this->liveBarMessages,
             array_values(array_map(function (Match $m) {
@@ -50,7 +56,7 @@ class LiveBarMessagesManager
                 )->addText(
                     $m->scoreAway
                 )->__toString();
-            }, $this->MR->findLastMatches($category)))
+            }, $matches))
         );
     }
 

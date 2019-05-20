@@ -13,7 +13,7 @@ namespace Minicup\Model\Entity;
  * @property int            $actual = 1         flag for actual state
  * @property Match|NULL     $afterMatch m:hasOne(after_match_id)    after this match is this team inserted
  * @property \DateTime|NULL $inserted           datetime of inserted
- * @property TeamInfo       $i m:hasOne         main team info
+ * @property TeamInfo       $i m:hasOne(team_info_id) main team info
  * @property-read Match[]   $wins               win matches
  * @property-read Match[]   $draws              draw matches
  * @property-read Match[]   $loses              lose matches

@@ -15,18 +15,18 @@
     "nette/security": "~2.4",
     "nette/utils": "~2.4",
     "latte/latte": "~2.4",
-    "tracy/tracy": "~2.4",
-    "tharos/leanmapper": "~3.2",
+    "tharos/leanmapper": "~3.4",
     "dibi/dibi": "~3.0",
     "o5/grido": "dev-master",
     "janmarek/webloader": "~2.5",
-    "natxet/CssMin": "@dev",
+    "natxet/cssmin": "@dev",
     "texy/texy": "~2.6",
-    "kdyby/forms-replicator": "dev-master",
+    "kdyby/forms-replicator": "^1.4",
     "zenify/doctrine-migrations": "~2.3",
     "kdyby/console": "^2.7",
     "tedivm/jshrink": "~1.0",
-    "nofutur3/nette-sentry": "^0.9.0"
+    "nofutur3/nette-sentry": "dev-master",
+    "contributte/logging": "^0.3.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -34,6 +34,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/Ciki/grido"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/milankyncl/nette-sentry"
     }
   ],
   "require-dev": {

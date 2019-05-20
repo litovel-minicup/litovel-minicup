@@ -9,15 +9,15 @@ use Psr\Log\NullLogger;
 
 /**
  * @property        int                $id
- * @property        Category           $category m:hasOne      category
+ * @property        Category           $category m:hasOne(category_id)      category
  * @property-read   Match[]            $matches                matches for this team
  * @property        Player[]           $players m:belongsToMany
  * @property        string             $name                   czech name of team
  * @property        string             $slug                   slug for URL
  * @property        string|NULL        $abbr                   team three or four letter abbr
  * @property        Team|NULL          $team m:belongsToOne    actually connected team
- * @property        StaticContent|NULL $staticContent m:hasOne
- * @property        Tag|NULL           $tag m:hasOne
+ * @property        StaticContent|NULL $staticContent m:hasOne(static_content_id)
+ * @property        Tag|NULL           $tag m:hasOne(tag_id)
  *
  * @property        string|NULL        $dressColor             Color of team dress
  * @property        string|NULL        $dressColorSecondary    Secondary color of team dress

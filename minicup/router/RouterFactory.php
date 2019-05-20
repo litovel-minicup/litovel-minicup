@@ -249,7 +249,7 @@ class RouterFactory
                     if (!$team) {
                         return NULL;
                     }
-                    $params['team'] = $team->slug;
+                    $params['team'] = $team->i->slug;
                     return $params;
                 }
             ]
@@ -341,7 +341,7 @@ class RouterFactory
 
         $categoryFilter = [
             Route::FILTER_IN => function ($id) {
-                return $this->CR->get($id);
+                return $this->CR->get($id, FALSE);
             },
             Route::FILTER_OUT => function (Category $category) {
                 return $category->id;
@@ -423,7 +423,7 @@ class RouterFactory
     public function team2TeamSlug($team, Request $request)
     {
         if ($team instanceof Team) {
-            return $team->slug;
+            return $team->i->slug;
         } else {
             $category = $this->CR->getBySlug($request->parameters['category']);
             return $this->TR->getBySlug($team, $category)->i->slug;
