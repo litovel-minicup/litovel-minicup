@@ -21,17 +21,20 @@ class InstagramManager
     private $key;
     /** @var string */
     private $expiration = '5 minutes';
+    /** @var int */
+    private $minimalStories;
 
     /**
      * InstagramManager constructor.
      * @param string   $username
      * @param IStorage $storage
      */
-    public function __construct(string $username, IStorage $storage)
+    public function __construct(string $username, int $minimalStories, IStorage $storage)
     {
         $this->cache = new Cache($storage);
         $this->username = $username;
         $this->key = "ig-stories-$username";
+        $this->minimalStories = $minimalStories;
     }
 
 
@@ -46,6 +49,7 @@ class InstagramManager
             $data = $this->fetch();
             $this->cache->save($this->key, $data, [Cache::EXPIRE => $this->expiration]);
         }
+        if (count($data) < $this->minimalStories) return [];
         return $data;
     }
 
