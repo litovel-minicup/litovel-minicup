@@ -13,7 +13,7 @@ namespace Minicup\Model\Entity;
  * @property int           $halfIndex m:enum(self::HALF_INDEX_*)
  * @property int           $timeOffset total seconds from start of current half of match
  * @property Player|NULL   $player m:hasOne optionally linked to player
- * @property TeamInfo|NULL $teamInfo m:hasOne optionally linked to player
+ * @property TeamInfo|NULL $teamInfo m:hasOne(team_info_id) optionally linked to player
  */
 class MatchEvent extends BaseEntity
 {
