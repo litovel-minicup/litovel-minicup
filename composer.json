@@ -26,7 +26,8 @@
     "kdyby/console": "^2.7",
     "tedivm/jshrink": "~1.0",
     "nofutur3/nette-sentry": "dev-master",
-    "contributte/logging": "^0.3.0"
+    "contributte/logging": "^0.3.0",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

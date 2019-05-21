@@ -372,6 +372,11 @@ class RouterFactory
             'category' => $categoryFilter,
         ]);
 
+        $list[] = new Route('api/v1/instagram-stories', [
+            'presenter' => 'Instagram',
+            'action' => 'stories',
+        ]);
+
         return $list;
     }
 

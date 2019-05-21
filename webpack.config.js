@@ -8,6 +8,7 @@ module.exports = {
         MatchOnline: path.resolve(__dirname, 'www/assets/vue/MatchOnline/main.js'),
         CategoryOnline: path.resolve(__dirname, 'www/assets/vue/CategoryOnline/main.js'),
         LiveBar: path.resolve(__dirname, 'www/assets/vue/LiveBar/main.js'),
+        InstagramStories: path.resolve(__dirname, 'www/assets/vue/InstagramStories/main.js'),
     },
     output: {
         path: path.resolve(__dirname, 'www/assets/build/'),
@@ -67,7 +68,12 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    devServer: {
+        proxy: {
+            "**": "http://localhost:8000/"
+        }
+    }
 };
 
 if (process.env.NODE_ENV === 'production') {
