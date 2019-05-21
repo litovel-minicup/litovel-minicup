@@ -1,18 +1,26 @@
+{control streamComponent}
+
+<div data-usernane="petrmara">
+    <div id="instagram-stories"></div>
+</div>
+<script src="{$basePath}/assets/build/InstagramStories.build.js" async defer></script>
+
 <div class="Aside" n:if="!$control->started">
     <div class="Box__head Aside__head">
         <div class="Aside__head__text Box__head__text">{control countdownComponent}</div>
     </div>
 </div>
 
-{control streamComponent}
 
 {cache $category->cacheTag, tags => $category->cacheTag}
     <div class="Aside" n:if="$control->playingTime">
         <a href="{plink Match:online}">
             <div class="Box__head Aside__head">
                 <span class="Article__head__icon Box__head__icon" style="background: #f6cd00">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
                     <rect x="74" y="12.583" opacity="0.3" width="1" height="49.834"/>
                     <path opacity="0.3" d="M45.723,33.435c-1.092-0.209-2.107-0.634-2.995-1.235l-0.022,5.906l-15.868-0.059l0.03-8.128
                         c2.409,2.276,4.987,3.445,7.704,3.455c0.048,0,0.097,0,0.145-0.001c2.597-0.029,4.847-1.116,6.61-2.387
@@ -37,21 +45,23 @@
         <a href="{plink Match:default}">
             <div class="Box__head Aside__head">
                 <div class="Aside__head__icon Box__head__icon">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
                     <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
-                    <path opacity="0.3" d="M45.584,36.126v2.124H29.667v-6.561C31.79,33.145,34.357,34,37.125,34c1.43,0,2.802-0.239,4.091-0.66
+                        <path opacity="0.3" d="M45.584,36.126v2.124H29.667v-6.561C31.79,33.145,34.357,34,37.125,34c1.43,0,2.802-0.239,4.091-0.66
                         c-0.737-0.768-1.361-1.642-1.852-2.598C38.644,30.905,37.896,31,37.125,31c-2.772,0-5.283-1.117-7.124-2.917h8.407
                         c-0.162-0.748-0.252-1.522-0.252-2.317c0-0.23,0.021-0.456,0.034-0.683h-9.524c-1.104,0-2,0.896-2,2v25.334c0,1.104,0.896,2,2,2
                         h17.917c1.104,0,2-0.896,2-2V36.693C47.539,36.643,46.533,36.45,45.584,36.126z M30.866,51.417c1.853-1.876,4.421-3.042,7.259-3.042
                         c2.839,0,5.408,1.166,7.26,3.042H30.866z M45.584,47.686c-2.123-1.455-4.689-2.311-7.459-2.311c-3.219,0-6.167,1.154-8.458,3.067
                         v-7.193h15.917V47.686z"/>
-                    <g opacity="0.3">
-                        <path d="M49.111,17.812c-4.393,0-7.954,3.561-7.954,7.954s3.562,7.954,7.954,7.954s7.954-3.561,7.954-7.954
+                        <g opacity="0.3">
+                            <path d="M49.111,17.812c-4.393,0-7.954,3.561-7.954,7.954s3.562,7.954,7.954,7.954s7.954-3.561,7.954-7.954
                             S53.504,17.812,49.111,17.812z M52.717,30.168c-0.586,0.62-1.449,0.755-1.928,0.303L47.857,27.7
                             c-0.024-0.023-0.03-0.058-0.052-0.083c-0.217-0.267-0.353-0.602-0.353-0.973v-5.23c0-0.854,0.692-1.546,1.547-1.546
                             c0.853,0,1.545,0.692,1.545,1.546v4.571l2.368,2.24C53.392,28.678,53.305,29.548,52.717,30.168z"/>
-                    </g>
+                        </g>
                     </svg>
                 </div>
                 <div class="Aside__head__text Box__head__text">Nejbližší utkání</div>
@@ -66,8 +76,10 @@
         <a href="{plink Stats:default}">
             <div class="Box__head Aside__head">
                 <span class="Article__head__icon Box__head__icon" style="background: #f6cd00">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
                     <rect x="74" y="12.583" opacity="0.3" width="1" height="49.834"/>
                     <path opacity="0.3" fill="#231F20" d="M51.25,21.667H23.917c-0.829,0-1.5,0.671-1.5,1.5V52c0,0.828,0.671,1.5,1.5,1.5H51.25
                         c0.828,0,1.5-0.672,1.5-1.5V23.167C52.75,22.338,52.078,21.667,51.25,21.667z M25.417,24.667H49.75v4.396H26.656v0.021h-1.239
@@ -85,8 +97,10 @@
         <a href="{plink Match:default}">
             <div class="Box__head Aside__head">
                 <span class="Article__head__icon Box__head__icon" style="background: #f6cd00">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                         xml:space="preserve">
                     <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
                     <g opacity="0.3">
                         <path d="M43.843,36.093c-0.108,0-0.217-0.003-0.329-0.01c-0.315-0.019-0.625-0.079-0.93-0.151v3.735H26.667v-6.561
@@ -100,7 +114,7 @@
                         <path fill="#231F20" d="M43.843,33.093c-0.05,0-0.1-0.001-0.149-0.004c-0.675-0.041-1.305-0.353-1.746-0.865l-3.822-4.442
                             c-0.9-1.046-0.782-2.625,0.265-3.525c1.048-0.901,2.624-0.783,3.526,0.265l2.142,2.489l8.946-8.179
                             c1.019-0.933,2.6-0.86,3.531,0.158c0.932,1.019,0.861,2.601-0.158,3.532l-10.848,9.917C45.067,32.86,44.466,33.093,43.843,33.093z"
-                            />
+                        />
                     </g>
                     </svg>
                 </span>

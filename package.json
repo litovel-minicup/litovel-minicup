@@ -8,10 +8,12 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9000"
+    "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9002"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "camelcase-keys": "latest",
+    "instory": "^1.0.2",
     "lodash": "^4.17.5",
     "raven-js": "^3.24.0",
     "sprintf-js": "latest",

@@ -15,6 +15,7 @@ parameters:
         - "Jsme i na Facebooku - <strong><a href=https://www.facebook.com/litovel.minicup/>@litovel.minicup</a>.</strong>"
         - "Sleduj nás na Instagramu - <strong><a href=https://www.instagram.com/litovel.minicup/>@litovel.minicup</a>.</strong>"
         - "Neboj se nás označit na sítích, <strong>#litovelminicup</strong>!"
+    instagramUsername: davidgrudl
 
 php:
     date.timezone: Europe/Prague
@@ -62,6 +63,7 @@ services:
     - Minicup\Model\Manager\TeamHistoryManager
     - Minicup\Model\Manager\CacheManager(%cachedRepositories%)
     - Minicup\Model\Manager\LiveBarMessagesManager(%liveBarMessages%)
+    - Minicup\Model\Manager\InstagramManager(%instagramUsername%)
 
     # css & js compiling
     - Minicup\Components\CssComponentFactory(%wwwDir%, %productionMode%)
