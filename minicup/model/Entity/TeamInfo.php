@@ -35,6 +35,7 @@ use Psr\Log\NullLogger;
  *
  * @property        string|NULL        $colorPrimary Primary color of team - in #RRGGBB (used in livestreams)
  * @property        string|NULL        $colorSecondary Secondary color of team - in #RRGGBB (used in livestreams)
+ * @property        string|NULL        $colorText Text color of team - in #RRGGBB (used in livestreams)
  */
 class TeamInfo extends BaseEntity
 {

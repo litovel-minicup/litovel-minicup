@@ -37,6 +37,7 @@ class TeamPresenter extends BaseAdminPresenter
 
         'color_primary' => 'Prim. barva',
         'color_secondary' => 'Sek. barva',
+        'color_text' => 'Tex. barva',
     ];
 
     /** @var IMatchFormComponentFactory @inject */
@@ -72,6 +73,7 @@ class TeamPresenter extends BaseAdminPresenter
     {
         $this->template->category = $category;
     }
+
     /**
      * @return MatchFormComponent
      */
@@ -124,8 +126,9 @@ class TeamPresenter extends BaseAdminPresenter
         $this->addTeamInfoEditableText($g, 'trainerName', 'trainer_name');
 
         // Team color
-        $this->addTeamInfoEditableText($g, 'colorPrimary', 'color_primary');
-        $this->addTeamInfoEditableText($g, 'colorSecondary', 'color_secondary');
+        $this->addColorEditableText($g, 'colorPrimary', 'color_primary');
+        $this->addColorEditableText($g, 'colorSecondary', 'color_secondary');
+        $this->addColorEditableText($g, 'colorText', 'color_text');
 
         // Dress color
         $this->addTeamInfoEditableText($g, 'dressColor', 'dress_color');
@@ -232,6 +235,18 @@ class TeamPresenter extends BaseAdminPresenter
 
                 return $td;
             });
+    }
+
+    private function addColorEditableText(Grid $g, string $identifier, string $column)
+    {
+        return $this->addTeamInfoEditableText($g, $identifier, $column)->setCellCallback(
+            function (Row $row, Html $td) use ($column) {
+                return $td->addAttributes([
+                    'class' => ["grid-cell-$column"],
+                    'style' => "background-color: {$row->{$column}}; text-align: center;"
+                ]);
+            }
+        );
     }
 
     private function addTeamInfoEditableText(Grid $g, $identifier, $column)

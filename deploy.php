@@ -84,6 +84,10 @@ task('deploy:update_php-fpm', function () {
     run('cp {{current_path}}/conf/php-fpm/minicup.conf /etc/php/7.2/fpm/pool.d/');
 });
 
+task('deploy:update_log-perms', function () {
+    run('chmod a+w {{current_path}}/log/');
+});
+
 desc('Deploy minicup from master!');
 task('deploy', [
     'deploy:info',
@@ -97,7 +101,8 @@ task('deploy', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
-    // 'deploy:migrate',
+    'deploy:update_log-perms',
+    'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
@@ -144,7 +149,8 @@ task('deploy_local', [
     'deploy:vendors',
     'deploy:clear_paths',
     'deploy:symlink',
-    // 'deploy:migrate',
+    'deploy:update_log-perms',
+    'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
