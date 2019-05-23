@@ -1,4 +1,4 @@
-import {installWebSocket, Vue} from '../base/vue'
+import {Vue} from '../base/vue'
 
 import App from './App.vue'
 
@@ -17,7 +17,6 @@ Vue.filter('formatSize', function (size) {
     return size.toString() + ' B'
 });
 
-installWebSocket(store);
 
 const app = new Vue({
     el: '#admin-photo-put',

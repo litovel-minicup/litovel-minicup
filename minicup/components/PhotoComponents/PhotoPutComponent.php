@@ -16,6 +16,7 @@ use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\Image;
 use Nette\Utils\ImageException;
+use Nette\Utils\Json;
 use Nette\Utils\Random;
 
 interface IPhotoPutComponentFactory
@@ -121,9 +122,97 @@ class PhotoPutComponent extends BaseComponent
                 return [
                     'id' => $p->id,
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
-
+                    'tags' => count($p->tags),
                 ];
             }, $photos)
         ]);
+    }
+
+    /**
+     * @throws \Nette\Application\AbortException
+     * @throws \Nette\Utils\JsonException
+     */
+    public function handleUpdateTags()
+    {
+        $data = Json::decode($this->request->getRawBody(), Json::FORCE_ARRAY);
+        $photos = $data['photos'];
+        $tags = $data['tags'];
+
+        $tagEntities = [];
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            $tag = $this->TR->get($tag);
+            if (!$tag) {
+                continue;
+            }
+            if ($tag->teamInfo) {
+                $this->CM->cleanByEntity($tag->teamInfo->team);
+            }
+            $tagEntities[] = $tag;
+        }
+
+        /** @var Photo $photo */
+        $photos = $this->PR->findByIds($photos);
+        foreach ($photos as $photo) {
+            $photo->removeAllTags();
+            foreach ($tagEntities as $tag) {
+                /** @var Tag $tag */
+                $photo->addToTags($tag);
+            }
+            $this->PR->persist($photo);
+        }
+
+        $this->presenter->sendJson(['success' => 'true', 'tags' => array_map(function (Photo $p) {
+            return ['id' => $p->id, 'tags' => count($p->tags)];
+        }, array_values($photos))]);
+    }
+
+    /**
+     * @throws \Nette\Application\AbortException
+     * @throws \Nette\Utils\JsonException
+     */
+    public function handleInsertPhotos()
+    {
+        $data = Json::decode($this->request->getRawBody(), Json::FORCE_ARRAY);
+        $photos = $data['photos'];
+
+        /** @var Photo $photo */
+        $photos = $this->PR->findByIds($photos);
+        foreach ($photos as $photo) {
+            $photo->active = TRUE;
+            $this->PR->persist($photo);
+
+        }
+
+        $this->photos = array_filter($this->photos, function ($p) use ($data) {
+            return !in_array($p, $data['photos']);
+        });
+        $this->session[$this->uploadId] = $this->photos;
+
+        $this->presenter->sendJson(['success' => 'true']);
+    }
+
+    /**
+     * @throws \Nette\Application\AbortException
+     * @throws \Nette\Utils\JsonException
+     * @throws \LeanMapper\Exception\InvalidStateException
+     */
+    public function handleDeletePhotos()
+    {
+        $data = Json::decode($this->request->getRawBody(), Json::FORCE_ARRAY);
+        $photos = $data['photos'];
+
+        /** @var Photo $photo */
+        $photos = $this->PR->findByIds($photos);
+        foreach ($photos as $photo) {
+            $this->PM->delete($photo);
+        }
+
+        $this->photos = array_filter($this->photos, function ($p) use ($data) {
+            return !in_array($p, $data['photos']);
+        });
+        $this->session[$this->uploadId] = $this->photos;
+
+        $this->presenter->sendJson(['success' => 'true']);
     }
 }

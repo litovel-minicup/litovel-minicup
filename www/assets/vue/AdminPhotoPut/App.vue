@@ -8,6 +8,7 @@
 <script>
     import Uploader from './components/Uploader'
     import Tagger from "./components/Tagger";
+    import {mapActions, mapMutations} from 'vuex'
 
     export default {
         name: "App",
@@ -18,6 +19,8 @@
         computed: {},
 
         methods: {
+            ...mapActions(['loadMainTags']),
+            ...mapMutations(['setConf']),
             uploaded() {
                 this.$refs.tagger.refresh();
             }
@@ -27,9 +30,11 @@
             this.uploadUrl = data.uploadUrl;
             this.photosUrl = data.photosUrl;
             this.uploadId = data.uploadId;
+            this.setConf(data);
             this.$nextTick(() => {
                 this.$refs.tagger.refresh();
             });
+            this.loadMainTags();
         },
     }
 </script>

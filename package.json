@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --mode production",
-    "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9000"
+    "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9002"
   },
   "dependencies": {
     "@xkeshi/image-compressor": "^0.5.3",
@@ -16,7 +16,7 @@
     "camelcase-keys": "latest",
     "instory": "^1.0.2",
     "javascript-time-ago": "^2.0.1",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.11",
     "raven-js": "^3.24.0",
     "sprintf-js": "latest",
     "vue": "^2.5.11",
@@ -46,7 +46,7 @@
     "exports-loader": "^0.7.0",
     "file-loader": "^1.1.4",
     "imports-loader": "^0.8.0",
-    "node-sass": "^4.8.3",
+    "node-sass": "^4.12.0",
     "postcss-loader": "^2.1.3",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.7",

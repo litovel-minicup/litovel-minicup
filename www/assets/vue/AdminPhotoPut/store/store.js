@@ -5,7 +5,14 @@ import mutations from './mutations'
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
-    state: {},
+    state: {
+        mainTags: [],
+        updateTagsUrl: '',
+        insertPhotosUrl: '',
+        deletePhotosUrl: '',
+        photosUrl: '',
+        photos: {},
+    },
     actions,
     mutations,
     strict: true

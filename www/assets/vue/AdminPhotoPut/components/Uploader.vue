@@ -2,7 +2,8 @@
     <div class="example-full">
 
         <div class="pull-right">
-            <button type="button" class="btn btn-danger float-right btn-is-option" @click.prevent="isOption = !isOption">
+            <button type="button" class="btn btn-danger float-right btn-is-option"
+                    @click.prevent="isOption = !isOption">
                 <i class="fa fa-cog" aria-hidden="true"></i>
                 Options
             </button>
@@ -28,12 +29,7 @@
                 Select
             </file-upload>
 
-            <div class="footer-status float-right">
-                Drop: {{$refs.upload ? $refs.upload.drop : false}},
-                Active: {{$refs.upload ? $refs.upload.active : false}},
-                Uploaded: {{$refs.upload ? $refs.upload.uploaded : true}},
-                Drop active: {{$refs.upload ? $refs.upload.dropActive : false}}
-            </div>
+
             <button type="button" class="btn btn-success" v-if="!$refs.upload || !$refs.upload.active"
                     @click.prevent="$refs.upload.active = true">
                 <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -45,35 +41,20 @@
             </button>
         </div>
 
-
-
-
         <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
             <h3>Drop files to upload</h3>
         </div>
         <div class="upload" v-show="!isOption">
             <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Thumb</th>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Tags</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
                 <tbody>
-                <tr v-if="!files.length">
+                <tr v-if="!filteredFiles.length">
                     <td colspan="7">
                         <div class="text-center p-5">
-                            <h4>Drop files anywhere to upload<br/>or</h4>
-                            <label :for="name" class="btn btn-lg btn-primary">Select Files</label>
+                            <label :for="name" class="btn btn-lg btn-warning">Vyber soubory</label>
                         </div>
                     </td>
                 </tr>
-                <tr v-for="(file, index) in files" :key="file.id">
+                <tr v-for="(file, index) in filteredFiles" :key="file.id">
                     <td>{{index}}</td>
                     <td>
                         <img v-if="file.thumb" :src="file.thumb" width="75" height="auto"/>
@@ -109,7 +90,8 @@
                                @click.prevent="$refs.upload.update(file, {active: true, error: '', progress: '0.00'})">Retry
                                 upload</a>
 
-                            <a class="btn btn-sm btn-success" :class="{disabled: file.success || file.error === 'compressing'}"
+                            <a class="btn btn-sm btn-success"
+                               :class="{disabled: file.success || file.error === 'compressing'}"
                                href="#" v-else
                                @click.prevent="file.success || file.error === 'compressing' ? false : $refs.upload.update(file, {active: true})">Upload</a>
 
@@ -230,16 +212,6 @@
         margin-top: 0.25rem;
     }
 
-    .example-full .example-foorer {
-        padding: .5rem 0;
-        border-top: 1px solid #e9ecef;
-        border-bottom: 1px solid #e9ecef;
-    }
-
-    .example-full .footer-status {
-        padding-top: .4rem;
-    }
-
     .example-full .drop-active {
         top: 0;
         bottom: 0;
@@ -270,6 +242,7 @@
 <script>
     import ImageCompressor from '@xkeshi/image-compressor'
     import FileUpload from 'vue-upload-component'
+    import _ from 'lodash'
 
     export default {
         components: {
@@ -279,8 +252,8 @@
         data() {
             return {
                 files: [],
-                accept: 'image/png,image/jpeg,image/webp',
-                extensions: 'jpg,jpeg,png,webp',
+                accept: 'image/png,image/jpeg',
+                extensions: 'jpg,jpeg,png',
                 // extensions: ['gif', 'jpg', 'jpeg','png', 'webp'],
                 // extensions: /\.(gif|jpe?g|png|webp)$/i,
                 minSize: 1024,
@@ -306,6 +279,11 @@
         },
         props: {
             uploadUrl: String,
+        },
+        computed: {
+            filteredFiles() {
+                return _.reject(this.files, {'success': true})
+            }
         },
 
         watch: {
@@ -413,7 +391,7 @@
                 // Automatically activate upload
                 // if (Boolean(newFile) !== Boolean(oldFile) || oldFile.error !== newFile.error) {
                 //     if (this.uploadAuto && !this.$refs.upload.active) {
-                        this.$refs.upload.active = true
+                this.$refs.upload.active = true
                 //     }
                 // }
             },

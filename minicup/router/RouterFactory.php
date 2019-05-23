@@ -377,6 +377,11 @@ class RouterFactory
             'action' => 'stories',
         ]);
 
+        $list[] = new Route('api/v1/main-tags', [
+            'presenter' => 'Tag',
+            'action' => 'mainTags',
+        ]);
+
         return $list;
     }
 
