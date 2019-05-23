@@ -2,7 +2,7 @@
     <div>
         <hr>
         <div class="row">
-            <div class="btn-group">
+            <div class="btn-group btn-group-tags">
                 <button
                         v-for="tag in mainTags"
                         v-text="tag.name"
@@ -16,27 +16,29 @@
                         @click="removeAnotherTag(tag.id)"
                         class="btn btn-primary"
                 ></button>
+
                 <button
                         @click="setSelectedTags([]); setAnotherTags([]);"
                         class="btn btn-warning"
                         v-if="selectedTags.length || anotherTags.length"
                 >&cross;
                 </button>
-                <select class="form-control pull-right"
-                        v-model="anotherTag"
-                        @change="selectedAnotherTag()"
-                >
-                    <option :value="0">...další tagy...</option>
-                    <option
-                            :value="opt.id"
-                            v-text="opt.name"
-                            v-for="opt in availableAnotherTags"
-                    ></option>
-                </select>
+
+                <label>
+                    <select class="form-control another-tag-select"
+                            v-model="anotherTag"
+                            @change="selectedAnotherTag()"
+                    >
+                        <option :value="0">...další tagy...</option>
+                        <option
+                                :value="opt.id"
+                                v-text="opt.name"
+                                v-for="opt in availableAnotherTags"
+                        ></option>
+                    </select>
+                </label>
             </div>
-        </div>
-        <hr>
-        <div class="row">
+
             <div class="btn-group pull-right">
                 <button class="btn btn-default btn-lg" v-if="selectedPhotos.length" @click="setSelectedPhotos([])">
                     Unselect {{ selectedPhotos.length }}
@@ -154,5 +156,13 @@
                 opacity: .6;
             }
         }
+    }
+
+    .another-tag-select {
+        display: inline-block;
+        width: auto;
+    }
+    .btn-group-tags {
+        max-width: 75%;
     }
 </style>

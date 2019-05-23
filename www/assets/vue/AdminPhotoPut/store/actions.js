@@ -12,7 +12,7 @@ export default {
         let data = photos.map((id) => {
             return {
                 id,
-                tags: state.photos[id].tags
+                tags: _.find(state.photos, {id}).tags
             }
         });
         return Vue.http.post(state.insertPhotosUrl, {photos: data}).then(({data}) => {
