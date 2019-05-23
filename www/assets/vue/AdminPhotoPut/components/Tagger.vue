@@ -10,6 +10,25 @@
                         class="btn"
                         :class="selectedTags.includes(tag.id) ? 'btn-primary' : 'btn-default'"
                 ></button>
+                <select class="form-control another-tag-select pull-left"
+                        v-model="anotherTag"
+                        @change="selectedAnotherTag()"
+                >
+                    <option :value="0">...další tagy...</option>
+                    <option
+                            :value="opt.id"
+                            v-text="opt.name"
+                            v-for="opt in availableAnotherTags"
+                    ></option>
+                </select>
+
+                <br>
+                <button
+                        @click="setSelectedTags([]); setAnotherTags([]);"
+                        class="btn btn-warning"
+                        v-if="selectedTags.length || anotherTags.length"
+                >&cross;
+                </button>
                 <button
                         v-for="tag in anotherTags"
                         v-text="tag.name"
@@ -17,26 +36,6 @@
                         class="btn btn-primary"
                 ></button>
 
-                <button
-                        @click="setSelectedTags([]); setAnotherTags([]);"
-                        class="btn btn-warning"
-                        v-if="selectedTags.length || anotherTags.length"
-                >&cross;
-                </button>
-
-                <label>
-                    <select class="form-control another-tag-select"
-                            v-model="anotherTag"
-                            @change="selectedAnotherTag()"
-                    >
-                        <option :value="0">...další tagy...</option>
-                        <option
-                                :value="opt.id"
-                                v-text="opt.name"
-                                v-for="opt in availableAnotherTags"
-                        ></option>
-                    </select>
-                </label>
             </div>
 
             <div class="btn-group pull-right">
@@ -162,6 +161,7 @@
         display: inline-block;
         width: auto;
     }
+
     .btn-group-tags {
         max-width: 75%;
     }

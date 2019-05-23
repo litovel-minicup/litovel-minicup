@@ -25,20 +25,7 @@
                     @input-filter="inputFilter"
                     @input-file="inputFile"
                     ref="upload">
-                <i class="fa fa-plus"></i>
-                Select
             </file-upload>
-
-
-            <button type="button" class="btn btn-success" v-if="!$refs.upload || !$refs.upload.active"
-                    @click.prevent="$refs.upload.active = true">
-                <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                Start Upload
-            </button>
-            <button type="button" class="btn btn-danger" v-else @click.prevent="$refs.upload.active = false">
-                <i class="fa fa-stop" aria-hidden="true"></i>
-                Stop Upload
-            </button>
         </div>
 
         <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
