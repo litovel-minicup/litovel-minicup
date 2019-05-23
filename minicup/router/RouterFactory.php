@@ -377,9 +377,9 @@ class RouterFactory
             'action' => 'stories',
         ]);
 
-        $list[] = new Route('api/v1/main-tags', [
+        $list[] = new Route('api/v1/tags', [
             'presenter' => 'Tag',
-            'action' => 'mainTags',
+            'action' => 'tags',
         ]);
 
         return $list;

@@ -122,7 +122,7 @@ class PhotoPutComponent extends BaseComponent
                 return [
                     'id' => $p->id,
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
-                    'tags' => count($p->tags),
+                    'tags' => array_map(function (Tag $t) {return $t->id;}, $p->tags),
                 ];
             }, $photos)
         ]);
@@ -138,7 +138,7 @@ class PhotoPutComponent extends BaseComponent
         $photos = $data['photos'];
         $tags = $data['tags'];
 
-        $tagEntities = [];
+        /**$tagEntities = [];
         /** @var Tag $tag */
         foreach ($tags as $tag) {
             $tag = $this->TR->get($tag);
@@ -148,7 +148,7 @@ class PhotoPutComponent extends BaseComponent
             if ($tag->teamInfo) {
                 $this->CM->cleanByEntity($tag->teamInfo->team);
             }
-            $tagEntities[] = $tag;
+            $tagEntities[$tag->id] = $tag;
         }
 
         /** @var Photo $photo */
@@ -162,9 +162,7 @@ class PhotoPutComponent extends BaseComponent
             $this->PR->persist($photo);
         }
 
-        $this->presenter->sendJson(['success' => 'true', 'tags' => array_map(function (Photo $p) {
-            return ['id' => $p->id, 'tags' => count($p->tags)];
-        }, array_values($photos))]);
+        $this->presenter->sendJson(['success' => 'true']);
     }
 
     /**
@@ -175,17 +173,23 @@ class PhotoPutComponent extends BaseComponent
     {
         $data = Json::decode($this->request->getRawBody(), Json::FORCE_ARRAY);
         $photos = $data['photos'];
+        bdump($photos);
 
+        $tags = [];
         /** @var Photo $photo */
-        $photos = $this->PR->findByIds($photos);
-        foreach ($photos as $photo) {
+        $photoIds = array_map(function ($p) {return $p['id'];}, $photos);
+        foreach ($photos as $item) {
+            $photo = $this->PR->get($item['id']);
+            foreach ($item['tags'] as $tagId) {
+                if (!isset($tags[$tagId])) $tags[$tagId] = $this->TR->get($tagId);
+                $photo->addToTags($tags[$tagId]);
+            }
             $photo->active = TRUE;
             $this->PR->persist($photo);
-
         }
 
-        $this->photos = array_filter($this->photos, function ($p) use ($data) {
-            return !in_array($p, $data['photos']);
+        $this->photos = array_filter($this->photos, function ($p) use ($photoIds) {
+            return !in_array($p, $photoIds);
         });
         $this->session[$this->uploadId] = $this->photos;
 

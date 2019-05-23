@@ -1,27 +1,51 @@
 <template>
     <div>
         <hr>
-        <div class="row text-center">
-
-
+        <div class="row">
             <div class="btn-group">
                 <button
                         v-for="tag in mainTags"
                         v-text="tag.name"
                         @click="toggleTag(tag.id)"
-                        class="btn btn-lg"
+                        class="btn"
                         :class="selectedTags.includes(tag.id) ? 'btn-primary' : 'btn-default'"
                 ></button>
+                <button
+                        v-for="tag in anotherTags"
+                        v-text="tag.name"
+                        @click="removeAnotherTag(tag.id)"
+                        class="btn btn-primary"
+                ></button>
+                <button
+                        @click="setSelectedTags([]); setAnotherTags([]);"
+                        class="btn btn-warning"
+                        v-if="selectedTags.length || anotherTags.length"
+                >&cross;
+                </button>
+                <select class="form-control pull-right"
+                        v-model="anotherTag"
+                        @change="selectedAnotherTag()"
+                >
+                    <option :value="0">...další tagy...</option>
+                    <option
+                            :value="opt.id"
+                            v-text="opt.name"
+                            v-for="opt in availableAnotherTags"
+                    ></option>
+                </select>
             </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="btn-group pull-right">
+                <button class="btn btn-default btn-lg" v-if="selectedPhotos.length" @click="setSelectedPhotos([])">
+                    Unselect {{ selectedPhotos.length }}
+                </button>
 
-            <button class="btn btn-lg btn-success" @click="updatePhotosTags">Otaguj!</button>
-            <button class="btn btn-lg btn-primary"
-                    @click="insertPhotos(selectedPhotos.length ? selectedPhotos : photos.map((p) => p.id)).then(() => {selectedPhotos = []})">Vlož!</button>
-            <button class="btn btn-lg btn-danger"
-                    @click="deletePhotos(selectedPhotos.length ? selectedPhotos : photos.map((p) => p.id)).then(() => {selectedPhotos = []})">Smaž!</button>
-            <button class="btn btn-lg btn-warning">Smaž tagy!</button>
-            <button class="btn btn-default btn-lg" v-if="selectedPhotos.length">Vybráno {{ selectedPhotos.length }}
-            </button>
+                <button class="btn btn-lg btn-success" @click="updateTags">Otaguj!</button>
+                <button class="btn btn-lg btn-primary" @click="insertPhotos()">Vlož!</button>
+                <button class="btn btn-lg btn-danger" @click="deletePhotos()">Smaž!</button>
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -32,7 +56,7 @@
                     @click="togglePhoto(photo.id)"
             >
                 <img :src="photo.thumb.replace('thumb', '_original')" alt="" class="img-responsive">
-                <span class="tags-count" v-text="photo.tags"></span>
+                <span class="tags-count">{{ photoLabel(photo.tags) }}</span>
             </span>
         </div>
     </div>
@@ -40,7 +64,7 @@
 <script>
     import Vue from 'vue'
     import axios from 'axios'
-    import {mapState, mapActions} from 'vuex'
+    import {mapState, mapActions, mapMutations} from 'vuex'
     import _ from 'lodash'
 
     export default {
@@ -49,41 +73,44 @@
             uploadId: {},
         },
         data() {
-            return {
-                selectedTags: [],
-                selectedPhotos: [],
-            }
+            return {anotherTag: 0}
         },
         computed: {
-            ...mapState(['mainTags', 'photos']),
+            ...mapState(['tags', 'photos', 'selectedTags', 'selectedPhotos', 'anotherTags']),
+            mainTags() {
+                return _.filter(this.tags, _.property('main'));
+            },
+            noMainTags() {
+                return _.orderBy(_.reject(this.tags, _.property('main')).reverse(), _.property('name'));
+            },
+            availableAnotherTags() {
+                let selectedAnother = _.map(this.anotherTags, _.property('id'));
+                return _.reject(this.noMainTags, (t) => {
+                    return selectedAnother.includes(t.id);
+                })
+            },
+            photoLabel() {
+                return (tags) => {
+                    return tags.map((id) => _.find(this.tags, {id}).name).join(',');
+                }
+            }
         },
         mounted() {
             this.refresh();
         },
+        filters: {},
         methods: {
-            ...mapActions(['updateTags', 'refreshPhotos', 'insertPhotos', 'deletePhotos']),
+            ...mapActions(['refreshPhotos', 'insertPhotos', 'deletePhotos', 'toggleTag', 'togglePhoto']),
+            ...mapMutations(['updateTags', 'setSelectedPhotos', 'setSelectedTags', 'setAnotherTags']),
+            selectedAnotherTag() {
+                let tag = _.find(this.tags, {id: this.anotherTag});
+                tag && this.setAnotherTags([...this.anotherTags, tag]);
+            },
+            removeAnotherTag(id) {
+                this.setAnotherTags(_.reject(this.anotherTags, {id}));
+            },
             refresh() {
                 this.refreshPhotos();
-            },
-            toggleTag(id) {
-                if (this.selectedTags.includes(id))
-                    Vue.delete(this.selectedTags, this.selectedTags.indexOf(id));
-                else
-                    this.selectedTags.push(id);
-
-            },
-            togglePhoto(id) {
-                if (this.selectedPhotos.includes(id))
-                    Vue.delete(this.selectedPhotos, this.selectedPhotos.indexOf(id));
-                else
-                    this.selectedPhotos.push(id);
-
-            },
-            updatePhotosTags() {
-                this.updateTags({
-                    tags: this.selectedTags,
-                    photos: this.selectedPhotos.length ? this.selectedPhotos : _.map(this.photos, (p) => p.id),
-                })
             }
         }
     }
@@ -98,6 +125,7 @@
         display: inline-block;
         margin: 5px;
         position: relative;
+        cursor: pointer;
 
         &:hover {
             opacity: .8;
@@ -109,21 +137,21 @@
             bottom: 0;
             background-color: black;
             color: white;
-            font-size: 32pt;
+            font-size: 8pt;
             line-height: 1;
             padding: 2px 4px;
         }
 
         &.selected {
             &:after {
-                content: attr(data-tags);
+                content: "";
                 position: absolute;
-                background-color: #CD1818;
+                background-color: white;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
-                opacity: .5;
+                opacity: .6;
             }
         }
     }

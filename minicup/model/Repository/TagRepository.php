@@ -68,4 +68,17 @@ class TagRepository extends BaseRepository
         }
         return $this->createEntities($fluent->fetchAll());
     }
+
+    /**
+     * @param Year $year
+     * @return Tag[]
+     */
+    public function findAllInYear(Year $year = NULL)
+    {
+        $fluent = $this->createFluent();
+        if ($year) {
+            $fluent->where('[year_id] = ', $year->id);
+        }
+        return $this->createEntities($fluent->fetchAll());
+    }
 }

@@ -14,15 +14,15 @@
         name: "App",
         components: {Tagger, Uploader},
         data() {
-            return {uploadUrl: '', uploadId: '', photosUrl: ''}
+            return {uploadUrl: '', uploadId: '', photosUrl: '', delayedRefresh: null}
         },
         computed: {},
 
         methods: {
-            ...mapActions(['loadMainTags']),
+            ...mapActions(['loadTags']),
             ...mapMutations(['setConf']),
             uploaded() {
-                this.$refs.tagger.refresh();
+                this.delayedRefresh();
             }
         },
         mounted() {
@@ -34,7 +34,9 @@
             this.$nextTick(() => {
                 this.$refs.tagger.refresh();
             });
-            this.loadMainTags();
+            this.loadTags();
+
+            this.delayedRefresh = _.debounce(this.$refs.tagger.refresh, 5 * 1000);
         },
     }
 </script>

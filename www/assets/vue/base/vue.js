@@ -8,16 +8,16 @@ import VueLoading from 'vue-loading-template'
 
 import 'vue2-animate/dist/vue2-animate.css';
 
-
-Raven.config(
-    'https://29dc267c2d6b4bcc80cfcb1ce1e34478@sentry.io/1205821',
-    {
-        ignoreUrls: [
-            /.*127\..*/,
-            /.*localhost.*/
-        ]
-    }
-).addPlugin(RavenVue, Vue).install();
+//
+// Raven.config(
+//     'https://29dc267c2d6b4bcc80cfcb1ce1e34478@sentry.io/1205821',
+//     {
+//         ignoreUrls: [
+//             /.*127\..*/,
+//             /.*localhost.*/
+//         ]
+//     }
+// ).addPlugin(RavenVue, Vue).install();
 
 Vue.use(VueResource);
 

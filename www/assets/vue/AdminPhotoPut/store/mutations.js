@@ -8,20 +8,37 @@ export default {
         state.insertPhotosUrl = conf.insertPhotosUrl;
         state.deletePhotosUrl = conf.deletePhotosUrl;
     },
-    setMainTags(state, tags) {
-        state.mainTags = tags;
+    setTags(state, tags) {
+        state.tags = tags;
     },
     setPhotos(state, photos) {
         state.photos = photos;
     },
-    refreshTagsCount(state, tags) {
-        tags.map(({id, tags}) => {
-            _.find(state.photos, {id}).tags = tags;
+    setSelectedPhotos(state, photos) {
+        state.selectedPhotos = photos;
+    },
+    setSelectedTags(state, tags) {
+        state.selectedTags = tags;
+    },
+    setAnotherTags(state, anotherTags) {
+        state.anotherTags = anotherTags;
+    },
+
+    updateTags(state) {
+        let photosToUpdate = state.selectedPhotos.length ? state.selectedPhotos : _.map(_.keys(state.photos), Number);
+        let anotherTags = _.map(state.anotherTags, _.property('id'));
+        let tags = _.uniq(_.concat(state.selectedTags, anotherTags));
+
+        photosToUpdate.map((p) => {
+            _.find(state.photos, {'id': p}).tags = tags;
         })
     },
     rejectPhotos(state, photos) {
         state.photos = _.filter(state.photos, (p) => {
             return !photos.includes(p.id);
+        });
+        state.selectedPhotos = _.filter(state.selectedPhotos, (p) => {
+            return !photos.includes(p);
         })
     },
 };

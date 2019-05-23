@@ -21,14 +21,15 @@ class TagPresenter extends BaseApiPresenter
     /**
      * @throws AbortException
      */
-    public function actionMainTags()
+    public function actionTags()
     {
         $this->sendJson(['tags' => array_map(function (Tag $t) {
             return [
                 'id' => $t->id,
                 'name' => $t->name,
+                'main' => (bool) $t->isMain,
             ];
-        }, $this->TR->findMainTags($this->YR->getActualYear()))]);
+        }, $this->TR->findAllInYear($this->YR->getActualYear()))]);
     }
 
 }
