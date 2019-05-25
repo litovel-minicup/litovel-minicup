@@ -10,6 +10,7 @@ module.exports = {
         AdminPhotoPut: path.resolve(__dirname, 'www/assets/vue/AdminPhotoPut/main.js'),
         LiveBar: path.resolve(__dirname, 'www/assets/vue/LiveBar/main.js'),
         InstagramStories: path.resolve(__dirname, 'www/assets/vue/InstagramStories/main.js'),
+        AdminPhotoTeamTagger: path.resolve(__dirname, 'www/assets/vue/AdminPhotoTeamTagger/main.js'),
     },
     output: {
         path: path.resolve(__dirname, 'www/assets/build/'),

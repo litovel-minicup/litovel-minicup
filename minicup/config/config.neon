@@ -182,6 +182,7 @@ services:
     - implement: Minicup\Components\IAdminPhotoListComponentFactory
     - implement: Minicup\Components\IYearToggleComponentFactory
     - implement: Minicup\Components\IPhotoPutComponentFactory
+    - implement: Minicup\Components\IPhotoTeamTaggerComponentFactory
 
 extensions:
     leanMapper: Minicup\Model\LeanMapperExtension

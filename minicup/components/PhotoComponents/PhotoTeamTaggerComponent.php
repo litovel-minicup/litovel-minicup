@@ -19,13 +19,13 @@ use Nette\Utils\ImageException;
 use Nette\Utils\Json;
 use Nette\Utils\Random;
 
-interface IPhotoPutComponentFactory
+interface IPhotoTeamTaggerComponentFactory
 {
-    /** @return PhotoPutComponent */
+    /** @return PhotoTeamTaggerComponent */
     public function create();
 }
 
-class PhotoPutComponent extends BaseComponent
+class PhotoTeamTaggerComponent extends BaseComponent
 {
     /** @var int[] */
     public $photos = [];
@@ -85,31 +85,6 @@ class PhotoPutComponent extends BaseComponent
         parent::render();
     }
 
-
-    /**
-     * @throws \LeanMapper\Exception\InvalidArgumentException
-     * @throws \Nette\Application\AbortException
-     */
-    public function handleUpload()
-    {
-        bdump($this->presenter->getHttpRequest());
-        try {
-            $image = Image::fromString($this->presenter->getHttpRequest()->getRawBody());
-        } catch (ImageException $e) {
-            $this->presenter->sendJson([
-                'success' => false,
-            ]);
-            return;
-        }
-        $photo = $this->PM->saveImage($image, $this->uploadId, $this->request->getPost('author'));
-        $this->photos[] = $photo->id;
-        $this->session[$this->uploadId] = $this->photos;
-        $this->presenter->sendJson([
-            'photo' => $photo->id,
-            'success' => true,
-        ]);
-    }
-
     /**
      * @throws \Nette\Application\AbortException
      */
@@ -122,7 +97,9 @@ class PhotoPutComponent extends BaseComponent
                 return [
                     'id' => $p->id,
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
-                    'tags' => array_map(function (Tag $t) {return $t->id;}, $p->tags),
+                    'tags' => array_map(function (Tag $t) {
+                        return $t->id;
+                    }, $p->tags),
                 ];
             }, $photos)
         ]);
@@ -177,7 +154,9 @@ class PhotoPutComponent extends BaseComponent
 
         $tags = [];
         /** @var Photo $photo */
-        $photoIds = array_map(function ($p) {return $p['id'];}, $photos);
+        $photoIds = array_map(function ($p) {
+            return $p['id'];
+        }, $photos);
         foreach ($photos as $item) {
             $photo = $this->PR->get($item['id']);
             foreach ($item['tags'] as $tagId) {
@@ -190,30 +169,6 @@ class PhotoPutComponent extends BaseComponent
 
         $this->photos = array_filter($this->photos, function ($p) use ($photoIds) {
             return !in_array($p, $photoIds);
-        });
-        $this->session[$this->uploadId] = $this->photos;
-
-        $this->presenter->sendJson(['success' => 'true']);
-    }
-
-    /**
-     * @throws \Nette\Application\AbortException
-     * @throws \Nette\Utils\JsonException
-     * @throws \LeanMapper\Exception\InvalidStateException
-     */
-    public function handleDeletePhotos()
-    {
-        $data = Json::decode($this->request->getRawBody(), Json::FORCE_ARRAY);
-        $photos = $data['photos'];
-
-        /** @var Photo $photo */
-        $photos = $this->PR->findByIds($photos);
-        foreach ($photos as $photo) {
-            $this->PM->delete($photo);
-        }
-
-        $this->photos = array_filter($this->photos, function ($p) use ($data) {
-            return !in_array($p, $data['photos']);
         });
         $this->session[$this->uploadId] = $this->photos;
 

@@ -11,6 +11,8 @@
     "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9002"
   },
   "dependencies": {
+    "@tensorflow-models/body-pix": "^1.0.1",
+    "@tensorflow/tfjs": "^1.1.2",
     "@xkeshi/image-compressor": "^0.5.3",
     "axios": "^0.18.0",
     "camelcase-keys": "latest",
