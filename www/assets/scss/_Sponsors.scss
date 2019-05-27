@@ -1,6 +1,6 @@
 .Sponsors {
   &__wrapper {
-    @include outer-container();
+    // @include outer-container();
     H2 {
       text-align: center;
       font-variant-caps: all-petite-caps;
@@ -15,7 +15,8 @@
 
   &__list {
     text-align: center;
-    padding: 40px 0;
+    padding: 30px 0;
+    opacity: .95;
     SPAN {
       display: inline-block;
       margin: 10px;
@@ -33,82 +34,39 @@
   @media screen and (max-width: 540px) {
     &__list {
       SPAN[class^=s-] {
-        margin: -5px;
+        margin: -5px 0;
       }
     }
   }
 
-  .s-11 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -150px -0;
-  }
+  .s-10, .s-11, .s-12, .s-13, .s-14,
+  .s-15, .s-16, .s-17, .s-18, .s-19,
+  .s-2, .s-20, .s-21, .s-3, .s-4,
+  .s-5, .s-6, .s-7, .s-8, .s-9, .s-1
+  { display: inline-block; background: url('../img/sprites.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
 
-  .s-10 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -0 -300px;
-  }
-
-  .s-9 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -0 -150px;
-  }
-
-  .s-8 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -150px -150px;
-  }
-
-  .s-7 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -300px -0;
-  }
-
-  .s-6 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -300px -150px;
-  }
-
-  .s-5 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -0 -0;
-  }
-
-  .s-4 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -150px -300px;
-  }
-
-  .s-3 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -300px -300px;
-  }
-
-  .s-2 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -450px -0;
-  }
-
-  .s-1 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -450px -150px;
-  }
-
-  .s-0 {
-    width: 150px;
-    height: 150px;
-    background: url('../img/sprites.png') -450px -300px;
-  }
+  // @formatter:off
+  .s-1 { background-position: -0px -0px; width: 150px; height: 150px; }
+  .s-10 { background-position: -150px -0px; width: 150px; height: 150px; }
+  .s-11 { background-position: -300px -0px; width: 150px; height: 150px; }
+  .s-12 { background-position: -450px -0px; width: 150px; height: 150px; }
+  .s-13 { background-position: -0px -150px; width: 150px; height: 150px; }
+  .s-14 { background-position: -150px -150px; width: 150px; height: 150px; }
+  .s-15 { background-position: -300px -150px; width: 150px; height: 150px; }
+  .s-16 { background-position: -450px -150px; width: 150px; height: 150px; }
+  .s-17 { background-position: -0px -300px; width: 150px; height: 150px; }
+  .s-18 { background-position: -150px -300px; width: 150px; height: 150px; }
+  .s-19 { background-position: -300px -300px; width: 150px; height: 150px; }
+  .s-2 { background-position: -450px -300px; width: 150px; height: 150px; }
+  .s-20 { background-position: -0px -450px; width: 150px; height: 150px; }
+  .s-3 { background-position: -150px -450px; width: 150px; height: 150px; }
+  .s-4 { background-position: -300px -450px; width: 150px; height: 150px; }
+  .s-5 { background-position: -450px -450px; width: 150px; height: 150px; }
+  .s-6 { background-position: -0px -600px; width: 150px; height: 150px; }
+  .s-7 { background-position: -150px -600px; width: 150px; height: 150px; }
+  .s-8 { background-position: -300px -600px; width: 150px; height: 150px; }
+  .s-9 { background-position: -450px -600px; width: 150px; height: 150px; }
+  // @formatter:on
 }
 
 

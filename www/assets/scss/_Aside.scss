@@ -13,6 +13,7 @@
 
   A {
     color: rgba(0, 0, 0, .75);
+
     &:hover {
       background: black;
       color: white;
@@ -76,16 +77,20 @@
   &__list--rank {
     @include span-columns(0.50 of 5);
   }
+
   &__list--team {
     @include span-columns(2.25 of 5);
   }
+
   &__list--matches {
     @include span-columns(0.75 of 5);
   }
+
   &__list--score {
     @include span-columns(0.75 of 5);
     text-align: center;
   }
+
   &__list--points {
     @include span-columns(0.75 of 5);
     text-align: right;
@@ -104,11 +109,13 @@
       tr {
         &[onclick] {
           cursor: pointer;
+
           &:hover td {
             background-color: black;
             color: white;
           }
         }
+
         &:nth-of-type(1) td {
           height: 40px;
           vertical-align: bottom;
