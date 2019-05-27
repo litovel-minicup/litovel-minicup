@@ -102,7 +102,7 @@ task('deploy', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:update_log-perms',
-    'deploy:migrate',
+    // 'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',
@@ -150,7 +150,7 @@ task('deploy_local', [
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:update_log-perms',
-    'deploy:migrate',
+    // 'deploy:migrate',
 
     'deploy:update_nginx',
     'deploy:update_php-fpm',

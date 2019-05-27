@@ -27,7 +27,8 @@
     "tedivm/jshrink": "~1.0",
     "contributte/logging": "^0.3.0",
     "guzzlehttp/guzzle": "^6.3",
-    "ext-exif": "*"
+    "ext-exif": "*",
+    "sentry/sentry": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
