@@ -6,7 +6,6 @@
         <a href="{$mediaRoot}{plink :Media:medium $photo->filename}" data-id="{$photo->id}"
            title="{$iterator->counter}. z {$photos|length}" class="swipebox Photo__item">
             <img src="{$mediaRoot}{plink :Media:thumb $photo->filename}" alt="Foto">
-            <img src="/media/_original/{$photo->filename}" alt="">
         </a>
         {last 3}
             </div>
