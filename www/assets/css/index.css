@@ -1850,7 +1850,7 @@ Header module
 .Sponsors .s-2, .Sponsors .s-20, .Sponsors .s-21, .Sponsors .s-3, .Sponsors .s-4,
 .Sponsors .s-5, .Sponsors .s-6, .Sponsors .s-7, .Sponsors .s-8, .Sponsors .s-9, .Sponsors .s-1 {
   display: inline-block;
-  background: url("../img/sprites.png") no-repeat;
+  background: url("../img/sprites.png?2019") no-repeat;
   overflow: hidden;
   text-indent: -9999px;
   text-align: left; }
