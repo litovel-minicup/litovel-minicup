@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a71c3006bb47d919cb553cc420487eaa",
+    "content-hash": "5a56000b8ae04dc3fc7db5b09aee1024",
     "packages": [
         {
             "name": "contributte/logging",
@@ -1739,31 +1739,31 @@
         },
         {
             "name": "nette/neon",
-            "version": "v2.4.3",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/neon.git",
-                "reference": "5e72b1dd3e2d34f0863c5561139a19df6a1ef398"
+                "reference": "cbff32059cbdd8720deccf9e9eace6ee516f02eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/neon/zipball/5e72b1dd3e2d34f0863c5561139a19df6a1ef398",
-                "reference": "5e72b1dd3e2d34f0863c5561139a19df6a1ef398",
+                "url": "https://api.github.com/repos/nette/neon/zipball/cbff32059cbdd8720deccf9e9eace6ee516f02eb",
+                "reference": "cbff32059cbdd8720deccf9e9eace6ee516f02eb",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
                 "ext-json": "*",
-                "php": ">=5.6.0"
+                "php": ">=7.0"
             },
             "require-dev": {
-                "nette/tester": "~2.0",
+                "nette/tester": "^2.0",
                 "tracy/tracy": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -1796,78 +1796,7 @@
                 "nette",
                 "yaml"
             ],
-            "time": "2018-03-21T12:12:21+00:00"
-        },
-        {
-            "name": "nette/nette",
-            "version": "v2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/nette.git",
-                "reference": "c74833a3581a7066a18c66b4f177b6a0bcbbf818"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/c74833a3581a7066a18c66b4f177b6a0bcbbf818",
-                "reference": "c74833a3581a7066a18c66b4f177b6a0bcbbf818",
-                "shasum": ""
-            },
-            "require": {
-                "latte/latte": "^2.4",
-                "nette/application": "^2.4",
-                "nette/bootstrap": "^2.4",
-                "nette/caching": "^2.5",
-                "nette/component-model": "^2.4",
-                "nette/database": "^2.4",
-                "nette/di": "^2.4",
-                "nette/finder": "^2.4",
-                "nette/forms": "^2.4",
-                "nette/http": "^2.4",
-                "nette/mail": "^2.4",
-                "nette/neon": "^2.4",
-                "nette/php-generator": "^2.4 || ^3.0",
-                "nette/robot-loader": "^2.4 || ^3.0",
-                "nette/safe-stream": "^2.4",
-                "nette/security": "^2.4",
-                "nette/tokenizer": "^2.2",
-                "nette/utils": "^2.5",
-                "tracy/tracy": "^2.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "Nette/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "David Grudl",
-                    "homepage": "https://davidgrudl.com"
-                },
-                {
-                    "name": "Nette Community",
-                    "homepage": "https://nette.org/contributors"
-                }
-            ],
-            "description": "? Nette Framework - innovative framework for fast and easy development of secured web applications in PHP (metapackage)",
-            "homepage": "https://nette.org",
-            "keywords": [
-                "framework",
-                "metapackage",
-                "mvc"
-            ],
-            "time": "2019-02-26T14:38:05+00:00"
+            "time": "2019-02-05T21:30:40+00:00"
         },
         {
             "name": "nette/php-generator",
@@ -2180,61 +2109,6 @@
             "time": "2018-10-17T15:50:54+00:00"
         },
         {
-            "name": "nette/tokenizer",
-            "version": "v2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nette/tokenizer.git",
-                "reference": "88373e9f79007245af0ccd8132fde117421723b2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nette/tokenizer/zipball/88373e9f79007245af0ccd8132fde117421723b2",
-                "reference": "88373e9f79007245af0ccd8132fde117421723b2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "conflict": {
-                "nette/nette": "<2.2"
-            },
-            "require-dev": {
-                "nette/tester": "~1.7",
-                "tracy/tracy": "^2.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "David Grudl",
-                    "homepage": "https://davidgrudl.com"
-                },
-                {
-                    "name": "Nette Community",
-                    "homepage": "https://nette.org/contributors"
-                }
-            ],
-            "description": "Nette Tokenizer",
-            "homepage": "https://nette.org",
-            "time": "2017-09-08T14:16:06+00:00"
-        },
-        {
             "name": "nette/utils",
             "version": "v2.5.3",
             "source": {
@@ -2315,56 +2189,6 @@
                 "validation"
             ],
             "time": "2018-09-18T10:22:16+00:00"
-        },
-        {
-            "name": "nofutur3/nette-sentry",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nofutur3/nette-sentry.git",
-                "reference": "04af98be1b563df287d97ce783285cb886b76aec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nofutur3/nette-sentry/zipball/04af98be1b563df287d97ce783285cb886b76aec",
-                "reference": "04af98be1b563df287d97ce783285cb886b76aec",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": ">=2.3.0",
-                "php": ">=5.6",
-                "sentry/sentry": ">=1.5.0"
-            },
-            "require-dev": {
-                "codeception/codeception": "^2.2",
-                "phpunit/phpunit": "^4.6.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Nofutur3\\Sentry\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Vyvazil",
-                    "email": "jakub@vyvazil.cz"
-                }
-            ],
-            "description": "Nette integration for Sentry (http://getsentry.com)",
-            "homepage": "http://getsentry.com",
-            "keywords": [
-                "errors",
-                "logging",
-                "nette",
-                "raven",
-                "sentry"
-            ],
-            "time": "2017-07-23T18:55:17+00:00"
         },
         {
             "name": "o5/grido",
@@ -4372,13 +4196,13 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "o5/grido": 20,
-        "natxet/cssmin": 20,
-        "nofutur3/nette-sentry": 20
+        "natxet/cssmin": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">= 7.2"
+        "php": ">= 7.2",
+        "ext-exif": "*"
     },
     "platform-dev": []
 }
