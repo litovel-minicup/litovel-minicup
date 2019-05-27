@@ -1823,26 +1823,19 @@ Header module
       .LiveBar .LiveBar__match A:hover {
         text-decoration: underline; }
 
-.Sponsors__wrapper {
-  max-width: 1145px;
-  margin-left: auto;
-  margin-right: auto; }
-  .Sponsors__wrapper::after {
-    clear: both;
-    content: "";
-    display: table; }
-  .Sponsors__wrapper H2 {
-    text-align: center;
-    font-variant-caps: all-petite-caps;
-    font-family: "Montserrat";
-    color: #a09f9f;
-    margin: 3em 0 0;
-    padding: 0 20px 2em;
-    font-size: 32px;
-    border-bottom: 1px solid #a09f9f; }
+.Sponsors__wrapper H2 {
+  text-align: center;
+  font-variant-caps: all-petite-caps;
+  font-family: "Montserrat";
+  color: #a09f9f;
+  margin: 3em 0 0;
+  padding: 0 20px 2em;
+  font-size: 32px;
+  border-bottom: 1px solid #a09f9f; }
 .Sponsors__list {
   text-align: center;
-  padding: 40px 0; }
+  padding: 30px 0;
+  opacity: .95; }
   .Sponsors__list SPAN {
     display: inline-block;
     margin: 10px; }
@@ -1851,55 +1844,96 @@ Header module
     margin: 0; } }
 @media screen and (max-width: 540px) {
   .Sponsors__list SPAN[class^=s-] {
-    margin: -5px; } }
-.Sponsors .s-11 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -150px 0; }
-.Sponsors .s-10 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") 0 -300px; }
-.Sponsors .s-9 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") 0 -150px; }
-.Sponsors .s-8 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -150px -150px; }
-.Sponsors .s-7 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -300px 0; }
-.Sponsors .s-6 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -300px -150px; }
-.Sponsors .s-5 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") 0 0; }
-.Sponsors .s-4 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -150px -300px; }
-.Sponsors .s-3 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -300px -300px; }
-.Sponsors .s-2 {
-  width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -450px 0; }
+    margin: -5px 0; } }
+.Sponsors .s-10, .Sponsors .s-11, .Sponsors .s-12, .Sponsors .s-13, .Sponsors .s-14,
+.Sponsors .s-15, .Sponsors .s-16, .Sponsors .s-17, .Sponsors .s-18, .Sponsors .s-19,
+.Sponsors .s-2, .Sponsors .s-20, .Sponsors .s-21, .Sponsors .s-3, .Sponsors .s-4,
+.Sponsors .s-5, .Sponsors .s-6, .Sponsors .s-7, .Sponsors .s-8, .Sponsors .s-9, .Sponsors .s-1 {
+  display: inline-block;
+  background: url("../img/sprites.png") no-repeat;
+  overflow: hidden;
+  text-indent: -9999px;
+  text-align: left; }
 .Sponsors .s-1 {
+  background-position: -0px -0px;
   width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -450px -150px; }
-.Sponsors .s-0 {
+  height: 150px; }
+.Sponsors .s-10 {
+  background-position: -150px -0px;
   width: 150px;
-  height: 150px;
-  background: url("../img/sprites.png") -450px -300px; }
+  height: 150px; }
+.Sponsors .s-11 {
+  background-position: -300px -0px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-12 {
+  background-position: -450px -0px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-13 {
+  background-position: -0px -150px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-14 {
+  background-position: -150px -150px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-15 {
+  background-position: -300px -150px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-16 {
+  background-position: -450px -150px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-17 {
+  background-position: -0px -300px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-18 {
+  background-position: -150px -300px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-19 {
+  background-position: -300px -300px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-2 {
+  background-position: -450px -300px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-20 {
+  background-position: -0px -450px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-3 {
+  background-position: -150px -450px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-4 {
+  background-position: -300px -450px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-5 {
+  background-position: -450px -450px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-6 {
+  background-position: -0px -600px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-7 {
+  background-position: -150px -600px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-8 {
+  background-position: -300px -600px;
+  width: 150px;
+  height: 150px; }
+.Sponsors .s-9 {
+  background-position: -450px -600px;
+  width: 150px;
+  height: 150px; }
 
 .Side__wrapper {
   float: left;
