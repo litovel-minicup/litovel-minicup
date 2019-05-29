@@ -1,0 +1,38 @@
+{block content}
+    <h1>
+        {$match->homeTeam->name} vs. {$match->awayTeam->name} | přímý přenos
+    </h1>
+    <div class="live-stream-form">
+        {form liveStreamForm}
+            <label n:name="facebook_video_id">FB <input class="form-control" n:name="facebook_video_id"></label>
+            <label n:name="youtube_video_id">YT <input class="form-control" n:name="youtube_video_id"></label>
+
+            <input n:name=submit class="btn btn-primary" value="Uložit">
+        {/form}
+    </div>
+
+    <iframe width="720" height="405" src="https://www.youtube.com/embed/{$match->youtubeVideoId}"></iframe>
+
+    <div id="fb-root"></div>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+
+    <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/{$match->facebookVideoId}/"
+         data-width="720"
+         data-show-text="false">
+    </div>
+
+    <style>
+        iframe {
+            border: none
+        }
+
+        .fb-video, iframe {
+            display: inline-block;
+        }
+
+        .live-stream-form {
+            margin-bottom: 20px;
+        }
+    </style>
+
+{/block}

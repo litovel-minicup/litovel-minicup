@@ -18,6 +18,8 @@ use Minicup\Model\Manager\MatchManager;
 use Minicup\Model\Repository\MatchRepository;
 use Minicup\Model\Repository\TeamInfoRepository;
 use Nette\Forms\Controls\SelectBox;
+use Nette\Forms\Form;
+use Nette\Utils\ArrayHash;
 use Nette\Utils\Html;
 
 final class MatchPresenter extends BaseAdminPresenter
@@ -111,9 +113,14 @@ final class MatchPresenter extends BaseAdminPresenter
 
         $g->addColumnNumber('id', '#');
 
-        $g->addActionHref('slug', 'Detail na webu')->setCustomHref(function ($row) {
+        $g->addActionHref('slug', 'WEB')->setCustomHref(function ($row) {
             $match = $this->MR->get($row->id, FALSE);
             return $this->link(':Front:Match:detail', ['match' => $match]);
+        });
+
+        $g->addActionHref('liveStream', 'LIVE')->setCustomHref(function ($row) {
+            $match = $this->MR->get($row->id, FALSE);
+            return $this->link(':Admin:Match:liveStream', ['id' => $match->id]);
         });
 
         $scoreEditCallback = $this->getScoreEditableCallback();
@@ -214,5 +221,39 @@ final class MatchPresenter extends BaseAdminPresenter
             return TRUE;
         };
         return $scoreEditCallback;
+    }
+    /** @var Match */
+    public $match;
+
+    public function actionLiveStream($id)
+    {
+        $this->match = $this->MR->get($id);
+    }
+
+    public function renderLiveStream()
+    {
+        $this->template->match = $this->match;
+    }
+
+    public function createComponentLiveStreamForm()
+    {
+        $f = $this->formFactory->create();
+
+        $f->addText('facebook_video_id')->setRequired(FALSE);
+        $f->addText('youtube_video_id')->setRequired(FALSE);
+        $f->addSubmit('submit', 'Uložit');
+        $match = $this->match;
+        $MR = $this->MR;
+        $presenter = $this;
+        $f->onSuccess[] = function (Form $f, ArrayHash $values) use ($match, $MR, $presenter) {
+            $match->youtubeVideoId = $values->youtube_video_id;
+            $match->facebookVideoId = $values->facebook_video_id;
+
+            $MR->persist($match);
+            $presenter->flashMessage('Úspěšně uloženo.');
+            $presenter->redirect(':Admin:Match:liveStream', ['id' => $match->id]);
+        };
+
+        return $f;
     }
 }
