@@ -2,6 +2,14 @@
     <h1>
         {$match->homeTeam->name} vs. {$match->awayTeam->name} | přímý přenos
     </h1>
+    <div class="btn btn-group my-2 pull-right">
+        <a class="btn btn-primary btn-lg" href="https://www.facebook.com/litovel.minicup/publishing_tools/?section=VIDEOS">
+            Facebook MC LIVESTREAM
+        </a>
+        <a class="btn btn-danger btn-lg" href="https://www.youtube.com/livestreaming/">
+            Youtube MC LIVESTREAM
+        </a>
+    </div>
     <div class="live-stream-form">
         {form liveStreamForm}
             <label n:name="facebook_video_id">FB <input class="form-control" n:name="facebook_video_id"></label>
@@ -11,15 +19,17 @@
         {/form}
     </div>
 
-    <iframe width="720" height="405" src="https://www.youtube.com/embed/{$match->youtubeVideoId}"></iframe>
+
+    <iframe n:if="$match->youtubeVideoId" width="720" height="405" src="https://www.youtube.com/embed/{$match->youtubeVideoId}"></iframe>
 
     <div id="fb-root"></div>
     <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
 
     <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/{$match->facebookVideoId}/"
          data-width="720"
-         data-show-text="false">
-    </div>
+         data-show-text="false"
+         n:if="$match->facebookVideoId"
+    ></div>
 
     <style>
         iframe {

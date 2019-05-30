@@ -104,7 +104,7 @@
                 },
                 (old, new_) => {
                     // use load fallback every 10 reconnect fails (include first attempt)
-                    !(new_ % this.fallbackReloadInterval) && this.refreshFallback();
+                    ((new_ % this.fallbackReloadInterval) === 0) && this.refreshFallback();
                 }
             );
         }
