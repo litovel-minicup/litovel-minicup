@@ -102,33 +102,32 @@ final class MatchPresenter extends BaseAdminPresenter
         $MR = $this->MR;
         $g = new Grid();
         $f = $connection->select('[m.*]')
+            ->select('[d.day] as day')
+            ->select('[mt.start] as start')
+            ->select('[mt.location] as location')
             ->from('[match] m')
             ->where('m.[category_id] = ', $this->getParameter('category')->id)
             ->orderBy('[d.day] ASC, [mt.start] ASC, [m.id] ASC');
-        $f->innerJoin('[team_info]')->as('hti')->on('[m.home_team_info_id] = [hti.id]')->select('[hti.name]')->as('htiname');
-        $f->innerJoin('[team_info]')->as('ati')->on('[m.away_team_info_id] = [ati.id]')->select('[ati.name]')->as('atiname');
+        $f->innerJoin('[team_info]')->as('hti')->on('[m.home_team_info_id] = [hti.id]')
+            ->select('[hti.name]')->as('htiname');
+        $f->innerJoin('[team_info]')->as('ati')->on('[m.away_team_info_id] = [ati.id]')
+            ->select('[ati.name]')->as('atiname');
         $f->innerJoin('[match_term]')->as('mt')->on('[m.match_term_id] = [mt.id]');
         $f->innerJoin('[day]')->as('d')->on('[mt.day_id] = [d.id]');
         $g->setModel($f);
 
-        $g->addColumnNumber('id', '#');
+        $g->addColumnNumber('id', '#', NULL, '', '');
 
-        $g->addActionHref('slug', 'WEB')->setCustomHref(function ($row) {
-            $match = $this->MR->get($row->id, FALSE);
-            return $this->link(':Front:Match:detail', ['match' => $match]);
-        });
+        $g->addActionHref('slug', 'WEB', 'redirectToMatchOnWeb', ['id' => 'id']);
 
         $g->addActionHref('liveStream', 'LIVE')->setCustomHref(function ($row) {
-            $match = $this->MR->get($row->id, FALSE);
-            return $this->link(':Admin:Match:liveStream', ['id' => $match->id]);
+            return $this->link(':Admin:Match:liveStream', ['id' => $row->id]);
         });
 
         $scoreEditCallback = $this->getScoreEditableCallback();
 
-        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) use ($MR) {
-            /** @var Match $match */
-            $match = $MR->get($row->id);
-            return $match->matchTerm->day->day->format('j. n.') . ' ' . $match->matchTerm->start->format('G:i');
+        $g->addColumnText('match_term', 'Čas')->setCustomRender(function ($row) {
+            return $row->day->format('j. n.') . ' ' . $row->start->format('G:i') . ' ' . $row->location;
         });
 
         $g->addColumnText('htiname', 'Domácí');
@@ -222,6 +221,7 @@ final class MatchPresenter extends BaseAdminPresenter
         };
         return $scoreEditCallback;
     }
+
     /** @var Match */
     public $match;
 
@@ -239,8 +239,8 @@ final class MatchPresenter extends BaseAdminPresenter
     {
         $f = $this->formFactory->create();
 
-        $f->addText('facebook_video_id')->setRequired(FALSE);
-        $f->addText('youtube_video_id')->setRequired(FALSE);
+        $f->addText('facebook_video_id')->setRequired(FALSE)->setDefaultValue($this->match->facebookVideoId);
+        $f->addText('youtube_video_id')->setRequired(FALSE)->setDefaultValue($this->match->youtubeVideoId);
         $f->addSubmit('submit', 'Uložit');
         $match = $this->match;
         $MR = $this->MR;
@@ -255,5 +255,15 @@ final class MatchPresenter extends BaseAdminPresenter
         };
 
         return $f;
+    }
+
+    /**
+     * @param $id
+     * @throws \Nette\Application\AbortException
+     */
+    public function actionRedirectToMatchOnWeb($id)
+    {
+        $match = $this->MR->get($id, FALSE);
+        $this->redirect(':Front:Match:detail', ['match' => $match]);
     }
 }
