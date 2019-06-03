@@ -98,7 +98,6 @@ class TeamDetailComponent extends BaseComponent
         $this->THCF = $THCF;
         $this->PlLCF = $PlLCF;
         $this->PR = $photoRepository;
-        $this->players = $PR->findByTeamWithConfirmedGoals($team->i);
         $this->PlLCF = $PlLCF;
         $this->players = $PR->findByTeamWithConfirmedGoals($team->i);
     }
