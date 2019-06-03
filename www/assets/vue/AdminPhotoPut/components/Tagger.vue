@@ -54,7 +54,8 @@
                     v-for="photo in photos"
                     class="photo"
                     :class="{selected: selectedPhotos.includes(photo.id)}"
-                    @click="togglePhoto(photo.id)"
+                    @click.exact="togglePhoto(photo.id)"
+                    @click.shift.exact="selectMultiplePhotos(photo.id)"
             >
                 <img :src="photo.thumb.replace('thumb', '_original')" alt="" class="img-responsive">
                 <span class="tags-count">{{ photoLabel(photo.tags) }}</span>
@@ -101,7 +102,10 @@
         },
         filters: {},
         methods: {
-            ...mapActions(['refreshPhotos', 'insertPhotos', 'deletePhotos', 'toggleTag', 'togglePhoto']),
+            ...mapActions([
+                'refreshPhotos', 'insertPhotos', 'deletePhotos',
+                'toggleTag', 'togglePhoto', 'selectMultiplePhotos'
+            ]),
             ...mapMutations(['updateTags', 'setSelectedPhotos', 'setSelectedTags', 'setAnotherTags']),
             selectedAnotherTag() {
                 let tag = _.find(this.tags, {id: this.anotherTag});

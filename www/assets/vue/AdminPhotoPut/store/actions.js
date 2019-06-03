@@ -51,7 +51,7 @@ export default {
         if (state.lastSelectedPhoto) {
             let fromIdx = _.findIndex(state.photos, {id: state.lastSelectedPhoto});
             let toIdx = _.findIndex(state.photos, {id});
-
+            commit('selectMultiplePhotos', {from: fromIdx, to: toIdx});
         }
     }
 }

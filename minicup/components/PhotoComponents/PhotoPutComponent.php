@@ -118,13 +118,13 @@ class PhotoPutComponent extends BaseComponent
         bdump($this->presenter->getHttpRequest());
         $photos = $this->PR->findByIds($this->photos);
         $this->presenter->sendJson([
-            'photos' => array_map(function (Photo $p) {
+            'photos' => array_values(array_map(function (Photo $p) {
                 return [
                     'id' => $p->id,
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
                     'tags' => array_map(function (Tag $t) {return $t->id;}, $p->tags),
                 ];
-            }, $photos)
+            }, $photos))
         ]);
     }
 
