@@ -17,6 +17,9 @@ export default {
     setSelectedPhotos(state, photos) {
         state.selectedPhotos = photos;
     },
+    setLastSelectedPhoto(state, photo) {
+        state.lastSelectedPhoto = photo;
+    },
     setSelectedTags(state, tags) {
         state.selectedTags = tags;
     },

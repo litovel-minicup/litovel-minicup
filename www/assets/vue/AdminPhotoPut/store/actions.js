@@ -39,10 +39,19 @@ export default {
 
     },
     togglePhoto({state, commit}, id) {
-        if (state.selectedPhotos.includes(id))
+        if (state.selectedPhotos.includes(id)) {
             commit('setSelectedPhotos', _.reject(state.selectedPhotos, (p) => p === id));
-        else
+        } else {
             commit('setSelectedPhotos', [...state.selectedPhotos, id]);
+            commit('setLastSelectedPhoto', id);
 
+        }
     },
+    selectMultiplePhotos({state, commit}, id) {
+        if (state.lastSelectedPhoto) {
+            let fromIdx = _.findIndex(state.photos, {id: state.lastSelectedPhoto});
+            let toIdx = _.findIndex(state.photos, {id});
+
+        }
+    }
 }

@@ -18,6 +18,8 @@ const store = new Vuex.Store({
         selectedPhotos: [],
         selectedTags: [],
         anotherTags: [],
+
+        lastSelectedPhoto: null,
     },
     actions,
     mutations,
