@@ -50,7 +50,7 @@ class PhotoRepository extends BaseRepository
                 $this->connection->select('[photo_id]')
                     ->from('[photo_tag]')
                     ->groupBy('[photo_id]')
-            )->fetchAll());
+            )->orderBy("[photo.taken] ASC")->fetchAll());
     }
 
     /**
