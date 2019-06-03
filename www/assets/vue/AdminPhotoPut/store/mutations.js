@@ -26,6 +26,10 @@ export default {
     setAnotherTags(state, anotherTags) {
         state.anotherTags = anotherTags;
     },
+    selectMultiplePhotos(state, {from, to}) {
+        let toAdd = _.map(_.slice(state.photos, from, to + 1), _.property('id'));
+        state.selectedPhotos = _.uniq([...state.selectedPhotos, ...toAdd]);
+    },
 
     updateTags(state) {
         let photosToUpdate = state.selectedPhotos.length ? state.selectedPhotos : _.map(_.keys(state.photos), Number);
