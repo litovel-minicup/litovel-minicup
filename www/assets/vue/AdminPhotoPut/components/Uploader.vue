@@ -299,7 +299,7 @@
                         return prevent()
                     }
 
-                    // Automatic compression
+                    /*// Automatic compression
                     if (newFile.file && newFile.type.substr(0, 6) === 'image/' && this.autoCompress > 0 && this.autoCompress < newFile.size) {
                         newFile.error = 'compressing';
 
@@ -310,21 +310,21 @@
                             .catch((err) => {
                                 this.$refs.upload.update(newFile, {error: err.message || 'compress'})
                             })
-                    }
+                    }*/
                 }
 
 
                 if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
 
                     // Create a blob field
-                    newFile.blob = ''
-                    let URL = window.URL || window.webkitURL
+                    newFile.blob = '';
+                    let URL = window.URL || window.webkitURL;
                     if (URL && URL.createObjectURL) {
                         newFile.blob = URL.createObjectURL(newFile.file)
                     }
 
                     // Thumbnails
-                    newFile.thumb = ''
+                    newFile.thumb = '';
                     if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
                         newFile.thumb = newFile.blob
                     }

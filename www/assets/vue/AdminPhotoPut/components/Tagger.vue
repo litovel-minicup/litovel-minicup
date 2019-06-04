@@ -51,7 +51,7 @@
         <hr>
         <div class="row">
             <span
-                    v-for="photo in photos"
+                    v-for="photo in sortedPhotos"
                     class="photo"
                     :class="{selected: selectedPhotos.includes(photo.id)}"
                     @click.exact="togglePhoto(photo.id)"
@@ -59,6 +59,7 @@
             >
                 <img :src="photo.thumb" alt="" class="img-responsive">
                 <span class="tags-count">{{ photoLabel(photo.tags) }}</span>
+                <span class="time">{{ photo.taken | takenString }}</span>
             </span>
         </div>
     </div>
@@ -95,12 +96,19 @@
                 return (tags) => {
                     return tags.map((id) => _.find(this.tags, {id}).name).join(',');
                 }
+            },
+            sortedPhotos() {
+                return _.sortBy(this.photos, [(p) => p.taken]);
             }
         },
         mounted() {
             this.refresh();
         },
-        filters: {},
+        filters: {
+            takenString(tmp) {
+                return (new Date(tmp * 1000).toLocaleString());
+            }
+        },
         methods: {
             ...mapActions([
                 'refreshPhotos', 'insertPhotos', 'deletePhotos',
@@ -140,6 +148,16 @@
             position: absolute;
             right: 0;
             bottom: 0;
+            background-color: black;
+            color: white;
+            font-size: 8pt;
+            line-height: 1;
+            padding: 2px 4px;
+        }
+        .time {
+            position: absolute;
+            right: 0;
+            top: 0;
             background-color: black;
             color: white;
             font-size: 8pt;
