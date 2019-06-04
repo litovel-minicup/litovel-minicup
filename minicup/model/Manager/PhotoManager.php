@@ -12,6 +12,7 @@ use Nette\FileNotFoundException;
 use Nette\Http\FileUpload;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
+use Nette\Utils\FileSystem;
 use Nette\Utils\Image;
 use Nette\Utils\ImageException;
 use Nette\Utils\Random;
@@ -187,10 +188,10 @@ class PhotoManager
             foreach ($this::$resolutions as $format => $val) {
                 $path = $this->formatPhotoPath($format, $photo->filename);
                 if (file_exists($path)) {
-                    unlink($path);
+                    FileSystem::delete($path);
                 }
             }
-            unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+            FileSystem::delete($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
             $this->PR->delete($photo);
         }
     }
