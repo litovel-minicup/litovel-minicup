@@ -10,6 +10,7 @@ use Minicup\Model\Manager\CacheManager;
 use Minicup\Model\Manager\PhotoManager;
 use Minicup\Model\Repository\PhotoRepository;
 use Minicup\Model\Repository\TagRepository;
+use Minicup\Model\Repository\YearRepository;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\Request;
 use Nette\Http\Session;
@@ -43,6 +44,8 @@ class PhotoPutComponent extends BaseComponent
     private $uploadId;
     /** @var CacheManager */
     private $CM;
+    /** @var YearRepository */
+    private $YR;
 
     /**
      * @param Session         $session
@@ -51,13 +54,16 @@ class PhotoPutComponent extends BaseComponent
      * @param TagRepository   $TR
      * @param PhotoManager    $PM
      * @param CacheManager    $CM
+     * @param YearRepository  $YR
      */
-    public function __construct(Session $session,
-                                Request $request,
-                                PhotoRepository $PR,
-                                TagRepository $TR,
-                                PhotoManager $PM,
-                                CacheManager $CM)
+    public function __construct(
+        Session $session,
+        Request $request,
+        PhotoRepository $PR,
+        TagRepository $TR,
+        PhotoManager $PM,
+        CacheManager $CM,
+        YearRepository $YR)
     {
         $this->request = $request;
         $this->session = $session->getSection('photoUpload');
@@ -75,6 +81,7 @@ class PhotoPutComponent extends BaseComponent
         $this->photos = (array)$this->session[$this->uploadId];
         parent::__construct();
 
+        $this->YR = $YR;
     }
 
     public function render()
@@ -112,17 +119,22 @@ class PhotoPutComponent extends BaseComponent
 
     /**
      * @throws \Nette\Application\AbortException
+     * @throws \LeanMapper\Exception\InvalidStateException
      */
     public function handleGetPhotos()
     {
         bdump($this->presenter->getHttpRequest());
-        $photos = $this->PR->findByIds($this->photos);
+        $photos = $this->PR->findByIds($this->photos); // TODO: not sure, what UX is better
+        $photos = $this->PR->findUntaggedPhotos($this->YR->getActualYear());
         $this->presenter->sendJson([
             'photos' => array_values(array_map(function (Photo $p) {
                 return [
                     'id' => $p->id,
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
-                    'tags' => array_map(function (Tag $t) {return $t->id;}, $p->tags),
+                    'taken' => $p->taken ? $p->taken->getTimestamp() : null,
+                    'tags' => array_map(function (Tag $t) {
+                        return $t->id;
+                    }, $p->tags),
                 ];
             }, $photos))
         ]);
@@ -138,7 +150,6 @@ class PhotoPutComponent extends BaseComponent
         $photos = $data['photos'];
         $tags = $data['tags'];
 
-        /**$tagEntities = [];
         /** @var Tag $tag */
         foreach ($tags as $tag) {
             $tag = $this->TR->get($tag);
@@ -177,7 +188,9 @@ class PhotoPutComponent extends BaseComponent
 
         $tags = [];
         /** @var Photo $photo */
-        $photoIds = array_map(function ($p) {return $p['id'];}, $photos);
+        $photoIds = array_map(function ($p) {
+            return $p['id'];
+        }, $photos);
         foreach ($photos as $item) {
             $photo = $this->PR->get($item['id']);
             foreach ($item['tags'] as $tagId) {
