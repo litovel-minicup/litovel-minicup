@@ -2,8 +2,10 @@
     <div class="Article">
         <div class="Article__head Box__head">
             <span class="Article__head__icon Box__head__icon">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75" xml:space="preserve">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="75px" height="75px" viewBox="0 0 75 75" enable-background="new 0 0 75 75"
+                     xml:space="preserve">
                 <rect x="74" y="12.583" opacity="0.3" enable-background="new    " width="1" height="49.834"/>
                 <g>
                     <path opacity="0.3" fill="#231F20" d="M54.922,55.942H31.528c-1.442,0-2.616-1.174-2.616-2.616V29.933
@@ -15,27 +17,40 @@
                             c-0.486-1.359-1.987-2.068-3.346-1.583l-22.025,7.881c-1.358,0.486-2.068,1.986-1.582,3.345l7.836,21.898v-7.579L20.02,29.577
                             C20.008,29.544,20.024,29.508,20.057,29.497z"/>
                     </g>
-                    <polygon opacity="0.3" fill="#231F20" points="34.921,49.508 50.883,49.508 46.732,41.314 43.967,46.422 38.114,36.418     "/>
+                    <polygon opacity="0.3" fill="#231F20"
+                             points="34.921,49.508 50.883,49.508 46.732,41.314 43.967,46.422 38.114,36.418     "/>
                     <circle opacity="0.3" fill="#231F20" cx="48.116" cy="35.567" r="2.979"/>
                 </g>
                 </svg>
             </span>
-            <h1 class="Article__head__text Box__head__text">{block title}Fotogalerie{/block} <span>celkem {$photosCount} fotek</span></h1>
+            <h1 class="Article__head__text Box__head__text">{block title}Fotogalerie{/block} <span>celkem {$photosCount} fotek</span>
+            </h1>
         </div>
-        {if $tags}
-            {*<div class="Article__subhead Box__subhead">
-                <a n:href="tags">Interaktivní výběr</a>
-            </div>*}
-            <div class="Box__content Team__content">
-                <ul>
-                    {foreach $tags as $tag}
-                        <li class="Box__rows"><a href={plink Gallery:detail $tag}>{$tag->name}</a></li>
-                    {/foreach}
-                </ul>
-            </div>
+        {if $user->isLoggedIn() && $category->year->slug == '2019'}
+
+            {if $tags}
+                {*<div class="Article__subhead Box__subhead">
+                    <a n:href="tags">Interaktivní výběr</a>
+                </div>*}
+                <div class="Box__content Team__content">
+                    <ul>
+                        {foreach $tags as $tag}
+                            <li class="Box__rows"><a href={plink Gallery:detail $tag}>{$tag->name}</a></li>
+                        {/foreach}
+                    </ul>
+                </div>
+            {else}
+                <div class="Article__subhead Box__subhead">
+                    Pro tento ročník nebyly bohužel nalezeny žádné fotografie.
+                </div>
+            {/if}
         {else}
-            <div class="Article__subhead Box__subhead">
-                Pro tento ročník nebyly bohužel nalezeny žádné fotografie.
+            <div class="Box__content Article__content">
+                <p>
+                    Fotogalerie z turnaje Litovel MINICUP 2019 bude kompletně dostupná <strong>během středy 5. června</strong> - drobná
+                    technická chybka nás donutila rozpracovanou galerii stáhnout, ale nebojte, <strong>všechny fotky zde opět
+                    budou</strong>, žádné jsme neztratili.
+                </p>
             </div>
         {/if}
     </div>
