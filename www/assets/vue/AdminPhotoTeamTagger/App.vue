@@ -1,5 +1,6 @@
 <template>
     <div>
+        <label>autonext <input type="checkbox" v-model="autonext"></label>
         <div>
             <span v-for="p in photos">
                 <img
@@ -15,7 +16,7 @@
                 <option :value="null">žádný</option>
                 <option :value="team.id" v-for="team in teams" v-text="team.name"></option>
             </select>
-            <span v-for="match in person.matches">{{ match[0].name }} ({{ match[1].length }}), </span>
+            <button class="btn btn-default"  @click="match(m)" v-for="m in person.matches">{{ m[0].name }} ({{ m[1].length }}), </button>
             <div class="btn-group">
                 <a type="button"  class="btn btn-primary form-control" @click="save(person)">uložit hist</a>
                 <a type="button"  class="btn btn-warning form-control" @click="skip(person)">z toho nic nebude</a>
@@ -56,6 +57,7 @@
                 current: {},
                 bodyPixNet: null,
                 persons: [],
+                autonext: false,
             }
         },
         computed: {
@@ -174,6 +176,13 @@
             async skip(person) {
                 this.persons = _.reject(this.persons, person);
             },
+            async match(match) {
+                this.addTeamTag({
+                    team: match[0].id,
+                    photo: this.current.id,
+                });
+                this.skip(match);
+            }
         },
         async mounted() {
             const data = this.$root.$el.parentElement.dataset;
@@ -189,8 +198,9 @@
             'persons'(new_, old) {
                 _.each(new_, (p) => {
                     const fullMatch = _.filter(p.matches, (m) => m[1].length === 5).length === 1;
+                    const partMatch = _.filter(p.matches, (m) => m[1].length === 4).length === 1;
 
-                    if (fullMatch) {
+                    if (fullMatch || (!fullMatch && partMatch)) {
                         this.addTeamTag({
                             team: p.matches[0][0].id,
                             photo: this.current.id,
@@ -198,6 +208,7 @@
                         this.skip(p);
                     }
                 });
+                new_.length && this.autonext && this.next();
             }
         }
     }

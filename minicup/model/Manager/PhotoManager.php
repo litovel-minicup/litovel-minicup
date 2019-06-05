@@ -115,7 +115,7 @@ class PhotoManager
             $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
             $file->move($path);
 
-            $exif = exif_read_data($path);
+            $exif = @exif_read_data($path);
             $taken = new DateTime();
             bdump($exif);
             if (isset($exif['DateTimeOriginal'])) {
@@ -170,7 +170,7 @@ class PhotoManager
         $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
         $image->save($path);
 
-        $exif = exif_read_data($path);
+        $exif = @exif_read_data($path);
         $taken = new DateTime();
         bdump($exif);
         if (isset($exif['DateTimeOriginal'])) {
