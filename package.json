@@ -28,6 +28,7 @@
     "vue-resource": "^1.5.0",
     "vue-tween-number": "^0.2.0",
     "vue-upload-component": "^2.8.20",
+    "vue-upload-image": "^1.1.2",
     "vue2-animate": "^2.0.0",
     "vuex": "^3.0.1"
   },

@@ -46,6 +46,11 @@ class PhotoPutComponent extends BaseComponent
     private $CM;
     /** @var YearRepository */
     private $YR;
+    private $autoDayTags = [
+        '2019-05-31' => 'patek',
+        '2019-06-01' => 'sobota',
+        '2019-06-02' => 'nedele',
+    ];
 
     /**
      * @param Session         $session
@@ -99,20 +104,17 @@ class PhotoPutComponent extends BaseComponent
      */
     public function handleUpload()
     {
-        bdump($this->presenter->getHttpRequest());
-        try {
-            $image = Image::fromString($this->presenter->getHttpRequest()->getRawBody());
-        } catch (ImageException $e) {
-            $this->presenter->sendJson([
-                'success' => false,
-            ]);
-            return;
+
+        $photos = $this->PM->saveFromUpload($this->request->files['images'], $this->uploadId, $this->request->getPost('author'));
+        foreach ($photos as $photo) {
+            if (isset($this->autoDayTags[$photo->taken->format('Y-m-d')])) {
+                $tag = $this->TR->getBySlug($this->autoDayTags[$photo->taken->format('Y-m-d')], $this->YR->getSelectedYear());
+                $photo->addToTags($tag);
+                $this->PR->persist($photo);
+            }
+
         }
-        $photo = $this->PM->saveImage($image, $this->uploadId, $this->request->getPost('author'));
-        $this->photos[] = $photo->id;
-        $this->session[$this->uploadId] = $this->photos;
         $this->presenter->sendJson([
-            'photo' => $photo->id,
             'success' => true,
         ]);
     }
@@ -166,7 +168,9 @@ class PhotoPutComponent extends BaseComponent
         /** @var Photo $photo */
         $photos = $this->PR->findByIds($photos);
         foreach ($photos as $photo) {
-            $photo->removeAllTags();
+            if (count($tagEntities) === 0)
+                $photo->removeAllTags();
+
             foreach ($tagEntities as $tag) {
                 /** @var Tag $tag */
                 $photo->addToTags($tag);

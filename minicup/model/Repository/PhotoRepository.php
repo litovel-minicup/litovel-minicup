@@ -46,6 +46,7 @@ class PhotoRepository extends BaseRepository
             SELECT *
             FROM photo
             WHERE (EXTRACT(YEAR FROM taken) = %i) AND (active IS FALSE OR id NOT IN (SELECT photo_id from photo_tag))
+            ORDER BY taken
         ', $year->year)->fetchAll()
         );
     }

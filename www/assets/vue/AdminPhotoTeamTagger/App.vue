@@ -3,7 +3,7 @@
         <div>
             <span v-for="p in photos">
                 <img
-                        :src="(p.thumb || '').replace('thumb', '_original')"
+                        :src="(p.thumb || '')"
                         @click="current=p; process()" alt=""
                         width="40"
                 ></span>

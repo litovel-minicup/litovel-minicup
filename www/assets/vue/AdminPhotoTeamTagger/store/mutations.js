@@ -12,7 +12,7 @@ export default {
     },
 
     setPhotos(state, photos) {
-        state.photos = photos;
+        state.photos = _.sortBy(photos, [(p) => p.taken]);
     },
     setTeams(state, teams) {
         state.teams = teams;

@@ -51,13 +51,13 @@
         <hr>
         <div class="row">
             <span
-                    v-for="photo in sortedPhotos"
+                    v-for="photo in photos"
                     class="photo"
                     :class="{selected: selectedPhotos.includes(photo.id)}"
                     @click.exact="togglePhoto(photo.id)"
                     @click.shift.exact="selectMultiplePhotos(photo.id)"
             >
-                <img :src="photo.thumb.replace('thumb', '_original')" alt="" class="img-responsive">
+                <img :src="photo.thumb" alt="" class="img-responsive">
                 <span class="tags-count">{{ photoLabel(photo.tags) }}</span>
                 <span class="time">{{ photo.taken | takenString }}</span>
             </span>
@@ -67,7 +67,7 @@
 <script>
     import Vue from 'vue'
     import axios from 'axios'
-    import {mapState, mapActions, mapMutations} from 'vuex'
+    import {mapState, mapActions, mapMutations, mapGetters} from 'vuex'
     import _ from 'lodash'
 
     export default {
@@ -94,11 +94,8 @@
             },
             photoLabel() {
                 return (tags) => {
-                    return tags.map((id) => _.find(this.tags, {id}).name).join(',');
+                    return tags.map((id) => (_.find(this.tags, {id}) || {name: '???'}).name).join(',');
                 }
-            },
-            sortedPhotos() {
-                return _.sortBy(this.photos, [(p) => p.taken]);
             }
         },
         mounted() {
@@ -154,6 +151,7 @@
             line-height: 1;
             padding: 2px 4px;
         }
+
         .time {
             position: absolute;
             right: 0;

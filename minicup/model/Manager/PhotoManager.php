@@ -101,7 +101,11 @@ class PhotoManager
             $prefix = Random::generate(20);
         }
         $photos = [];
+        bdump(__METHOD__);
+        bdump($files);
         foreach ($files as $file) {
+
+            bdump($file->isOk() && $file->isImage());
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
             }
@@ -113,10 +117,13 @@ class PhotoManager
 
             $exif = exif_read_data($path);
             $taken = new DateTime();
+            bdump($exif);
             if (isset($exif['DateTimeOriginal'])) {
                 try {
                     $taken = new DateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
+                    dump($exif, $e);
+                    exit;
                 }
             }
             $photo->taken = $taken;
@@ -124,6 +131,21 @@ class PhotoManager
             $this->PR->persist($photo);
             $photos[] = $photo;
         }
+        /**
+         * FileName => "81a3467ec3.jpg" (14)
+        FileDateTime => 1559738922
+        FileSize => 143535
+        FileType => 2
+        MimeType => "image/jpeg" (10)
+        SectionsFound => "COMMENT" (7)
+        COMPUTED =>
+        html => "width="800" height="1200"" (25)
+        Height => 1200
+        Width => 800
+        IsColor => 1
+        COMMENT =>
+
+         */
 
         return $photos;
     }
@@ -150,10 +172,13 @@ class PhotoManager
 
         $exif = exif_read_data($path);
         $taken = new DateTime();
+        bdump($exif);
         if (isset($exif['DateTimeOriginal'])) {
             try {
                 $taken = new DateTime($exif['DateTimeOriginal']);
             } catch (\Exception $e) {
+                dump($exif, $e);
+                exit;
             }
         }
         $photo->taken = $taken;

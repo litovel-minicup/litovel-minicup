@@ -107,7 +107,7 @@ class PhotoTeamTaggerComponent extends BaseComponent
             'photos' => array_values(array_map(function (Photo $p) {
                 return [
                     'id' => $p->id,
-                    'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
+                    'thumb' => $this->presenter->link(':Media:medium', $p->filename),
                     'tags' => array_map(function (Tag $t) {
                         return $t->id;
                     }, $p->tags),
