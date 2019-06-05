@@ -12,6 +12,7 @@ use Nette\FileNotFoundException;
 use Nette\Http\FileUpload;
 use Nette\InvalidArgumentException;
 use Nette\InvalidStateException;
+use Nette\Utils\FileSystem;
 use Nette\Utils\Image;
 use Nette\Utils\ImageException;
 use Nette\Utils\Random;
@@ -100,7 +101,11 @@ class PhotoManager
             $prefix = Random::generate(20);
         }
         $photos = [];
+        bdump(__METHOD__);
+        bdump($files);
         foreach ($files as $file) {
+
+            bdump($file->isOk() && $file->isImage());
             if (!$file->isOk() || !$file->isImage()) {
                 continue;
             }
@@ -110,12 +115,15 @@ class PhotoManager
             $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
             $file->move($path);
 
-            $exif = exif_read_data($path);
+            $exif = @exif_read_data($path);
             $taken = new DateTime();
+            bdump($exif);
             if (isset($exif['DateTimeOriginal'])) {
                 try {
                     $taken = new DateTime($exif['DateTimeOriginal']);
                 } catch (\Exception $e) {
+                    dump($exif, $e);
+                    exit;
                 }
             }
             $photo->taken = $taken;
@@ -123,6 +131,21 @@ class PhotoManager
             $this->PR->persist($photo);
             $photos[] = $photo;
         }
+        /**
+         * FileName => "81a3467ec3.jpg" (14)
+        FileDateTime => 1559738922
+        FileSize => 143535
+        FileType => 2
+        MimeType => "image/jpeg" (10)
+        SectionsFound => "COMMENT" (7)
+        COMPUTED =>
+        html => "width="800" height="1200"" (25)
+        Height => 1200
+        Width => 800
+        IsColor => 1
+        COMMENT =>
+
+         */
 
         return $photos;
     }
@@ -147,12 +170,15 @@ class PhotoManager
         $path = $this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename);
         $image->save($path);
 
-        $exif = exif_read_data($path);
+        $exif = @exif_read_data($path);
         $taken = new DateTime();
+        bdump($exif);
         if (isset($exif['DateTimeOriginal'])) {
             try {
                 $taken = new DateTime($exif['DateTimeOriginal']);
             } catch (\Exception $e) {
+                dump($exif, $e);
+                exit;
             }
         }
         $photo->taken = $taken;
@@ -187,10 +213,10 @@ class PhotoManager
             foreach ($this::$resolutions as $format => $val) {
                 $path = $this->formatPhotoPath($format, $photo->filename);
                 if (file_exists($path)) {
-                    unlink($path);
+                    FileSystem::delete($path);
                 }
             }
-            unlink($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
+            FileSystem::delete($this->formatPhotoPath($this::PHOTO_ORIGINAL, $photo->filename));
             $this->PR->delete($photo);
         }
     }

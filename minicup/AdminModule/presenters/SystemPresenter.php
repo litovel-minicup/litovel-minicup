@@ -3,6 +3,7 @@
 namespace Minicup\AdminModule\Presenters;
 
 use Minicup\Model\Manager\PhotoManager;
+use Minicup\Model\Repository\PhotoRepository;
 use Nette;
 
 /**
@@ -12,6 +13,14 @@ class SystemPresenter extends BaseAdminPresenter
 {
     /** @var PhotoManager @inject */
     public $PM;
+    /** @var PhotoRepository @inject */
+    public $PR;
+
+    public function actionDefault()
+    {
+        $this->template->photosToDelete = $this->PR->findUntaggedAndNotActivePhotos($this->YR->getSelectedYear());
+
+    }
 
     public function handleDeleteAllEntityCaches()
     {
@@ -39,6 +48,17 @@ class SystemPresenter extends BaseAdminPresenter
                 $this->flashMessage('Selhalo promazání latte cache.', 'danger');
             }
         }
+    }
+
+    /**
+     * @throws \LeanMapper\Exception\InvalidStateException
+     */
+    public function handleDeleteNotActivePhotos()
+    {
+        foreach ($this->template->photosToDelete as $p) {
+            $this->PM->delete($p, FALSE);
+        }
+        $this->flashMessage('Fotky smazány', 'success');
     }
 
     private static function rmDir($dir)

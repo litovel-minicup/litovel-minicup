@@ -28,6 +28,7 @@ use Psr\Log\NullLogger;
  * @property        DateTime|NULL      $updated                Last time update
  * @property        string|NULL        $authToken              Auth token for REST API
  *
+ * @property        string|NULL        $dressColorHistogram
  * @property        string|NULL        $dressColorMin
  * @property        string|NULL        $dressColorMax
  * @property        string|NULL        $dressColorSecondaryMin

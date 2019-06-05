@@ -37,7 +37,8 @@ export default {
         let tags = _.uniq(_.concat(state.selectedTags, anotherTags));
 
         photosToUpdate.map((p) => {
-            _.find(state.photos, {'id': p}).tags = tags;
+            p = _.find(state.photos, {'id': p});
+            p.tags = _.union(p.tags, tags);
         })
     },
     rejectPhotos(state, photos) {

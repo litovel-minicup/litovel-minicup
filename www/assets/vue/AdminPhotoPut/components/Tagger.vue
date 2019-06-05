@@ -67,7 +67,7 @@
 <script>
     import Vue from 'vue'
     import axios from 'axios'
-    import {mapState, mapActions, mapMutations} from 'vuex'
+    import {mapState, mapActions, mapMutations, mapGetters} from 'vuex'
     import _ from 'lodash'
 
     export default {
@@ -94,7 +94,7 @@
             },
             photoLabel() {
                 return (tags) => {
-                    return tags.map((id) => _.find(this.tags, {id}).name).join(',');
+                    return tags.map((id) => (_.find(this.tags, {id}) || {name: '???'}).name).join(',');
                 }
             },
             sortedPhotos() {
@@ -154,6 +154,17 @@
             line-height: 1;
             padding: 2px 4px;
         }
+        .time {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-color: black;
+            color: white;
+            font-size: 8pt;
+            line-height: 1;
+            padding: 2px 4px;
+        }
+
         .time {
             position: absolute;
             right: 0;

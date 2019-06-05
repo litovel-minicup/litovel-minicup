@@ -40,17 +40,15 @@ class PhotoRepository extends BaseRepository
      * @return Photo[]
      * @throws \LeanMapper\Exception\InvalidStateException
      */
-    public function findUntaggedPhotos(Year $year): array
+    public function findUntaggedAndNotActivePhotos(Year $year): array
     {
-        return $this->createEntities($this->connection
-            ->select('*')
-            ->from($this->getTable())
-            ->where('EXTRACT(YEAR FROM [taken]) = ', $year->year)
-            ->where('[id] NOT IN',
-                $this->connection->select('[photo_id]')
-                    ->from('[photo_tag]')
-                    ->groupBy('[photo_id]')
-            )->orderBy("[photo.taken] ASC")->fetchAll());
+        return $this->createEntities($this->connection->query('
+            SELECT *
+            FROM photo
+            WHERE (EXTRACT(YEAR FROM taken) = %i) AND (active IS FALSE OR id NOT IN (SELECT photo_id from photo_tag))
+            ORDER BY taken
+        ', $year->year)->fetchAll()
+        );
     }
 
     /**

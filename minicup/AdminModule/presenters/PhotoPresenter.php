@@ -11,6 +11,7 @@ use Minicup\Components\IAdminPhotoListComponentFactory;
 use Minicup\Components\IPhotoEditComponentFactory;
 use Minicup\Components\IPhotoListComponentFactory;
 use Minicup\Components\IPhotoPutComponentFactory;
+use Minicup\Components\IPhotoTeamTaggerComponentFactory;
 use Minicup\Components\IPhotoUploadComponentFactory;
 use Minicup\Components\ITagFormComponentFactory;
 use Minicup\Components\PhotoEditComponent;
@@ -62,6 +63,9 @@ final class PhotoPresenter extends BaseAdminPresenter
 
     /** @var IPhotoPutComponentFactory @inject */
     public $PPCF;
+
+    /** @var IPhotoTeamTaggerComponentFactory @inject */
+    public $PTTCF;
 
     /** @var NewsRepository @inject */
     public $NR;
@@ -196,6 +200,11 @@ final class PhotoPresenter extends BaseAdminPresenter
     protected function createComponentPhotoPutComponent()
     {
         return $this->PPCF->create();
+    }
+
+    protected function createComponentPhotoTeamTaggerComponent()
+    {
+        return $this->PTTCF->create();
     }
 
     public function handleUpload() {

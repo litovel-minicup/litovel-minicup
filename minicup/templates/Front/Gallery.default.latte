@@ -26,31 +26,24 @@
             <h1 class="Article__head__text Box__head__text">{block title}Fotogalerie{/block} <span>celkem {$photosCount} fotek</span>
             </h1>
         </div>
-        {if $user->isLoggedIn() && $category->year->slug == '2019'}
-
-            {if $tags}
-                {*<div class="Article__subhead Box__subhead">
-                    <a n:href="tags">Interaktivní výběr</a>
-                </div>*}
-                <div class="Box__content Team__content">
-                    <ul>
-                        {foreach $tags as $tag}
-                            <li class="Box__rows"><a href={plink Gallery:detail $tag}>{$tag->name}</a></li>
-                        {/foreach}
-                    </ul>
-                </div>
-            {else}
-                <div class="Article__subhead Box__subhead">
-                    Pro tento ročník nebyly bohužel nalezeny žádné fotografie.
-                </div>
-            {/if}
+        {if $tags}
+            {*<div class="Article__subhead Box__subhead">
+                <a n:href="tags">Interaktivní výběr</a>
+            </div>*}
+            <div class="Box__content Team__content">
+                <ul>
+                    {foreach $tags as $tag}
+                        <li class="Box__rows">
+                            <a href={plink Gallery:detail $tag}>
+                                {$tag->name}
+                            </a>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
         {else}
-            <div class="Box__content Article__content">
-                <p>
-                    Fotogalerie z turnaje Litovel MINICUP 2019 bude kompletně dostupná <strong>během středy 5. června</strong> - drobná
-                    technická chybka nás donutila rozpracovanou galerii stáhnout, ale nebojte, <strong>všechny fotky zde opět
-                    budou</strong>, žádné jsme neztratili.
-                </p>
+            <div class="Article__subhead Box__subhead">
+                Pro tento ročník nebyly bohužel nalezeny žádné fotografie.
             </div>
         {/if}
     </div>

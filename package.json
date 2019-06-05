@@ -11,6 +11,9 @@
     "run:dev": "cross-env NODE_ENV=development webpack-dev-server --hot --port 9002"
   },
   "dependencies": {
+    "@tensorflow-models/body-pix": "^1.0.1",
+    "@tensorflow-models/coco-ssd": "^1.0.2",
+    "@tensorflow/tfjs": "^1.1.2",
     "@xkeshi/image-compressor": "^0.5.3",
     "axios": "^0.18.0",
     "camelcase-keys": "latest",
@@ -25,6 +28,7 @@
     "vue-resource": "^1.5.0",
     "vue-tween-number": "^0.2.0",
     "vue-upload-component": "^2.8.20",
+    "vue-upload-image": "^1.1.2",
     "vue2-animate": "^2.0.0",
     "vuex": "^3.0.1"
   },

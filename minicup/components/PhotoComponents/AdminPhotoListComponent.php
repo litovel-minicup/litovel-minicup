@@ -160,7 +160,7 @@ class AdminPhotoListComponent extends BaseComponent
 
     public function handleUntaggedPhotos()
     {
-        $this->photos = $this->PR->findUntaggedPhotos($this->year);
+        $this->photos = $this->PR->findUntaggedAndNotActivePhotos($this->year);
         $this->sortPhotos();
         if ($this->presenter->isAjax()) {
             $this->redrawControl('photo-list');
