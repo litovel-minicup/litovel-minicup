@@ -4,6 +4,7 @@ namespace Minicup\Model\Repository;
 
 use Minicup\Model\Entity\Category;
 use Minicup\Model\Entity\TeamInfo;
+use Minicup\Model\Entity\Year;
 
 class TeamInfoRepository extends BaseRepository
 {
@@ -63,5 +64,18 @@ class TeamInfoRepository extends BaseRepository
             ->where('[auth_token] = %s', $token)
             ->fetch();
         return $row ? $this->createEntity($row) : NULL;
+    }
+
+    /**
+     * @param Year $year
+     * @return array
+     */
+    public function findInYear(Year $year)
+    {
+        $rows = $this->createFluent()
+            ->innerJoin('[category] c')->on('team_info.category_id = c.id')
+            ->where('[c.year_id] = ', $year->id)
+            ->fetchAll();
+        return $this->createEntities($rows);
     }
 }

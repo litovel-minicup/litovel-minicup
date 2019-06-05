@@ -7,7 +7,9 @@ import _ from "lodash";
 Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
+        addTeamTagUrl: '',
         photosUrl: '',
+        teamsUrl: '',
         photos: [],
     },
     actions,

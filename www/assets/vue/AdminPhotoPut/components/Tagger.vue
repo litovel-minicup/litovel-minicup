@@ -57,7 +57,7 @@
                     @click.exact="togglePhoto(photo.id)"
                     @click.shift.exact="selectMultiplePhotos(photo.id)"
             >
-                <img :src="photo.thumb" alt="" class="img-responsive">
+                <img :src="photo.thumb.replace('thumb', '_original')" alt="" class="img-responsive">
                 <span class="tags-count">{{ photoLabel(photo.tags) }}</span>
                 <span class="time">{{ photo.taken | takenString }}</span>
             </span>

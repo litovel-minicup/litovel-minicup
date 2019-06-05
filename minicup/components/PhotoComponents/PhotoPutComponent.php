@@ -123,9 +123,8 @@ class PhotoPutComponent extends BaseComponent
      */
     public function handleGetPhotos()
     {
-        bdump($this->presenter->getHttpRequest());
         $photos = $this->PR->findByIds($this->photos); // TODO: not sure, what UX is better
-        $photos = $this->PR->findUntaggedPhotos($this->YR->getActualYear());
+        $photos = $this->PR->findUntaggedAndNotActivePhotos($this->YR->getSelectedYear());
         $this->presenter->sendJson([
             'photos' => array_values(array_map(function (Photo $p) {
                 return [
@@ -133,6 +132,7 @@ class PhotoPutComponent extends BaseComponent
                     'thumb' => $this->presenter->link(':Media:thumb', $p->filename),
                     'taken' => $p->taken ? $p->taken->getTimestamp() : null,
                     'tags' => array_map(function (Tag $t) {
+                        bdump($t);
                         return $t->id;
                     }, $p->tags),
                 ];

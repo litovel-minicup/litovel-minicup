@@ -38,6 +38,7 @@ class TeamPresenter extends BaseAdminPresenter
         'color_primary' => 'Prim. barva',
         'color_secondary' => 'Sek. barva',
         'color_text' => 'Tex. barva',
+        'dress_color_histogram' => 'Bar. hist',
     ];
 
     /** @var IMatchFormComponentFactory @inject */
@@ -134,10 +135,7 @@ class TeamPresenter extends BaseAdminPresenter
         $this->addTeamInfoEditableText($g, 'dressColor', 'dress_color');
         $this->addTeamInfoEditableText($g, 'dressColorSecondary', 'dress_color_secondary');
 
-        $this->addColorColumn($g, 'dress_color_min', 'dressColorMin', 'Prim. barva od');
-        $this->addColorColumn($g, 'dress_color_max', 'dressColorMax', 'Prim. barva do');
-        $this->addColorColumn($g, 'dress_color_secondary_min', 'dressColorSecondaryMin', 'Sek. barva od');
-        $this->addColorColumn($g, 'dress_color_secondary_max', 'dressColorSecondaryMax', 'Sek. barva do');
+        $this->addTeamInfoEditableText($g, 'dressColorHistogram', 'dress_color_histogram');
 
         $g->addColumnNumber('photo_count', 'Fotek');
         $g->addColumnNumber('player_count', 'Hráčů');
