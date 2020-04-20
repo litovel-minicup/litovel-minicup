@@ -15,7 +15,7 @@
     "@tensorflow-models/coco-ssd": "^1.0.2",
     "@tensorflow/tfjs": "^1.1.2",
     "@xkeshi/image-compressor": "^0.5.3",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "camelcase-keys": "latest",
     "instory": "^1.0.2",
     "javascript-time-ago": "^2.0.1",
