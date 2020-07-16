@@ -19,7 +19,7 @@
     "camelcase-keys": "latest",
     "instory": "^1.0.2",
     "javascript-time-ago": "^2.0.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "raven-js": "^3.24.0",
     "sprintf-js": "latest",
     "vue": "^2.5.11",
